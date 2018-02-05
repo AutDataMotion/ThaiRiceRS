@@ -1,0 +1,45 @@
+			<div class="detail-bottom">
+				<div class="detail-slide detail-slide1">
+					<a class="prev" href="javascript:void(0)"></a>
+					<div class="detail-slide-bd">
+						<ul>
+							<% for(img in objImgList){%>
+								<li><a onclick="replace(this)" href="#"><img src="${cxt!}${img.imgurl}${img.imgname}" alt="" title="" /></a></li>
+							<% } %>
+							<!-- <li><a href="detail.html"><img src="${cxt!}/ui/trecog/images/picture.jpg"
+									alt="" title="" /></a></li>-->
+						</ul>
+					</div>
+					<a class="next" href="javascript:void(0)"></a>
+				</div>
+				<div class="detail-slide detail-slide2">
+					<a class="prev" href="javascript:void(0)"></a>
+					<div class="detail-slide-bd">
+						<ul>
+							<% for(img in objImgList){%>
+								<li><a onclick="replace(this)" href="#"><img src="${cxt!}${img.imgurl}${img.imgname}" alt="" title="" /></a></li>
+							<% } %>
+						</ul>
+						
+					</div>
+					<a class="next" href="javascript:void(0)"></a>
+				</div>
+			</div>
+			
+			
+			
+	//底部滚动效果
+		jQuery(".detail-slide1").slide({
+			mainCell : ".detail-slide-bd ul",
+			autoPage : false,
+			effect : "leftLoop",
+			autoPlay : true,
+			vis : 3
+		});
+		jQuery(".detail-slide2").slide({
+			mainCell : ".detail-slide-bd ul",
+			autoPage : false,
+			effect : "leftLoop",
+			autoPlay : true,
+			vis : 3
+		});
