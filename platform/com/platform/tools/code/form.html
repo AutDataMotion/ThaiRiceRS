@@ -1,0 +1,46 @@
+
+<% for(colunm in colunmList){ 
+if(strutil.startWith(colunm.column_name,"id")&&strutil.endWith(colunm.column_name,"id")){continue;}
+%>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">${colunm.column_desc}</label>
+	<% if(strutil.startWith(colunm.clm_type,"cha")){%>
+	<div class="col-sm-7">
+		<input type="text" name="${classNameSmall}.${colunm.column_name}" value="\${escapeXml(${classNameSmall}.${colunm.column_name}!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+	<%}else if(strutil.startWith(colunm.clm_type,"tex")){%>
+	<div class="col-sm-7">
+		<textarea name="${classNameSmall}.${colunm.column_name}" class="autosize form-control">\${escapeXml(${classNameSmall}.${colunm.column_name}!)}</textarea>
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+	<%}else if(strutil.startWith(colunm.clm_type,"tim")){%>
+	<div class="col-sm-7">
+		<div class="input-group">
+		<input type="text" name="${classNameSmall}.${colunm.column_name}" date-data-format="yyyy-mm-dd" data-data-viewmode="years" class="form-control data-picker" value="\${${classNameSmall}.${colunm.column_name}!, dateFormat="yyyy-MM-dd HH:mm:ss"}">
+		<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+		</div>
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<%}else if(strutil.startWith(colunm.clm_type,"boo")){%>
+	<div class="col-sm-7">
+		<select name="${classNameSmall}.${colunm.column_name}" class="combox">
+		<option value="0" \${${classNameSmall}.${colunm.column_name}! == 0 ? "selected='selected'":"" }>\${i18nMap["admin.common.no"]}</option>
+		<option value="1" \${${classNameSmall}.${colunm.column_name}! == 1 ? "selected='selected'":"" }>\${i18nMap["admin.common.yes"]}</option>
+		</select>
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<%}else{%>
+	<div class="col-sm-7">
+		<input type="text" name="${classNameSmall}.${colunm.column_name}" value="\${${classNameSmall}.${colunm.column_name}!}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+	<%}%>
+</div>
+<% } %>

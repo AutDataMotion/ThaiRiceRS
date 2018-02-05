@@ -1,0 +1,35 @@
+<!-- start: BREADCRUMB -->
+<div class="row">
+	<div class="col-md-12">
+		<ol class="breadcrumb">
+			<li><a href="#">导航</a></li>
+			<li class="active">默认主页</li>
+		</ol>
+	</div>
+</div>
+<!-- end: BREADCRUMB -->
+
+<!-- start: PAGE CONTENT -->
+
+<!-- end: PAGE CONTENT -->
+
+
+<div class="row" id="operator">
+	<script type="text/javascript">
+		common_ajax.ajaxDiv("operator", "/jf/platform/test/operator?pageSize=10"); // 处理在一个页显示多个分页，分页输出{"divId" : "aaaaa", "formId" : "splitPage1"}
+	</script>
+</div>
+
+<div class="row" id="sysLog">
+	<script type="text/javascript">
+		common_ajax.ajaxDiv("sysLog", "/jf/platform/test/sysLog?pageSize=10"); // 处理在一个页显示多个分页，分页输出{"divId" : "bbbbb", "formId" : "splitPage2"}
+	</script>
+</div>
+					
+<script type="text/javascript" src="${cxt!}/jsFile/rapido/platform/index/context.js"></script>
+
+<script type="text/javascript">
+	jQuery(document).ready(function() {
+		Context.init();
+	});
+</script>
