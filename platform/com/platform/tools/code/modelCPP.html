@@ -1,0 +1,78 @@
+/**  
+ * Date:	 - -  : :   
+ * project:	   
+ * fileName:	${className}.h  
+ * description:	
+ * author:	zhongweng.hao@qq.com
+ * Modification History:   
+ * Date        Author         Version      Description   
+ * ----------------------------------------------------------------- 
+ *  - -   : :        Zhongweng       1.0         1.0 Version   
+ */
+#pragma once
+#include <string>
+#include "AbsDAL.h"
+using namespace std;
+
+class ${className} :public AbsDAL {
+
+public:
+	${className}():AbsDAL(&TableName){}
+	~${className}(){}
+	
+private:
+	static const string TableName;
+	<% for(colunm in colunmList){ %>
+	/**
+	 * 字段描述：${colunm.column_desc} 
+	 * 字段类型：${colunm.column_type}  ${isEmpty(colunm.column_length) ? "" : "长度：" + colunm.column_length}
+	 */
+	 	<% var clmClassName = "";
+	 	if(strutil.startWith(colunm.column_className,"Str")){
+	 		clmClassName = "string";
+	 	}else if(strutil.startWith(colunm.column_className,"Integer")){
+	 		clmClassName = "int";
+	 	}else if(strutil.startWith(colunm.column_className,"Boolean")){
+	 		clmClassName = "bool";
+	 	}else if(strutil.startWith(colunm.column_className,"Time")){
+	 		clmClassName = "string";
+	 	}else{
+	 		clmClassName = strutil.toLowerCase(colunm.column_className);
+	 	}
+	 	%>
+	${clmClassName} ${colunm.column_name};
+	<% } %>
+public:
+	<% for(colunm in colunmList){ %>
+	
+	<% var clmClassName = "";
+	 	if(strutil.startWith(colunm.column_className,"Str")){
+	 		clmClassName = "string";
+	 	}else if(strutil.startWith(colunm.column_className,"Integer")){
+	 		clmClassName = "int";
+	 	}else if(strutil.startWith(colunm.column_className,"Boolean")){
+	 		clmClassName = "bool";
+	 	}else if(strutil.startWith(colunm.column_className,"Time")){
+	 		clmClassName = "string";
+	 	}else{
+	 		clmClassName = strutil.toLowerCase(colunm.column_className);
+	 	}
+	 	%>
+	
+	${className}& set${colunm.column_name_upperCaseFirstOne}(${clmClassName} a${colunm.column_name}){
+		${colunm.column_name} = a${colunm.column_name};
+		<%if(strutil.startWith(clmClassName,"str")){%>
+		
+		mapSQLTokens["${colunm.column_name}"] = "'"+${colunm.column_name}+"'";
+		<%}else{%>
+		mapSQLTokens["${colunm.column_name}"] = to_string(${colunm.column_name});
+		<%}%>
+		return *this;
+	}
+	${clmClassName} get${colunm.column_name_upperCaseFirstOne}() {
+		return ${colunm.column_name};
+	}
+	<% } %>
+	
+};
+const string ${className}::TableName = "${strutil.toLowerCase(className)}";

@@ -1,0 +1,26 @@
+package thairice.config;
+
+import org.apache.log4j.Logger;
+
+import com.platform.config.run.BaseConfMain;
+
+/**  
+ * 创建时间：2016年1月26日 上午11:13:45  
+ * 项目名称：DUCPlatFormWeb   
+ * 文件名称：ConfMain.java  
+ * 类说明：  
+ *
+ * Modification History:   
+ * Date        Author         Version      Description   
+ * ----------------------------------------------------------------- 
+ * 2016年1月26日     Zhongweng       1.0         1.0 Version   
+ */
+
+public class ConfMain extends BaseConfMain{
+	private static Logger log = Logger.getLogger(ConfMain.class);
+	private final static ConfMain single = new ConfMain();
+	
+	public static ConfMain getInstance(){
+		return single;
+	}
+}

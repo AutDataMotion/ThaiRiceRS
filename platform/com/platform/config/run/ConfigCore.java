@@ -49,7 +49,7 @@ public class ConfigCore {
 	public ConfigCore() throws IOException {
 		Properties properties = new Properties();
 		properties.load(ConfigCore.class
-				.getResourceAsStream("/init.properties"));
+				.getResourceAsStream("/init_rice.properties"));
 		PropertiesPlugin propertiesPlugin = new PropertiesPlugin(properties,
 				true);
 		propertiesPlugin.start();
@@ -110,21 +110,21 @@ public class ConfigCore {
 		baseMapping.scan(propertiesPlugin);
 
 		log.info("configPlugin 表手工注册");
-		arp.addMapping("pt_department", "ids", Department.class);
-		arp.addMapping("pt_dict", "ids", Dict.class);
-		arp.addMapping("pt_group", "ids", Group.class);
-		arp.addMapping("pt_menu", "ids", Menu.class);
-		arp.addMapping("pt_module", "ids", Module.class);
-		arp.addMapping("pt_operator", "ids", Operator.class);
-		arp.addMapping("pt_param", "ids", Param.class);
-		arp.addMapping("pt_resources", "ids", Resources.class);
-		arp.addMapping("pt_role", "ids", Role.class);
-		arp.addMapping("pt_station", "ids", Station.class);
-		arp.addMapping("pt_syslog", "ids", Syslog.class);
-		arp.addMapping("pt_systems", "ids", Systems.class);
-		arp.addMapping("pt_upload", "ids", Upload.class);
-		arp.addMapping("pt_user", "ids", User.class);
-		arp.addMapping("pt_userinfo", "ids", UserInfo.class);
+//		arp.addMapping("pt_department", "ids", Department.class);
+//		arp.addMapping("pt_dict", "ids", Dict.class);
+//		arp.addMapping("pt_group", "ids", Group.class);
+//		arp.addMapping("pt_menu", "ids", Menu.class);
+//		arp.addMapping("pt_module", "ids", Module.class);
+//		arp.addMapping("pt_operator", "ids", Operator.class);
+//		arp.addMapping("pt_param", "ids", Param.class);
+//		arp.addMapping("pt_resources", "ids", Resources.class);
+//		arp.addMapping("pt_role", "ids", Role.class);
+//		arp.addMapping("pt_station", "ids", Station.class);
+//		arp.addMapping("pt_syslog", "ids", Syslog.class);
+//		arp.addMapping("pt_systems", "ids", Systems.class);
+//		arp.addMapping("pt_upload", "ids", Upload.class);
+//		arp.addMapping("pt_user", "ids", User.class);
+//		arp.addMapping("pt_userinfo", "ids", UserInfo.class);
 
 		arp.start();
 
@@ -154,8 +154,8 @@ public class ConfigCore {
 		sqlXmlPlugin.start();
 
 		log.info("afterJFinalStart 缓存参数");
-		ParamInitPlugin paramInitPlugin = new ParamInitPlugin();
-		paramInitPlugin.start();
+//		ParamInitPlugin paramInitPlugin = new ParamInitPlugin();
+//		paramInitPlugin.start();
 	}
 
 }

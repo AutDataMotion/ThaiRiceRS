@@ -17,7 +17,7 @@
 	-->
 	<sql id="getTables">
 		<![CDATA[ 
-        	select * from tables where table_schema = ? and table_name = ?
+			SELECT TABLE_NAME FROM INFORMATION_SCHEMA.TABLES WHERE TABLE_SCHEMA = ?
     	]]>
 	</sql>
 	
@@ -28,7 +28,7 @@
 	-->
 	<sql id="getColumns">
 		<![CDATA[ 
-        	select * from columns where table_schema = ? and table_name = ?
+        	select column_name from information_schema.columns where table_schema = ? and table_name = ?
     	]]>
 	</sql>
 	

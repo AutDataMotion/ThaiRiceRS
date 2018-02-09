@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<sql-statement namespace="thairice.t6org_data">
+	
+	<!-- 分页查询：from -->
+	<sql id="splitPageFrom">
+		<![CDATA[ 
+        	from 
+        		t6org_data
+			
+			where 1=1 
+				
+    	]]>
+	</sql>
+	
+</sql-statement>

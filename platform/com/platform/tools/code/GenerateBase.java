@@ -42,58 +42,25 @@ public abstract class GenerateBase {
 	 * 类名（不包含后缀.java）
 	 * 该表对应的视图的显示名称
 	 */
+	
 	public static String[][] tableArr = {
-		//{"ConstantInit.db_dataSource_main", "test_blog", "ids", "TestBlog"}
-		//{null, "test_blog", null, "TestBlog"}
-//		{null, "r10_user_evaluate_img", null, "R10_user_evaluate_img","用户融合评价"},
-//		{null, "r1_user_regist_sys", null, "R1_user_regist_sys","用户注册系统"},
-//		{null, "r2_user_select_appgoal", null, "R2_user_select_appgoal","用户选择应用类型"},
-//		{null, "r3_1appdatafusioneva", null, "R3_1appdatafusioneva","应用决策关系"},
-//		{null, "r3_2appdecirule", null, "R3_2appdecirule","决策知识规则"},
-//		{null, "r3_3appdecitrain", null, "R3_3appdecitrain","应用决策关系训练"},
-//		{null, "r4_wise_rcmd_imgdata", null, "R4_wise_rcmd_imgdata","推荐数据"},
-//		{null, "r5_user_search_imgdata", null, "R5_user_search_imgdata","检索数据"},
-//		{null, "r6_user_select_imgdata", null, "R6_user_select_imgdata","筛选数据"},
-//		{null, "r7_wise_rcmd_algfuse", null, "R7_wise_rcmd_algfuse","推荐融合算法"},
-//		{null, "r8_user_upload_imgdata", null, "R8_user_upload_imgdata","用户上传数据"},
-//		{null, "r9_user_fusion_img", null, "R9_user_fusion_img","图像融合"},
-//		{null, "t10userfuseimgbill", null, "T10userfuseimgbill","用户融合订单"},
-//		{null, "t1system", null, "T1system","系统"},
-//		{null, "t2user", null, "T2user","用户"},
-//		{null, "t3admin", null, "T3admin","管理员"},
-//		{null, "t4_appgoal", null, "T4_appgoal","应用目的"},
-//		{null, "t5_datatype", null, "T5_datatype","数据产品类型"},
-//		{null, "t6_dataproduct_optical", null, "T6_dataproduct_optical","光学数据产品"},
-//		{null, "t7_dataproduct_sar", null, "T7_dataproduct_sar","sar数据产品"},
-//		{null, "t8_algfusion", null, "T8_algfusion","融合算法"},
-//		{null, "t9_algevaluate", null, "T9_algevaluate","评价算法"},
-//		{null, "tcms_articles", null, "Tcms_articles","新闻资讯"},
-//		{null, "tcms_kvalue", null, "Tcms_kvalue","系统配置"},
-//		{null, "tcms_resource", null, "Tcms_resource","资源"},
-//		{null, "tcms_tag", null, "Tcms_tag","标签"}
-//		{null, "tapiserv", null, "Tapiserv","API接口"}
-//		{null, "tplugin", null, "Tplugin","插件"}
-//		{null, "tcms_regist_agent", null, "Tcms_regist_agent","中介方入驻"},
-//		{null, "tcms_regist_money", null, "Tcms_regist_money","资金方入驻"},
-//		{null, "tcms_regist_prj", null, "Tcms_regist_prj","项目方入驻"},
-//		{null, "tcms_user_keyinvite", null, "Tcms_user_keyinvite","邀请码生成"}
-//		{null, "listblack", null, "Listblack","失信黑榜"},
-//		{null, "listinvestor", null, "Listinvestor","每周资方"},
-//		{null, "listprj", null, "Listprj","每周项目"}
-		{null, "r2_user_look_img", null, "R2_user_look_img","用户查看图片"},
-		{null, "r3_user_search_word", null, "R3_user_search_word","用户文字搜索"},
-		{null, "r4_user_upload_img", null, "R4_user_upload_img","用户上传图片"},
-		{null, "r5_user_search_img", null, "R5_user_search_img","用户图片搜索"},
-		{null, "t3targetinfo", null, "T3targetinfo","目标信息"},
-		{null, "t4pic", null, "T4pic","目标普通图像"},
-		{null, "t4_1piccap", null, "T4_1piccap","目标普通剪切图像"},
-		{null, "t5remotecap", null, "T5remotecap","目标遥感影像"},
-		{null, "t6remoteimg", null, "T6remoteimg","原始遥感影像"},
-		{null, "t7dictionary", null, "T7dictionary","特征库"}
+		{null, "t1parameter", null, "T1parameter","--"},
+		{null, "t2syslog", null, "T2syslog","--"},
+		{null, "t3user", null, "T3user","--"},
+		{null, "r4message_send", null, "R4message_send","--"},
+		{null, "t5parameter_type", null, "T5parameter_type","--"},
+		{null, "t6org_data", null, "T6org_data","--"},
+		{null, "t7pdt_data", null, "T7pdt_data","--"},
+		{null, "t8message", null, "T8message","--"},
+		{null, "t9sample_info", null, "T9sample_info","--"},
+		{null, "t10pdt_report", null, "T10pdt_report","--"},
+		{null, "t11zone", null, "T11zone","--"},
+		{null, "tkvalue", null, "Tkvalue","--"}
 	};
 	
 	//String prjName = "targrecog";
-	public static String  prjName = "targrecog";
+	protected static final String schema = "thairice";
+	public static String  prjName = "thairice";
 	/**
 	 * 生成的包和类所在的源码根目录，比如src或者是weiXin
 	 */
@@ -107,6 +74,7 @@ public abstract class GenerateBase {
 	 */
 	public static String packageBase = prjName+".mvc";
 	public static String packageConf = prjName+".config";
+	public static String packageConstant = prjName+".constant";
 	/**
 	 * controller基础路径，例如
 	 * @Controller(controllerKey = "/jf/platform/authImg") 中的platform
@@ -178,6 +146,23 @@ public abstract class GenerateBase {
 		String filePath = System.getProperty("user.dir") +generalPathSrc+srcFolder+"/" + packages.replace(".", "/") + "/" + className +".java";
 		createFileByTemplete("model.html", paraMap, filePath);
 	}
+	public void modelcpp(String className, String classNameSmall, String dataSource, String tableName, String pkName, List<TableColumnDto> colunmList){
+		Map<String, Object> paraMap = new HashMap<String, Object>();
+		String packages = packageBase + "." + className.toLowerCase();
+		paraMap.put("package", packages);
+		paraMap.put("className", className);
+		paraMap.put("dataSource", dataSource);
+		paraMap.put("tableName", tableName);
+		paraMap.put("pkName", pkName);
+		paraMap.put("namespace", basePath + "." + classNameSmall);
+
+		paraMap.put("colunmList", colunmList);
+		paraMap.put("dataTypes", getJataTypeList(tableName));
+		
+		String filePath = System.getProperty("user.dir") +generalPathSrc+srcFolder+"/" + packages.replace(".", "/") + "/../../cpp/" + className +".h";
+		createFileByTemplete("modelCPP.html", paraMap, filePath);
+	}
+
 
 	/**
 	 * 生成DTO                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                      
@@ -334,27 +319,49 @@ public abstract class GenerateBase {
 		createFileByTemplete("add.html", paraMap, filePath);
 	}
 
-	public void tableMapping(String basePath,List<GenerateTableMappingRoute> listTableMap){
+	public void configGen(String basePath,List<GenerateTableMappingRoute> listTableMap){
 		
 		Map<String, Object> paraMap = new HashMap<String, Object>();
-		paraMap.put("basePath", basePath);
 		System.out.println("tableMapping listTableMap size:"+listTableMap.size());
+		paraMap.put("basePath", basePath);
 		paraMap.put("listTableMap", listTableMap);
+		paraMap.put("prjName", prjName);
+		String filePathPackage = System.getProperty("user.dir") + generalPathSrc+srcFolder+"/" + packageConf.replace(".", "/");
 		
-		String filePath = System.getProperty("user.dir") + generalPathSrc+srcFolder+"/" + packageConf.replace(".", "/") + "/MappingTable.java";
+		String filePath = filePathPackage + "/MappingTable.java";
 		createFileByTemplete("MappingTable.html", paraMap, filePath);
+		
+		filePath = filePathPackage + "/RoutePlugins.java";
+		createFileByTemplete("RoutePlugins.html", paraMap, filePath);
+		
+		filePath = filePathPackage + "/ConfMain.java";
+		createFileByTemplete("ConfMain.html", paraMap, filePath);
+		
+		filePath = filePathPackage + "/DBMappingMy.java";
+		createFileByTemplete("DBMappingMy.html", paraMap, filePath);
+		
 	}
 	
-	public void routePlugin(String basePath,List<GenerateTableMappingRoute> listTableMap){
-		Map<String, Object> paraMap = new HashMap<String, Object>();
-		System.out.println("routePlugin listTableMap size:"+listTableMap.size());
-		paraMap.put("basePath", basePath);
-		paraMap.put("listTableMap", listTableMap);
-		
-		String filePath = System.getProperty("user.dir") + generalPathSrc+srcFolder+"/" + packageConf.replace(".", "/") + "/RoutePlugins.java";
-		createFileByTemplete("RoutePlugins.html", paraMap, filePath);
-	}
+//	public void routePlugin(String basePath,List<GenerateTableMappingRoute> listTableMap){
+//		Map<String, Object> paraMap = new HashMap<String, Object>();
+//		System.out.println("routePlugin listTableMap size:"+listTableMap.size());
+//		paraMap.put("basePath", basePath);
+//		paraMap.put("listTableMap", listTableMap);
+//		
+//		String filePath = System.getProperty("user.dir") + generalPathSrc+srcFolder+"/" + packageConf.replace(".", "/") + "/RoutePlugins.java";
+//		createFileByTemplete("RoutePlugins.html", paraMap, filePath);
+//	}
 
+	public void constantGen(String basePath,List<GenerateTableMappingRoute> listTableMap){
+		Map<String, Object> paraMap = new HashMap<String, Object>();
+		paraMap.put("basePath", basePath);
+		paraMap.put("prjName", prjName);
+		String filePathPackage = System.getProperty("user.dir") + generalPathSrc+srcFolder+"/" + packageConstant.replace(".", "/");
+		String filePath =  filePathPackage + "/ConstantInitMy.java";
+		createFileByTemplete("ConstantInitMy.html", paraMap, filePath);
+		filePath = filePathPackage + "/PropertiesInitMy.java";
+		createFileByTemplete("PropertiesInitMy.html", paraMap, filePath);
+	}
 	/**
 	 * 根据具体模板生成文件
 	 * @param templateFileName

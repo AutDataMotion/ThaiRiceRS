@@ -86,37 +86,37 @@ public class GeneratePostgreSQL extends GenerateBase {
 			}
 
 			// 1.生成sql文件
-			base.sql(classNameSmall, tableName);
+//			base.sql(classNameSmall, tableName);
 
 			// 2.生成model
-			base.model(className, classNameSmall, dataSource, tableName,
+			base.modelcpp(className, classNameSmall, dataSource, tableName,
 					pkName, colunmList);
 
 			// 3.生成validator
-			base.validator(className, classNameSmall);
+//			base.validator(className, classNameSmall);
 
 			// 4.生成controller
-			base.controller(className, classNameSmall, tableName);
+//			base.controller(className, classNameSmall, tableName);
 
 			// 5.生成service
-			base.service(className, classNameSmall);
+//			base.service(className, classNameSmall);
 
 			// 6.生成DTO，还没有处理数据库字段类型到java数据类型的对应转换
 			// base.dto(className, classNameSmall, dataSource, tableName,
 			// colunmList);
 
 			// 7.生成视图文件
-			base.form(classNameSmall, tableName, colunmList);
-			base.list(classNameSmall, tableName, pageTitle, colunmList);
-			base.view(classNameSmall, tableName, pageTitle, colunmList);
-			base.update(classNameSmall, tableName, pageTitle, colunmList);
-			base.add(classNameSmall, tableName, pageTitle, colunmList);
+//			base.form(classNameSmall, tableName, colunmList);
+//			base.list(classNameSmall, tableName, pageTitle, colunmList);
+//			base.view(classNameSmall, tableName, pageTitle, colunmList);
+//			base.update(classNameSmall, tableName, pageTitle, colunmList);
+//			base.add(classNameSmall, tableName, pageTitle, colunmList);
 		}
 
-		// 生成MappingTable
-		base.tableMapping(basePath, listTableMap);
-		// 生成route
-		base.routePlugin(basePath, listTableMap);
+		// 生成config 类文件
+//		base.configGen(basePath, listTableMap);
+		// 生成constant 类文件
+//		base.constantGen(basePath, listTableMap);
 		System.exit(0);
 	}
 
