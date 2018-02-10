@@ -1,35 +1,123 @@
 
 
 <div class="form-group">
-	<label class="col-sm-2 control-label"></label>
->>12:34:26:调用方法抛出了异常(NATIVE_CALL_EXCEPTION):strutil.startWith 位于8行 资源:
-<% for(c...
-调用方法出错 strutil.startWith
-5|
-6|<div class="form-group">
-7|	<label class="col-sm-2 control-label">${colunm.column_desc}</label>
-8|	<% if(strutil.startWith(colunm.clm_type,"cha")){%>
-9|	<div class="col-sm-7">
-10|		<input type="text" name="${classNameSmall}.${colunm.column_name}" value="\${escapeXml(${classNameSmall}.${colunm.column_name}!)}" 
-java.lang.NullPointerException: Error:startWith(null)
-	at org.beetl.ext.fn.StringUtil.startWith(StringUtil.java:52)
-	at sun.reflect.GeneratedMethodAccessor9.invoke(Unknown Source)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:497)
-	at org.beetl.core.om.ObjectUtil.invoke(ObjectUtil.java:538)
-	at org.beetl.core.om.ObjectUtil.invoke(ObjectUtil.java:494)
-	at org.beetl.core.om.ObjectUtil.invokeObject(ObjectUtil.java:519)
-	at org.beetl.core.fun.SingleFunctionWrapper.call(SingleFunctionWrapper.java:65)
-	at org.beetl.core.statement.FunctionExpression.evaluate(FunctionExpression.java:76)
-	at org.beetl.core.statement.IfStatement.execute(IfStatement.java:59)
-	at org.beetl.core.statement.BlockStatement.execute(BlockStatement.java:56)
-	at org.beetl.core.statement.ForStatement.execute(ForStatement.java:115)
-	at org.beetl.core.statement.Program.execute(Program.java:70)
-	at org.beetl.core.engine.FilterProgram.execute(FilterProgram.java:31)
-	at org.beetl.core.Template.renderTo(Template.java:137)
-	at org.beetl.core.Template.renderTo(Template.java:90)
-	at org.beetl.core.Template.render(Template.java:77)
-	at org.beetl.core.BeetlKit.render(BeetlKit.java:101)
-	at com.platform.tools.code.GenerateBase.createFileByTemplete(GenerateBase.java:393)
-	at com.platform.tools.code.GenerateBase.form(GenerateBase.java:270)
-	at com.platform.tools.code.GenerateMySQL.main(GenerateMySQL.java:105)
+	<label class="col-sm-2 control-label">用户ID</label>
+	<div class="col-sm-7">
+		<input type="text" name="t1parameter.userid" value="${t1parameter.userid!}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">多实体标识</label>
+	<div class="col-sm-7">
+		<input type="text" name="t1parameter.identifier" value="${escapeXml(t1parameter.identifier!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">业务参数类型</label>
+	<div class="col-sm-7">
+		<input type="text" name="t1parameter.type_" value="${escapeXml(t1parameter.type_!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">参数描述</label>
+	<div class="col-sm-7">
+		<input type="text" name="t1parameter.description" value="${escapeXml(t1parameter.description!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">参数备注</label>
+	<div class="col-sm-7">
+		<input type="text" name="t1parameter.remark" value="${escapeXml(t1parameter.remark!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">删除标志</label>
+	<div class="col-sm-7">
+		<input type="text" name="t1parameter.status_" value="${t1parameter.status_!}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">营业日期</label>
+	<div class="col-sm-7">
+		<div class="input-group">
+		<input type="text" name="t1parameter.open_date" date-data-format="yyyy-mm-dd" data-data-viewmode="years" class="form-control data-picker" value="${t1parameter.open_date!, dateFormat="yyyy-MM-dd HH:mm:ss"}">
+		<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+		</div>
+		<span class="help-inline col-sm-2"></span>
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">DAC校验</label>
+	<div class="col-sm-7">
+		<input type="text" name="t1parameter.dac" value="${escapeXml(t1parameter.dac!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">交易发起渠道类别</label>
+	<div class="col-sm-7">
+		<input type="text" name="t1parameter.busi_type" value="${escapeXml(t1parameter.busi_type!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">交易发起渠道编号</label>
+	<div class="col-sm-7">
+		<input type="text" name="t1parameter.busi_code" value="${escapeXml(t1parameter.busi_code!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">版本号</label>
+	<div class="col-sm-7">
+		<input type="text" name="t1parameter.version" value="${t1parameter.version!}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">时间戳</label>
+	<div class="col-sm-7">
+		<div class="input-group">
+		<input type="text" name="t1parameter.datetime_" date-data-format="yyyy-mm-dd" data-data-viewmode="years" class="form-control data-picker" value="${t1parameter.datetime_!, dateFormat="yyyy-MM-dd HH:mm:ss"}">
+		<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+		</div>
+		<span class="help-inline col-sm-2"></span>
+	</div>
+</div>

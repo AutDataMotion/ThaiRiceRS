@@ -3,7 +3,7 @@
 	<div class="col-md-12">
 		<ol class="breadcrumb">
 			<li><a href="#" onclick="common_ajax.ajaxMainPanel('/thairice/index');">${i18nMap["admin.common.mainPage"]}</a></li>
-			<li class="active">--管理</li>
+			<li class="active">产品报告管理</li>
 		</ol>
 	</div>
 </div>
@@ -90,33 +90,171 @@
 									<input type="checkbox" name="checkAll" class="flat-grey selectall" 
 										onchange="common_common.checkFunc('dataTable', this.checked);"> 
 								</th>
->>12:34:27:调用方法抛出了异常(NATIVE_CALL_EXCEPTION):strutil.startWith 位于94行 资源:
-<div clas...
-调用方法出错 strutil.startWith
-91|							</th>
-92|								<% for(colunm in colunmList){ %>
-93|								<%if(strutil.startWith(colunm.clm_type,"tex")){%>
-94|								<%}else{%>
-95|								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
-96|										'mainPanel', 'splitPage', '${colunm.column_name!"null"}')">
-java.lang.NullPointerException: Error:startWith(null)
-	at org.beetl.ext.fn.StringUtil.startWith(StringUtil.java:52)
-	at sun.reflect.GeneratedMethodAccessor9.invoke(Unknown Source)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:497)
-	at org.beetl.core.om.ObjectUtil.invoke(ObjectUtil.java:538)
-	at org.beetl.core.om.ObjectUtil.invoke(ObjectUtil.java:494)
-	at org.beetl.core.om.ObjectUtil.invokeObject(ObjectUtil.java:519)
-	at org.beetl.core.fun.SingleFunctionWrapper.call(SingleFunctionWrapper.java:65)
-	at org.beetl.core.statement.FunctionExpression.evaluate(FunctionExpression.java:76)
-	at org.beetl.core.statement.IfStatement.execute(IfStatement.java:59)
-	at org.beetl.core.statement.BlockStatement.execute(BlockStatement.java:68)
-	at org.beetl.core.statement.ForStatement.execute(ForStatement.java:144)
-	at org.beetl.core.statement.Program.execute(Program.java:70)
-	at org.beetl.core.Template.renderTo(Template.java:137)
-	at org.beetl.core.Template.renderTo(Template.java:90)
-	at org.beetl.core.Template.render(Template.java:77)
-	at org.beetl.core.BeetlKit.render(BeetlKit.java:101)
-	at com.platform.tools.code.GenerateBase.createFileByTemplete(GenerateBase.java:393)
-	at com.platform.tools.code.GenerateBase.list(GenerateBase.java:297)
-	at com.platform.tools.code.GenerateMySQL.main(GenerateMySQL.java:106)
+								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
+										'mainPanel', 'splitPage', 'id')">
+									产品报表编号	${orderBy("id")}
+								</th>
+								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
+										'mainPanel', 'splitPage', 'userid')">
+									用户ID	${orderBy("userid")}
+								</th>
+								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
+										'mainPanel', 'splitPage', 'add_time')">
+									报告创建时间	${orderBy("add_time")}
+								</th>
+								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
+										'mainPanel', 'splitPage', 'collect_time')">
+									采集日期	${orderBy("collect_time")}
+								</th>
+								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
+										'mainPanel', 'splitPage', 'start_time')">
+									查询产品开始日期	${orderBy("start_time")}
+								</th>
+								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
+										'mainPanel', 'splitPage', 'end_time')">
+									查询产品结束日期	${orderBy("end_time")}
+								</th>
+								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
+										'mainPanel', 'splitPage', 'zone_code')">
+									查询行政区域代码	${orderBy("zone_code")}
+								</th>
+								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
+										'mainPanel', 'splitPage', 'crop_type')">
+									查询作物种类代码	${orderBy("crop_type")}
+								</th>
+								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
+										'mainPanel', 'splitPage', 'pdt_type')">
+									产品类型代码	${orderBy("pdt_type")}
+								</th>
+								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
+										'mainPanel', 'splitPage', 'suffix')">
+									报告格式代码	${orderBy("suffix")}
+								</th>
+								<th class="hidden-xs">
+									${i18nMap["admin.common.operation"]}
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							
+							<% for(item in splitPage.list){ %>
+							<tr>
+								<td class="center hidden-xs">
+									<input type="checkbox" name="checkIds" 
+										value="${item.id!}" class="flat-grey foocheck">
+								</td>
+								
+								<td>
+
+							${item["id"]!}
+
+								</td>
+								
+								<td>
+
+							${item["userid"]!}
+
+								</td>
+								
+								<td>
+
+							${item["add_time"]!, dateFormat="yyyy-MM-dd HH:mm:ss"}
+
+								</td>
+								
+								<td>
+
+							${item["collect_time"]!, dateFormat="yyyy-MM-dd HH:mm:ss"}
+
+								</td>
+								
+								<td>
+
+							${item["start_time"]!, dateFormat="yyyy-MM-dd HH:mm:ss"}
+
+								</td>
+								
+								<td>
+
+							${item["end_time"]!, dateFormat="yyyy-MM-dd HH:mm:ss"}
+
+								</td>
+								
+								<td>
+
+							${item["zone_code"]!}
+
+								</td>
+								
+								<td>
+
+							${item["crop_type"]!}
+
+								</td>
+								
+								<td>
+
+							${item["pdt_type"]!}
+
+								</td>
+								
+								<td>
+
+							${item["suffix"]!}
+
+								</td>
+								
+								
+
+								<td class="hidden-xs">
+									<% if(view == true){ %>
+									<button type="button" class="btn btn-dark-yellow add-row" 
+										onclick="common_ajax.ajaxMainPanel(
+												'${pthc}view/${item.id!}');">
+										${i18nMap["admin.common.see"]} <i class="fa fa-eye"></i>
+									</button>
+									<% } %>
+										
+									<% if(edit == true){ %>
+									<button type="button" class="btn btn-green edit-row" 
+										onclick="common_ajax.ajaxMainPanel(
+												'${pthc}edit/${item.id!}');"> 
+										${i18nMap["admin.common.edit"]} 
+										<i class="fa fa-edit"></i>
+									</button>
+									<% } %>
+									
+									<% if(delete == true){ %>
+									<button type="button" class="btn btn-red delete-row" 
+										data-bb="deleteOne" 
+										data-url="${pthc}delete/${item.id!}"> 
+										${i18nMap["admin.common.delete"]} 
+										<i class="fa fa-trash-o"></i>
+									</button>
+									<% } %>
+								</td>
+							</tr>
+							<% } %>
+							
+						</tbody>
+					</table>
+					</div>
+					<div class="row" id="splitPageDiv">
+						<% include("/common/splitPage.html", {"divId" : "mainPanel", "formId" : "splitPage", "splitPageDiv" : "splitPageDiv"}){} %>
+					</div>
+					
+				</div>
+			
+			</div>
+			<!-- end: BORDERED TABLE PANEL -->
+		</div>
+	</div>
+	
+</form>			
+
+
+<script type="text/javascript">
+	jQuery(document).ready(function() {
+		common_form.init();
+	});
+</script>

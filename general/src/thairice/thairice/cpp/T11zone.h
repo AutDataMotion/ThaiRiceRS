@@ -23,23 +23,23 @@ public:
 private:
 	static const string TableName;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：行政区划id 
+	 * 字段类型：int  长度：null
 	 */
 	int id;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：行政区划代码 
+	 * 字段类型：int  长度：null
 	 */
 	int code_;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：产品类型代码 
+	 * 字段类型：enum  长度：2
 	 */
 	string type_;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：行政区划名称 
+	 * 字段类型：varchar  长度：30
 	 */
 	string name_;
 public:

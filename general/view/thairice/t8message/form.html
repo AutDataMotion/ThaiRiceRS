@@ -1,34 +1,51 @@
 
 
 <div class="form-group">
-	<label class="col-sm-2 control-label"></label>
->>12:34:26:调用方法抛出了异常(NATIVE_CALL_EXCEPTION):strutil.startWith 位于8行 资源:
-<% for(c...
-调用方法出错 strutil.startWith
-5|
-6|<div class="form-group">
-7|	<label class="col-sm-2 control-label">${colunm.column_desc}</label>
-8|	<% if(strutil.startWith(colunm.clm_type,"cha")){%>
-9|	<div class="col-sm-7">
-10|		<input type="text" name="${classNameSmall}.${colunm.column_name}" value="\${escapeXml(${classNameSmall}.${colunm.column_name}!)}" 
-java.lang.NullPointerException: Error:startWith(null)
-	at org.beetl.ext.fn.StringUtil.startWith(StringUtil.java:52)
-	at sun.reflect.GeneratedMethodAccessor9.invoke(Unknown Source)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:497)
-	at org.beetl.core.om.ObjectUtil.invoke(ObjectUtil.java:538)
-	at org.beetl.core.om.ObjectUtil.invoke(ObjectUtil.java:494)
-	at org.beetl.core.om.ObjectUtil.invokeObject(ObjectUtil.java:519)
-	at org.beetl.core.fun.SingleFunctionWrapper.call(SingleFunctionWrapper.java:65)
-	at org.beetl.core.statement.FunctionExpression.evaluate(FunctionExpression.java:76)
-	at org.beetl.core.statement.IfStatement.execute(IfStatement.java:59)
-	at org.beetl.core.statement.BlockStatement.execute(BlockStatement.java:56)
-	at org.beetl.core.statement.ForStatement.execute(ForStatement.java:115)
-	at org.beetl.core.statement.Program.execute(Program.java:70)
-	at org.beetl.core.Template.renderTo(Template.java:137)
-	at org.beetl.core.Template.renderTo(Template.java:90)
-	at org.beetl.core.Template.render(Template.java:77)
-	at org.beetl.core.BeetlKit.render(BeetlKit.java:101)
-	at com.platform.tools.code.GenerateBase.createFileByTemplete(GenerateBase.java:393)
-	at com.platform.tools.code.GenerateBase.form(GenerateBase.java:270)
-	at com.platform.tools.code.GenerateMySQL.main(GenerateMySQL.java:105)
+	<label class="col-sm-2 control-label">发送人ID</label>
+	<div class="col-sm-7">
+		<input type="text" name="t8message.send_userid" value="${t8message.send_userid!}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">系统消息时间</label>
+	<div class="col-sm-7">
+		<div class="input-group">
+		<input type="text" name="t8message.add_time" date-data-format="yyyy-mm-dd" data-data-viewmode="years" class="form-control data-picker" value="${t8message.add_time!, dateFormat="yyyy-MM-dd HH:mm:ss"}">
+		<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+		</div>
+		<span class="help-inline col-sm-2"></span>
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">系统消息内容</label>
+	<div class="col-sm-7">
+		<textarea name="t8message.content" class="autosize form-control">${escapeXml(t8message.content!)}</textarea>
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">消息类型代码</label>
+	<div class="col-sm-7">
+		<input type="text" name="t8message.type_" value="${t8message.type_!}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">群发标志</label>
+	<div class="col-sm-7">
+		<input type="text" name="t8message.flag" value="${t8message.flag!}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>

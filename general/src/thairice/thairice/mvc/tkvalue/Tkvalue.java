@@ -24,38 +24,38 @@ public class Tkvalue extends BaseModel<Tkvalue> {
 	public static final Tkvalue dao = new Tkvalue();
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：id 
+	 * 字段类型：bigint  长度：null
 	 */
 	public static final String column_id = "id";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：key 
+	 * 字段类型：varchar  长度：64
 	 */
 	public static final String column_key_ = "key_";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：名称 
+	 * 字段类型：varchar  长度：256
 	 */
 	public static final String column_value_ = "value_";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：备注 
+	 * 字段类型：varchar  长度：128
 	 */
 	public static final String column_info = "info";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：状态 （0未/ 1已发布,2已结束） 
+	 * 字段类型：int  长度：null
 	 */
 	public static final String column_status_ = "status_";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：添加时间 
+	 * 字段类型：datetime  长度：null
 	 */
 	public static final String column_add_time = "add_time";
 	

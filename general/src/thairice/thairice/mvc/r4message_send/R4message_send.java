@@ -23,20 +23,20 @@ public class R4message_send extends BaseModel<R4message_send> {
 	public static final R4message_send dao = new R4message_send();
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：系统消息编号 
+	 * 字段类型：bigint  长度：null
 	 */
 	public static final String column_id = "id";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：接收人ID 
+	 * 字段类型：bigint  长度：null
 	 */
 	public static final String column_receive_userid = "receive_userid";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：消息状态代码 
+	 * 字段类型：enum  长度：2
 	 */
 	public static final String column_status_ = "status_";
 	

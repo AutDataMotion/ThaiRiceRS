@@ -123,14 +123,18 @@ public class GenerateMySQL extends GenerateBase {
 		String sql = ToolSqlXml.getSql("platform.mysql.getColumns");
 		List<Record> listColumn = Db.use(ConstantInit.db_dataSource_main).find(sql,schema, tableName);
 
+		for (Record record : listColumn) {
+			System.out.println(record.getStr("column_name"));
+		}
+		
 		Map<String, String> columnJavaTypeMap = getJavaType(tableName);
 
 		for (Record record : listColumn) {
 			String column_name = record.getStr("column_name");
-			String column_type = record.getStr("column_type");
+			String column_type = record.getStr("data_type");
 			String character_maximum_length = String.valueOf(record
 					.getBigInteger("CHARACTER_MAXIMUM_LENGTH"));
-			String column_comment = record.getStr("COLUMN_COMMENT");
+			String column_comment = record.getStr("column_comment");
 
 			// 需要跳过的字段
 			if ("xxx".equals(column_name) || "yyy".equals(column_name)
@@ -140,12 +144,13 @@ public class GenerateMySQL extends GenerateBase {
 
 			TableColumnDto table = new TableColumnDto();
 			table.setTable_name(tableName);
-//			table.setTable_desc(tableDesc);
+			table.setTable_desc("--");
 
 			table.setColumn_name(column_name);
 			table.setColumn_name_upperCaseFirstOne(ToolString
 					.toUpperCaseFirstOne(column_name));
 			table.setColumn_type(column_type);
+			table.setClm_type(column_type);
 			table.setColumn_length(character_maximum_length);
 			table.setColumn_desc(column_comment);
 

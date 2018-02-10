@@ -3,7 +3,7 @@
 	<div class="col-md-12">
 		<ol class="breadcrumb">
 			<li><a href="#" onclick="common_ajax.ajaxMainPanel('/thairice/index');">${i18nMap["admin.common.mainPage"]}</a></li>
-			<li class="active">--管理</li>
+			<li class="active">键值管理</li>
 		</ol>
 	</div>
 </div>
@@ -90,33 +90,134 @@
 									<input type="checkbox" name="checkAll" class="flat-grey selectall" 
 										onchange="common_common.checkFunc('dataTable', this.checked);"> 
 								</th>
->>12:34:28:调用方法抛出了异常(NATIVE_CALL_EXCEPTION):strutil.startWith 位于94行 资源:
-<div clas...
-调用方法出错 strutil.startWith
-91|							</th>
-92|								<% for(colunm in colunmList){ %>
-93|								<%if(strutil.startWith(colunm.clm_type,"tex")){%>
-94|								<%}else{%>
-95|								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
-96|										'mainPanel', 'splitPage', '${colunm.column_name!"null"}')">
-java.lang.NullPointerException: Error:startWith(null)
-	at org.beetl.ext.fn.StringUtil.startWith(StringUtil.java:52)
-	at sun.reflect.GeneratedMethodAccessor9.invoke(Unknown Source)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:497)
-	at org.beetl.core.om.ObjectUtil.invoke(ObjectUtil.java:538)
-	at org.beetl.core.om.ObjectUtil.invoke(ObjectUtil.java:494)
-	at org.beetl.core.om.ObjectUtil.invokeObject(ObjectUtil.java:519)
-	at org.beetl.core.fun.SingleFunctionWrapper.call(SingleFunctionWrapper.java:65)
-	at org.beetl.core.statement.FunctionExpression.evaluate(FunctionExpression.java:76)
-	at org.beetl.core.statement.IfStatement.execute(IfStatement.java:59)
-	at org.beetl.core.statement.BlockStatement.execute(BlockStatement.java:68)
-	at org.beetl.core.statement.ForStatement.execute(ForStatement.java:144)
-	at org.beetl.core.statement.Program.execute(Program.java:70)
-	at org.beetl.core.Template.renderTo(Template.java:137)
-	at org.beetl.core.Template.renderTo(Template.java:90)
-	at org.beetl.core.Template.render(Template.java:77)
-	at org.beetl.core.BeetlKit.render(BeetlKit.java:101)
-	at com.platform.tools.code.GenerateBase.createFileByTemplete(GenerateBase.java:393)
-	at com.platform.tools.code.GenerateBase.list(GenerateBase.java:297)
-	at com.platform.tools.code.GenerateMySQL.main(GenerateMySQL.java:106)
+								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
+										'mainPanel', 'splitPage', 'id')">
+									id	${orderBy("id")}
+								</th>
+								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
+										'mainPanel', 'splitPage', 'key_')">
+									key	${orderBy("key_")}
+								</th>
+								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
+										'mainPanel', 'splitPage', 'value_')">
+									名称	${orderBy("value_")}
+								</th>
+								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
+										'mainPanel', 'splitPage', 'info')">
+									备注	${orderBy("info")}
+								</th>
+								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
+										'mainPanel', 'splitPage', 'status_')">
+									状态 （0未/ 1已发布,2已结束）	${orderBy("status_")}
+								</th>
+								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
+										'mainPanel', 'splitPage', 'add_time')">
+									添加时间	${orderBy("add_time")}
+								</th>
+								<th class="hidden-xs">
+									${i18nMap["admin.common.operation"]}
+								</th>
+							</tr>
+						</thead>
+						<tbody>
+							
+							<% for(item in splitPage.list){ %>
+							<tr>
+								<td class="center hidden-xs">
+									<input type="checkbox" name="checkIds" 
+										value="${item.id!}" class="flat-grey foocheck">
+								</td>
+								
+								<td>
+
+							${item["id"]!}
+
+								</td>
+								
+								<td>
+
+								${escapeXml(item["key_"]!)}
+
+								</td>
+							
+								
+								<td>
+
+								${escapeXml(item["value_"]!)}
+
+								</td>
+							
+								
+								<td>
+
+								${escapeXml(item["info"]!)}
+
+								</td>
+							
+								
+								<td>
+
+							${item["status_"]!}
+
+								</td>
+								
+								<td>
+
+							${item["add_time"]!, dateFormat="yyyy-MM-dd HH:mm:ss"}
+
+								</td>
+								
+								
+
+								<td class="hidden-xs">
+									<% if(view == true){ %>
+									<button type="button" class="btn btn-dark-yellow add-row" 
+										onclick="common_ajax.ajaxMainPanel(
+												'${pthc}view/${item.id!}');">
+										${i18nMap["admin.common.see"]} <i class="fa fa-eye"></i>
+									</button>
+									<% } %>
+										
+									<% if(edit == true){ %>
+									<button type="button" class="btn btn-green edit-row" 
+										onclick="common_ajax.ajaxMainPanel(
+												'${pthc}edit/${item.id!}');"> 
+										${i18nMap["admin.common.edit"]} 
+										<i class="fa fa-edit"></i>
+									</button>
+									<% } %>
+									
+									<% if(delete == true){ %>
+									<button type="button" class="btn btn-red delete-row" 
+										data-bb="deleteOne" 
+										data-url="${pthc}delete/${item.id!}"> 
+										${i18nMap["admin.common.delete"]} 
+										<i class="fa fa-trash-o"></i>
+									</button>
+									<% } %>
+								</td>
+							</tr>
+							<% } %>
+							
+						</tbody>
+					</table>
+					</div>
+					<div class="row" id="splitPageDiv">
+						<% include("/common/splitPage.html", {"divId" : "mainPanel", "formId" : "splitPage", "splitPageDiv" : "splitPageDiv"}){} %>
+					</div>
+					
+				</div>
+			
+			</div>
+			<!-- end: BORDERED TABLE PANEL -->
+		</div>
+	</div>
+	
+</form>			
+
+
+<script type="text/javascript">
+	jQuery(document).ready(function() {
+		common_form.init();
+	});
+</script>

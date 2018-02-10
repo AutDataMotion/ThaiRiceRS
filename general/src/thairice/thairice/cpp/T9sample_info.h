@@ -23,43 +23,43 @@ public:
 private:
 	static const string TableName;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：样本编号 
+	 * 字段类型：bigint  长度：null
 	 */
 	biginteger id;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：用户ID 
+	 * 字段类型：bigint  长度：null
 	 */
 	biginteger userid;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：源文件编号 
+	 * 字段类型：bigint  长度：null
 	 */
 	biginteger identifier;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：样本名称 
+	 * 字段类型：varchar  长度：128
 	 */
 	string name_;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：样本数量 
+	 * 字段类型：varchar  长度：30
 	 */
 	string number_;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：样本路径 
+	 * 字段类型：varchar  长度：30
 	 */
 	string path_;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：样本类型内容 
+	 * 字段类型：varchar  长度：30
 	 */
 	string type_content;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：样本时间 
+	 * 字段类型：datetime  长度：null
 	 */
 	string datetime_;
 public:

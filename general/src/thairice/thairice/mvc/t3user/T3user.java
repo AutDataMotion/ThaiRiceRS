@@ -24,86 +24,86 @@ public class T3user extends BaseModel<T3user> {
 	public static final T3user dao = new T3user();
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：用户ID 
+	 * 字段类型：bigint  长度：null
 	 */
 	public static final String column_id = "id";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：用户类型代码 
+	 * 字段类型：enum  长度：5
 	 */
 	public static final String column_type_ = "type_";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：用户名 
+	 * 字段类型：varchar  长度：180
 	 */
 	public static final String column_account = "account";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：密码 
+	 * 字段类型：varchar  长度：60
 	 */
 	public static final String column_pwd = "pwd";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：姓名 
+	 * 字段类型：varchar  长度：180
 	 */
 	public static final String column_name_ = "name_";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：手机号码 
+	 * 字段类型：varchar  长度：30
 	 */
 	public static final String column_phone = "phone";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：电子邮箱地址 
+	 * 字段类型：varchar  长度：240
 	 */
 	public static final String column_email = "email";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：通讯地址 
+	 * 字段类型：varchar  长度：1500
 	 */
 	public static final String column_address = "address";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：邮政编码 
+	 * 字段类型：varchar  长度：30
 	 */
 	public static final String column_zip_encode = "zip_encode";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：头像 
+	 * 字段类型：varchar  长度：255
 	 */
 	public static final String column_heading = "heading";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：公司名称 
+	 * 字段类型：varchar  长度：240
 	 */
 	public static final String column_company = "company";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：行业 
+	 * 字段类型：varchar  长度：80
 	 */
 	public static final String column_industry = "industry";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：创建时间 
+	 * 字段类型：datetime  长度：null
 	 */
 	public static final String column_create_time = "create_time";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：用户审核状态代码 
+	 * 字段类型：enum  长度：5
 	 */
 	public static final String column_status_ = "status_";
 	

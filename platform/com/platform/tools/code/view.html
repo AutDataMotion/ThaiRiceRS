@@ -26,13 +26,13 @@
 						<div class="form-group">
 							<label class="col-sm-2 control-label">${colunm.column_desc!} </label>
 							<div class="col-sm-7">
-						<% if(strutil.startWith(colunm.clm_type,"cha")){%>
+						<% if(strutil.contain(colunm.clm_type,"char")){%>
 							<input type="text" class="form-control" readonly="readonly" value="\${escapeXml(${classNameSmall}.${colunm.column_name}!)}">
-						<%}else if(strutil.startWith(colunm.clm_type,"tex")){%>
+						<%}else if(strutil.contain(colunm.clm_type,"text")){%>
 							<textarea class="autosize form-control" readonly="readonly">\${escapeXml(${classNameSmall}.${colunm.column_name}!)}</textarea>
-						<%}else if(strutil.startWith(colunm.clm_type,"tim")){%>
+						<%}else if(strutil.contain(colunm.clm_type,"time")){%>
 							<input type="text" class="form-control" readonly="readonly" value="\${${classNameSmall}.${colunm.column_name}!, dateFormat="yyyy-MM-dd HH:mm:ss"}">
-						<%}else if(strutil.startWith(colunm.clm_type,"boo")){%>
+						<%}else if(strutil.contain(colunm.clm_type,"boo")){%>
 							<input type="text" class="form-control" readonly="readonly" value="\${${classNameSmall}.${colunm.column_name}!==0?"否":"是"}">
 						<%}else{%>
 							<input type="text" class="form-control" readonly="readonly" value="\${${classNameSmall}.${colunm.column_name}!}">

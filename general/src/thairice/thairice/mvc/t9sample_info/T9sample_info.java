@@ -24,50 +24,50 @@ public class T9sample_info extends BaseModel<T9sample_info> {
 	public static final T9sample_info dao = new T9sample_info();
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：样本编号 
+	 * 字段类型：bigint  长度：null
 	 */
 	public static final String column_id = "id";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：用户ID 
+	 * 字段类型：bigint  长度：null
 	 */
 	public static final String column_userid = "userid";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：源文件编号 
+	 * 字段类型：bigint  长度：null
 	 */
 	public static final String column_identifier = "identifier";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：样本名称 
+	 * 字段类型：varchar  长度：128
 	 */
 	public static final String column_name_ = "name_";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：样本数量 
+	 * 字段类型：varchar  长度：30
 	 */
 	public static final String column_number_ = "number_";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：样本路径 
+	 * 字段类型：varchar  长度：30
 	 */
 	public static final String column_path_ = "path_";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：样本类型内容 
+	 * 字段类型：varchar  长度：30
 	 */
 	public static final String column_type_content = "type_content";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：样本时间 
+	 * 字段类型：datetime  长度：null
 	 */
 	public static final String column_datetime_ = "datetime_";
 	

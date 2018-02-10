@@ -3,7 +3,7 @@
 	<div class="col-md-12">
 		<ol class="breadcrumb">
 			<li><a href="#" onclick="common_ajax.ajaxMainPanel('/thairice/index');">${i18nMap["admin.common.mainPage"]}</a></li>
-			<li><a href="#" onclick="common_ajax.ajaxMainPanel('${pthc}');">--管理</a></li>
+			<li><a href="#" onclick="common_ajax.ajaxMainPanel('${pthc}');">产品报告管理</a></li>
 			<li class="active">查看</li>
 		</ol>
 	</div>
@@ -23,35 +23,68 @@
 			<div class="panel-body">	
 				<form role="form" class="form-horizontal">
 						<div class="form-group">
-							<label class="col-sm-2 control-label"> </label>
+							<label class="col-sm-2 control-label">产品报表编号 </label>
 							<div class="col-sm-7">
->>12:34:27:调用方法抛出了异常(NATIVE_CALL_EXCEPTION):strutil.startWith 位于29行 资源:
-<div cla...
-调用方法出错 strutil.startWith
-26|						<div class="form-group">
-27|							<label class="col-sm-2 control-label">${colunm.column_desc!} </label>
-28|							<div class="col-sm-7">
-29|						<% if(strutil.startWith(colunm.clm_type,"cha")){%>
-30|							<input type="text" class="form-control" readonly="readonly" value="\${escapeXml(${classNameSmall}.${colunm.column_name}!)}">
-31|						<%}else if(strutil.startWith(colunm.clm_type,"tex")){%>
-java.lang.NullPointerException: Error:startWith(null)
-	at org.beetl.ext.fn.StringUtil.startWith(StringUtil.java:52)
-	at sun.reflect.GeneratedMethodAccessor9.invoke(Unknown Source)
-	at sun.reflect.DelegatingMethodAccessorImpl.invoke(DelegatingMethodAccessorImpl.java:43)
-	at java.lang.reflect.Method.invoke(Method.java:497)
-	at org.beetl.core.om.ObjectUtil.invoke(ObjectUtil.java:538)
-	at org.beetl.core.om.ObjectUtil.invoke(ObjectUtil.java:494)
-	at org.beetl.core.om.ObjectUtil.invokeObject(ObjectUtil.java:519)
-	at org.beetl.core.fun.SingleFunctionWrapper.call(SingleFunctionWrapper.java:65)
-	at org.beetl.core.statement.FunctionExpression.evaluate(FunctionExpression.java:76)
-	at org.beetl.core.statement.IfStatement.execute(IfStatement.java:59)
-	at org.beetl.core.statement.BlockStatement.execute(BlockStatement.java:68)
-	at org.beetl.core.statement.ForStatement.execute(ForStatement.java:144)
-	at org.beetl.core.statement.Program.execute(Program.java:70)
-	at org.beetl.core.Template.renderTo(Template.java:137)
-	at org.beetl.core.Template.renderTo(Template.java:90)
-	at org.beetl.core.Template.render(Template.java:77)
-	at org.beetl.core.BeetlKit.render(BeetlKit.java:101)
-	at com.platform.tools.code.GenerateBase.createFileByTemplete(GenerateBase.java:393)
-	at com.platform.tools.code.GenerateBase.view(GenerateBase.java:286)
-	at com.platform.tools.code.GenerateMySQL.main(GenerateMySQL.java:107)
+							<input type="text" class="form-control" readonly="readonly" value="${t10pdt_report.id!}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">用户ID </label>
+							<div class="col-sm-7">
+							<input type="text" class="form-control" readonly="readonly" value="${t10pdt_report.userid!}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">报告创建时间 </label>
+							<div class="col-sm-7">
+							<input type="text" class="form-control" readonly="readonly" value="${t10pdt_report.add_time!, dateFormat="yyyy-MM-dd HH:mm:ss"}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">采集日期 </label>
+							<div class="col-sm-7">
+							<input type="text" class="form-control" readonly="readonly" value="${t10pdt_report.collect_time!, dateFormat="yyyy-MM-dd HH:mm:ss"}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">查询产品开始日期 </label>
+							<div class="col-sm-7">
+							<input type="text" class="form-control" readonly="readonly" value="${t10pdt_report.start_time!, dateFormat="yyyy-MM-dd HH:mm:ss"}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">查询产品结束日期 </label>
+							<div class="col-sm-7">
+							<input type="text" class="form-control" readonly="readonly" value="${t10pdt_report.end_time!, dateFormat="yyyy-MM-dd HH:mm:ss"}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">查询行政区域代码 </label>
+							<div class="col-sm-7">
+							<input type="text" class="form-control" readonly="readonly" value="${t10pdt_report.zone_code!}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">查询作物种类代码 </label>
+							<div class="col-sm-7">
+							<input type="text" class="form-control" readonly="readonly" value="${t10pdt_report.crop_type!}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">产品类型代码 </label>
+							<div class="col-sm-7">
+							<input type="text" class="form-control" readonly="readonly" value="${t10pdt_report.pdt_type!}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">报告格式代码 </label>
+							<div class="col-sm-7">
+							<input type="text" class="form-control" readonly="readonly" value="${t10pdt_report.suffix!}">
+							</div>
+						</div>
+				</form>
+			</div>
+		
+		</div>
+	</div>
+</div>	

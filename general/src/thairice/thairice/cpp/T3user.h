@@ -23,73 +23,73 @@ public:
 private:
 	static const string TableName;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：用户ID 
+	 * 字段类型：bigint  长度：null
 	 */
 	biginteger id;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：用户类型代码 
+	 * 字段类型：enum  长度：5
 	 */
 	string type_;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：用户名 
+	 * 字段类型：varchar  长度：180
 	 */
 	string account;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：密码 
+	 * 字段类型：varchar  长度：60
 	 */
 	string pwd;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：姓名 
+	 * 字段类型：varchar  长度：180
 	 */
 	string name_;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：手机号码 
+	 * 字段类型：varchar  长度：30
 	 */
 	string phone;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：电子邮箱地址 
+	 * 字段类型：varchar  长度：240
 	 */
 	string email;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：通讯地址 
+	 * 字段类型：varchar  长度：1500
 	 */
 	string address;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：邮政编码 
+	 * 字段类型：varchar  长度：30
 	 */
 	string zip_encode;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：头像 
+	 * 字段类型：varchar  长度：255
 	 */
 	string heading;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：公司名称 
+	 * 字段类型：varchar  长度：240
 	 */
 	string company;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：行业 
+	 * 字段类型：varchar  长度：80
 	 */
 	string industry;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：创建时间 
+	 * 字段类型：datetime  长度：null
 	 */
 	string create_time;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：用户审核状态代码 
+	 * 字段类型：enum  长度：5
 	 */
 	string status_;
 public:

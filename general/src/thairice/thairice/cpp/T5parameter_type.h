@@ -23,58 +23,58 @@ public:
 private:
 	static const string TableName;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：序号 
+	 * 字段类型：bigint  长度：null
 	 */
 	biginteger id;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：用户ID 
+	 * 字段类型：bigint  长度：null
 	 */
 	biginteger userid;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：多实体标识 
+	 * 字段类型：char  长度：5
 	 */
 	string identifier;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：参数类型名称 
+	 * 字段类型：varchar  长度：240
 	 */
 	string name_;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：参数备注 
+	 * 字段类型：varchar  长度：240
 	 */
 	string remark;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：营业日期 
+	 * 字段类型：datetime  长度：null
 	 */
 	string open_date;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：DAC校验 
+	 * 字段类型：char  长度：16
 	 */
 	string dac;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：交易发起渠道类别 
+	 * 字段类型：char  长度：8
 	 */
 	string busi_type;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：交易发起渠道编号 
+	 * 字段类型：char  长度：23
 	 */
 	string busi_code;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：版本号 
+	 * 字段类型：int  长度：null
 	 */
 	int version;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：时间戳 
+	 * 字段类型：datetime  长度：null
 	 */
 	string datetime_;
 public:

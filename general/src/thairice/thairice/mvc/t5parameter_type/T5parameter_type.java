@@ -24,68 +24,68 @@ public class T5parameter_type extends BaseModel<T5parameter_type> {
 	public static final T5parameter_type dao = new T5parameter_type();
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：序号 
+	 * 字段类型：bigint  长度：null
 	 */
 	public static final String column_id = "id";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：用户ID 
+	 * 字段类型：bigint  长度：null
 	 */
 	public static final String column_userid = "userid";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：多实体标识 
+	 * 字段类型：char  长度：5
 	 */
 	public static final String column_identifier = "identifier";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：参数类型名称 
+	 * 字段类型：varchar  长度：240
 	 */
 	public static final String column_name_ = "name_";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：参数备注 
+	 * 字段类型：varchar  长度：240
 	 */
 	public static final String column_remark = "remark";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：营业日期 
+	 * 字段类型：datetime  长度：null
 	 */
 	public static final String column_open_date = "open_date";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：DAC校验 
+	 * 字段类型：char  长度：16
 	 */
 	public static final String column_dac = "dac";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：交易发起渠道类别 
+	 * 字段类型：char  长度：8
 	 */
 	public static final String column_busi_type = "busi_type";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：交易发起渠道编号 
+	 * 字段类型：char  长度：23
 	 */
 	public static final String column_busi_code = "busi_code";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：版本号 
+	 * 字段类型：int  长度：null
 	 */
 	public static final String column_version = "version";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：时间戳 
+	 * 字段类型：datetime  长度：null
 	 */
 	public static final String column_datetime_ = "datetime_";
 	

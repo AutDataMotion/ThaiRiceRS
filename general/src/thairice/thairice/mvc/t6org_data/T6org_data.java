@@ -24,86 +24,86 @@ public class T6org_data extends BaseModel<T6org_data> {
 	public static final T6org_data dao = new T6org_data();
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：源文件编号 
+	 * 字段类型：bigint  长度：null
 	 */
 	public static final String column_id = "id";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：用户ID 
+	 * 字段类型：bigint  长度：null
 	 */
 	public static final String column_userid = "userid";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：文件名称 
+	 * 字段类型：varchar  长度：128
 	 */
 	public static final String column_name_ = "name_";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：文件大小 
+	 * 字段类型：float  长度：null
 	 */
 	public static final String column_size_ = "size_";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：文件下载地址 
+	 * 字段类型：varchar  长度：256
 	 */
 	public static final String column_download_path = "download_path";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：文件存放地址 
+	 * 字段类型：varchar  长度：256
 	 */
 	public static final String column_storage_path = "storage_path";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：文件类型代码 
+	 * 字段类型：enum  长度：9
 	 */
 	public static final String column_type_ = "type_";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：文件行列号 
+	 * 字段类型：varchar  长度：256
 	 */
 	public static final String column_row_column = "row_column";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：波段数编码 
+	 * 字段类型：varchar  长度：256
 	 */
 	public static final String column_band_number = "band_number";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：文件状态代码 
+	 * 字段类型：enum  长度：6
 	 */
 	public static final String column_status_ = "status_";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：文件下载失败原因代码 
+	 * 字段类型：enum  长度：6
 	 */
 	public static final String column_fail_code = "fail_code";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：数据采集时间 
+	 * 字段类型：datetime  长度：null
 	 */
 	public static final String column_collect_time = "collect_time";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：文件下载开始时间 
+	 * 字段类型：datetime  长度：null
 	 */
 	public static final String column_dload_start_time = "dload_start_time";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：文件下载结束时间 
+	 * 字段类型：datetime  长度：null
 	 */
 	public static final String column_dload_end_time = "dload_end_time";
 	

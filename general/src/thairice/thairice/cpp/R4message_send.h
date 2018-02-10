@@ -23,18 +23,18 @@ public:
 private:
 	static const string TableName;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：系统消息编号 
+	 * 字段类型：bigint  长度：null
 	 */
 	biginteger id;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：接收人ID 
+	 * 字段类型：bigint  长度：null
 	 */
 	biginteger receive_userid;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：消息状态代码 
+	 * 字段类型：enum  长度：2
 	 */
 	string status_;
 public:

@@ -91,7 +91,7 @@
 										onchange="common_common.checkFunc('dataTable', this.checked);"> 
 								</th>
 								<% for(colunm in colunmList){ %>
-								<%if(strutil.startWith(colunm.clm_type,"tex")){%>
+								<%if(strutil.contain(colunm.clm_type,"text")){%>
 								<%}else{%>
 								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
 										'mainPanel', 'splitPage', '${colunm.column_name!"null"}')">
@@ -114,21 +114,21 @@
 								</td>
 								
 								<% for(colunm in colunmList){ %>
-								<%if(strutil.startWith(colunm.clm_type,"cha")){%>
+								<%if(strutil.contain(colunm.clm_type,"char")){%>
 								<td>
 
 								\${escapeXml(item["${colunm.column_name}"]!)}
 
 								</td>
 							
-						<%}else if(strutil.startWith(colunm.clm_type,"tex")){
-						}else if(strutil.startWith(colunm.clm_type,"tim")){%>
+						<%}else if(strutil.contain(colunm.clm_type,"text")){
+						}else if(strutil.contain(colunm.clm_type,"tim")){%>
 								<td>
 
 							\${item["${colunm.column_name}"]!, dateFormat="yyyy-MM-dd HH:mm:ss"}
 
 								</td>
-						<%}else if(strutil.startWith(colunm.clm_type,"boo")){%>
+						<%}else if(strutil.contain(colunm.clm_type,"boo")){%>
 								<td>
 
 							\${item["${colunm.column_name}"]!==0?"否":"是"}

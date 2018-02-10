@@ -23,33 +23,33 @@ public:
 private:
 	static const string TableName;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：系统消息编号 
+	 * 字段类型：bigint  长度：null
 	 */
 	biginteger id;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：发送人ID 
+	 * 字段类型：bigint  长度：null
 	 */
 	biginteger send_userid;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：系统消息时间 
+	 * 字段类型：datetime  长度：null
 	 */
 	string add_time;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：系统消息内容 
+	 * 字段类型：text  长度：65535
 	 */
 	string content;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：消息类型代码 
+	 * 字段类型：enum  长度：2
 	 */
 	string type_;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：群发标志 
+	 * 字段类型：tinyint  长度：null
 	 */
 	bool flag;
 public:

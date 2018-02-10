@@ -23,33 +23,33 @@ public:
 private:
 	static const string TableName;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：系统日志编号 
+	 * 字段类型：bigint  长度：null
 	 */
 	biginteger id;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：系统日志类型代码 
+	 * 字段类型：char  长度：3
 	 */
 	string type_;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：用户ID 
+	 * 字段类型：bigint  长度：null
 	 */
 	biginteger userid;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：操作 
+	 * 字段类型：varchar  长度：256
 	 */
 	string action_;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：系统日志内容 
+	 * 字段类型：text  长度：65535
 	 */
 	string content;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：系统日志生成日期 
+	 * 字段类型：datetime  长度：null
 	 */
 	string add_time;
 public:

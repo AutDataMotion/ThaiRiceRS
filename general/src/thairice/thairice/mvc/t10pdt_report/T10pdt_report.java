@@ -24,62 +24,62 @@ public class T10pdt_report extends BaseModel<T10pdt_report> {
 	public static final T10pdt_report dao = new T10pdt_report();
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：产品报表编号 
+	 * 字段类型：bigint  长度：null
 	 */
 	public static final String column_id = "id";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：用户ID 
+	 * 字段类型：bigint  长度：null
 	 */
 	public static final String column_userid = "userid";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：报告创建时间 
+	 * 字段类型：datetime  长度：null
 	 */
 	public static final String column_add_time = "add_time";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：采集日期 
+	 * 字段类型：datetime  长度：null
 	 */
 	public static final String column_collect_time = "collect_time";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：查询产品开始日期 
+	 * 字段类型：datetime  长度：null
 	 */
 	public static final String column_start_time = "start_time";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：查询产品结束日期 
+	 * 字段类型：datetime  长度：null
 	 */
 	public static final String column_end_time = "end_time";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：查询行政区域代码 
+	 * 字段类型：int  长度：null
 	 */
 	public static final String column_zone_code = "zone_code";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：查询作物种类代码 
+	 * 字段类型：enum  长度：2
 	 */
 	public static final String column_crop_type = "crop_type";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：产品类型代码 
+	 * 字段类型：enum  长度：2
 	 */
 	public static final String column_pdt_type = "pdt_type";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：报告格式代码 
+	 * 字段类型：enum  长度：4
 	 */
 	public static final String column_suffix = "suffix";
 	

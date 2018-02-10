@@ -24,38 +24,38 @@ public class T2syslog extends BaseModel<T2syslog> {
 	public static final T2syslog dao = new T2syslog();
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：系统日志编号 
+	 * 字段类型：bigint  长度：null
 	 */
 	public static final String column_id = "id";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：系统日志类型代码 
+	 * 字段类型：char  长度：3
 	 */
 	public static final String column_type_ = "type_";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：用户ID 
+	 * 字段类型：bigint  长度：null
 	 */
 	public static final String column_userid = "userid";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：操作 
+	 * 字段类型：varchar  长度：256
 	 */
 	public static final String column_action_ = "action_";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：系统日志内容 
+	 * 字段类型：text  长度：65535
 	 */
 	public static final String column_content = "content";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：系统日志生成日期 
+	 * 字段类型：datetime  长度：null
 	 */
 	public static final String column_add_time = "add_time";
 	

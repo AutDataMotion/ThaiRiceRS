@@ -23,48 +23,48 @@ public:
 private:
 	static const string TableName;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：数据产品编号 
+	 * 字段类型：bigint  长度：null
 	 */
 	biginteger id;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：产品类型代码 
+	 * 字段类型：enum  长度：2
 	 */
 	string type_;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：源文件列表 
+	 * 字段类型：varchar  长度：256
 	 */
 	string source_file_list;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：样本路径 
+	 * 字段类型：varchar  长度：256
 	 */
 	string sample_path;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：产品路径 
+	 * 字段类型：varchar  长度：256
 	 */
 	string product_path;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：数据采集时间 
+	 * 字段类型：datetime  长度：null
 	 */
 	string collect_time;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：产品生成时间 
+	 * 字段类型：datetime  长度：null
 	 */
 	string generate_time;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：行政区域代码 
+	 * 字段类型：char  长度：4
 	 */
 	string zone_code;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：文件下载失败原因代码 
+	 * 字段类型：enum  长度：6
 	 */
 	string fail_code;
 public:

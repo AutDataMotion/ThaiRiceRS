@@ -44,18 +44,18 @@ public abstract class GenerateBase {
 	 */
 	
 	public static String[][] tableArr = {
-		{null, "t1parameter", null, "T1parameter","--"},
-		{null, "t2syslog", null, "T2syslog","--"},
-		{null, "t3user", null, "T3user","--"},
-		{null, "r4message_send", null, "R4message_send","--"},
-		{null, "t5parameter_type", null, "T5parameter_type","--"},
-		{null, "t6org_data", null, "T6org_data","--"},
-		{null, "t7pdt_data", null, "T7pdt_data","--"},
-		{null, "t8message", null, "T8message","--"},
-		{null, "t9sample_info", null, "T9sample_info","--"},
-		{null, "t10pdt_report", null, "T10pdt_report","--"},
-		{null, "t11zone", null, "T11zone","--"},
-		{null, "tkvalue", null, "Tkvalue","--"}
+		{null, "t1parameter", null, "T1parameter","参数"},
+		{null, "t2syslog", null, "T2syslog","日志"},
+		{null, "t3user", null, "T3user","用户"},
+		{null, "r4message_send", null, "R4message_send","消息发送"},
+		{null, "t5parameter_type", null, "T5parameter_type","参数类型"},
+		{null, "t6org_data", null, "T6org_data","原始数据信息"},
+		{null, "t7pdt_data", null, "T7pdt_data","产品数据信息"},
+		{null, "t8message", null, "T8message","消息"},
+		{null, "t9sample_info", null, "T9sample_info","样本数据信息"},
+		{null, "t10pdt_report", null, "T10pdt_report","产品报告"},
+		{null, "t11zone", null, "T11zone","行政区"},
+		{null, "tkvalue", null, "Tkvalue","键值"}
 	};
 	
 	//String prjName = "targrecog";

@@ -24,38 +24,38 @@ public class T8message extends BaseModel<T8message> {
 	public static final T8message dao = new T8message();
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：系统消息编号 
+	 * 字段类型：bigint  长度：null
 	 */
 	public static final String column_id = "id";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：发送人ID 
+	 * 字段类型：bigint  长度：null
 	 */
 	public static final String column_send_userid = "send_userid";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：系统消息时间 
+	 * 字段类型：datetime  长度：null
 	 */
 	public static final String column_add_time = "add_time";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：系统消息内容 
+	 * 字段类型：text  长度：65535
 	 */
 	public static final String column_content = "content";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：消息类型代码 
+	 * 字段类型：enum  长度：2
 	 */
 	public static final String column_type_ = "type_";
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：群发标志 
+	 * 字段类型：tinyint  长度：null
 	 */
 	public static final String column_flag = "flag";
 	

@@ -23,33 +23,33 @@ public:
 private:
 	static const string TableName;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：id 
+	 * 字段类型：bigint  长度：null
 	 */
 	biginteger id;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：key 
+	 * 字段类型：varchar  长度：64
 	 */
 	string key_;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：名称 
+	 * 字段类型：varchar  长度：256
 	 */
 	string value_;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：备注 
+	 * 字段类型：varchar  长度：128
 	 */
 	string info;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：状态 （0未/ 1已发布,2已结束） 
+	 * 字段类型：int  长度：null
 	 */
 	int status_;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：添加时间 
+	 * 字段类型：datetime  长度：null
 	 */
 	string add_time;
 public:

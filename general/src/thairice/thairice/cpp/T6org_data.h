@@ -23,73 +23,73 @@ public:
 private:
 	static const string TableName;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：源文件编号 
+	 * 字段类型：bigint  长度：null
 	 */
 	biginteger id;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：用户ID 
+	 * 字段类型：bigint  长度：null
 	 */
 	biginteger userid;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：文件名称 
+	 * 字段类型：varchar  长度：128
 	 */
 	string name_;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：文件大小 
+	 * 字段类型：float  长度：null
 	 */
 	float size_;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：文件下载地址 
+	 * 字段类型：varchar  长度：256
 	 */
 	string download_path;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：文件存放地址 
+	 * 字段类型：varchar  长度：256
 	 */
 	string storage_path;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：文件类型代码 
+	 * 字段类型：enum  长度：9
 	 */
 	string type_;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：文件行列号 
+	 * 字段类型：varchar  长度：256
 	 */
 	string row_column;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：波段数编码 
+	 * 字段类型：varchar  长度：256
 	 */
 	string band_number;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：文件状态代码 
+	 * 字段类型：enum  长度：6
 	 */
 	string status_;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：文件下载失败原因代码 
+	 * 字段类型：enum  长度：6
 	 */
 	string fail_code;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：数据采集时间 
+	 * 字段类型：datetime  长度：null
 	 */
 	string collect_time;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：文件下载开始时间 
+	 * 字段类型：datetime  长度：null
 	 */
 	string dload_start_time;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：文件下载结束时间 
+	 * 字段类型：datetime  长度：null
 	 */
 	string dload_end_time;
 public:

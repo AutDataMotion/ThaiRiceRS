@@ -23,53 +23,53 @@ public:
 private:
 	static const string TableName;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：产品报表编号 
+	 * 字段类型：bigint  长度：null
 	 */
 	biginteger id;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：用户ID 
+	 * 字段类型：bigint  长度：null
 	 */
 	biginteger userid;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：报告创建时间 
+	 * 字段类型：datetime  长度：null
 	 */
 	string add_time;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：采集日期 
+	 * 字段类型：datetime  长度：null
 	 */
 	string collect_time;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：查询产品开始日期 
+	 * 字段类型：datetime  长度：null
 	 */
 	string start_time;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：查询产品结束日期 
+	 * 字段类型：datetime  长度：null
 	 */
 	string end_time;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：查询行政区域代码 
+	 * 字段类型：int  长度：null
 	 */
 	int zone_code;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：查询作物种类代码 
+	 * 字段类型：enum  长度：2
 	 */
 	string crop_type;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：产品类型代码 
+	 * 字段类型：enum  长度：2
 	 */
 	string pdt_type;
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
+	 * 字段描述：报告格式代码 
+	 * 字段类型：enum  长度：4
 	 */
 	string suffix;
 public:
