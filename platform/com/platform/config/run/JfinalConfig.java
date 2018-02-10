@@ -2,6 +2,8 @@ package com.platform.config.run;
 
 import org.apache.log4j.Logger;
 
+import thairice.config.DBMappingMy;
+import thairice.constant.PropertiesInitMy;
 import zeroc.util.IceClientUtil;
 
 import com.jfinal.config.Constants;
@@ -57,10 +59,10 @@ public class JfinalConfig extends JFinalConfig {
 								loadPropertyFile("init.properties"), true));
 		com.platform.config.run.ConfMain.getInstance().initProperties();
 
-		// 目标识别
-		// targrecog.config.ConfMain.getInstance().setPropertyes(new
-		// PropertiesInitMy(loadPropertyFile("init_target.properties"), false));
-		// targrecog.config.ConfMain.getInstance().initProperties();
+		// 子系统配置初始化
+		 thairice.config.ConfMain.getInstance().setPropertyes(new
+		 PropertiesInitMy(loadPropertyFile("init_target.properties"), false));
+		 thairice.config.ConfMain.getInstance().initProperties();
 
 		log.info("configConstant 设置字符集");
 		constants.setEncoding(ToolString.encoding);
@@ -90,7 +92,9 @@ public class JfinalConfig extends JFinalConfig {
 
 		log.info("configRoute 手动注册路由");
 		routes.add(new PlatformRoutes());
-		// routes.add(new wisefuse.config.RoutePlugins());
+		
+		//子系统路由
+		 routes.add(new thairice.config.RoutePlugins());
 	}
 
 	/**
@@ -102,10 +106,12 @@ public class JfinalConfig extends JFinalConfig {
 		com.platform.config.run.ConfMain.getInstance().setDBMapping(
 				new PlatformMapping());
 		com.platform.config.run.ConfMain.getInstance().initDBMapping(plugins);
-		// 数据库层设置初始化 ---目标识别
-		// targrecog.config.ConfMain.getInstance().setDBMapping(new
-		// DBMappingMy());
-		// targrecog.config.ConfMain.getInstance().initDBMapping(plugins);
+		
+		// 数据库层设置初始化 ---子系统
+		thairice.config.ConfMain.getInstance().setDBMapping(new DBMappingMy());
+		thairice.config.ConfMain.getInstance().initDBMapping(plugins);
+		
+		
 		log.info("I18NPlugin 国际化键值对加载");
 		plugins.add(new I18NPlugin());
 
@@ -169,9 +175,9 @@ public class JfinalConfig extends JFinalConfig {
 	 * 系统启动完成后执行
 	 */
 	public void afterJFinalStart() {
-		// 加载cms系统内存信息
-		// wisefuse.mvc.cms.MainConf.GetInstance().init();
-		// wisefuse.mvc.cms.MainConf.GetInstance().start();
+		// 加载子系统
+//		 thairice.mvc.MainConf.GetInstance().init();
+//		 thairice.mvc.MainConf.GetInstance().start();
 
 		// Zeroc Ice Util 初始化
 		IceClientUtil.init(60);
@@ -198,7 +204,7 @@ public class JfinalConfig extends JFinalConfig {
 		IceClientUtil.closeCommunicator(true);
 
 		// cms 释放资源
-		// wisefuse.mvc.cms.MainConf.GetInstance().stop();
+//		thairice.mvc.cms.MainConf.GetInstance().stop();
 
 		log.info("beforeJFinalStop 释放日志入库线程");
 		ThreadSysLog.setThreadRun(false);
