@@ -6,6 +6,7 @@ import com.platform.mvc.base.BaseModel;
 
 import org.apache.log4j.Logger;
 import com.jfinal.aop.Before;
+import com.jfinal.aop.Clear;
 
 import thairice.constant.ConstantInitMy;
 
@@ -40,6 +41,10 @@ public class T1parameterController extends BaseController {
 		renderWithPath(pthv+"list.html");
 	}
 	
+	@Clear
+	public void hello(){
+		renderText("hello guyes, let's go!");
+	}
 	/**
 	 * 保存
 	 */
