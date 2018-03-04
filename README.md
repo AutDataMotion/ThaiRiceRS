@@ -1,1 +1,3 @@
 # ThaiRiceRS
+
+## use git
