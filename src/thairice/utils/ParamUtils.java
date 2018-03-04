@@ -73,7 +73,7 @@ public class ParamUtils {
 				List<T1parameter> rltList = T1parameter.dao.find(sql);
 				if(null != rltList) {
 					T1parameter elem = rltList.get(0);
-					paramValue = elem.getValue();
+					paramValue = elem.getValue_();
 				}
 				else
 					LOG.error("根据参数类型ID和参数明细ID查询参数值为NULL,查询条件：parmTypeId=\" + parmTypeId + \"parmId=\" + parmId");
@@ -104,7 +104,7 @@ public class ParamUtils {
 				List<T1parameter> rltList = T1parameter.dao.find(sql);
 				if(null != rltList) {
 					T1parameter elem = rltList.get(0);
-					elem.setValue(value);
+					elem.setValue_(value);
 					elem.update();
 					return true;
 				}
@@ -137,7 +137,7 @@ public class ParamUtils {
 				List<T1parameter> rltList = T1parameter.dao.find(sql);
 				if(null != rltList) {
 					for(T1parameter parmElem : rltList) {
-						String parmValue = parmElem.getValue();
+						String parmValue = parmElem.getValue_();
 						if(!StringUtils.isBlank(parmValue)){
 							paramValueList.add(parmValue);
 						} else {

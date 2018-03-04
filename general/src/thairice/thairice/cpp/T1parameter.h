@@ -23,32 +23,17 @@ public:
 private:
 	static const string TableName;
 	/**
-	 * 字段描述：序列编号 
-	 * 字段类型：int  长度：null
+	 * 字段描述： 
+	 * 字段类型：bigint  长度：null
 	 */
-	long id;
+	biginteger id;
 	/**
 	 * 字段描述：用户ID 
 	 * 字段类型：bigint  长度：null
 	 */
-	biginteger userid;
+	long userid;
 	/**
-	 * 字段描述：多实体标识 
-	 * 字段类型：char  长度：5
-	 */
-	string identifier;
-	/**
-	 * 字段描述：业务参数类型 
-	 * 字段类型：varchar  长度：6
-	 */
-	string type_;
-	/**
-	 * 字段描述：参数描述 
-	 * 字段类型：varchar  长度：256
-	 */
-	string description;
-	/**
-	 * 字段描述：参数备注 
+	 * 字段描述：参数明细备注 
 	 * 字段类型：varchar  长度：256
 	 */
 	string remark;
@@ -57,26 +42,6 @@ private:
 	 * 字段类型：tinyint  长度：null
 	 */
 	bool status_;
-	/**
-	 * 字段描述：营业日期 
-	 * 字段类型：datetime  长度：null
-	 */
-	string open_date;
-	/**
-	 * 字段描述：DAC校验 
-	 * 字段类型：char  长度：16
-	 */
-	string dac;
-	/**
-	 * 字段描述：交易发起渠道类别 
-	 * 字段类型：char  长度：8
-	 */
-	string busi_type;
-	/**
-	 * 字段描述：交易发起渠道编号 
-	 * 字段类型：char  长度：23
-	 */
-	string busi_code;
 	/**
 	 * 字段描述：版本号 
 	 * 字段类型：int  长度：null
@@ -87,59 +52,46 @@ private:
 	 * 字段类型：datetime  长度：null
 	 */
 	string datetime_;
+	/**
+	 * 字段描述：参数类型编号 
+	 * 字段类型：varchar  长度：8
+	 */
+	string parm_type_id;
+	/**
+	 * 字段描述：参数明细名称 
+	 * 字段类型：varchar  长度：256
+	 */
+	string name_;
+	/**
+	 * 字段描述：参数值 
+	 * 字段类型：varchar  长度：256
+	 */
+	string value_;
+	/**
+	 * 字段描述：参数明细编号 
+	 * 字段类型：varchar  长度：3
+	 */
+	string parm__id;
 public:
 	
 	
-	T1parameter& setId(long aid){
+	T1parameter& setId(biginteger aid){
 		id = aid;
 		mapSQLTokens["id"] = to_string(id);
 		return *this;
 	}
-	long getId() {
+	biginteger getId() {
 		return id;
 	}
 	
 	
-	T1parameter& setUserid(biginteger auserid){
+	T1parameter& setUserid(long auserid){
 		userid = auserid;
 		mapSQLTokens["userid"] = to_string(userid);
 		return *this;
 	}
-	biginteger getUserid() {
+	long getUserid() {
 		return userid;
-	}
-	
-	
-	T1parameter& setIdentifier(string aidentifier){
-		identifier = aidentifier;
-		
-		mapSQLTokens["identifier"] = "'"+identifier+"'";
-		return *this;
-	}
-	string getIdentifier() {
-		return identifier;
-	}
-	
-	
-	T1parameter& setType_(string atype_){
-		type_ = atype_;
-		
-		mapSQLTokens["type_"] = "'"+type_+"'";
-		return *this;
-	}
-	string getType_() {
-		return type_;
-	}
-	
-	
-	T1parameter& setDescription(string adescription){
-		description = adescription;
-		
-		mapSQLTokens["description"] = "'"+description+"'";
-		return *this;
-	}
-	string getDescription() {
-		return description;
 	}
 	
 	
@@ -164,50 +116,6 @@ public:
 	}
 	
 	
-	T1parameter& setOpen_date(string aopen_date){
-		open_date = aopen_date;
-		
-		mapSQLTokens["open_date"] = "'"+open_date+"'";
-		return *this;
-	}
-	string getOpen_date() {
-		return open_date;
-	}
-	
-	
-	T1parameter& setDac(string adac){
-		dac = adac;
-		
-		mapSQLTokens["dac"] = "'"+dac+"'";
-		return *this;
-	}
-	string getDac() {
-		return dac;
-	}
-	
-	
-	T1parameter& setBusi_type(string abusi_type){
-		busi_type = abusi_type;
-		
-		mapSQLTokens["busi_type"] = "'"+busi_type+"'";
-		return *this;
-	}
-	string getBusi_type() {
-		return busi_type;
-	}
-	
-	
-	T1parameter& setBusi_code(string abusi_code){
-		busi_code = abusi_code;
-		
-		mapSQLTokens["busi_code"] = "'"+busi_code+"'";
-		return *this;
-	}
-	string getBusi_code() {
-		return busi_code;
-	}
-	
-	
 	T1parameter& setVersion(int aversion){
 		version = aversion;
 		mapSQLTokens["version"] = to_string(version);
@@ -226,6 +134,50 @@ public:
 	}
 	string getDatetime_() {
 		return datetime_;
+	}
+	
+	
+	T1parameter& setParm_type_id(string aparm_type_id){
+		parm_type_id = aparm_type_id;
+		
+		mapSQLTokens["parm_type_id"] = "'"+parm_type_id+"'";
+		return *this;
+	}
+	string getParm_type_id() {
+		return parm_type_id;
+	}
+	
+	
+	T1parameter& setName_(string aname_){
+		name_ = aname_;
+		
+		mapSQLTokens["name_"] = "'"+name_+"'";
+		return *this;
+	}
+	string getName_() {
+		return name_;
+	}
+	
+	
+	T1parameter& setValue_(string avalue_){
+		value_ = avalue_;
+		
+		mapSQLTokens["value_"] = "'"+value_+"'";
+		return *this;
+	}
+	string getValue_() {
+		return value_;
+	}
+	
+	
+	T1parameter& setParm__id(string aparm__id){
+		parm__id = aparm__id;
+		
+		mapSQLTokens["parm__id"] = "'"+parm__id+"'";
+		return *this;
+	}
+	string getParm__id() {
+		return parm__id;
 	}
 	
 };
