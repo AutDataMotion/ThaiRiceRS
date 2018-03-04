@@ -31,6 +31,7 @@ import com.jfinal.config.Routes;
  *---------------------------------------------------
  *2016年1月28日		Zhongweng	1.0			1.0Version
  */
+import com.platform.mvc.login.LoginController;
 
 /**
  * <p>Title: RoutePlugins<／p>
@@ -53,5 +54,7 @@ public class RoutePlugins extends Routes {
 		add("/jf/thairice/t10pdt_report", T10pdt_reportController.class);
 		add("/jf/thairice/t11zone", T11zoneController.class);
 		add("/jf/thairice/tkvalue", TkvalueController.class);
+		// zhuchaobin.zh
+		add("/jf/targrecog/index/shw", LoginController.class);
 	}
 }

@@ -24,58 +24,29 @@ public class T5parameter_type extends BaseModel<T5parameter_type> {
 	public static final T5parameter_type dao = new T5parameter_type();
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
-	 */
-	public static final String column_id = "id";
-	
-	/**
-	 * 字段描述： 
+	 * 字段描述： 用户编号
 	 * 字段类型：  长度：null
 	 */
 	public static final String column_userid = "userid";
-	
+		
 	/**
-	 * 字段描述： 
+	 * 字段描述：参数类型编号 
 	 * 字段类型：  长度：null
 	 */
-	public static final String column_identifier = "identifier";
+	public static final String column_parm_type_id = "parm_type_id";
 	
 	/**
-	 * 字段描述： 
+	 * 字段描述： 参数类型名称
 	 * 字段类型：  长度：null
 	 */
 	public static final String column_name_ = "name_";
 	
 	/**
-	 * 字段描述： 
+	 * 字段描述： 备注信息
 	 * 字段类型：  长度：null
 	 */
 	public static final String column_remark = "remark";
 	
-	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
-	 */
-	public static final String column_open_date = "open_date";
-	
-	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
-	 */
-	public static final String column_dac = "dac";
-	
-	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
-	 */
-	public static final String column_busi_type = "busi_type";
-	
-	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
-	 */
-	public static final String column_busi_code = "busi_code";
 	
 	/**
 	 * 字段描述： 
@@ -88,7 +59,6 @@ public class T5parameter_type extends BaseModel<T5parameter_type> {
 	 * 字段类型：  长度：null
 	 */
 	public static final String column_datetime_ = "datetime_";
-	
 	
 	/**
 	 * sqlId : thairice.t5parameter_type.splitPageFrom
@@ -108,24 +78,14 @@ public class T5parameter_type extends BaseModel<T5parameter_type> {
 	private Integer version;
 	private Timestamp datetime_;
 
-	public void setId(BigInteger id){
-		set(column_id, id);
-	}
-	public <T> T getId() {
-		return get(column_id);
-	}
+
 	public void setUserid(BigInteger userid){
 		set(column_userid, userid);
 	}
 	public <T> T getUserid() {
 		return get(column_userid);
 	}
-	public void setIdentifier(String identifier){
-		set(column_identifier, identifier);
-	}
-	public <T> T getIdentifier() {
-		return get(column_identifier);
-	}
+
 	public void setName_(String name_){
 		set(column_name_, name_);
 	}
@@ -138,30 +98,7 @@ public class T5parameter_type extends BaseModel<T5parameter_type> {
 	public <T> T getRemark() {
 		return get(column_remark);
 	}
-	public void setOpen_date(Timestamp open_date){
-		set(column_open_date, open_date);
-	}
-	public <T> T getOpen_date() {
-		return get(column_open_date);
-	}
-	public void setDac(String dac){
-		set(column_dac, dac);
-	}
-	public <T> T getDac() {
-		return get(column_dac);
-	}
-	public void setBusi_type(String busi_type){
-		set(column_busi_type, busi_type);
-	}
-	public <T> T getBusi_type() {
-		return get(column_busi_type);
-	}
-	public void setBusi_code(String busi_code){
-		set(column_busi_code, busi_code);
-	}
-	public <T> T getBusi_code() {
-		return get(column_busi_code);
-	}
+	
 	public void setVersion(Integer version){
 		set(column_version, version);
 	}

@@ -21,6 +21,10 @@ import java.util.Properties;
 import com.jfinal.core.Const;
 import com.jfinal.kit.Prop;
 import com.jfinal.kit.PropKit;
+import com.jfinal.plugin.activerecord.Db;
+
+import thairice.constant.ConstantInitMy;
+import thairice.utils.FtpUtils;
 
 /**
  * JFinalConfig.
@@ -57,7 +61,9 @@ public abstract class JFinalConfig {
 	/**
 	 * Call back after JFinal start
 	 */
-	public void afterJFinalStart(){};
+	public void afterJFinalStart(){
+		System.out.println("ddddddddddddddddddddddddd");
+	};
 	
 	/**
 	 * Call back before JFinal stop

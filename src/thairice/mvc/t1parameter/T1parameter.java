@@ -22,72 +22,37 @@ public class T1parameter extends BaseModel<T1parameter> {
 	private static Logger log = Logger.getLogger(T1parameter.class);
 	
 	public static final T1parameter dao = new T1parameter();
-	
+		
 	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
-	 */
-	public static final String column_id = "id";
-	
-	/**
-	 * 字段描述： 
+	 * 字段描述： 用户编号
 	 * 字段类型：  长度：null
 	 */
 	public static final String column_userid = "userid";
 	
 	/**
-	 * 字段描述： 
+	 * 字段描述：参数值
 	 * 字段类型：  长度：null
 	 */
-	public static final String column_identifier = "identifier";
-	
+	public static final String column_value = "value_";
+		
 	/**
-	 * 字段描述： 
+	 * 字段描述：参数类型编号 
 	 * 字段类型：  长度：null
 	 */
-	public static final String column_type_ = "type_";
+	public static final String column_parm_type_id = "parm_type_id";
 	
 	/**
-	 * 字段描述： 
+	 * 字段描述： 参数名称
 	 * 字段类型：  长度：null
 	 */
-	public static final String column_description = "description";
+	public static final String column_name_ = "name_";
 	
 	/**
-	 * 字段描述： 
+	 * 字段描述： 备注信息
 	 * 字段类型：  长度：null
 	 */
 	public static final String column_remark = "remark";
 	
-	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
-	 */
-	public static final String column_status_ = "status_";
-	
-	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
-	 */
-	public static final String column_open_date = "open_date";
-	
-	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
-	 */
-	public static final String column_dac = "dac";
-	
-	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
-	 */
-	public static final String column_busi_type = "busi_type";
-	
-	/**
-	 * 字段描述： 
-	 * 字段类型：  长度：null
-	 */
-	public static final String column_busi_code = "busi_code";
 	
 	/**
 	 * 字段描述： 
@@ -103,54 +68,40 @@ public class T1parameter extends BaseModel<T1parameter> {
 	
 	
 	/**
+	 * 字段描述： 参数ID
+	 * 字段类型：  长度：null
+	 */
+	public static final String column_parm_id = "parm_id";
+	
+	/**
+	 * 字段描述： 参数状态
+	 * 字段类型：  长度：null
+	 */
+	public static final String column_status_ = "status_";
+
+	
+	/**
 	 * sqlId : thairice.t1parameter.splitPageFrom
 	 * 描述：分页from
 	 */
 	public static final String sqlId_splitPage_from = "thairice.t1parameter.splitPageFrom";
 
-	private Long id;
 	private BigInteger userid;
-	private String identifier;
-	private String type_;
-	private String description;
+	private String value_;
+	private String parm_type_id;
+	private String name_;
 	private String remark;
-	private Boolean status_;
-	private Timestamp open_date;
-	private String dac;
-	private String busi_type;
-	private String busi_code;
 	private Integer version;
 	private Timestamp datetime_;
+	private Boolean status_;
+	private String parm_id;
 
-	public void setId(Long id){
-		set(column_id, id);
-	}
-	public <T> T getId() {
-		return get(column_id);
-	}
+
 	public void setUserid(BigInteger userid){
 		set(column_userid, userid);
 	}
 	public <T> T getUserid() {
 		return get(column_userid);
-	}
-	public void setIdentifier(String identifier){
-		set(column_identifier, identifier);
-	}
-	public <T> T getIdentifier() {
-		return get(column_identifier);
-	}
-	public void setType_(String type_){
-		set(column_type_, type_);
-	}
-	public <T> T getType_() {
-		return get(column_type_);
-	}
-	public void setDescription(String description){
-		set(column_description, description);
-	}
-	public <T> T getDescription() {
-		return get(column_description);
 	}
 	public void setRemark(String remark){
 		set(column_remark, remark);
@@ -164,30 +115,6 @@ public class T1parameter extends BaseModel<T1parameter> {
 	public <T> T getStatus_() {
 		return get(column_status_);
 	}
-	public void setOpen_date(Timestamp open_date){
-		set(column_open_date, open_date);
-	}
-	public <T> T getOpen_date() {
-		return get(column_open_date);
-	}
-	public void setDac(String dac){
-		set(column_dac, dac);
-	}
-	public <T> T getDac() {
-		return get(column_dac);
-	}
-	public void setBusi_type(String busi_type){
-		set(column_busi_type, busi_type);
-	}
-	public <T> T getBusi_type() {
-		return get(column_busi_type);
-	}
-	public void setBusi_code(String busi_code){
-		set(column_busi_code, busi_code);
-	}
-	public <T> T getBusi_code() {
-		return get(column_busi_code);
-	}
 	public void setVersion(Integer version){
 		set(column_version, version);
 	}
@@ -199,6 +126,31 @@ public class T1parameter extends BaseModel<T1parameter> {
 	}
 	public <T> T getDatetime_() {
 		return get(column_datetime_);
+	}
+	
+	public <T> T getValue() {
+		return get(column_value);
+	}
+	public void setValue(String value) {
+		set(column_value, value);
+	}	
+	public <T> T  getParm_type_id() {
+		return get(column_parm_type_id);
+	}
+	public void setParm_type_id(String parm_type_id) {
+		set(column_parm_type_id, parm_type_id);
+	}
+	public <T> T  getName_() {
+		return get(column_name_);
+	}
+	public void setName_(String name_) {
+		set(column_name_, name_);
+	}
+	public <T> T  getParm_id() {
+		return get(column_parm_id);
+	}
+	public void setParm_id(String parm_id) {
+		set(column_parm_id, parm_id);
 	}
 	
 }

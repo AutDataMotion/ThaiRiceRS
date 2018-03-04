@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 
 import thairice.config.DBMappingMy;
 import thairice.constant.PropertiesInitMy;
+import thairice.utils.FtpUtils;
 import zeroc.util.IceClientUtil;
 
 import com.jfinal.config.Constants;
@@ -61,7 +62,7 @@ public class JfinalConfig extends JFinalConfig {
 
 		// 子系统配置初始化
 		 thairice.config.ConfMain.getInstance().setPropertyes(new
-		 PropertiesInitMy(loadPropertyFile("init_target.properties"), false));
+		 PropertiesInitMy(loadPropertyFile("init_rice.properties"), false));
 		 thairice.config.ConfMain.getInstance().initProperties();
 
 		log.info("configConstant 设置字符集");
@@ -180,19 +181,20 @@ public class JfinalConfig extends JFinalConfig {
 //		 thairice.mvc.MainConf.GetInstance().start();
 
 		// Zeroc Ice Util 初始化
-		IceClientUtil.init(60);
+		//IceClientUtil.init(60);
 		// 初始化ftp地址
-		com.platform.config.run.ConfMain.getInstance().initFtp();
+		//com.platform.config.run.ConfMain.getInstance().initFtp();
 		// targrecog.config.ConfMain.getInstance().initFtp();
 
-		log.info("afterJFinalStart 启动操作日志入库线程");
-		ThreadSysLog.startSaveDBThread();
-
-		log.info("afterJFinalStart 系统负载");
-		TimerResources.start();
-
-		log.info("afterJFinalStart 数据清理");
-		DataClear.start();
+//		log.info("afterJFinalStart 启动操作日志入库线程");
+//		ThreadSysLog.startSaveDBThread();
+//
+//		log.info("afterJFinalStart 系统负载");
+//		TimerResources.start();
+//
+//		log.info("afterJFinalStart 数据清理");
+//		DataClear.start();
+		FtpUtils.initScanFtp();
 	}
 
 	/**
@@ -206,14 +208,14 @@ public class JfinalConfig extends JFinalConfig {
 		// cms 释放资源
 //		thairice.mvc.cms.MainConf.GetInstance().stop();
 
-		log.info("beforeJFinalStop 释放日志入库线程");
-		ThreadSysLog.setThreadRun(false);
-
-		log.info("beforeJFinalStop 释放系统负载抓取线程");
-		TimerResources.stop();
-
-		log.info("beforeJFinalStop 数据清理");
-		DataClear.stop();
+//		log.info("beforeJFinalStop 释放日志入库线程");
+//		ThreadSysLog.setThreadRun(false);
+//
+//		log.info("beforeJFinalStop 释放系统负载抓取线程");
+//		TimerResources.stop();
+//
+//		log.info("beforeJFinalStop 数据清理");
+//		DataClear.stop();
 	}
 
 	/**
@@ -221,7 +223,7 @@ public class JfinalConfig extends JFinalConfig {
 	 * 中运行webAppDir路径可能需要适当调整，可以设置为WebContent的绝对路径
 	 */
 	public static void main(String[] args) {
-		JFinal.start("WebContent", 99, "/", 10);
+		JFinal.start("WebContent", 9000, "/", 10);
 		// JFinal.start("D:\\DevelopmentTool\\IntelliJIDEA14.1.4" +
 		// "\\IdeaProjects\\JFinalUIBV2\\JFinalUIBV2\\WebContent", 99, "/", 5);
 	}
