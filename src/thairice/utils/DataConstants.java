@@ -25,6 +25,8 @@ public class DataConstants {
 	// 波段数编码
 	// MODIS的产品波段数统一为1
 	public static final String MODIS_BANDNUM = "1";
+	
+	public static final String FLAGE_OFF2 = "00";
 
 	// 用户ID：系统自动
 	public static final BigInteger SYS_USER_ID = new BigInteger("99999999");
