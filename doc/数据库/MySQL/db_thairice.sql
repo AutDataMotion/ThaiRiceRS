@@ -1,5 +1,6 @@
 use thairice;
 drop table if exists t1parameter;  
+<<<<<<< HEAD
 Create table t1parameter(
 
 id INT(10) unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY  COMMENT'序列编号',
@@ -17,6 +18,22 @@ busi_code CHAR(23) COMMENT'交易发起渠道编号',
 version INT(9) COMMENT'版本号', 
 datetime_ datetime  COMMENT'时间戳'
 )ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+=======
+CREATE TABLE `t1parameter` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `userid` bigint(20) DEFAULT NULL COMMENT '用户ID',
+  `remark` varchar(256) DEFAULT NULL COMMENT '参数明细备注',
+  `status_` tinyint(1) DEFAULT NULL COMMENT '删除标志',
+  `version` int(9) DEFAULT NULL COMMENT '版本号',
+  `datetime_` datetime DEFAULT NULL COMMENT '时间戳',
+  `parm_type_id` varchar(8) NOT NULL COMMENT '参数类型编号',
+  `name_` varchar(256) DEFAULT NULL COMMENT '参数明细名称',
+  `value_` varchar(256) NOT NULL COMMENT '参数值',
+  `parm__id` varchar(3) NOT NULL COMMENT '参数明细编号',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
+
+>>>>>>> 7a8fb6b8d630b39017e6b96f68eb19fbc30cc1c8
 
 drop table if exists t2syslog;  
 Create table t2syslog(
@@ -59,6 +76,7 @@ status_ ENUM ('01','02') NOT NULL COMMENT'消息状态代码'
 
 
 drop table if exists t5parameter_type;  
+<<<<<<< HEAD
 Create table t5parameter_type(
 `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY  COMMENT'序号',
 userid bigint(20) unsigned COMMENT'用户ID',
@@ -72,6 +90,22 @@ busi_code CHAR(23) COMMENT'交易发起渠道编号',
 version INT(9) COMMENT'版本号',
 datetime_ datetime  COMMENT'时间戳'
 )ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+=======
+
+CREATE TABLE `t5parameter_type` (
+  `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
+  `userid` bigint(20) unsigned DEFAULT NULL COMMENT '用户ID',
+  `name_` varchar(256) DEFAULT NULL COMMENT '参数类型名称',
+  `remark` varchar(256) DEFAULT NULL COMMENT '参数类型备注',
+  `parm_type_id` varchar(8) NOT NULL COMMENT '参数类型编号',
+  `version` int(9) DEFAULT NULL COMMENT '版本号',
+  `datetime_` datetime DEFAULT NULL COMMENT '时间戳',
+  `status_` tinyint(1) DEFAULT NULL COMMENT '删除标志',
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='参数类型表';
+
+
+>>>>>>> 7a8fb6b8d630b39017e6b96f68eb19fbc30cc1c8
 
 
 drop table if exists t6org_data;  

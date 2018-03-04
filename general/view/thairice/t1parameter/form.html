@@ -11,37 +11,7 @@
 </div>
 
 <div class="form-group">
-	<label class="col-sm-2 control-label">多实体标识</label>
-	<div class="col-sm-7">
-		<input type="text" name="t1parameter.identifier" value="${escapeXml(t1parameter.identifier!)}" 
-		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
-		<span class="help-inline col-sm-2"></span>
-	</div>
-	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
-</div>
-
-<div class="form-group">
-	<label class="col-sm-2 control-label">业务参数类型</label>
-	<div class="col-sm-7">
-		<input type="text" name="t1parameter.type_" value="${escapeXml(t1parameter.type_!)}" 
-		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
-		<span class="help-inline col-sm-2"></span>
-	</div>
-	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
-</div>
-
-<div class="form-group">
-	<label class="col-sm-2 control-label">参数描述</label>
-	<div class="col-sm-7">
-		<input type="text" name="t1parameter.description" value="${escapeXml(t1parameter.description!)}" 
-		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
-		<span class="help-inline col-sm-2"></span>
-	</div>
-	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
-</div>
-
-<div class="form-group">
-	<label class="col-sm-2 control-label">参数备注</label>
+	<label class="col-sm-2 control-label">参数明细备注</label>
 	<div class="col-sm-7">
 		<input type="text" name="t1parameter.remark" value="${escapeXml(t1parameter.remark!)}" 
 		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
@@ -54,47 +24,6 @@
 	<label class="col-sm-2 control-label">删除标志</label>
 	<div class="col-sm-7">
 		<input type="text" name="t1parameter.status_" value="${t1parameter.status_!}" 
-		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
-		<span class="help-inline col-sm-2"></span>
-	</div>
-	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
-</div>
-
-<div class="form-group">
-	<label class="col-sm-2 control-label">营业日期</label>
-	<div class="col-sm-7">
-		<div class="input-group">
-		<input type="text" name="t1parameter.open_date" date-data-format="yyyy-mm-dd" data-data-viewmode="years" class="form-control data-picker" value="${t1parameter.open_date!, dateFormat="yyyy-MM-dd HH:mm:ss"}">
-		<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-		</div>
-		<span class="help-inline col-sm-2"></span>
-	</div>
-</div>
-
-<div class="form-group">
-	<label class="col-sm-2 control-label">DAC校验</label>
-	<div class="col-sm-7">
-		<input type="text" name="t1parameter.dac" value="${escapeXml(t1parameter.dac!)}" 
-		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
-		<span class="help-inline col-sm-2"></span>
-	</div>
-	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
-</div>
-
-<div class="form-group">
-	<label class="col-sm-2 control-label">交易发起渠道类别</label>
-	<div class="col-sm-7">
-		<input type="text" name="t1parameter.busi_type" value="${escapeXml(t1parameter.busi_type!)}" 
-		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
-		<span class="help-inline col-sm-2"></span>
-	</div>
-	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
-</div>
-
-<div class="form-group">
-	<label class="col-sm-2 control-label">交易发起渠道编号</label>
-	<div class="col-sm-7">
-		<input type="text" name="t1parameter.busi_code" value="${escapeXml(t1parameter.busi_code!)}" 
 		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
 		<span class="help-inline col-sm-2"></span>
 	</div>
@@ -120,4 +49,44 @@
 		</div>
 		<span class="help-inline col-sm-2"></span>
 	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">参数类型编号</label>
+	<div class="col-sm-7">
+		<input type="text" name="t1parameter.parm_type_id" value="${escapeXml(t1parameter.parm_type_id!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">参数明细名称</label>
+	<div class="col-sm-7">
+		<input type="text" name="t1parameter.name_" value="${escapeXml(t1parameter.name_!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">参数值</label>
+	<div class="col-sm-7">
+		<input type="text" name="t1parameter.value_" value="${escapeXml(t1parameter.value_!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">参数明细编号</label>
+	<div class="col-sm-7">
+		<input type="text" name="t1parameter.parm__id" value="${escapeXml(t1parameter.parm__id!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
 </div>

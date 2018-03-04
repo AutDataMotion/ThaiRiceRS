@@ -92,47 +92,19 @@
 								</th>
 								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
 										'mainPanel', 'splitPage', 'id')">
-									序列编号	${orderBy("id")}
+										${orderBy("id")}
 								</th>
 								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
 										'mainPanel', 'splitPage', 'userid')">
 									用户ID	${orderBy("userid")}
 								</th>
 								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
-										'mainPanel', 'splitPage', 'identifier')">
-									多实体标识	${orderBy("identifier")}
-								</th>
-								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
-										'mainPanel', 'splitPage', 'type_')">
-									业务参数类型	${orderBy("type_")}
-								</th>
-								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
-										'mainPanel', 'splitPage', 'description')">
-									参数描述	${orderBy("description")}
-								</th>
-								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
 										'mainPanel', 'splitPage', 'remark')">
-									参数备注	${orderBy("remark")}
+									参数明细备注	${orderBy("remark")}
 								</th>
 								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
 										'mainPanel', 'splitPage', 'status_')">
 									删除标志	${orderBy("status_")}
-								</th>
-								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
-										'mainPanel', 'splitPage', 'open_date')">
-									营业日期	${orderBy("open_date")}
-								</th>
-								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
-										'mainPanel', 'splitPage', 'dac')">
-									DAC校验	${orderBy("dac")}
-								</th>
-								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
-										'mainPanel', 'splitPage', 'busi_type')">
-									交易发起渠道类别	${orderBy("busi_type")}
-								</th>
-								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
-										'mainPanel', 'splitPage', 'busi_code')">
-									交易发起渠道编号	${orderBy("busi_code")}
 								</th>
 								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
 										'mainPanel', 'splitPage', 'version')">
@@ -141,6 +113,22 @@
 								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
 										'mainPanel', 'splitPage', 'datetime_')">
 									时间戳	${orderBy("datetime_")}
+								</th>
+								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
+										'mainPanel', 'splitPage', 'parm_type_id')">
+									参数类型编号	${orderBy("parm_type_id")}
+								</th>
+								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
+										'mainPanel', 'splitPage', 'name_')">
+									参数明细名称	${orderBy("name_")}
+								</th>
+								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
+										'mainPanel', 'splitPage', 'value_')">
+									参数值	${orderBy("value_")}
+								</th>
+								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
+										'mainPanel', 'splitPage', 'parm__id')">
+									参数明细编号	${orderBy("parm__id")}
 								</th>
 								<th class="hidden-xs">
 									${i18nMap["admin.common.operation"]}
@@ -170,27 +158,6 @@
 								
 								<td>
 
-								${escapeXml(item["identifier"]!)}
-
-								</td>
-							
-								
-								<td>
-
-								${escapeXml(item["type_"]!)}
-
-								</td>
-							
-								
-								<td>
-
-								${escapeXml(item["description"]!)}
-
-								</td>
-							
-								
-								<td>
-
 								${escapeXml(item["remark"]!)}
 
 								</td>
@@ -204,33 +171,6 @@
 								
 								<td>
 
-							${item["open_date"]!, dateFormat="yyyy-MM-dd HH:mm:ss"}
-
-								</td>
-								
-								<td>
-
-								${escapeXml(item["dac"]!)}
-
-								</td>
-							
-								
-								<td>
-
-								${escapeXml(item["busi_type"]!)}
-
-								</td>
-							
-								
-								<td>
-
-								${escapeXml(item["busi_code"]!)}
-
-								</td>
-							
-								
-								<td>
-
 							${item["version"]!}
 
 								</td>
@@ -240,6 +180,34 @@
 							${item["datetime_"]!, dateFormat="yyyy-MM-dd HH:mm:ss"}
 
 								</td>
+								
+								<td>
+
+								${escapeXml(item["parm_type_id"]!)}
+
+								</td>
+							
+								
+								<td>
+
+								${escapeXml(item["name_"]!)}
+
+								</td>
+							
+								
+								<td>
+
+								${escapeXml(item["value_"]!)}
+
+								</td>
+							
+								
+								<td>
+
+								${escapeXml(item["parm__id"]!)}
+
+								</td>
+							
 								
 								
 

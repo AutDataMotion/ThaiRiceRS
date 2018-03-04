@@ -23,7 +23,7 @@
 			<div class="panel-body">	
 				<form role="form" class="form-horizontal">
 						<div class="form-group">
-							<label class="col-sm-2 control-label">序列编号 </label>
+							<label class="col-sm-2 control-label"> </label>
 							<div class="col-sm-7">
 							<input type="text" class="form-control" readonly="readonly" value="${t1parameter.id!}">
 							</div>
@@ -35,25 +35,7 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-sm-2 control-label">多实体标识 </label>
-							<div class="col-sm-7">
-							<input type="text" class="form-control" readonly="readonly" value="${escapeXml(t1parameter.identifier!)}">
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-sm-2 control-label">业务参数类型 </label>
-							<div class="col-sm-7">
-							<input type="text" class="form-control" readonly="readonly" value="${escapeXml(t1parameter.type_!)}">
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-sm-2 control-label">参数描述 </label>
-							<div class="col-sm-7">
-							<input type="text" class="form-control" readonly="readonly" value="${escapeXml(t1parameter.description!)}">
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-sm-2 control-label">参数备注 </label>
+							<label class="col-sm-2 control-label">参数明细备注 </label>
 							<div class="col-sm-7">
 							<input type="text" class="form-control" readonly="readonly" value="${escapeXml(t1parameter.remark!)}">
 							</div>
@@ -62,30 +44,6 @@
 							<label class="col-sm-2 control-label">删除标志 </label>
 							<div class="col-sm-7">
 							<input type="text" class="form-control" readonly="readonly" value="${t1parameter.status_!}">
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-sm-2 control-label">营业日期 </label>
-							<div class="col-sm-7">
-							<input type="text" class="form-control" readonly="readonly" value="${t1parameter.open_date!, dateFormat="yyyy-MM-dd HH:mm:ss"}">
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-sm-2 control-label">DAC校验 </label>
-							<div class="col-sm-7">
-							<input type="text" class="form-control" readonly="readonly" value="${escapeXml(t1parameter.dac!)}">
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-sm-2 control-label">交易发起渠道类别 </label>
-							<div class="col-sm-7">
-							<input type="text" class="form-control" readonly="readonly" value="${escapeXml(t1parameter.busi_type!)}">
-							</div>
-						</div>
-						<div class="form-group">
-							<label class="col-sm-2 control-label">交易发起渠道编号 </label>
-							<div class="col-sm-7">
-							<input type="text" class="form-control" readonly="readonly" value="${escapeXml(t1parameter.busi_code!)}">
 							</div>
 						</div>
 						<div class="form-group">
@@ -98,6 +56,30 @@
 							<label class="col-sm-2 control-label">时间戳 </label>
 							<div class="col-sm-7">
 							<input type="text" class="form-control" readonly="readonly" value="${t1parameter.datetime_!, dateFormat="yyyy-MM-dd HH:mm:ss"}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">参数类型编号 </label>
+							<div class="col-sm-7">
+							<input type="text" class="form-control" readonly="readonly" value="${escapeXml(t1parameter.parm_type_id!)}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">参数明细名称 </label>
+							<div class="col-sm-7">
+							<input type="text" class="form-control" readonly="readonly" value="${escapeXml(t1parameter.name_!)}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">参数值 </label>
+							<div class="col-sm-7">
+							<input type="text" class="form-control" readonly="readonly" value="${escapeXml(t1parameter.value_!)}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">参数明细编号 </label>
+							<div class="col-sm-7">
+							<input type="text" class="form-control" readonly="readonly" value="${escapeXml(t1parameter.parm__id!)}">
 							</div>
 						</div>
 				</form>

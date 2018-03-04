@@ -11,16 +11,6 @@
 </div>
 
 <div class="form-group">
-	<label class="col-sm-2 control-label">多实体标识</label>
-	<div class="col-sm-7">
-		<input type="text" name="t5parameter_type.identifier" value="${escapeXml(t5parameter_type.identifier!)}" 
-		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
-		<span class="help-inline col-sm-2"></span>
-	</div>
-	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
-</div>
-
-<div class="form-group">
 	<label class="col-sm-2 control-label">参数类型名称</label>
 	<div class="col-sm-7">
 		<input type="text" name="t5parameter_type.name_" value="${escapeXml(t5parameter_type.name_!)}" 
@@ -31,7 +21,7 @@
 </div>
 
 <div class="form-group">
-	<label class="col-sm-2 control-label">参数备注</label>
+	<label class="col-sm-2 control-label">参数类型备注</label>
 	<div class="col-sm-7">
 		<input type="text" name="t5parameter_type.remark" value="${escapeXml(t5parameter_type.remark!)}" 
 		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
@@ -41,40 +31,9 @@
 </div>
 
 <div class="form-group">
-	<label class="col-sm-2 control-label">营业日期</label>
+	<label class="col-sm-2 control-label">参数类型编号</label>
 	<div class="col-sm-7">
-		<div class="input-group">
-		<input type="text" name="t5parameter_type.open_date" date-data-format="yyyy-mm-dd" data-data-viewmode="years" class="form-control data-picker" value="${t5parameter_type.open_date!, dateFormat="yyyy-MM-dd HH:mm:ss"}">
-		<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
-		</div>
-		<span class="help-inline col-sm-2"></span>
-	</div>
-</div>
-
-<div class="form-group">
-	<label class="col-sm-2 control-label">DAC校验</label>
-	<div class="col-sm-7">
-		<input type="text" name="t5parameter_type.dac" value="${escapeXml(t5parameter_type.dac!)}" 
-		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
-		<span class="help-inline col-sm-2"></span>
-	</div>
-	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
-</div>
-
-<div class="form-group">
-	<label class="col-sm-2 control-label">交易发起渠道类别</label>
-	<div class="col-sm-7">
-		<input type="text" name="t5parameter_type.busi_type" value="${escapeXml(t5parameter_type.busi_type!)}" 
-		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
-		<span class="help-inline col-sm-2"></span>
-	</div>
-	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
-</div>
-
-<div class="form-group">
-	<label class="col-sm-2 control-label">交易发起渠道编号</label>
-	<div class="col-sm-7">
-		<input type="text" name="t5parameter_type.busi_code" value="${escapeXml(t5parameter_type.busi_code!)}" 
+		<input type="text" name="t5parameter_type.parm_type_id" value="${escapeXml(t5parameter_type.parm_type_id!)}" 
 		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
 		<span class="help-inline col-sm-2"></span>
 	</div>
@@ -100,4 +59,14 @@
 		</div>
 		<span class="help-inline col-sm-2"></span>
 	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">删除标志</label>
+	<div class="col-sm-7">
+		<input type="text" name="t5parameter_type.status_" value="${t5parameter_type.status_!}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
 </div>
