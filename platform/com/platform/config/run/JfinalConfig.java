@@ -175,6 +175,8 @@ public class JfinalConfig extends JFinalConfig {
 	 * 系统启动完成后执行
 	 */
 	public void afterJFinalStart() {
+
+		System.out.println("afterJFinalStart");	
 		// 加载子系统
 //		 thairice.mvc.MainConf.GetInstance().init();
 //		 thairice.mvc.MainConf.GetInstance().start();
@@ -201,7 +203,7 @@ public class JfinalConfig extends JFinalConfig {
 	public void beforeJFinalStop() {
 
 		// Zeroc Ice Util 销毁
-		IceClientUtil.closeCommunicator(true);
+//		IceClientUtil.closeCommunicator(true);
 
 		// cms 释放资源
 //		thairice.mvc.cms.MainConf.GetInstance().stop();
