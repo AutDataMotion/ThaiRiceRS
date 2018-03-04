@@ -196,10 +196,8 @@ public class JfinalConfig extends JFinalConfig {
 //
 //		log.info("afterJFinalStart 数据清理");
 //		DataClear.start();
-<<<<<<< HEAD
 		FtpUtils.initScanFtp();
-=======
->>>>>>> 7a8fb6b8d630b39017e6b96f68eb19fbc30cc1c8
+
 	}
 
 	/**
