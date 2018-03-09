@@ -201,6 +201,28 @@ public class FileUtils {
 		}
 	}
 
+	// 判断文件是否为泰国境内条带数据
+	public static boolean isThairHV(String remoteFileName) {
+		String[] fileAttr = remoteFileName.split("\\.");
+		if (fileAttr.length >= 3) {
+			if( DataConstants.STR_H26V06.equals(fileAttr[2]) ||
+				DataConstants.STR_H27V06.equals(fileAttr[2]) ||
+				DataConstants.STR_H27V07.equals(fileAttr[2]) ||
+				DataConstants.STR_H27V08.equals(fileAttr[2]) ||
+				DataConstants.STR_H28V07.equals(fileAttr[2]) ||
+				DataConstants.STR_H28V08.equals(fileAttr[2]) ) {
+					LOG.debug("为泰国境内条带:" + remoteFileName);
+					return true;
+			} else {
+				LOG.debug("非泰国境内条带:" + remoteFileName);
+				return false;
+			}
+		} else {
+			LOG.error("文件名无效：" + remoteFileName);
+			return false;
+		}
+	}
+	
 	public static void main(String[] args) throws IOException {
 		// String str = "MOD13Q1.A2001033.h00v08.006.2015141152020.hdf";
 		// String[] fileAttr = str.split("\\.");
