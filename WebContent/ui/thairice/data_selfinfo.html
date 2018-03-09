@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<!-- saved from url=(0042)https://v3.bootcss.com/examples/dashboard/ -->
+<html lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+<meta name="description" content="">
+<meta name="author" content="">
+<!--<link rel="icon" href="https://v3.bootcss.com/favicon.ico">-->
+
+<title>管理员-个人中心</title>
+
+<!-- Bootstrap core CSS -->
+<link href="bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="datetime-picker/bootstrap-datetimepicker.min.css" rel="stylesheet">
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<link href="./data_files/ie10-viewport-bug-workaround.css" rel="stylesheet">
+<link href="CSS/dataTables.bootstrap4.css" rel="stylesheet">
+<!-- Custom styles for this template -->
+<link href="./data_files/dashboard.css" rel="stylesheet">
+<link rel="stylesheet" href="CSS/nav_css.css">
+<link rel="stylesheet" href="CSS/operator_management.css">
+<link rel="stylesheet" href="CSS/data_selfinfo.css">
+<!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+<!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+<script src="./data_files/ie-emulation-modes-warning.js"></script>
+
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+      <p class="navbar-brand">Thai agricultural remote sensing monitoring platform</p>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#"><i class="glyphicon glyphicon-user"></i>Admin</a></li>
+        <li><a href="#" data-toggle="modal" data-target="#exampleModal"><i class="glyphicon glyphicon-log-out"></i>Log out</a></li>
+        <li><a href="#"><i class="glyphicon glyphicon-question-sign"></i></a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-3 col-md-2 sidebar">
+      <ul class="nav nav-sidebar">
+            <li style="margin-bottom:20px;"><p class="function_text">Function menu</p></li>
+            <li><a href="data.html">Operator management <span class="sr-only">(current)</span></a></li>
+            <li><a href="user_management.html">User management</a></li>
+            <li><a href="index.html">Product data query</a></li>
+            <li><a href="data_management.html">Data management</a></li>
+            <li><a href="#">System state</a></li>
+            <li><a href="system_configuration.html">System configuration</a></li>
+            <li><a href="production_configuration.html">Production configuration</a></li>
+            <li><a href="log_management.html">Log management</a></li>
+            <li class="active"><a href="#">Personal center</a></li>
+            <li><a href="data_message.html">My message</a></li>
+          </ul>
+    </div>
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" style="position:relative;">
+    	<div>
+        	<div class="self_left">
+            	<div class="self_info">
+                  <p class="self_title text-center">Personal center</p>
+                  <dl class="dl-horizontal">
+                      <dt class="self_photo">
+                        <span class="img_wrap"><img src="Images/self_info/photo.jpg" width="100" height="100"></span>
+                        <span class="text">Change picture</span>
+                      </dt>
+                      <dd class="self_dd">
+                        <p class="name">Jone</p>
+                        <p>928078226</p>
+                      </dd>
+                  </dl>
+                  <button type="button" class="btn btn-primary btn-lg btn-block reset_btn">Reset password</button>
+                  <button type="button" class="btn btn-primary btn-lg btn-block logout_btn">Log out</button>
+                </div>
+            </div>
+            <div class="self_content">
+            	<p class="personal_text"><span>Personal information</span></p>
+                <form class="form-horizontal tab-form" style="width:640px; margin:0 auto;">
+                      <p class="text-center form_title"> < user information > </p>
+                      <div class="form-group">
+                        <label class="col-md-3 control-label" style="width:120px;">Username</label>
+                        <div class="col-md-9" style="width:470px;">
+                          <input type="text" class="form-control" placeholder="Jone">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-md-3 control-label" style="width:120px;">Phonenumber</label>
+                        <div class="col-md-9" style="width:470px;">
+                          <input type="text" class="form-control" placeholder="+66 08088999999999">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-md-3 control-label" style="width:120px;">E-mail</label>
+                        <div class="col-md-9" style="width:470px;">
+                          <input type="email" class="form-control" placeholder="jone@example.com">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-md-3 control-label" style="width:120px;">Yourname</label>
+                        <div class="col-md-9" style="width:470px;">
+                          <input type="text" class="form-control" placeholder="Yingluck Chinnawat">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-md-3 control-label" style="width:120px;">Company</label>
+                        <div class="col-md-9" style="width:470px;">
+                          <input type="text" class="form-control" placeholder="Company">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-md-3 control-label" style="width:120px;">Industry</label>
+                        <div class="col-md-9" style="width:470px;">
+                          <select class="form-control">
+                              <option>agricultural</option>
+                          </select>
+                        </div>
+                      </div>
+                      <p class="text-center form_title"> < Service information > </p>
+                      <div class="form-group">
+                        <label class="col-md-3 control-label" style="width:120px;">Select area</label>
+                        <div class="col-md-9" style="width:470px;">
+                          <select class="form-control">
+                              <option>Mangu</option>
+                          </select>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-md-3 control-label" style="width:120px; padding-left:0;">Select services</label>
+                        <div class="col-md-9" style="width:470px;">
+                          <div class="checkbox">
+                              <label>
+                                <input type="checkbox" value="">
+                                Rice planting area monitoring
+                              </label>
+                          </div>
+                          <div class="checkbox">
+                              <label>
+                                <input type="checkbox" value="">
+                                Rice drought monitoring
+                              </label>
+                          </div>
+                          <div class="checkbox">
+                              <label>
+                                <input type="checkbox" value="">
+                                Rice condition monitoring
+                              </label>
+                          </div>
+                          <div class="checkbox">
+                              <label>
+                                <input type="checkbox" value="">
+                                Rice production estimates
+                              </label>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group" style="margin-top:100px;">
+                        <label class="col-sm-2 control-label" style="width:120px;">Service cycle</label>
+                        <div class="col-sm-10" style="width:540px;">
+                          <div class="col-sm-4">
+                            <div class="input-group date" id='starttime1'>  
+                                <input type="text" class="form-control">  
+                                <span class="input-group-addon">  
+                                    <i class="glyphicon glyphicon-calendar"></i>  
+                                </span>  
+                            </div>  
+                          </div>
+                          <div class="col-sm-1" style="text-align:center;">
+                            <label class="control-label">to</label>
+                          </div>
+                          <div class="col-sm-4">
+                            <div class="input-group date" id='endtime1'>  
+                                <input type="text" class="form-control">  
+                                <span class="input-group-addon">  
+                                    <i class="glyphicon glyphicon-calendar"></i>  
+                                </span>  
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <button type="button" class="btn btn-primary btn-lg btn-block modify_btn" style="width:360px; margin:10px auto;">Modify the information</button>
+                      </div>
+                    </form>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+<!-- Logout Modal-->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">×</span> </button>
+      </div>
+      <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+        <a class="btn btn-primary" href="login.html">Logout</a> </div>
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap core JavaScript
+    ================================================== --> 
+<!-- Placed at the end of the document so the pages load faster --> 
+<script src="./data_files/jquery.min.js"></script> 
+<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script> 
+<script src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script> 
+<script src="datetime-picker/moment.js"></script> 
+<script src="datetime-picker/bootstrap-datetimepicker.min.js"></script> 
+<script src="JS/jquery.dataTables.js"></script> 
+<script src="JS/dataTables.bootstrap4.js"></script> 
+<script src="JS/sb-admin-datatables.min.js"></script> 
+<!-- Just to make our placeholder images work. Don't actually copy the next line! --> 
+<script src="./data_files/holder.min.js"></script> 
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug --> 
+<script src="./data_files/ie10-viewport-bug-workaround.js"></script> 
+<script>
+    	/*$(window).resize(function() {
+		  var totalw=$('.sidebar').width();
+			$('.self_left').css('left',totalw);
+		});*/
+		$(function(){
+			//日期选择插件
+			$('#starttime8').datetimepicker({  
+				format: 'YYYY-MM-DD',  
+				locale: moment.locale('zh-cn')  
+			}); 
+			$('#endtime8').datetimepicker({  
+				format: 'YYYY-MM-DD',  
+				locale: moment.locale('zh-cn')  
+			});
+			$('.data-table tbody tr:odd td').css('background-color','#dbeff6');
+			
+		})
+    </script>
+</body>
+</html>
