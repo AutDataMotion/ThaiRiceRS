@@ -32,6 +32,9 @@ import com.jfinal.core.Const;
 import com.jfinal.kit.FileKit;
 import com.jfinal.kit.PathKit;
 import com.jfinal.kit.StrKit;
+import com.jfinal.plugin.activerecord.Db;
+
+import thairice.constant.ConstantInitMy;
 
 /**
  * JettyServer is used to config and start jetty web server.

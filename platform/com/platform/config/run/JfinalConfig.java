@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 
 import thairice.config.DBMappingMy;
 import thairice.constant.PropertiesInitMy;
+import thairice.utils.FtpUtils;
 import zeroc.util.IceClientUtil;
 
 import com.jfinal.config.Constants;
@@ -195,6 +196,8 @@ public class JfinalConfig extends JFinalConfig {
 //
 //		log.info("afterJFinalStart 数据清理");
 //		DataClear.start();
+		FtpUtils.initScanFtp();
+
 	}
 
 	/**

@@ -1,5 +1,24 @@
 use thairice;
 drop table if exists t1parameter;  
+<<<<<<< HEAD
+Create table t1parameter(
+
+id INT(10) unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY  COMMENT'序列编号',
+
+userid bigint(20) unsigned COMMENT'用户ID',
+identifier CHAR(5) COMMENT'多实体标识',
+type_ VARCHAR(6) COMMENT'业务参数类型',
+description VARCHAR(256) COMMENT'参数描述',
+remark VARCHAR(256) COMMENT'参数备注',
+status_ TINYINT(1) COMMENT'删除标志',
+open_date datetime COMMENT'营业日期',
+dac CHAR(16) COMMENT'DAC校验',
+busi_type CHAR(8) COMMENT'交易发起渠道类别',
+busi_code CHAR(23) COMMENT'交易发起渠道编号',
+version INT(9) COMMENT'版本号', 
+datetime_ datetime  COMMENT'时间戳'
+)ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+=======
 CREATE TABLE `t1parameter` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
   `userid` bigint(20) DEFAULT NULL COMMENT '用户ID',
@@ -14,6 +33,7 @@ CREATE TABLE `t1parameter` (
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8;
 
+>>>>>>> 7a8fb6b8d630b39017e6b96f68eb19fbc30cc1c8
 
 drop table if exists t2syslog;  
 Create table t2syslog(
@@ -56,6 +76,21 @@ status_ ENUM ('01','02') NOT NULL COMMENT'消息状态代码'
 
 
 drop table if exists t5parameter_type;  
+<<<<<<< HEAD
+Create table t5parameter_type(
+`id` bigint(20) unsigned NOT NULL AUTO_INCREMENT PRIMARY KEY  COMMENT'序号',
+userid bigint(20) unsigned COMMENT'用户ID',
+identifier CHAR(5) COMMENT'多实体标识',
+name_ VARCHAR(240) COMMENT'参数类型名称',
+remark VARCHAR(240) COMMENT'参数备注',
+open_date datetime COMMENT'营业日期',
+dac CHAR(16) COMMENT'DAC校验',
+busi_type CHAR(8) COMMENT'交易发起渠道类别',
+busi_code CHAR(23) COMMENT'交易发起渠道编号',
+version INT(9) COMMENT'版本号',
+datetime_ datetime  COMMENT'时间戳'
+)ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
+=======
 
 CREATE TABLE `t5parameter_type` (
   `id` bigint(20) unsigned NOT NULL AUTO_INCREMENT,
@@ -70,6 +105,7 @@ CREATE TABLE `t5parameter_type` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='参数类型表';
 
 
+>>>>>>> 7a8fb6b8d630b39017e6b96f68eb19fbc30cc1c8
 
 
 drop table if exists t6org_data;  

@@ -3,11 +3,14 @@ package com.platform.mvc.login;
 import org.apache.log4j.Logger;
 
 import com.jfinal.aop.Before;
+import com.jfinal.plugin.activerecord.Db;
 import com.platform.constant.ConstantLogin;
 import com.platform.constant.ConstantWebContext;
 import com.platform.mvc.base.BaseController;
 import com.platform.mvc.user.User;
 import com.platform.tools.ToolWeb;
+
+import thairice.constant.ConstantInitMy;
 
 /**
  * 登陆处理
@@ -26,6 +29,10 @@ public class LoginController extends BaseController {
 		if(null != user){//后台
 			redirect("/jf/platform/");
 		}else{
+			System.out.println("hello");
+			Db.update("update pt_dict set zhuangtai = ? where zhuangtai is null", "2");
+			String sql = "update T6org_data set download_path = '9' where download_path='5'";
+			Db.use(ConstantInitMy.db_dataSource_main).update(sql);
 			render("/platform/login/login.html");
 		}
 	}

@@ -2,17 +2,21 @@ package thairice.config;
 
 import org.apache.log4j.Logger;
 
+import thairice.autotask.autoInitFtpScan;
 import thairice.constant.ConstantInitMy;
+import thairice.utils.FtpUtils;
 
 import com.alibaba.druid.filter.stat.StatFilter;
 import com.alibaba.druid.wall.WallConfig;
 import com.alibaba.druid.wall.WallFilter;
 import com.jfinal.config.Plugins;
+import com.jfinal.kit.PropKit;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 import com.jfinal.plugin.activerecord.CaseInsensitiveContainerFactory;
 import com.jfinal.plugin.activerecord.dialect.MysqlDialect;
 import com.jfinal.plugin.activerecord.dialect.OracleDialect;
 import com.jfinal.plugin.activerecord.dialect.PostgreSqlDialect;
+import com.jfinal.plugin.cron4j.Cron4jPlugin;
 import com.jfinal.plugin.druid.DruidPlugin;
 import com.platform.config.mapping.BaseMapping;
 import com.platform.constant.ConstantInit;
@@ -55,8 +59,7 @@ public class DBMappingMy extends BaseMapping{
 		druidPlugin.set(
 				(Integer)aproperity.getparamMapMy(ConstantInit.db_initialSize), 
 				(Integer)aproperity.getparamMapMy(ConstantInit.db_minIdle), 
-				(Integer)aproperity.getparamMapMy(ConstantInit.db_maxActive));
-		
+				(Integer)aproperity.getparamMapMy(ConstantInit.db_maxActive));		
 		log.info("configPlugin 配置Druid数据库连接池过滤器配制");
 		druidPlugin.addFilter(new StatFilter());
 		WallFilter wall = new WallFilter();
@@ -103,6 +106,14 @@ public class DBMappingMy extends BaseMapping{
 		thairice.config.MappingTable.mapping(arp);
 		log.info("configPlugin 注册ActiveRecordPlugin插件");
 		plugins.add(arp);
+		
+		// 添加任务调度插件
+		// 定时扫描初始化ftp文件
+//		FtpUtils.initScanFtp();
+//		plugins.add(new Cron4jPlugin(PropKit.use("autoInitFtpScan.properties")));
+//		// 定时扫描检测远程ftp文件
+//		plugins.add(new Cron4jPlugin(PropKit.use("autoRemoteFtpScan.properties")));
+//		// 定时自动扫描待下载文件并启动ftp下载
+//		plugins.add(new Cron4jPlugin(PropKit.use("autoFtpDownload.properties")));
 	}
-
 }
