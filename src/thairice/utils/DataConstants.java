@@ -30,4 +30,12 @@ public class DataConstants {
 
 	// 用户ID：系统自动
 	public static final BigInteger SYS_USER_ID = new BigInteger("99999999");
+	
+	// 泰国全境，条带行列号
+	public static final String STR_H26V06 = "h26v06";
+	public static final String STR_H27V06 = "h27v06";
+	public static final String STR_H27V07 = "h27v07";
+	public static final String STR_H27V08 = "h27v08";
+	public static final String STR_H28V07 = "h28v07";
+	public static final String STR_H28V08 = "h28v08";
 }
