@@ -6,6 +6,7 @@ import com.platform.mvc.base.BaseModel;
 
 import org.apache.log4j.Logger;
 import com.jfinal.aop.Before;
+import com.jfinal.plugin.activerecord.Page;
 
 import thairice.constant.ConstantInitMy;
 
@@ -34,10 +35,13 @@ public class T10pdt_reportController extends BaseController {
 
 	/**
 	 * 列表
+	 * modified by zhuchaobin, 2018-03-10
 	 */
 	public void index() {
-		paging(ConstantInitMy.db_dataSource_main, splitPage, BaseModel.sqlId_splitPage_select, T10pdt_report.sqlId_splitPage_from);
-		renderWithPath(pthv+"list.html");
+//		paging(ConstantInitMy.db_dataSource_main, splitPage, BaseModel.sqlId_splitPage_select, T10pdt_report.sqlId_splitPage_from);
+		Page page  = T10pdt_report.dao.paginate(getParaToInt(0, 1), 10, "select *", "from T10pdt_report order by id asc");
+		setAttr("blogPage",page );
+		renderWithPath("/ui/thairice/self_center.html");
 	}
 	
 	/**
@@ -85,10 +89,10 @@ public class T10pdt_reportController extends BaseController {
 	
 	/**
 	 * 删除
+	 * modified by zhuchaobin, 2018-03-10
 	 */
 	public void delete() {
-		//T10pdt_reportService.service.delete("t10pdt_report", getPara() == null ? ids : getPara());	//guuid
-		T10pdt_reportService.service.deleteById("t10pdt_report", getPara() == null ? ids : getPara());	//serial int id
+		T10pdt_report.dao.deleteById(getPara() == null ? ids : getPara());
 		redirect(pthc);
 	}
 	
