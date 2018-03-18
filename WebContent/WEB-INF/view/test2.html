@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>LOGIN</h1>
+	<form action="/jf/thairice/t3user/doLogin" method="post">
+<!-- 	<p>userId:<input type="text" name="account"></p>
+	<p>pass:<input type="password" name="password"></p> -->
+	<p><input type="submit" value="login"></p>
+	</form>
+</body>
+</html><!DOCTYPE html>
+<script type="text/javascript" src="jquery-1.9.1.min.js"></script>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<script type=text/javascript>
+function tttt(){  
+	alert("test2");
+	var test = "${cxt!}/jf/platform/login/vali";
+	alert(test);
+   $.ajax({  
+//       url:'detailCourseEvaluate/queryByEvaluateID',
+       url:"/jf/platform/login/vali",
+       async:false,  
+       type:'post',  
+       dataType:"json",  
+       success:function(data){ 
+    	   alert("test");
+    	   alert(data.userName);
+           $("#teacherName").val(data.teacherName);  
+   
+        },  
+        error:function(){  
+   
+            }  
+    });  
+}
+   </script> 
+   
+</head>
+<body>
+	
+dddddddd
+<input name="button" type="button" class="btn3" onclick="tttt()" value="查询">
+	
+</body>
+</html>

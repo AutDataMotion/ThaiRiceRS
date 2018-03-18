@@ -1,0 +1,312 @@
+<!doctype html>
+<html>
+<head>
+<!-- <meta http-equiv="refresh" content="1000;url=/jf/thairice/t10pdt_report/"/> -->
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale-1">
+<title>个人中心</title>
+<link type="text/css" rel="stylesheet" href="/ui/thairice/CSS/base.css">
+<link type="text/css" rel="stylesheet"
+	href="/ui/thairice/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+<link type="text/css" rel="stylesheet"
+	href="/ui/thairice/CSS/self_info.css">
+<link type="text/css" rel="stylesheet"
+	href="/ui/thairice/CSS/nav_css.css">
+<link type="text/css" rel="stylesheet"
+	href="/ui/thairice/data_files/dashboard.css">
+<script src="/ui/thairice/JS/jquery-2.0.0.min.js"></script>
+<script src="/ui/thairice/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+<script type="text/javascript">
+  $(document).ready(function(){
+	  send("/jf/thairice/t10pdt_report/", index, );//
+});
+</script>
+
+</head>
+
+<body onload="/jf/thairice/t10pdt_report/">
+
+	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+		<div class="container-fluid" style="padding-right: 0;">
+			<div class="navbar-header" style="padding-left: 15px;">
+				<button type="button" class="navbar-toggle collapsed"
+					data-toggle="collapse" data-target="#navbar">
+					<span class="sr-only">toggle navigation</span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span> <span
+						class="icon-bar"></span> <span class="icon-bar"></span>
+				</button>
+				<p class="nav-title navbar-brand">Thai agricultural remote
+					sensing monitoring platform</p>
+			</div>
+			<div class="collapse navbar-collapse" id="navbar">
+				<ul class="nav navbar-nav navbar-right">
+					<li><a class="one" href="index.html" title="首页"></a></li>
+					<li class="active"><a class="two dropdown-toggle"
+						data-toggle="dropdown" role="button" aria-haspopup="true"
+						aria-expanded="false" href="#" title="用户"></a>
+						<ul class="dropdown-menu">
+							<li><a href="#">Self center</a></li>
+							<li><a href="my_message.html">My message</a></li>
+							<li><a href="#" data-toggle="modal"
+								data-target="#exampleModal">Log out</a></li>
+						</ul></li>
+					<li><a class="three" href="#" title="换肤"></a></li>
+					<li><a class="four" href="#" title="帮助"></a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<div class="container-fluid">
+		<div class="row">
+			<div class="col-sm-3 col-md-2 sidebar"
+				style="background-color: #0c7897; padding: 0;">
+				<div class="self_info">
+					<p class="self_title text-center">Personal center</p>
+					<dl class="dl-horizontal">
+						<dt class="self_photo">
+							<span class="img_wrap"><img
+								src="/ui/thairice/Images/self_info/photo.jpg" width="100"
+								height="100"></span> <span class="text">Change picture</span>
+						</dt>
+						<dd class="self_dd">
+							<p class="name">Jone</p>
+							<p>928078226</p>						
+						</dd>
+					</dl>
+					<button type="button"
+						class="btn btn-primary btn-lg btn-block reset_btn">Reset
+						password</button>
+					<button type="button"
+						class="btn btn-primary btn-lg btn-block logout_btn">Log
+						out</button>
+				</div>
+			</div>
+			<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+				<div class="self_tablist">
+					<ul class="nav nav-pills" id="myTabs">
+						<li><a href="#tab_one" data-toggle="tab">Personal
+								information</a></li>
+						<li class="active"><a href="#tab_two"
+							onclick="/jf/thairice/t10pdt_report" data-toggle="tab">My
+								report</a></li>
+					</ul>
+				</div>
+				<div class="tab-content">
+					<div class="tab-pane fade" id="tab_one">
+						<form class="form-horizontal tab-form">
+							<p class="text-center form_title">< user information ></p>
+							<div class="form-group">
+								<label class="col-md-3 control-label" style="width: 120px;">Username</label>
+								<div class="col-md-9" style="width: 470px;">
+									<input type="text" class="form-control" placeholder="Jone">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-md-3 control-label" style="width: 120px;">Phonenumber</label>
+								<div class="col-md-9" style="width: 470px;">
+									<input type="text" class="form-control"
+										placeholder="+66 08088999999999">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-md-3 control-label" style="width: 120px;">E-mail</label>
+								<div class="col-md-9" style="width: 470px;">
+									<input type="email" class="form-control"
+										placeholder="jone@example.com">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-md-3 control-label" style="width: 120px;">Yourname</label>
+								<div class="col-md-9" style="width: 470px;">
+									<input type="text" class="form-control"
+										placeholder="Yingluck Chinnawat">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-md-3 control-label" style="width: 120px;">Company</label>
+								<div class="col-md-9" style="width: 470px;">
+									<input type="text" class="form-control" placeholder="Company">
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-md-3 control-label" style="width: 120px;">Industry</label>
+								<div class="col-md-9" style="width: 470px;">
+									<select class="form-control">
+										<option>agricultural</option>
+									</select>
+								</div>
+							</div>
+							<p class="text-center form_title">< Service information ></p>
+							<div class="form-group">
+								<label class="col-md-3 control-label" style="width: 120px;">Select
+									area</label>
+								<div class="col-md-9" style="width: 470px;">
+									<select class="form-control">
+										<option>Mangu</option>
+									</select>
+								</div>
+							</div>
+							<div class="form-group">
+								<label class="col-md-3 control-label"
+									style="width: 120px; padding-left: 0;">Select services</label>
+								<div class="col-md-9" style="width: 470px;">
+									<div class="checkbox">
+										<label> <input type="checkbox" value=""> Rice
+											planting area monitoring
+										</label>
+									</div>
+									<div class="checkbox">
+										<label> <input type="checkbox" value=""> Rice
+											drought monitoring
+										</label>
+									</div>
+									<div class="checkbox">
+										<label> <input type="checkbox" value=""> Rice
+											condition monitoring
+										</label>
+									</div>
+									<div class="checkbox">
+										<label> <input type="checkbox" value=""> Rice
+											production estimates
+										</label>
+									</div>
+								</div>
+							</div>
+							<div class="form-group" style="margin-top: 100px;">
+								<label class="col-sm-2 control-label" style="width: 120px;">Service
+									cycle</label>
+								<div class="col-sm-10" style="width: 540px;">
+									<div class="col-sm-4">
+										<div class="input-group date" id='starttime1'>
+											<input type="text" class="form-control"> <span
+												class="input-group-addon"> <i
+												class="glyphicon glyphicon-calendar"></i>
+											</span>
+										</div>
+									</div>
+									<div class="col-sm-1" style="text-align: center;">
+										<label class="control-label">to</label>
+									</div>
+									<div class="col-sm-4">
+										<div class="input-group date" id='endtime1'>
+											<input type="text" class="form-control"> <span
+												class="input-group-addon"> <i
+												class="glyphicon glyphicon-calendar"></i>
+											</span>
+										</div>
+									</div>
+								</div>
+							</div>
+							<div class="form-group">
+								<button type="button"
+									class="btn btn-primary btn-lg btn-block modify_btn">Modify
+									the information</button>
+							</div>
+						</form>
+					</div>
+					<div class="tab-pane fade in active" id="tab_two">
+						<div class="tab_btns">
+							<button type="button" class="btn btn-success">Download
+								the selected</button>
+							<button type="button" class="btn btn-warning">Batch
+								download</button>
+							<button type="button" class="btn btn-info">Merging
+								download</button>
+						</div>
+						<div class="tab_table_wrap">
+						
+							<table class="table table-bordered table-condensed"
+								align="center" cellpadding="0" cellspacing="0">
+								<thead>
+									<tr>
+										<th style="border-bottom: none;"><input type="checkbox"
+											align="center">Select</th>
+										<th style="border-bottom: none;">Start date</th>
+										<th style="border-bottom: none;">End date</th>
+										<th style="border-bottom: none;">Zone code</th>
+										<th style="border-bottom: none;">Pdt type</th>
+										<th style="border-bottom: none;">Suffix</th>
+										<th style="border-bottom: none;">Option</th>
+									</tr>
+								</thead>
+								<tbody>
+									<%for(x in blogPage.list){ %>
+									<tr>
+										<td style="text-align: center;"><input type="checkbox"
+											name="id" value=$(x.id)></td>
+										<td style="text-align: center;">${x.start_time}</td>
+										<td style="text-align: center;">${x.end_time}</td>
+										<td style="text-align: center;">${x.zone_code}</td>
+										<td style="text-align: center;">${x.pdt_type}</td>
+										<td style="text-align: center;">${x.suffix}</td>
+										<td style="text-align: center;"><a href="/jf/thairice/t10pdt_report/delete/${x.id}">删除</a></td>
+									</tr>
+									<%}%>
+								</tbody>
+							</table>
+							<%includeFileTemplate("/common/_paginate.html",
+							{"currentPage":blogPage.pageNumber,"totalPage":blogPage.totalPage,"actionUrl":"/jf/thairice/t10pdt_report/"})
+							{} %>
+
+						<!-- <nav aria-label="...">
+                          <ul class="pager">
+                            <li><a href="#">Previous</a></li>
+                            <li><a href="#">1</a>
+                            <li><a href="#">2</a>
+                            <li><a href="#">3</a>
+                            <li><a href="#">4</a>
+                            <li><a href="#">5</a>
+                            <li><a href="#">Next</a></li>
+                          </ul>
+                        </nav> -->
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- Logout Modal-->
+	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+					<button class="close" type="button" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body">Select "Logout" below if you are ready
+					to end your current session.</div>
+				<div class="modal-footer">
+					<button class="btn btn-secondary" type="button"
+						data-dismiss="modal">Cancel</button>
+					<a class="btn btn-primary" href="login.html">Logout</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>
+<script src="datetime-picker/moment.js"></script>
+<script src="datetime-picker/bootstrap-datetimepicker.min.js"></script>
+<script>
+	$(function(){
+		$('#myTabs a').click(function (e) {
+		  e.preventDefault()
+		  $(this).tab('show')
+		});
+		//日期选择插件
+		$('#starttime1').datetimepicker({  
+			format: 'YYYY-MM-DD',  
+			locale: moment.locale('zh-cn')  
+		}); 
+		$('#endtime1').datetimepicker({  
+			format: 'YYYY-MM-DD',  
+			locale: moment.locale('zh-cn')  
+		});
+		$('.tab_table_wrap tbody tr:odd td').css('background-color','#dbeff6');
+	})
+</script>

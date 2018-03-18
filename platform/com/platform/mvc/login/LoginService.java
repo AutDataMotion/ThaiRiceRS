@@ -16,7 +16,7 @@ import com.jfinal.aop.Enhancer;
 import com.jfinal.plugin.activerecord.Db;
 import com.platform.constant.ConstantInit;
 import com.platform.constant.ConstantLogin;
-import com.platform.interceptor.AuthInterceptor;
+//import com.platform.interceptor.AuthInterceptor;
 import com.platform.mvc.base.BaseService;
 import com.platform.mvc.user.User;
 import com.platform.mvc.user.UserInfo;
@@ -189,7 +189,7 @@ public class LoginService extends BaseService {
 		//bool = true;
 		if (bool) {
 			// 密码验证成功
-			AuthInterceptor.setCurrentUser(request, response, user, autoLogin);// 设置登录账户
+//			AuthInterceptor.setCurrentUser(request, response, user, autoLogin);// 设置登录账户
 			return ConstantLogin.login_info_3;
 		} else {
 			// 密码验证失败

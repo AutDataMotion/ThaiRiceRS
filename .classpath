@@ -69,9 +69,12 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/json.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/ice-3.6.2.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-pool2-2.4.1.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre1.8.0_161"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/UtilZW"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/DUCRPC"/>
 	<classpathentry kind="lib" path="D:/DUC/github6/cron4j-2.2.5.jar"/>
+	<classpathentry kind="lib" path="D:/DUC/github6/jstl.jar"/>
+	<classpathentry kind="lib" path="D:/DUC/github6/jfinal-mail-plugin-2.2.jar"/>
+	<classpathentry kind="lib" path="D:/DUC/泰国农业遥感v20180108/commons-email-1.5-bin/commons-email-1.5/commons-email-1.5.jar"/>
 	<classpathentry kind="output" path="WebContent/WEB-INF/classes"/>
 </classpath>

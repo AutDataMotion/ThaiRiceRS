@@ -13,7 +13,7 @@ public class T3userValidator extends Validator {
 	protected void validate(Controller controller) {
 		String actionKey = getActionKey();
 		if (actionKey.equals(T3userController.pthc+"save")){
-			// validateString("username", 6, 30, "usernameMsg", "请输入登录账号!");
+			 validateString("username", 6, 30, "usernameMsg", "请输入登录账号!");
 			
 		} else if (actionKey.equals(T3userController.pthc+"update")){
 			

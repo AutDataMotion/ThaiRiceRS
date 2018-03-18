@@ -4,11 +4,13 @@ import com.platform.constant.ConstantRender;
 import com.platform.mvc.base.BaseController;
 import com.platform.mvc.base.BaseModel;
 
+import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import com.jfinal.aop.Before;
 import com.jfinal.plugin.activerecord.Page;
 
 import thairice.constant.ConstantInitMy;
+import thairice.entity.ResultEntity;
 
 
 /**
@@ -28,7 +30,7 @@ import thairice.constant.ConstantInitMy;
 public class T10pdt_reportController extends BaseController {
 
 	@SuppressWarnings("unused")
-	private static Logger log = Logger.getLogger(T10pdt_reportController.class);
+	private static Logger LOG = Logger.getLogger(T10pdt_reportController.class);
 
 	public static final String pthc = "/jf/thairice/t10pdt_report/";
 	public static final String pthv = "/thairice/t10pdt_report/";
@@ -39,7 +41,19 @@ public class T10pdt_reportController extends BaseController {
 	 */
 	public void index() {
 //		paging(ConstantInitMy.db_dataSource_main, splitPage, BaseModel.sqlId_splitPage_select, T10pdt_report.sqlId_splitPage_from);
-		Page page  = T10pdt_report.dao.paginate(getParaToInt(0, 1), 10, "select *", "from T10pdt_report order by id asc");
+		setAttr("path", "/ui/thairice/");
+		// 处理结果
+		ResultEntity res = null;
+		// 1、获取用户账号
+		String account = getPara("account", "").trim();
+		account = "333";
+		if (StringUtils.isBlank(account)) {
+			LOG.debug("用户账号不能为空");
+			res = new ResultEntity("0003");
+			renderJson(res);
+			return;
+		}
+		Page page  = T10pdt_report.dao.paginate(getParaToInt(0, 1), 10, "select *", "from T10pdt_report t where t.userid = '" + account + "' order by id asc");
 		setAttr("blogPage",page );
 		renderWithPath("/ui/thairice/self_center.html");
 	}

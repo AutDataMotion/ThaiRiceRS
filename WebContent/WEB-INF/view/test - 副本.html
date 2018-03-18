@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+
+<script type=text/javascript>
+function tttt(){  
+	alert("test2");
+   $.ajax({  
+//       url:'detailCourseEvaluate/queryByEvaluateID',
+       url:"${cxt!}/jf/platform/login/vali",
+       async:false,  
+       type:'post',  
+       dataType:"json",  
+       success:function(data){ 
+    	   alert("test");
+    	   alert(data.userName);
+           $("#teacherName").val(data.teacherName);  
+   
+        },  
+        error:function(){  
+   
+            }  
+    });  
+}
+   </script> 
+   
+</head>
+<body>
+	
+dddddddd
+<input name="button" type="button" class="btn3" onclick="tttt()" value="查询">
+	
+</body>
+</html>

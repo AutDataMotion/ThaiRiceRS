@@ -107,6 +107,18 @@ public class T3user extends BaseModel<T3user> {
 	 */
 	public static final String column_status_ = "status_";
 	
+	// added by zhuchaobin, 20180314
+	/**
+	 * 字段描述： 验证码
+	 * 字段类型：  长度：null
+	 */
+	public static final String column_identiCode = "identiCode";
+	
+	/**
+	 * 字段描述： 验证码
+	 * 字段类型：  长度：null
+	 */
+	public static final String column_expiryTime = "expiryTime";
 	
 	/**
 	 * sqlId : thairice.t3user.splitPageFrom
@@ -128,6 +140,9 @@ public class T3user extends BaseModel<T3user> {
 	private String industry;
 	private Timestamp create_time;
 	private String status_;
+	// added by zhuchaobin, 20180314
+	private String identiCode;
+	private Timestamp expiryTime;
 
 	public void setId(BigInteger id){
 		set(column_id, id);
@@ -207,6 +222,21 @@ public class T3user extends BaseModel<T3user> {
 	public <T> T getCreate_time() {
 		return get(column_create_time);
 	}
+	// added by zhuchaobin, 20180314
+	public <T> T getExpiryTime() {
+		return get(column_expiryTime);
+	}	
+	public void setExpiryTime(Timestamp expiryTime){
+		set(column_expiryTime, expiryTime);
+	}
+	public void setIdentiCode_(String identiCode){
+		set(column_identiCode, identiCode);
+	}
+	public <T> T getIdentiCode() {
+		return get(column_identiCode);
+	}
+	//
+	
 	public void setStatus_(String status_){
 		set(column_status_, status_);
 	}

@@ -60,12 +60,12 @@ public class autoInitFtpScan extends Controller implements ITask {
 			// 如果开关为打开则开始逐天扫描
 			if (DataConstants.FLAGE_ON.equals(inlzSwtc)) {
 				// 初始化完成关闭开关
-//				if (ParamUtils.updateParam(ParamUtils.PC_FTP_AUTO_DWLD, ParamUtils.INLZ_SWTC,
-//						DataConstants.FLAGE_OFF)) {
-//					LOG.info("初始化完成关闭开关关闭成功");
-//				} else {
-//					LOG.error("初始化完成关闭开关关闭失败");
-//				}
+				if (ParamUtils.updateParam(ParamUtils.PC_FTP_AUTO_DWLD, ParamUtils.INLZ_SWTC,
+						DataConstants.FLAGE_OFF)) {
+					LOG.info("初始化完成关闭开关关闭成功");
+				} else {
+					LOG.error("初始化完成关闭开关关闭失败");
+				}
 				List<Date> dateList = new ArrayList<Date>();
 				try {
 					dateList = DatesUtils.getBetweenDates(inlzStDt, inlzEdDt);
@@ -79,12 +79,12 @@ public class autoInitFtpScan extends Controller implements ITask {
 					final FtpUtils ftpUtils = new FtpUtils();
 					FTPClient ftpClient = ftpUtils.connectFtp();
 					for (Date eleDate : dateList) {
-						// 更新初始数据开始日期
-						inlzStDt = ParamUtils.getParam(ParamUtils.PC_FTP_AUTO_DWLD, ParamUtils.INLZ_STDT);						
-						String dateStr = new SimpleDateFormat("yyyyMMdd").format(eleDate);
-						if(dateStr.compareTo(inlzStDt) > 0) {
-							ParamUtils.updateParam(ParamUtils.PC_FTP_AUTO_DWLD, ParamUtils.INLZ_STDT, dateStr);
-						}
+//						// 更新初始数据开始日期
+//						inlzStDt = ParamUtils.getParam(ParamUtils.PC_FTP_AUTO_DWLD, ParamUtils.INLZ_STDT);						
+//						String dateStr = new SimpleDateFormat("yyyyMMdd").format(eleDate);
+//						if(dateStr.compareTo(inlzStDt) > 0) {
+//							ParamUtils.updateParam(ParamUtils.PC_FTP_AUTO_DWLD, ParamUtils.INLZ_STDT, dateStr);
+//						}
 
 						Calendar cal = Calendar.getInstance();
 						List<String> remotePathList = ParamUtils.getParamList(ParamUtils.PC_FTP_AUTO_DWLD,

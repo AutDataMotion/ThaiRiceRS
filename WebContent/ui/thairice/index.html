@@ -1,0 +1,386 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale-1">
+<title>首页</title>
+<link type="text/css" rel="stylesheet" href="CSS/base.css">
+<link type="text/css" rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.min.css">
+<link type="text/css" rel="stylesheet" href="datetime-picker/bootstrap-datetimepicker.min.css">
+<link type="text/css" rel="stylesheet" href="CSS/index.css">
+<link type="text/css" rel="stylesheet" href="CSS/nav_css.css">
+<script src="JS/jquery-2.0.0.min.js"></script>
+<script src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+<script src="area-select/Area.js"></script>
+<script src="area-select/AreaData_min.js"></script>
+<script src="datetime-picker/moment.js"></script>
+<script src="datetime-picker/bootstrap-datetimepicker.min.js"></script>
+<script src="JS/index.js"></script>
+<script>
+	//进度条
+	var progress = 1;  
+    var totalWidth = $('#progress').css('width');  
+    var initstr='';  
+    $(function () {  
+        $('.report_btn02').click(function(e) {
+			$('.BbReportcons').hide();
+			$('.progress').show().delay(3000).hide(0);
+			$('.BbReportGenerate').delay(3000).show(0);
+			initstr = setInterval("change('progress-bar')",100); 
+		});
+    })  
+    function change(id){  
+        console.log(progress);  
+        $('#'+id).css({  
+            width:progress*29  
+        })  
+        if(progress==totalWidth){  
+            clearInterval(initstr);
+        }  
+        progress= progress+1;  
+    }
+	//进度条结束
+	$(function () {  
+		//日期选择插件
+		$('#date_choose').datetimepicker({  
+			format: 'YYYY-MM-DD',  
+			locale: moment.locale('zh-cn')  
+		}); 
+		//地区选择插件
+		initComplexArea('seachprov', 'seachcity', 'seachdistrict', area_array, sub_array, '44', '0', '0');  
+	});
+	//得到地区码
+	function getAreaID(){
+		var area = 0;          
+		if($("#seachdistrict").val() != "0"){
+			area = $("#seachdistrict").val();                
+		}else if ($("#seachcity").val() != "0"){
+			area = $("#seachcity").val();
+		}else{
+			area = $("#seachprov").val();
+		}
+		return area;
+	}
+	//根据地区码查询地区名
+	function getAreaNamebyID(areaID){
+		var areaName = "";
+		if(areaID.length == 2){
+			areaName = area_array[areaID];
+		}else if(areaID.length == 4){
+			var index1 = areaID.substring(0, 2);
+			areaName = area_array[index1] + " " + sub_array[index1][areaID];
+		}else if(areaID.length == 6){
+			var index1 = areaID.substring(0, 2);
+			var index2 = areaID.substring(0, 4);
+			areaName = area_array[index1] + " " + sub_array[index1][index2] + " " + sub_arr[index2][areaID];
+		}
+		return areaName;
+	}
+	
+	
+</script>
+</head>
+
+<body>
+
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  <div class="container-fluid" style="padding-right:0;">
+    <div class="navbar-header" style="padding-left:15px;">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
+      	<span class="sr-only">toggle navigation</span> 
+        <span class="icon-bar"></span> 
+        <span class="icon-bar"></span> 
+        <span class="icon-bar"></span> 
+        <span class="icon-bar"></span> 
+      </button>
+      <p class="nav-title navbar-brand">Thai agricultural remote sensing monitoring platform </p>
+    </div>
+    <div class="collapse navbar-collapse" id="navbar">
+      <ul class="nav navbar-nav navbar-right">
+        <li class="active"><a class="one" href="#" title="首页"></a></li>
+        <li>
+        	<a class="two dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" href="#" title="用户"></a>
+            <ul class="dropdown-menu">
+            	<li><a href="self_center.html">Self center</a></li>
+                <li><a href="my_message.html">My message</a></li>
+                <li><a href="backend_login.html" data-toggle="modal" data-target="#exampleModal">Log out</a></li>
+            </ul>
+        </li>
+        <li><a class="three" href="#" title="换肤"></a></li>
+        <li><a class="four" href="#" title="帮助"></a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="BbAreaSelect" style="z-index: 9;position: fixed;">
+  <form class="form-inline">
+    <div class="form-group">
+      <select id="seachprov" name="seachprov" onChange="changeComplexProvince(this.value, sub_array, 'seachcity', 'seachdistrict');">
+      </select>
+    </div>
+    <div class="form-group">
+      <select id="seachcity" name="homecity" onChange="changeCity(this.value,'seachdistrict','seachdistrict');">
+      </select>
+    </div>
+    <div class="form-group"> <span id="seachdistrict_div">
+      <select id="seachdistrict" name="seachdistrict">
+      </select>
+      </span> </div>
+    <div class="form-group">
+      <label style="line-height:50px; padding:0 5px; font-weight:normal;">时间：</label>
+      <div class="input-group date" id='date_choose'>
+        <input type="text" class="form-control" style="width:150px; float:left;">
+        <span class="input-group-addon"> <i class="glyphicon glyphicon-calendar"></i> </span> </div>
+    </div>
+  </form>
+</div>
+<div class="BbProductMenuWrap">
+  <div class="BbProductabs"><span></span></div>
+  <div class="BbProductMenu">
+    <div class="list-group">
+      <div class="list-group-item">
+        <h4 class="list-group-item-heading">product</h4>
+        <p class="list-group-item-text one">Rice planting area monitoring</p>
+        <p class="list-group-item-text two">Rice drought monitoring</p>
+        <p class="list-group-item-text three">Rice condition monitoring</p>
+        <p class="list-group-item-text active four">Rice production estimates</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="BbReportWrap">
+  <div class="BbReport">
+      <div class="BbReportcons">
+      	<div class="BbReportLeft"> 
+            <span><img src="Images/index/report_abs01.png" width="355" height="440"></span>
+            <button type="button" class="btn btn-primary btn-lg report_btn01">Statistical analysis</button>
+        </div>
+        <div class="BbReportRight">
+            <div class="container" style="width:500px;">
+              <div class="row">
+                <div class="col-sm-12 report_graph">
+                    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+                    <div id="main" style="height:295px; width:500px;"></div>
+                    <!-- ECharts单文件引入 -->
+                    <script src="http://echarts.baidu.com/build/dist/echarts.js"></script>
+                    <script type="text/javascript">
+                        // 路径配置
+                        require.config({
+                            paths: {
+                                echarts: 'http://echarts.baidu.com/build/dist'
+                            }
+                        });
+                        
+                        // 使用
+                        require(
+                            [
+                                'echarts',
+                                'echarts/chart/line',
+                                'echarts/chart/bar' // 使用柱状图就加载bar模块，按需加载
+                            ],
+                            function (ec) {
+                                // 基于准备好的dom，初始化echarts图表
+                                var myChart = ec.init(document.getElementById('main')); 
+                                var option = {
+                                   title : {
+                                        text: 'Results of the analysis',
+                                        textStyle:{//标题内容的样式
+                                        color:'#00aace',
+                                        fontStyle:'normal',//主标题文字字体风格，默认normal，有italic(斜体),oblique(斜体)
+                                        fontSize:14//主题文字字体大小，默认为18px
+                                    },
+                                    left:"center",
+                                    top:'20px'
+                                    },
+                                    tooltip: {
+                                        show: true
+                                    },
+                                    legend: {
+                                        data:['production']
+                                    },
+                                    xAxis : [
+                                        {
+                                            type : 'category',
+                                            splitLine:{
+                                        　　　　show:false
+                                        　　 },
+                                            data : ["0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15"]
+                                        }
+                                    ],
+                                    yAxis : [
+                                        {
+                                            type : 'value',
+                                            axisLabel : {
+                                                formatter: '{value} kg'
+                                            },
+                                            min:0,
+                                            max:5000,
+                                        }
+                                    ],
+                                    series : [
+                                        {
+                                            "name":"production",
+                                            "type":"line",
+                                            "data":[1000, 2000, 4000, 1000, 1000, 2000,2345,3456,5000,3333,4444,3333,1234,2334,2312,5000]
+                                        }
+                                    ]
+                                };
+                        
+                                // 为echarts对象加载数据 
+                                myChart.setOption(option); 
+                            }
+                        );
+                    </script>
+                </div>
+              </div>
+              <div class="row">
+                <div class="col-sm-12 report_description">
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque</p>
+                </div>
+              </div>
+              <button type="button" class="btn btn-primary btn-lg report_btn02">Generate reports</button>
+            </div>
+        </div>
+      </div>
+      <div id="progress" class="progress">  
+        <div id="progress-bar" class="progress-bar">  
+            <span class="sr-only">40% 完成</span>  
+        </div>  
+      </div>
+      <div class="BbReportGenerate">
+      	<div class="generate_cons">
+        	<p class="title">Document preview</p>
+          	<button type="button" class="close generate_btn" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <div class="container" style="width:840px; padding:0;">
+            	<dl class="dl-horizontal" style="height:180px; width:760px; margin:15px auto;">
+                  <dt style="width:260px; margin-right:18px;"><span><img src="Images/index/report.jpg" width="260" height="180"></span></dt>
+                  <dd>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque
+Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque</dd>
+                </dl>
+            </div>
+            <div class="container" style="width:760px;">
+              <div class="row">
+                <div class="col-sm-12 report_graph">
+                    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+                    <div id="main01" style="height:295px; width:760px;"></div>
+                    <!-- ECharts单文件引入 -->
+                    <script src="http://echarts.baidu.com/build/dist/echarts.js"></script>
+                    <script type="text/javascript">
+                        // 路径配置
+                        require.config({
+                            paths: {
+                                echarts: 'http://echarts.baidu.com/build/dist'
+                            }
+                        });
+                        
+                        // 使用
+                        require(
+                            [
+                                'echarts',
+                                'echarts/chart/line',
+                                'echarts/chart/bar' // 使用柱状图就加载bar模块，按需加载
+                            ],
+                            function (ec) {
+                                // 基于准备好的dom，初始化echarts图表
+                                var myChart01 = ec.init(document.getElementById('main01')); 
+                                var option = {
+                                  // title : {
+//                                        text: 'Results of the analysis',
+//                                        textStyle:{//标题内容的样式
+//                                        color:'#00aace',
+//                                        fontStyle:'normal',//主标题文字字体风格，默认normal，有italic(斜体),oblique(斜体)
+//                                        fontSize:14//主题文字字体大小，默认为18px
+//                                    },
+//                                    left:"center",
+//                                    top:'20px'
+//                                    },
+                                    tooltip: {
+                                        show: true
+                                    },
+                                    legend: {
+                                        data:['production']
+                                    },
+                                    xAxis : [
+                                        {
+                                            type : 'category',
+                                            splitLine:{
+                                        　　　　show:false
+                                        　　 },
+                                            data : ["0","1","2","3","4","5","6","7","8","9","10","11","12","13","14","15"]
+                                        }
+                                    ],
+                                    yAxis : [
+                                        {
+                                            type : 'value',
+                                            axisLabel : {
+                                                formatter: '{value} kg'
+                                            },
+                                            min:0,
+                                            max:5000,
+                                        }
+                                    ],
+                                    series : [
+                                        {
+                                            "name":"production",
+                                            "type":"line",
+                                            "data":[1000, 2000, 4000, 1000, 1000, 2000,2345,3456,5000,3333,4444,3333,1234,2334,2312,5000]
+                                        }
+                                    ]
+                                };
+                        
+                                // 为echarts对象加载数据 
+                                myChart01.setOption(option); 
+                            }
+                        );
+                    </script>
+                </div>
+              </div>
+              <!--<div class="row">
+                <div class="col-sm-12 report_description">
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque</p>
+                </div>
+              </div>
+              <button type="button" class="btn btn-primary btn-lg report_btn02">Generate reports</button>-->
+            </div>
+            <p class="btns_group" style="margin-top:0;">
+              <!-- 按钮触发模态框 -->
+              <button type="button" class="btn btn-primary btn-lg download_btn" data-toggle="modal" data-target="#exampleModal" data-whatever="System message">Download</button>
+              <button type="button" class="btn btn-default btn-lg cancel_btn">Cancel</button>
+            </p>
+        </div>
+      </div>	
+  </div>
+  
+</div>
+	<!-- 模态框（Modal） -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+            <h4 class="modal-title" id="exampleModalLabel">System message</h4>
+          </div>
+          <div class="modal-body">
+            <p class="modal_text">Generate the report can be in <span>the center of the individual - my report page</span> views</p>
+          </div>
+          <div class="modal-footer">
+            <input type="checkbox">Don't tip
+            <button type="button" class="btn btn-primary" data-dismiss="modal" style="margin:0 15px; padding:6px 40px;">Ok, I know !</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <script type="text/javascript">
+		$('#exampleModal').on('show.bs.modal', function (event) {
+		  var button = $(event.relatedTarget) // Button that triggered the modal
+		  var recipient = button.data('whatever') // Extract info from data-* attributes
+		  //var modal = $(this)
+		  //modal.find('.modal-title').text(recipient + '专题')
+		})
+	</script>
+
+</body>
+</html>

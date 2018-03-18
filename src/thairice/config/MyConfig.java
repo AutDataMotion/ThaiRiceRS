@@ -27,6 +27,7 @@ import com.jfinal.config.Interceptors;
 import com.jfinal.config.JFinalConfig;
 import com.jfinal.config.Plugins;
 import com.jfinal.config.Routes;
+import com.jfinal.core.JFinal;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 import com.jfinal.plugin.c3p0.C3p0Plugin;
 /**
@@ -73,7 +74,7 @@ public class MyConfig extends JFinalConfig {
 	@Override
 	public void configConstant(Constants me) {
 		// TODO Auto-generated method stub
-		
+		me.setDevMode(true);
 	}
 	@Override
 	public void configRoute(Routes me) {
@@ -92,4 +93,25 @@ public class MyConfig extends JFinalConfig {
 		// TODO Auto-generated method stub
 		
 	}
+	
+	/**
+	 * 运行此 main 方法可以启动项目，此main方法可以放置在任意的Class类定义中，不一定要放于此
+	 * 
+	 * 使用本方法启动过第一次以后，会在开发工具的 debug、run config 中自动生成
+	 * 一条启动配置，可对该自动生成的配置再添加额外的配置项，例如 VM argument 可配置为：
+	 * -XX:PermSize=64M -XX:MaxPermSize=256M
+	 */
+	public static void main(String[] args) {
+		/**
+		 * 特别注意：Eclipse 之下建议的启动方式
+		 */
+//		JFinal.start("WebRoot", 80, "/", 5);
+
+		/**
+		 * 特别注意：IDEA 之下建议的启动方式，仅比 eclipse 之下少了最后一个参数
+		 */
+		 JFinal.start("WebRoot", 80, "/", 5);
+//		MailKit.send("nanjing2007@163.com",Arrays.asList("抄送1","抄送2"), "测试标题", "测试邮件内容");
+	}
+	
 }

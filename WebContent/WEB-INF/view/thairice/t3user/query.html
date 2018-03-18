@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+	<h1>注册页面</h1yemian>
+	<form action="/jf/thairice/t3user/doReg" method="post">
+	<p>Username<input type="text" name="t3user.account" value="${t3user.account!''}">${accountMsg!''}</p>
+	<p>Password<input type="password" name="t3user.pwd" >${passMsg!''}</p>
+	<p>Verify Password<input type="password" name="confirmPass">${confirmPassMsg!''}</p>
+	<p>Phonenumber<input type="text" name="t3user.phone" value="${t3user.phone!''}">${phoneMsg!''}</p>
+	<p>E-mail<input type="text" name="t3user.email" value="${t3user.email!''}">${emailMsg!''}</p>
+	<p>Yourname<input type="text" name="t3user.name_" value="${t3user.name_!''}">${nameMsg!''}</p>
+	<p>Industry<input type="text" name="t3user.industry" value="${t3user.industry!''}">${industryMsg!''}</p>
+	<p>company:<input type="text" name="t3user.company" value="${t3user.company!''}">${companyMsg!''}</p>
+	<p><input type="submit" value="regist"></p>
+	</form>
+</body>
+</html> 

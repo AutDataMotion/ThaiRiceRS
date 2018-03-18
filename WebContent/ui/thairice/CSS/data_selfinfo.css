@@ -1,0 +1,76 @@
+@charset "utf-8";
+/* CSS Document */
+.personal_text{
+	font-size:20px;
+	color:#06a6ce;
+	font-weight:bold;
+	border-bottom:1px solid #d4d4d4;
+}
+.personal_text span{
+	display:inline-block;
+	border-bottom:5px solid #06a6ce;
+}
+.self_left{
+	width:230px;
+	float:left;
+	background:#0c7897;
+	position:absolute;
+	top:0px;
+	bottom:0;
+	left:0;
+}
+.self_content{
+	margin-left:230px;
+}
+.dl-horizontal{
+	margin:20px auto 40px;
+	color:#fff;
+	width:200px;
+}
+.dl-horizontal .self_photo{
+	width:98px;
+	height:128px;
+	text-align:center;
+}
+.self_photo .img_wrap{
+	width:98px;
+	height:98px;
+	border-radius:6px;
+	overflow:hidden;
+	display:block;
+}
+.self_photo .text{
+	height:30px;
+	line-height:30px;
+	font-size:12px;
+	font-weight:normal;
+}
+.dl-horizontal .self_dd{
+	margin-left:115px;
+	padding-top:20px;
+	font-size:16px;
+}
+.dl-horizontal .self_dd .name{
+	font-weight:bold;
+	font-size:20px;
+}
+.reset_btn{
+	background:#00bbe2 url(../Images/self_info/lock_icon.png) no-repeat 10px center;
+	border-radius:0;
+}
+.logout_btn{
+	background:#00bbe2 url(../Images/self_info/log_out_icon.png) no-repeat 10px center;
+	border-radius:0;
+}
+.self_title{
+	width:100%;
+	height:56px;
+	line-height:56px;
+	border-bottom:1px solid #006980;
+	font-size:20px;
+	color:#fff;
+	font-weight:bold;
+}
+label{
+	font-weight:normal;
+}

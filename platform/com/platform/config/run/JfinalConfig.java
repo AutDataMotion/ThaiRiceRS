@@ -1,10 +1,14 @@
 package com.platform.config.run;
 
+import java.util.Arrays;
+
 import org.apache.log4j.Logger;
 
 import thairice.config.DBMappingMy;
 import thairice.constant.PropertiesInitMy;
+import thairice.utils.EmailUtils;
 import thairice.utils.FtpUtils;
+import thairice.utils.ParamUtils;
 import zeroc.util.IceClientUtil;
 
 import com.jfinal.config.Constants;
@@ -15,10 +19,13 @@ import com.jfinal.config.Plugins;
 import com.jfinal.config.Routes;
 import com.jfinal.core.JFinal;
 import com.jfinal.i18n.I18nInterceptor;
+import com.jfinal.kit.PropKit;
 import com.jfinal.plugin.activerecord.tx.TxByMethods;
 import com.jfinal.plugin.activerecord.tx.TxByRegex;
 import com.jfinal.plugin.ehcache.EhCachePlugin;
 import com.jfinal.plugin.redis.RedisPlugin;
+import com.jfplugin.mail.MailKit;
+import com.jfplugin.mail.MailPlugin;
 import com.platform.beetl.render.MyBeetlRenderFactory;
 import com.platform.config.mapping.PlatformMapping;
 import com.platform.config.routes.PlatformRoutes;
@@ -140,6 +147,8 @@ public class JfinalConfig extends JFinalConfig {
 
 		log.info("afterJFinalStart 配置文件上传命名策略插件");
 		plugins.add(new FileRenamePlugin());
+		
+
 	}
 
 	/**
@@ -150,10 +159,10 @@ public class JfinalConfig extends JFinalConfig {
 		// me.add(new SessionInViewInterceptor());
 
 		log.info("configInterceptor 权限认证拦截器");
-		interceptors.add(new AuthInterceptor());
+//		interceptors.add(new AuthInterceptor());
 
 		log.info("configInterceptor 参数封装拦截器");
-		interceptors.add(new ParamPkgInterceptor());
+//		interceptors.add(new ParamPkgInterceptor());
 
 		log.info("configInterceptor 配置开启事物规则");
 		interceptors.add(new TxByMethods("save", "update", "delete"));
@@ -196,8 +205,15 @@ public class JfinalConfig extends JFinalConfig {
 //
 //		log.info("afterJFinalStart 数据清理");
 //		DataClear.start();
-		FtpUtils.initScanFtp();
-
+//		FtpUtils.initScanFtp();
+//		try {
+//			for(int i= 0 ; i < 10; i++ )
+//			EmailUtils.findPwd("333");
+//		} catch (Exception e1) {
+//			// TODO Auto-generated catch block
+//			e1.printStackTrace();
+//		}
+//		ParamUtils.initEmailParm();
 	}
 
 	/**

@@ -24,10 +24,10 @@ import thairice.constant.ConstantInitMy;
  * 
  */
 //@Controller(controllerKey = "/jf/thairice/t3user")
-public class T3userController extends BaseController {
+public class T3userController2 extends BaseController {
 
 	@SuppressWarnings("unused")
-	private static Logger log = Logger.getLogger(T3userController.class);
+	private static Logger log = Logger.getLogger(T3userController2.class);
 
 	public static final String pthc = "/jf/thairice/t3user/";
 	public static final String pthv = "/thairice/t3user/";

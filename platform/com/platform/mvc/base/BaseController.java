@@ -17,7 +17,7 @@ import com.jfinal.render.JsonRender;
 import com.platform.constant.ConstantInit;
 import com.platform.constant.ConstantWebContext;
 import com.platform.dto.SplitPage;
-import com.platform.interceptor.AuthInterceptor;
+//import com.platform.interceptor.AuthInterceptor;
 import com.platform.mvc.syslog.Syslog;
 import com.platform.mvc.user.User;
 import com.platform.plugin.PropertiesPlugin;
@@ -254,15 +254,16 @@ public abstract class BaseController extends Controller {
 	protected boolean authCode() {
 		String authCodePram = getPara(ConstantWebContext.request_authCode);
 		
-		String authCodeCookie = AuthInterceptor.getAuthCode(getRequest());
-		if (null != authCodePram && null != authCodeCookie) {
-			authCodePram = authCodePram.toLowerCase();// 统一小写
-			authCodeCookie = authCodeCookie.toLowerCase();// 统一小写
-			if (authCodePram.equals(authCodeCookie)) {
-				return true;
-			}
-		}
-		return false;
+//		String authCodeCookie = AuthInterceptor.getAuthCode(getRequest());
+//		if (null != authCodePram && null != authCodeCookie) {
+//			authCodePram = authCodePram.toLowerCase();// 统一小写
+//			authCodeCookie = authCodeCookie.toLowerCase();// 统一小写
+//			if (authCodePram.equals(authCodeCookie)) {
+//				return true;
+//			}
+//		}
+//		return ture;
+		return true;
 	}
 
 	/**

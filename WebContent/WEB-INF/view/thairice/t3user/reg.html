@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+</head>
+<body>
+
+			<%for(x in testList){ %>
+${x!''}
+			<%}%>
+			
+	<h1>注册页面33333ee</h1yemian>
+	<form action="/jf/thairice/t3user/doReg" method="post">
+	<p>Username<input type="text" name="t3user.account" value="${t3user.account!''}">${accountMsg!''}</p>
+	<p>Password<input type="password" name="t3user.pwd" >${passMsg!''}</p>
+	<p>Verify Password<input type="password" name="confirmPass">${confirmPassMsg!''}</p>
+	<p>Phonenumber<input type="text" name="t3user.phone" value="${t3user.phone!''}">${phoneMsg!''}</p>
+	<p>E-mail<input type="text" name="t3user.email" value="${t3user.email!''}">${emailMsg!''}</p>
+	<p>Yourname<input type="text" name="t3user.name_" value="${t3user.name_!''}">${nameMsg!''}</p>
+	<p>Industry<input type="text" name="t3user.industry" value="${t3user.industry!''}">${industryMsg!''}</p>
+	<p>company:<input type="text" name="t3user.company" value="${t3user.company!''}">${companyMsg!''}</p>
+	<p><input type="submit" value="regist"></p>
+	</form>
+	
+	<div class="table_box">
+<table class="table table-striped">
+	<a href="/jf/thairice/t10pdt_report">合并下载</a>
+	<thead>
+		<tr>
+				<th style="text-align:center;">选择</th>
+				<th style="text-align:center;">开始日期</th>
+				<th style="text-align:center;">结束日期</th>
+				<th style="text-align:center;">行政区域</th>
+				<th style="text-align:center;">产品类型</th>
+				<th style="text-align:center;">报告格式</th>
+				<th style="text-align:center;">操作</th>
+		</tr>
+	</thead>
+	<tbody>
+	
+		<%for(x in T10pdtReportPage.getList){ %>
+			<tr>
+				<td style="text-align:center;"><input type="checkbox" name="id" value=#(x.id) /></td>
+				<td style="text-align:center;">${x.start_time!''}</td>
+				<td style="text-align:center;">${x.end_time!''}</td>
+				<td style="text-align:center;">${x.zone_code!''}</td>
+				<td style="text-align:center;">${x.pdt_type!''}</td>
+				<td style="text-align:center;">${x.suffix!''}</td>
+				<td style="text-align:center;">
+					<a href="/report/delete/${x.id!''}">删除</a>
+				</td>
+			</tr>
+			<%}%>
+	</tbody>
+</table>
+	<%includeFileTemplate("/common/_paginate.html",
+		{"currentPage":blogPage.pageNumber,"totalPage":blogPage.totalPage,"actionUrl":"/blog/"}) {} 
+	 %>
+</div>
+</body>
+</html> 

@@ -9,6 +9,7 @@ package thairice.config;
 import thairice.mvc.t1parameter.T1parameterController;
 import thairice.mvc.t2syslog.T2syslogController;
 import thairice.mvc.t3user.T3userController;
+import thairice.mvc.t3user.T3userController2;
 import thairice.mvc.r4message_send.R4message_sendController;
 import thairice.mvc.t5parameter_type.T5parameter_typeController;
 import thairice.mvc.t6org_data.T6org_dataController;
@@ -55,6 +56,8 @@ public class RoutePlugins extends Routes {
 		add("/jf/thairice/t11zone", T11zoneController.class);
 		add("/jf/thairice/tkvalue", TkvalueController.class);
 		// zhuchaobin.zh
-		add("/jf/targrecog/index/shw", LoginController.class);
+//		add("/jf/targrecog/index/shw", LoginController.class);
+		add("/index", LoginController.class);
+		add("/ui/thairice/self_center", T10pdt_reportController.class);
 	}
 }
