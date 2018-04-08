@@ -1,7 +1,7 @@
 @charset "utf-8";
 /* CSS Document */
 .section1 {
-	background: red url(../Images/welcome/section1_bg.jpg) no-repeat center center;
+	background: url(../Images/welcome/section1_bg.jpg) no-repeat center center;
 }
 .section2 {
 	background: url(../Images/welcome/section2_bg.jpg) no-repeat center center;
@@ -176,16 +176,16 @@
 	letter-spacing:2px;
 }
 .welcome_login{
-	width:370px;
+	width:550px;
 	height:410px;
 	position:absolute;
 	top:50%;
 	margin-top:-185px;
 	left:50%;
-	margin-left:-185px;
+	margin-left:-275px;
 }
 .welcome_login h2{
-	width:370px;
+	width:550px;
 	height:70px;
 	background:url(../Images/welcome/yourlogo.png) no-repeat center center;
 	margin-bottom:20px;

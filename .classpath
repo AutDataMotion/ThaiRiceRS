@@ -15,7 +15,6 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/asm-5.0.4.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/bcprov-ext-jdk15on-1.52.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/bcprov-jdk15on-1.52.jar"/>
-	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/beetl-2.2.6.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/cglib-3.1.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-codec-1.10.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-dbutils-1.5.jar"/>
@@ -69,9 +68,11 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/json.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/ice-3.6.2.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-pool2-2.4.1.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/cron4j-2.2.5.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/beetl-2.2.6.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/sigar.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/UtilZW"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/DUCRPC"/>
-	<classpathentry kind="lib" path="D:/DUC/github6/cron4j-2.2.5.jar"/>
 	<classpathentry kind="output" path="WebContent/WEB-INF/classes"/>
 </classpath>

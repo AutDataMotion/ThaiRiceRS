@@ -14,3 +14,9 @@ label{
 	margin-right:20px;
 	margin-bottom:15px;
 }
+.submit_btn{
+	width:360px;
+}
+.file-input.file-input-new{
+	float:left;
+}

@@ -23,6 +23,11 @@
 <link rel="stylesheet" href="CSS/nav_css.css">
 <link rel="stylesheet" href="CSS/operator_management.css">
 <link rel="stylesheet" href="CSS/user_management.css">
+<style>
+.ellipse_text{
+	
+}	
+</style>
 <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
 <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
 <script src="./data_files/ie-emulation-modes-warning.js"></script>
@@ -87,7 +92,7 @@
           <div class="form-group">
             <button type="button" class="btn btn-primary">search</button>
           </div>
-          <div class="form-group" style="float:right;">
+          <div class="form-group">
             <button type="button" class="btn btn-primary"><i class="glyphicon glyphicon-level-up" style="margin-right:3px;"></i>Exported selected</button>
             <button type="button" class="btn btn-warning"><i class="glyphicon glyphicon-remove-sign" style="margin-right:3px;"></i>Remove selected</button>
           </div>
@@ -97,13 +102,13 @@
         <table class="table table-bordered data-table" id="dataTable09" width="100%" cellspacing="0" align="center">
           <thead>
             <tr>
-              <th><input type="checkbox">
+              <th width="11%"><input type="checkbox">
                 Select all</th>
-              <th>Dataname</th>
-              <th>Datatype</th>
-              <th>Gerneratedtime</th>
-              <th>Processing</th>
-              <th>Profile information</th>
+              <th width="9%">Dataname</th>
+              <th width="13%">Datatype</th>
+              <th width="17%">Gerneratedtime</th>
+              <th width="13%">Processing</th>
+              <th width="37%">Profile information</th>
             </tr>
           </thead>
           <tbody>
@@ -121,7 +126,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam fermentum, nulla luctus pharetra vulputate, felis tellus mollis orci, sed rhoncus sapien nunc eget.
 
 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus. Nam fermentum, nulla luctus pharetra vulputate, felis tellus mollis orci, sed rhoncus sapien nunc eget.
-">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.……</p></td>
+" class="ellipse_text">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque penatibus et magnis dis parturient montes, nascetur ridiculus mus.</p></td>
             </tr>
             <tr>
               <td><input type="checkbox">
@@ -230,7 +235,7 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum
       <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
       <div class="modal-footer">
         <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-        <a class="btn btn-primary" href="login.html">Logout</a> </div>
+        <a class="btn btn-primary" href="backend_login.html">Logout</a> </div> 
     </div>
   </div>
 </div>
@@ -262,6 +267,14 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum
 				locale: moment.locale('zh-cn')  
 			});
 			$('.data-table tbody tr:odd td').css('background-color','#dbeff6');
+			//限制字符个数
+			$(".ellipse_text").each(function(){
+				var maxwidth=100;
+				if($(this).text().length>maxwidth){
+					$(this).text($(this).text().substring(0,maxwidth));
+					$(this).html($(this).html()+'...');
+				}
+			});
 		})
     </script>
 </body>

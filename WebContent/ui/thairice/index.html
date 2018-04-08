@@ -9,7 +9,43 @@
 <link type="text/css" rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.min.css">
 <link type="text/css" rel="stylesheet" href="datetime-picker/bootstrap-datetimepicker.min.css">
 <link type="text/css" rel="stylesheet" href="CSS/index.css">
+
 <link type="text/css" rel="stylesheet" href="CSS/nav_css.css">
+<link type="text/css" id="skin" rel="stylesheet" href="CSS/skin/color_one.css">
+<style>
+.flex-center {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	position:absolute;
+	top:200px;
+	display:none;
+	width:600px;
+	background:#fff;
+	left:50%;
+	margin-left:-300px;
+	border-radius: 2px;
+	overflow:hidden;
+	border: 1px solid #337ab7;
+}
+.flex-center .container {
+	display: inline-block;
+	width: 600px;
+	height: 20px;
+	padding-right: 10px;
+}
+.h-100P {
+	height: 100%;
+}
+.bar {
+	display: inline-block;
+	background: #337ab7;
+	color: white;
+	font-weight: bold;
+	padding: 0 5px;
+	text-align: right;
+}
+</style>
 <script src="JS/jquery-2.0.0.min.js"></script>
 <script src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 <script src="area-select/Area.js"></script>
@@ -18,30 +54,45 @@
 <script src="datetime-picker/bootstrap-datetimepicker.min.js"></script>
 <script src="JS/index.js"></script>
 <script>
-	//进度条
-	var progress = 1;  
-    var totalWidth = $('#progress').css('width');  
-    var initstr='';  
-    $(function () {  
-        $('.report_btn02').click(function(e) {
-			$('.BbReportcons').hide();
-			$('.progress').show().delay(3000).hide(0);
-			$('.BbReportGenerate').delay(3000).show(0);
-			initstr = setInterval("change('progress-bar')",100); 
-		});
-    })  
-    function change(id){  
-        console.log(progress);  
-        $('#'+id).css({  
-            width:progress*29  
-        })  
-        if(progress==totalWidth){  
-            clearInterval(initstr);
-        }  
-        progress= progress+1;  
-    }
-	//进度条结束
+	//进度条及文件预览
 	$(function () {  
+		$('.report_btn02').click(function(e) {
+                $('.BbReportcons').hide();
+				$('.flex-center').show();
+				var percentage = 0;
+				var interval = setInterval(function () {
+				if (percentage < 300) {
+					percentage++;
+					var widthTemp = (percentage / 3).toFixed(1) + '%';
+					$('#progressBar').css('width', widthTemp);
+					$('#progressBar').text(widthTemp);
+				} else {
+					clearInterval(interval);
+					setTimeout(function () {
+						$('.flex-center').hide();
+						$('#documentModal').modal();
+					}, 500);
+					}
+					
+					}, 10);
+            });
+			$('#documentModal .close').click(function(e) {
+                $('#documentModal').modal('hide');
+				$('.BbReportWrap').show();
+				$('.BbReportcons').show();
+				$('.BbReportLeft').show();
+				$('.BbReportRight').show();
+            });
+			$('#documentModal .cancel_btn').click(function(e) {
+                $('#documentModal').modal('hide');
+				$('.BbReportWrap').show();
+				$('.BbReportcons').show();
+				$('.BbReportLeft').show();
+				$('.BbReportRight').show();
+            });
+			$('.navbar-nav>li>.dropdown-menu li').click(function(e) {
+                $(this).addClass('checked').siblings().removeClass('checked');
+            });
 		//日期选择插件
 		$('#date_choose').datetimepicker({  
 			format: 'YYYY-MM-DD',  
@@ -77,8 +128,19 @@
 		}
 		return areaName;
 	}
-	
-	
+	/*换肤*/
+	function skin1() {
+        var ob = document.getElementById('skin');
+        ob.href='CSS/skin/color_one.css';
+    }
+    function skin2() {
+        var ob = document.getElementById('skin');
+        ob.href='CSS/skin/color_two.css';
+    }
+	function skin3() {
+        var ob = document.getElementById('skin');
+        ob.href='CSS/skin/color_three.css';
+    }
 </script>
 </head>
 
@@ -86,27 +148,27 @@
 <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
   <div class="container-fluid" style="padding-right:0;">
     <div class="navbar-header" style="padding-left:15px;">
-      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar">
-      	<span class="sr-only">toggle navigation</span> 
-        <span class="icon-bar"></span> 
-        <span class="icon-bar"></span> 
-        <span class="icon-bar"></span> 
-        <span class="icon-bar"></span> 
-      </button>
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"> <span class="sr-only">toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
       <p class="nav-title navbar-brand">Thai agricultural remote sensing monitoring platform </p>
     </div>
     <div class="collapse navbar-collapse" id="navbar">
       <ul class="nav navbar-nav navbar-right">
         <li class="active"><a class="one" href="#" title="首页"></a></li>
-        <li>
-        	<a class="two dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" href="#" title="用户"></a>
-            <ul class="dropdown-menu">
-            	<li><a href="self_center.html">Self center</a></li>
-                <li><a href="my_message.html">My message</a></li>
-                <li><a href="backend_login.html" data-toggle="modal" data-target="#exampleModal">Log out</a></li>
-            </ul>
+        <li> <a class="two dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" href="#" title="用户"></a>
+          <ul class="dropdown-menu">
+            <li><a href="self_center.html">Self center</a></li>
+            <li><a href="my_message.html">My message</a></li>
+            <li><a href="welcome.html#page4">Log out</a></li>
+          </ul>
         </li>
-        <li><a class="three" href="#" title="换肤"></a></li>
+        <li>
+        	<a class="three dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" href="#" title="换肤"></a>
+           <ul class="dropdown-menu skin" style="min-width:80px;">
+            <li class="checked"><a href="#" onclick="skin1()"><span style="background:#009cd4;"></span></a></li>
+            <li><a href="#" onclick="skin2()"><span style="background:#07cfcd;"></span></a></li>
+            <li><a href="#" onclick="skin3()"><span style="background:#09dba2;"></span></a></li>
+          </ul>
+        </li>
         <li><a class="four" href="#" title="帮助"></a></li>
       </ul>
     </div>
@@ -150,20 +212,19 @@
 </div>
 <div class="BbReportWrap">
   <div class="BbReport">
-      <div class="BbReportcons">
-      	<div class="BbReportLeft"> 
-            <span><img src="Images/index/report_abs01.png" width="355" height="440"></span>
-            <button type="button" class="btn btn-primary btn-lg report_btn01">Statistical analysis</button>
-        </div>
-        <div class="BbReportRight">
-            <div class="container" style="width:500px;">
-              <div class="row">
-                <div class="col-sm-12 report_graph">
-                    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
-                    <div id="main" style="height:295px; width:500px;"></div>
-                    <!-- ECharts单文件引入 -->
-                    <script src="http://echarts.baidu.com/build/dist/echarts.js"></script>
-                    <script type="text/javascript">
+    <div class="BbReportcons">
+      <div class="BbReportLeft"> <span><img src="Images/index/report_abs01.png" width="355" height="440"></span>
+        <button type="button" class="btn btn-primary btn-lg report_btn01">Statistical analysis</button>
+      </div>
+      <div class="BbReportRight">
+        <div class="container" style="width:500px;">
+          <div class="row">
+            <div class="col-sm-12 report_graph"> 
+              <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+              <div id="main" style="height:295px; width:500px;"></div>
+              <!-- ECharts单文件引入 --> 
+              <script src="http://echarts.baidu.com/build/dist/echarts.js"></script> 
+              <script type="text/javascript">
                         // 路径配置
                         require.config({
                             paths: {
@@ -230,43 +291,66 @@
                                 myChart.setOption(option); 
                             }
                         );
-                    </script>
-                </div>
-              </div>
-              <div class="row">
-                <div class="col-sm-12 report_description">
-                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque
-                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque</p>
-                </div>
-              </div>
-              <button type="button" class="btn btn-primary btn-lg report_btn02">Generate reports</button>
+                    </script> 
             </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 report_description">
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque</p>
+            </div>
+          </div>
+          <button type="button" class="btn btn-primary btn-lg report_btn02" >Generate reports</button>
         </div>
       </div>
-      <div id="progress" class="progress">  
-        <div id="progress-bar" class="progress-bar">  
-            <span class="sr-only">40% 完成</span>  
-        </div>  
+    </div>
+    <!--进度条-->
+    <div class="flex-center"> <span class="container" style="padding-left:0; padding-right:0; display:block; margin:0 auto;"> <span id="progressBar" class="h-100P bar"></span> </span> </div>
+  </div>
+</div>
+<!-- log out模态框（Modal） -->
+<div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="exampleModalLabel">System message</h4>
       </div>
-      <div class="BbReportGenerate">
-      	<div class="generate_cons">
-        	<p class="title">Document preview</p>
-          	<button type="button" class="close generate_btn" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <div class="container" style="width:840px; padding:0;">
-            	<dl class="dl-horizontal" style="height:180px; width:760px; margin:15px auto;">
-                  <dt style="width:260px; margin-right:18px;"><span><img src="Images/index/report.jpg" width="260" height="180"></span></dt>
-                  <dd>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque
-Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque</dd>
-                </dl>
-            </div>
-            <div class="container" style="width:760px;">
-              <div class="row">
-                <div class="col-sm-12 report_graph">
-                    <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
-                    <div id="main01" style="height:295px; width:760px;"></div>
-                    <!-- ECharts单文件引入 -->
-                    <script src="http://echarts.baidu.com/build/dist/echarts.js"></script>
-                    <script type="text/javascript">
+      <div class="modal-body">
+        <p class="modal_text">Generate the report can be in <span>the center of the individual - my report page</span> views</p>
+      </div>
+      <div class="modal-footer">
+        <input type="checkbox">
+        Don't tip
+        <a href="#" type="button" role="button" class="btn btn-primary" data-dismiss="modal" style="margin:0 15px; padding:6px 40px;">Ok, I know !</a>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- document review模态框（Modal） -->
+<div class="modal fade" id="documentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+  <div class="modal-dialog" role="document" style="width:840px; margin-top:100px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="exampleModalLabel">Document preview</h4>
+      </div>
+      <div class="modal-body">
+        <div class="container" style="width:840px; padding:0;">
+          <dl class="dl-horizontal" style="height:180px; width:760px; margin:15px auto;">
+            <dt style="width:260px; margin-right:18px;"><span><img src="Images/index/report.jpg" width="260" height="180"></span></dt>
+            <dd>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque</dd>
+          </dl>
+        </div>
+        <div class="container" style="width:760px;">
+          <div class="row">
+            <div class="col-sm-12 report_graph"> 
+              <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+              <div id="main01" style="height:295px; width:760px;"></div>
+              <!-- ECharts单文件引入 --> 
+              <script src="http://echarts.baidu.com/build/dist/echarts.js"></script> 
+              <script type="text/javascript">
                         // 路径配置
                         require.config({
                             paths: {
@@ -333,53 +417,25 @@ Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum
                                 myChart01.setOption(option); 
                             }
                         );
-                    </script>
-                </div>
-              </div>
-              <!--<div class="row">
+                    </script> 
+            </div>
+          </div>
+          <!--<div class="row">
                 <div class="col-sm-12 report_description">
                   <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque
                     Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque</p>
                 </div>
               </div>
-              <button type="button" class="btn btn-primary btn-lg report_btn02">Generate reports</button>-->
-            </div>
-            <p class="btns_group" style="margin-top:0;">
-              <!-- 按钮触发模态框 -->
-              <button type="button" class="btn btn-primary btn-lg download_btn" data-toggle="modal" data-target="#exampleModal" data-whatever="System message">Download</button>
-              <button type="button" class="btn btn-default btn-lg cancel_btn">Cancel</button>
-            </p>
-        </div>
-      </div>	
-  </div>
-  
-</div>
-	<!-- 模态框（Modal） -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
-            <h4 class="modal-title" id="exampleModalLabel">System message</h4>
-          </div>
-          <div class="modal-body">
-            <p class="modal_text">Generate the report can be in <span>the center of the individual - my report page</span> views</p>
-          </div>
-          <div class="modal-footer">
-            <input type="checkbox">Don't tip
-            <button type="button" class="btn btn-primary" data-dismiss="modal" style="margin:0 15px; padding:6px 40px;">Ok, I know !</button>
-          </div>
+              <button type="button" class="btn btn-primary btn-lg report_btn02">Generate reports</button>--> 
         </div>
       </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary report_downbtn" data-dismiss="modal" style="margin:0 15px; padding:6px 40px;">download</button>
+        <button type="button" class="btn btn-secondary cancel_btn" style="margin:0 15px; padding:6px 40px;">Cancel</button>
+      </div>
     </div>
-    <script type="text/javascript">
-		$('#exampleModal').on('show.bs.modal', function (event) {
-		  var button = $(event.relatedTarget) // Button that triggered the modal
-		  var recipient = button.data('whatever') // Extract info from data-* attributes
-		  //var modal = $(this)
-		  //modal.find('.modal-title').text(recipient + '专题')
-		})
-	</script>
+  </div>
+</div>
 
 </body>
 </html>

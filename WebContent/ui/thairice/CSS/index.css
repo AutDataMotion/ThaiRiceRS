@@ -32,48 +32,6 @@ body {
  * Top navigation
  * Hide default border to remove 1px line.
  */
-.navbar-fixed-top {
-  border: 0;
-  height:60px;
-  line-height:60px;
-  background-color:#009cd4;
-  color:#fff;
-}
-.navbar-nav>li{
-	width:70px;
-	height:60px;
-	background:url(../Images/index/nav_bar_right_bg.png) no-repeat left center;
-}
-.navbar-nav>li.active{
-	background-color:#00dfec;
-}
-.navbar-default .navbar-nav>li.active>a{
-	background-color:#00dfec;
-}
-.navbar-nav>li>a{
-	height:60px;
-	padding:0;
-	line-height:60px;
-	width:70px;
-}
-.navbar-nav>li>a.one{
-	background:url(../Images/index/nav_bar_icon01.png) no-repeat center center;
-}
-.navbar-nav>li>a.two{
-	background:url(../Images/index/nav_bar_icon02.png) no-repeat center center;
-}
-.navbar-nav>li>a.three{
-	background:url(../Images/index/nav_bar_icon03.png) no-repeat center center;
-}
-.navbar-nav>li>a.four{
-	background:url(../Images/index/nav_bar_icon04.png) no-repeat center center;
-}
-.navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:focus, .navbar-inverse .navbar-nav>.active>a:hover{
-	background-color:#00dfec;
-}
-.navbar-right{
-	margin-right:0;
-}
 .BbAreaSelect{
 	position:fixed;
 	z-index:999999;
@@ -92,18 +50,18 @@ body {
 #seachprov{
 	border:none;
 	border-right:1px solid #ccc;
-	padding:14px 10px 13px;
+	padding:15px 10px;
 	border-radius:5px 0 0 5px;
 }
 #seachcity{
 	border:none;
 	border-right:1px solid #ccc;
-	padding:14px 20px 13px;
+	padding:15px 10px;
 }
 #seachdistrict_div select{
 	border:none;
 	border-right:1px solid #ccc;
-	padding:14px 20px 13px;
+	padding:15px 10px;
 }
 .BbProductMenuWrap{
 	position:absolute;
@@ -111,6 +69,7 @@ body {
 	top:80px;
 	font-size:16px;
 	overflow:hidden;
+	z-index:9;
 }
 .BbProductabs{
 	width:60px;

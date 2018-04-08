@@ -14,29 +14,12 @@ public class ThreadSysLog {
 
 	private static Logger log = Logger.getLogger(ThreadSysLog.class);
 	
-//	private static final int queueSize = 5000; // 入库队列大小
 	private static boolean threadRun = true; // 线程是否运行
 	
 	/**
 	 * 队列
 	 */
-	//private static final BlockingQueue<Syslog> queue = new LinkedBlockingQueue<Syslog>(queueSize); 
 	private static Queue<Syslog> queue = new ConcurrentLinkedQueue<Syslog>(); //	此队列按照 FIFO（先进先出）原则对元素进行排序
-	
-	/**
-	 * 向队列中增加Syslog对象，基于LinkedBlockingQueue
-	 * @param sysLog
-	public static void add(Syslog sysLog){
-		try {
-			log.info("put操作日志到缓存queue start......");
-			queue.put(sysLog);
-			log.info("put操作日志到缓存queue end......");
-		} catch (InterruptedException e) {
-			log.error("put操作日志到缓存queue异常");
-			throw new RuntimeException("ThreadSysLog -> add Exception");
-		}
-	}*/
-	
 	public static void setThreadRun(boolean threadRun) {
 		ThreadSysLog.threadRun = threadRun;
 	}
@@ -46,15 +29,7 @@ public class ThreadSysLog {
 	 * @param syslog
 	 */
 	public static void add(Syslog syslog){
-//		if(null != syslog){	// 此队列不允许使用 null 元素
-//			synchronized(queue) {
-//				if(queue.size() == queueSize){
-//					queue.poll(); // 获取并移除此队列的头，如果此队列为空，则返回 null
-//					log.error("日志队列：超过" + queueSize);
-//				}
 				queue.offer(syslog); // 将指定元素插入此队列的尾部
-//			}
-//		}
 	}
 	
 	/**

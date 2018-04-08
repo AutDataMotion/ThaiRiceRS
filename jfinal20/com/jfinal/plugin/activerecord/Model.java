@@ -26,13 +26,16 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.Iterator;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
 import com.jfinal.plugin.activerecord.cache.ICache;
+import com.platform.constant.ConstantRender;
 import com.platform.mvc.base.BaseModel;
+import com.platform.tools.ToolSqlXml;
 
 /**
  * Model.
@@ -544,6 +547,84 @@ public abstract class Model<M extends Model> implements Serializable {
 			config.close(conn);
 		}
 	}
+	
+	public <T> List<T> query(String sqlId, Map<String, Object> param){
+		LinkedList<Object> paramValue = new LinkedList<Object>();
+		String sql = getSqlByBeetl(sqlId, param, paramValue);
+		return (List<T>) find(sql, paramValue.toArray());
+	}
+
+	/**
+     * 获取SQL，固定SQL
+     * @param sqlId
+     * @return
+     */
+	protected String getSql(String sqlId){
+		return ToolSqlXml.getSql(sqlId);
+	}
+	
+    /**
+     * 获取SQL，动态SQL，使用Beetl解析
+     * @param sqlId
+     * @param param
+     * @return
+     */
+	protected String getSqlByBeetl(String sqlId, Map<String, Object> param){
+    	return ToolSqlXml.getSql(sqlId, param, ConstantRender.sql_renderType_beetl);
+    }
+    
+    /**
+     * 获取SQL，动态SQL，使用Beetl解析
+     * @param sqlId 
+     * @param param 查询参数
+     * @param list 用于接收预处理的值
+     * @return
+     */
+	protected String getSqlByBeetl(String sqlId, Map<String, Object> param, LinkedList<Object> list){
+    	return ToolSqlXml.getSql(sqlId, param, ConstantRender.sql_renderType_beetl, list);
+    }
+
+    /**
+     * 获取SQL，动态SQL，使用FreeMarker解析
+     * @param sqlId
+     * @param param
+     * @return
+     */
+	protected String getSqlByFreeMarker(String sqlId, Map<String, Object> param){
+    	return ToolSqlXml.getSql(sqlId, param, ConstantRender.sql_renderType_freeMarker);
+    }
+    
+    /**
+     * 获取SQL，动态SQL，使用FreeMarker解析
+     * @param sqlId 
+     * @param param 查询参数
+     * @param list 用于接收预处理的值
+     * @return
+     */
+	protected String getSqlByFreeMarker(String sqlId, Map<String, Object> param, LinkedList<Object> list){
+    	return ToolSqlXml.getSql(sqlId, param, ConstantRender.sql_renderType_freeMarker, list);
+    }
+
+    /**
+     * 获取SQL，动态SQL，使用Velocity解析
+     * @param sqlId
+     * @param param
+     * @return
+     */
+	protected String getSqlByVelocity(String sqlId, Map<String, Object> param){
+    	return ToolSqlXml.getSql(sqlId, param, ConstantRender.sql_renderType_velocity);
+    }
+    
+    /**
+     * 获取SQL，动态SQL，使用Velocity解析
+     * @param sqlId 
+     * @param param 查询参数
+     * @param list 用于接收预处理的值
+     * @return
+     */
+	protected String getSqlByVelocity(String sqlId, Map<String, Object> param, LinkedList<Object> list){
+    	return ToolSqlXml.getSql(sqlId, param, ConstantRender.sql_renderType_velocity, list);
+    }
 	
 	/**
 	 * Check the table name. The table name must in sql.

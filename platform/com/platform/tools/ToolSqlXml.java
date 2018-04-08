@@ -135,19 +135,19 @@ public abstract class ToolSqlXml {
     	
     	String sql = null;
     	if(null == renderType || renderType.equals(ConstantRender.sql_renderType_beetl)){
+    	
     		log.debug("beetl解析sql");
     		sql = BeetlKit.render(sqlTemplete, param);
-    		
     	} else if(renderType.equals(ConstantRender.sql_renderType_freeMarker)){
+    		
     		log.debug("FreeMarker解析sql");
     		sql = ToolFreeMarker.render(sqlTemplete, param);
-    		
     	} else if(renderType.equals(ConstantRender.sql_renderType_velocity)){
+    		
     		log.debug("Velocity解析sql");
     		sql = ToolVelocity.render(sqlTemplete, param);
-    	
     	}
-		
+		log.info(sql);
     	// 匹配模式为 #'%$names$%'#
     	Pattern pattern = Pattern.compile("#[\\w\\d\\$\\'\\%\\_]+#");	//#[\\w\\d]+#    \\$
 		
@@ -164,7 +164,7 @@ public abstract class ToolSqlXml {
 			String clounm2 = matcher2.group(0); // 得到的结果形式：$names$
 			
 			String clounm3 = clounm2.replace("$", "");
-			
+		
 			if(clounm.equals("#" + clounm2 + "#")){ // 数值型，可以对应处理int、long、bigdecimal、double等等
 				String val = String.valueOf(param.get(clounm3));
 				try {

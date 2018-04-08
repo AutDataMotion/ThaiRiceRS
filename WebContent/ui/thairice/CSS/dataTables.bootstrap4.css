@@ -95,6 +95,13 @@ table.dataTable thead .sorting_desc_disabled:before,
 table.dataTable thead .sorting_desc_disabled:after {
   position: absolute;
   top:50%;
+  margin-top:-10px;
+  display: block;
+  opacity: 0.3;
+}
+table.table-special thead .sorting:before, table.table-special thead .sorting:after, table.table-special thead .sorting_asc:before, table.table-special thead .sorting_asc:after, table.table-special thead .sorting_desc:before, table.table-special thead .sorting_desc:after, table.table-special thead .sorting_asc_disabled:before, table.table-special thead .sorting_asc_disabled:after, table.table-special thead .sorting_desc_disabled:before, table.table-special thead .sorting_desc_disabled:after{
+  position: absolute;
+  top:50%;
   margin-top:-16px;
   display: block;
   opacity: 0.3;

@@ -1,0 +1,60 @@
+@charset "utf-8";
+/* CSS Document */
+.skin li span{
+	display:block;
+	height:30px;
+	width:36px;
+	border-radius:5px;
+}
+.navbar-fixed-top {
+  border: 0;
+  height:60px;
+  line-height:60px;
+  background-color:#009cd4;
+  color:#fff;
+}
+.navbar-nav>li{
+	width:70px;
+	height:60px;
+	background:url(../../Images/index/nav_bar_right_bg02.png) no-repeat left center;
+}
+.navbar-nav>li.active{
+	background-color:#00dfec;
+}
+.navbar-default .navbar-nav>li.active>a{
+	background-color:#00dfec;
+}
+.navbar-nav>li>a{
+	height:60px;
+	padding:0;
+	line-height:60px;
+	width:70px;
+}
+.navbar-nav>li>a.one{
+	background:url(../../Images/index/nav_bar_icon01.png) no-repeat center center;
+}
+.navbar-nav>li>a.two{
+	background:url(../../Images/index/nav_bar_icon02.png) no-repeat center center;
+}
+.navbar-nav>li>a.three{
+	background:url(../../Images/index/nav_bar_icon03.png) no-repeat center center;
+}
+.navbar-nav>li>a.four{
+	background:url(../../Images/index/nav_bar_icon04.png) no-repeat center center;
+}
+.navbar-inverse .navbar-nav>.active>a, .navbar-inverse .navbar-nav>.active>a:focus, .navbar-inverse .navbar-nav>.active>a:hover{
+	background-color:#00dfec;
+}
+.navbar-right{
+	margin-right:0;
+}
+.navbar-inverse .navbar-nav>.open>a, .navbar-inverse .navbar-nav>.open>a:focus, .navbar-inverse .navbar-nav>.open>a:hover{
+	background-color:#00dfec;
+}
+.left_menu{
+	background-color:#0c7897; 
+	padding:0;
+}
+.navbar-nav>li>.dropdown-menu li.checked{
+	background-color:#85caf3;
+}

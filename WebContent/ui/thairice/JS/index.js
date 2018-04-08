@@ -39,4 +39,7 @@ $(function(){
 	$('.download_btn').click(function(e) {
         $('.BbReportWrap').hide();
     });
+	$('.report_downbtn').click(function(e) {
+        $('#reportModal').modal();
+    });
 })

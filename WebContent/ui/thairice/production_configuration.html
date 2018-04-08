@@ -48,6 +48,34 @@
           .colorpicker-2x .colorpicker-color div {
               height: 30px;
           }
+		  .flex-center{
+				display: flex;
+				flex-direction: column;
+				align-items: center;
+				padding-top:150px;
+				display:none;
+			}
+			.container{
+					display: inline-block;
+					width: 50%;
+					height: 20px;
+					padding-right: 10px;
+					border: 1px solid #999;
+					border-radius: 5px; 
+			}
+			.h-100P{
+					height: 100%;
+			}
+			.bar{
+					display: inline-block;
+					background: #90bf46;
+					color: white;
+					font-weight: bold;
+					padding: 0 5px;
+					text-align: right;
+					border-radius: 5px;
+					border-right: 1px solid #999;
+			}
     </style>
     <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
     <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
@@ -131,9 +159,11 @@
                     </ul>
                 </div>
                     <!--进度条-->
-                    <div class="barline" id="probar">
-                        <div id="line" w="100" style="width:0px;"></div>	
-                    </div>
+                    <div class="flex-center">
+                       <span class="container" style="padding-left:0; padding-right:0; display:block; margin:0 auto;">
+                           <span id="progressBar" class="h-100P bar"></span>
+                       </span>
+                   </div>
                     <!--显示模式和分类样本-->
                     <div class="modes_samples">
                     	<div class="block"><span></span></div>
@@ -198,8 +228,8 @@
                                             <tr>
                                             <tr>
                                             	<td>rice</td>
-                                                <td>
-                                                	<input id="mycp" type="text" class="form-control" value="pink">
+                                                <td style="width:80px;">
+                                                	<input id="mycp" type="text" class="form-control" value="pink" style="padding:6px 0; width:100%; text-align:center; border:none;">
                                                 </td>
                                                 <td>1</td>
                                                 <td><span><i class="glyphicon glyphicon-remove-sign"></i></span></td>
@@ -235,10 +265,10 @@
             <div role="tabpanel" class="tab-pane" id="production02">
             	<form class="form-horizontal tab-form" style="width:500px; margin:100px auto 0; background:#fff; border-radius:5px; padding:5px 20px;">
                 	<h4> < MODIS Upload > </h4>
-                    <input type="file" name="txt_file" id="txt_file02" multiple class="file" />
-                    <input type="file" name="txt_file" id="txt_file03" multiple class="file" />
-                    <input type="file" name="txt_file" id="txt_file04" multiple class="file" />
-                    <input type="file" name="txt_file" id="txt_file05" multiple class="file" />
+                    <input type="text" class="form-control" style="margin-bottom:15px;" placeholder="13A1MODIS" />
+                    <input type="text" class="form-control" style="margin-bottom:15px;" placeholder="13A1MODIS" />
+                    <input type="text" class="form-control" style="margin-bottom:15px;" placeholder="13A1MODIS" />
+                    <input type="text" class="form-control" style="margin-bottom:15px;" placeholder="13A1MODIS" />
                     <div class="form-group" style="text-align:center;">
                     	<button class="btn btn-primary">submit</button>
                     	<button class="btn btn-default">reset</button>
@@ -286,9 +316,9 @@
             	<form class="form-horizontal tab-form" style="width:500px; margin:100px auto 0; background:#fff; border-radius:5px; padding:5px 20px;">
                 	<h4> < Classification threshold > </h4>
                     <div class="form-group">
-                        <input type="text" class="form-control" placeholder="input year as 2018" style="float:left; width:200px;">
-                        <label class="control-label" style="float:left; width:60px; height:34px; line-height:34px; padding-top:0; text-align:center;">To</label>
-                        <input type="text" class="form-control" placeholder="input year as 2020" style="float:left; width:200px;">
+                        <div class="input-group" id="starttime8" style="width:200px; float:left;"><input type="text" class="form-control" placeholder="Year"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span></div>
+                        <label class="control-label" style="width:60px; float:left; text-align:center; line-height:34px; padding-top:0;">to</label>
+                        <div class="input-group" id="endtime8" style="width:200px; float:left;"><input type="text" class="form-control" placeholder="Year"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span></div>
                     </div>
                     <div class="form-group" style="margin-bottom:0;">
                         <div class="input-group">
@@ -351,7 +381,7 @@
           <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-primary" href="login.html">Logout</a>
+            <a class="btn btn-primary" href="backend_login.html">Logout</a> </div>
           </div>
         </div>
       </div>
@@ -370,7 +400,7 @@
           	<input type="file" name="txt_file" id="txt_file01" multiple class="file" />
           </div>
           <div class="modal-footer" style="text-align:center;">
-            <button class="btn btn-primary upload_btn" type="button" data-dismiss="modal" onClick="processerbar(3000)">Upload</button>
+            <button class="btn btn-primary upload_btn" type="button" data-dismiss="modal">Upload</button>
           </div>
         </div>
       </div>
@@ -414,10 +444,10 @@
                     <label class="col-sm-4">Selection algorithm:</label>
                     <div class="col-sm-8">
                       <label>
-                          <input type="radio" value="option1"> Minimum likelihood classification
+                          <input type="radio" value="option1" checked name="classification"> Minimum likelihood classification
                       </label><br>
                       <label>
-                          <input type="radio" value="option1"> Spectral Angle Mapper
+                          <input type="radio" value="option1" name="classification"> Spectral Angle Mapper
                       </label><br>
                     </div>
                   </div>
@@ -458,7 +488,7 @@
           <div class="modal-footer">
             <input type="radio" name="rice">Rice
             <input type="radio" name="rice" style="margin-left:10px;">Not rice
-            <button class="btn btn-primary result_btn" type="button" style="margin-left:10px;" data-dismiss="modal">Run</button>
+            <button class="btn btn-primary result_btn" type="submit" style="margin-left:10px;" data-dismiss="modal">submit</button>
           </div>
         </div>
       </div>
@@ -478,45 +508,46 @@
     <script src="bootstrap-fileinput-master/js/locales/zh.js"></script>
     
     <script src="JS/production.js"></script>
-    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
     <script src="./data_files/holder.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <script src="./data_files/ie10-viewport-bug-workaround.js"></script>
     <script src="bootstrap-colorpicker-master/bootstrap-colorpicker-master/dist/js/bootstrap-colorpicker.min.js"></script>
     
   	<script>
-    	function processerbar(time){
-			document.getElementById('probar').style.display="block";
-			$("#line").each(function(i,item){
-				var a=parseInt($(item).attr("w"));
-				$(item).animate({
-					width: a+"%"
-				},time);
-			});
-			var timer = time + 500;
-			setTimeout(function(){
-				$('#probar').hide();
-				$('.block').show();
-				$('.samples').slideDown();
-				$('.modes').slideDown();
-				$('.okay_btn').show();
-			},timer)
-		};
 		$(function(){
 			//日期选择插件
-			$('#starttime6').datetimepicker({  
-				format: 'YYYY-MM-DD',  
+			$('#starttime8').datetimepicker({  
+				format: 'YYYY',  
 				locale: moment.locale('zh-cn')  
 			}); 
-			$('#endtime6').datetimepicker({  
-				format: 'YYYY-MM-DD',  
+			$('#endtime8').datetimepicker({  
+				format: 'YYYY',  
 				locale: moment.locale('zh-cn')  
 			});
 			$('.data-table tbody tr:odd td').css('background-color','#dbeff6');
+			/*进度条*/
 			$('.upload_btn').click(function(e) {
-                //processerbar(2000);
-				$('#probar').show().delay(3000).hide();
+                $('.flex-center').show();
+				var percentage = 0;
+				var interval = setInterval(function () {
+				if (percentage < 300) {
+					percentage++;
+					var widthTemp = (percentage / 3).toFixed(1) + '%';
+					$('#progressBar').css('width', widthTemp);
+					$('#progressBar').text(widthTemp);
+				} else {
+					clearInterval(interval);
+					setTimeout(function () {
+						$('.flex-center').hide();
+						$('.block').show();
+						$('.samples').slideDown();
+						$('.modes').slideDown();
+						$('.okay_btn').show();
+					}, 500);
+					}
+					}, 10);
             });
+			/*颜色选择器*/
 			$('#mycp').colorpicker({
                   align: 'left',
                   customClass: 'colorpicker-2x',

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<!--[if IE 9 ]>
+<html class="ie9"><![endif]-->
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no">
+    <meta charset="UTF-8">
+    <meta name="description" content="Violate Responsive Admin Template">
+    <meta name="keywords" content="Super Admin, Admin, Template, Bootstrap">
+
+    <title>自动运营平台</title>
+	<script type="text/javascript">
+		var cxt = '${cxt!}';
+	</script>
+    <!-- CSS -->
+    <link href="${cxt!}/ui/SuperAdmin/css/bootstrap.min.css" rel="stylesheet">
+    <link href="${cxt!}/ui/SuperAdmin/css/animate.min.css" rel="stylesheet">
+    <link href="${cxt!}/ui/SuperAdmin/css/font-awesome.min.css" rel="stylesheet">
+    <link href="${cxt!}/ui/SuperAdmin/css/form.css" rel="stylesheet">
+    <link href="${cxt!}/ui/SuperAdmin/css/calendar.css" rel="stylesheet">
+    <link href="${cxt!}/ui/SuperAdmin/css/style.css" rel="stylesheet">
+        <link href="${cxt!}/ui/SuperAdmin/css/style-my.css" rel="stylesheet">
+    <link href="${cxt!}/ui/SuperAdmin/css/icons.css" rel="stylesheet">
+    <link href="${cxt!}/ui/SuperAdmin/css/generics.css" rel="stylesheet">
+    <link href="${cxt!}/ui/SuperAdmin/css/zTreeStyle/zTreeStyle.css" rel="stylesheet">
+    ${cssSec!}
+    <style>
+        #sidebar {
+            width: 0px;
+        }
+        .block-area{
+        	margin-left: 0px;
+        }
+        #treeDemo {
+           min-width: 250px;
+            max-width:300px;
+            min-height: 600px;
+            overflow-x: auto;
+            overflow-y: scroll;
+            border-right: 1px solid rgba(255, 255, 255, 0.15);
+        }
+        #treeDemo::-webkit-scrollbar {
+            width: 5px;
+            height: 5px;
+        }
+
+        #treeDemo::-webkit-scrollbar-thumb {
+            background-color: rgba(0, 0, 0, 0.5);;
+        }
+    </style>
+</head>
+<body id="skin-6">
+<header id="header" class="media">
+    <a href="" id="menu-toggle"></a>
+    <a class="logo pull-left" href="#">自动运营平台
+	    <div id="time" class="pull-right">
+	        <span id="hours"></span>
+	        :
+	        <span id="min"></span>
+	        :
+	        <span id="sec"></span>
+	    </div>
+     </a>
+</header>
+<section id="main" class="p-relative" role="main">
+    <!-- Sidebar -->
+    <% include("sidebar.html"){}%>
+    <section id="content" class="container">
+   <h4 class="page-title">菜单标题</h4> 
+    <!-- Content -->
+				${contSec!}
+   </section>
+</section>
+
+<!-- Javascript Libraries -->
+<!-- jQuery -->
+<script src="${cxt!}/ui/SuperAdmin/js/jquery.min.js"></script> <!-- jQuery Library -->
+<script src="${cxt!}/ui/SuperAdmin/js/jquery-ui.min.js"></script> <!-- jQuery UI -->
+<script src="${cxt!}/ui/SuperAdmin/js/jquery.easing.1.3.js"></script> <!-- jQuery Easing - Requirred for Lightbox + Pie Charts-->
+
+<!-- Bootstrap -->
+<script src="${cxt!}/ui/SuperAdmin/js/bootstrap.min.js"></script>
+<!-- Charts -->
+<script src="${cxt!}/ui/SuperAdmin/js/charts/jquery.flot.js"></script> <!-- Flot Main -->
+<script src="${cxt!}/ui/SuperAdmin/js/charts/jquery.flot.time.js"></script> <!-- Flot sub -->
+<script src="${cxt!}/ui/SuperAdmin/js/charts/jquery.flot.animator.min.js"></script> <!-- Flot sub -->
+<script src="${cxt!}/ui/SuperAdmin/js/charts/jquery.flot.resize.min.js"></script> <!-- Flot sub - for repaint when resizing the screen -->
+
+
+<!--  Form Related -->
+<script src="${cxt!}/ui/SuperAdmin/js/select.min.js"></script> <!-- Custom Select -->
+<script src="${cxt!}/ui/SuperAdmin/js/chosen.min.js"></script> <!-- Custom Multi Select -->
+<script src="${cxt!}/ui/SuperAdmin/js/icheck.js"></script> <!-- Custom Checkbox + Radio -->
+
+<!-- UX -->
+<script src="${cxt!}/ui/SuperAdmin/js/scroll.min.js"></script> <!-- Custom Scrollbar -->
+
+<!-- Other -->
+<script src="${cxt!}/ui/SuperAdmin/js/calendar.min.js"></script> <!-- Calendar -->
+ <script src="${cxt!}/ui/SuperAdmin/js/datetimepicker.min.js"></script> <!-- Date & Time Picker -->
+<script src="${cxt!}/ui/SuperAdmin/js/feeds.min.js"></script> <!-- News Feeds -->
+<script src="${cxt!}/ui/SuperAdmin/js/jquery.cookie.js"></script>
+
+<!-- All JS functions -->
+<script src="${cxt!}/ui/SuperAdmin/js/functions.js"></script>
+
+${jsSec!}
+</body>
+</html>
+
+

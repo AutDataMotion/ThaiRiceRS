@@ -1,0 +1,92 @@
+<% var cssSec={ %>
+<style>
+</style>
+<% }; %> <% var contSec={ %>
+<div class="user_query">
+	<form role="form" class="form-inline" style="margin: 15px 0 15px 0;">
+		<div class="form-group">
+			<label>UserID</label> <input id="userId" type="text"
+				placeholder="UserID" class="form-control" style="width: 80px;">
+		</div>
+		<div class="form-group">
+			<label class="control-label">Time:</label>
+			<div class="input-group" id="starttime8">
+				<input id="datetimeBeg" type="text" class="form-control"> <span
+					class="input-group-addon" readonly><i class="glyphicon glyphicon-calendar"></i></span>
+			</div>
+			<label class="control-label">to</label>
+			<div class="input-group" id="endtime8">
+				<input id="datetimeEnd" type="text" class="form-control"> <span
+					class="input-group-addon" readonly><i class="glyphicon glyphicon-calendar"></i></span>
+			</div>
+		</div>
+		<div class="form-group">
+			<button id="btnSearch" type="button" class="btn btn-primary">search</button>
+		</div>
+		<div class="form-group" style="float: right;">
+			<button type="button" class="btn btn-primary">
+				<i class="glyphicon glyphicon-level-up" style="margin-right: 3px;"></i>Exported</button>
+		</div>
+	</form>
+</div>
+<div class="table-responsive">
+	<table class="table table-bordered data-table" id="dataTable09"
+		width="100%" cellspacing="0" align="center">
+		<thead>
+			<tr>
+				<th>id</th>
+				<th>type</th>
+				<th>user</th>
+				<th>action</th>
+				<th>content</th>
+				<th>datetime</th>
+			</tr>
+		</thead>
+		<tfoot>
+			<tr>
+				<th>id</th>
+				<th>type</th>
+				<th>user</th>
+				<th>action</th>
+				<th>content</th>
+				<th>datetime</th>
+			</tr>
+		</tfoot>
+	</table>
+</div>
+<% }; %> <% var jsSec={ %>
+<script src="${cxt!}/ui/jedate/jedate.js"></script>
+<script>
+		$(function(){
+		//日期选择插件
+		jeDate({
+			dateCell : "#datetimeBeg",
+			format : "YYYY-MM-DD",
+			isinitVal : false,
+			isTime : false, //isClear:false,
+			minDate : "2014-09-19",
+			okfun : function(val) {
+				alert(val)
+			}
+		})
+		jeDate({
+			dateCell : "#datetimeEnd",
+			format : "YYYY-MM-DD",
+			isinitVal : false,
+			isTime : false, //isClear:false,
+			minDate : "2014-09-19",
+			okfun : function(val) {
+				alert(val)
+			}
+		})
+		$('.data-table tbody tr:odd td').css('background-color','#dbeff6');
+	})
+	</script>
+<script src="${cxt!}/ui/thairice/js_rd/jquery-json.js"></script>
+<script type="text/javascript"
+	src="${cxt!}/ui/DataTables/datatables.min.js"></script>
+<script src="${cxt!}/ui/thairice/js_rd/t2syslog.js"></script>
+
+<% }; %> <%
+include("../layout.html",{cssSec:cssSec,contSec:contSec,jsSec:jsSec}){}
+%>

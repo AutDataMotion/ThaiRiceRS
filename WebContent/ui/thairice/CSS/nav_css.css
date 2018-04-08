@@ -6,11 +6,6 @@
 .navbar-inverse .navbar-toggle:focus, .navbar-inverse .navbar-toggle:hover{
 	background-color:inherit;
 }
-.navbar-nav{
-	background-color:#009cd4;
-	margin-top:0;
-	margin-bottom:0;
-}
 .navbar-inverse .navbar-brand{
 	text-shadow:0 2px 2px #006a85;
 	color:#fff;
@@ -58,9 +53,7 @@
 	background-color:#05506b;
 	color:#a2e6ff;
 }
-.navbar-inverse .navbar-nav>.open>a, .navbar-inverse .navbar-nav>.open>a:focus, .navbar-inverse .navbar-nav>.open>a:hover{
-	background-color:#00dfec;
-}
+
 /*模态框*/
 .close:not(:disabled):not(.disabled){
 	color:#00aace;
@@ -82,4 +75,7 @@
 }
 .modal-header .close{
 	margin-top:20px;
+}
+.modal-dialog{
+	margin-top:100px;
 }

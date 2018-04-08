@@ -8,7 +8,6 @@ import com.platform.mvc.base.BaseModel;
 
 /**
  * 日志model
- * @author DHJ
  */
 @SuppressWarnings("unused")
 //@Table(tableName = "pt_syslog")

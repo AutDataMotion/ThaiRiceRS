@@ -80,78 +80,7 @@ public abstract class BaseModel<M extends Model<M>> extends Model<M> {
 	 */
 	public static final String sqlId_splitPage_select = "platform.baseModel.splitPageSelect";
 	
-	/**
-     * 获取SQL，固定SQL
-     * @param sqlId
-     * @return
-     */
-	protected String getSql(String sqlId){
-		return ToolSqlXml.getSql(sqlId);
-	}
-	
-    /**
-     * 获取SQL，动态SQL，使用Beetl解析
-     * @param sqlId
-     * @param param
-     * @return
-     */
-	protected String getSqlByBeetl(String sqlId, Map<String, Object> param){
-    	return ToolSqlXml.getSql(sqlId, param, ConstantRender.sql_renderType_beetl);
-    }
-    
-    /**
-     * 获取SQL，动态SQL，使用Beetl解析
-     * @param sqlId 
-     * @param param 查询参数
-     * @param list 用于接收预处理的值
-     * @return
-     */
-	protected String getSqlByBeetl(String sqlId, Map<String, Object> param, LinkedList<Object> list){
-    	return ToolSqlXml.getSql(sqlId, param, ConstantRender.sql_renderType_beetl, list);
-    }
 
-    /**
-     * 获取SQL，动态SQL，使用FreeMarker解析
-     * @param sqlId
-     * @param param
-     * @return
-     */
-	protected String getSqlByFreeMarker(String sqlId, Map<String, Object> param){
-    	return ToolSqlXml.getSql(sqlId, param, ConstantRender.sql_renderType_freeMarker);
-    }
-    
-    /**
-     * 获取SQL，动态SQL，使用FreeMarker解析
-     * @param sqlId 
-     * @param param 查询参数
-     * @param list 用于接收预处理的值
-     * @return
-     */
-	protected String getSqlByFreeMarker(String sqlId, Map<String, Object> param, LinkedList<Object> list){
-    	return ToolSqlXml.getSql(sqlId, param, ConstantRender.sql_renderType_freeMarker, list);
-    }
-
-    /**
-     * 获取SQL，动态SQL，使用Velocity解析
-     * @param sqlId
-     * @param param
-     * @return
-     */
-	protected String getSqlByVelocity(String sqlId, Map<String, Object> param){
-    	return ToolSqlXml.getSql(sqlId, param, ConstantRender.sql_renderType_velocity);
-    }
-    
-    /**
-     * 获取SQL，动态SQL，使用Velocity解析
-     * @param sqlId 
-     * @param param 查询参数
-     * @param list 用于接收预处理的值
-     * @return
-     */
-	protected String getSqlByVelocity(String sqlId, Map<String, Object> param, LinkedList<Object> list){
-    	return ToolSqlXml.getSql(sqlId, param, ConstantRender.sql_renderType_velocity, list);
-    }
-	
 	/**
 	 * 根据i18n参数查询获取哪个字段的值
 	 * @param i18n
