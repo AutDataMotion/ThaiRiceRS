@@ -2,17 +2,17 @@
 <style>
 </style>
 <% }; %> <% var contSec={ %>
-	<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
-	<%for(var i = 0; i < groupCpu; i++){ %>
-	<div id="mainCpu${i}" style="height: 300px"></div>
-	<% }%>
-	
-	<div id="mainDisk" style="height: 400px"></div>
-	
-<% }; %> <% var jsSec={ %>
-	<!-- ECharts单文件引入 -->
-	<script src="http://echarts.baidu.com/build/dist/echarts.js"></script>
-	<script type="text/javascript">
+<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+<%for(var i = 0; i < groupCpu; i++){ %>
+<div id="mainCpu${i}" style="height: 300px"></div>
+<% }%>
+<div id="mainMem" style="height: 300px"></div>
+ <%for(var i = 0; i < groupDisk; i++){ %>
+<div id="mainDisk${i}" style="height: 300px"></div>
+<% }%> <% }; %> <% var jsSec={ %>
+<!-- ECharts单文件引入 -->
+<script src="http://echarts.baidu.com/build/dist/echarts.js"></script>
+<script type="text/javascript">
 		// 路径配置
 		require.config({
 			paths : {
@@ -130,21 +130,77 @@
                 	    ]
             	};
             	 <% }%>
-                
-                var myChartDisk = ec.init(document.getElementById('mainDisk'));
+            	 
+            	// ------内存
+            	var myMem = ec.init(document.getElementById('mainMem'));
+                 var optionMem = {
+              		    tooltip : {
+              		        trigger: 'axis',
+              		        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+              		            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+              		        }
+              		    },
+              		    legend: {
+              		        data:['已使用(MB)','未使用(MB)']
+              		    },
+              		    calculable : true,
+              		    xAxis : [
+              		        {
+              		            type : 'value'
+              		        }
+              		    ],
+              		    yAxis : [
+              		        {
+              		            type : 'category',
+              		            data : ['内存容量(MB)']
+              		        }
+              		    ],
+              		    series : [
+              		        {
+              		            name:'已使用',
+              		            type:'bar',
+              		            stack: '总量',
+              		            itemStyle : { normal: {label : {show: true, position: 'insideRight'}}},
+              		            data:[1024]
+              		        },
+              		        {
+              		            name:'未使用',
+              		            type:'bar',
+              		            stack: '总量',
+              		            itemStyle : { normal: {label : {show: true, position: 'insideRight'}}},
+              		            data:[1024]
+              		        }
+              		    ]
+              		}; // end Mem Option
+              		
                 	//clearInterval(timeTicket);
-                	var optionArray = [];
                 	timeTicket = setInterval(function (){
-                		// ajax获取cpu信息
-                		<%for(var i = 0; i < groupCpu; i++){ %>
-                		option${i}.series[0].data[0].value = (Math.random()*100).toFixed(2) - 0;
-                	    option${i}.series[1].data[0].value = (Math.random()*100).toFixed(2) - 0;
-                	    option${i}.series[2].data[0].value = (Math.random()*100).toFixed(2) - 0;
-                	    option${i}.series[3].data[0].value = (Math.random()*100).toFixed(2) - 0;
-                	    optionArray.push(option${i});
-                	    myChart${i}.setOption(option${i},true);
-                	    <% }%>
-                	    
+                	 // 发送查询请求
+                		$.ajax({
+                			type : "get",
+                			url : encodeURI(encodeURI(cxt + "/jf/thairice/sysmonitor/ajaxGetCpuAndMem")),
+                			dataType : 'json',
+                			contentType : "application/json",
+                			success : function(response) {
+                				var cpuInfo = response.cpus;
+                				console.log(cpuInfo);
+                				var memInfo = response.mems;
+                				console.log(memInfo);
+                				// ajax获取cpu信息
+                        		<%for(var i = 0; i < groupCpu; i++){ %>
+                        		option${i}.series[0].data[0].value = cpuInfo[${i*4+0}];
+                        	    option${i}.series[1].data[0].value = cpuInfo[${i*4+1}];
+                        	    option${i}.series[2].data[0].value = cpuInfo[${i*4+2}];;
+                        	    option${i}.series[3].data[0].value = cpuInfo[${i*4+3}];;
+                        	    
+                        	    myChart${i}.setOption(option${i},true);
+                        	    <% }%>
+                        	    // mem 信息
+                        	    optionMem.series[0].data[0] = memInfo[0];
+                        	    optionMem.series[1].data[0] = memInfo[1];
+                        	    myMem.setOption(optionMem,true);
+                			}
+                		});
                 	    // 获取网络信息
                 	   
                 	},4000);
@@ -157,7 +213,8 @@
                 		            position : 'center',
                 		            formatter : '{b}',
                 		            textStyle: {
-                		                baseline : 'bottom'
+                		                baseline : 'bottom',
+                		                fontSize:14
                 		            }
                 		        },
                 		        labelLine : {
@@ -182,7 +239,10 @@
                 		        color: '#ccc',
                 		        label : {
                 		            show : true,
-                		            position : 'center'
+                		            position : 'center',
+                		            textStyle: {
+                		                fontSize:16
+                		            }
                 		        },
                 		        labelLine : {
                 		            show : false
@@ -192,146 +252,54 @@
                 		        color: 'rgba(0,0,0,0)'
                 		    }
                 		};
-                		var radius = [40, 55];
-                		option2 = {
-                		    legend: {
-                		        x : 'center',
-                		        y : 'center',
-                		        data:[
-                		            'disk1','disk2','disk3','disk','disk',
-                		            'disk', 'disk', 'disk', 'disk', 'disk'
-                		        ]
-                		    },
-                		    title : {
+                		var radius = [60, 86];
+                		
+                		var titleDisk = {
                 		        text: 'disk monitor',
-                		        subtext: 'local',
+                		        textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+            	                    fontWeight: 'bolder',
+            	                    fontSize: 18,
+            	                    fontStyle: 'italic',
+            	                    shadowBlur: 10
+            	                },
                 		        x: 'center'
-                		    },
-                		    toolbox: {
-                		        show : true,
-                		        feature : {              		       
-                		            saveAsImage : {show: true}
-                		        }
-                		    },
-                		    series : [
-                		        {
-                		            type : 'pie',
-                		            center : ['10%', '30%'],
-                		            radius : radius,
-                		            x: '0%', // for funnel
-                		            itemStyle : labelFromatter,
-                		            data : [
-                		                {name:'other', value:46, itemStyle : labelBottom},
-                		                {name:'disk1', value:54,itemStyle : labelTop}
-                		            ]
-                		        },
-                		        {
-                		            type : 'pie',
-                		            center : ['30%', '30%'],
-                		            radius : radius,
-                		            x:'20%', // for funnel
-                		            itemStyle : labelFromatter,
-                		            data : [
-                		                {name:'other', value:56, itemStyle : labelBottom},
-                		                {name:'disk2', value:44,itemStyle : labelTop}
-                		            ]
-                		        },
-                		        {
-                		            type : 'pie',
-                		            center : ['50%', '30%'],
-                		            radius : radius,
-                		            x:'40%', // for funnel
-                		            itemStyle : labelFromatter,
-                		            data : [
-                		                {name:'other', value:65, itemStyle : labelBottom},
-                		                {name:'disk3', value:35,itemStyle : labelTop}
-                		            ]
-                		        },
-                		        {
-                		            type : 'pie',
-                		            center : ['70%', '30%'],
-                		            radius : radius,
-                		            x:'60%', // for funnel
-                		            itemStyle : labelFromatter,
-                		            data : [
-                		                {name:'other', value:70, itemStyle : labelBottom},
-                		                {name:'disk4', value:30,itemStyle : labelTop}
-                		            ]
-                		        },
-                		        {
-                		            type : 'pie',
-                		            center : ['90%', '30%'],
-                		            radius : radius,
-                		            x:'80%', // for funnel
-                		            itemStyle : labelFromatter,
-                		            data : [
-                		                {name:'other', value:73, itemStyle : labelBottom},
-                		                {name:'disk', value:27,itemStyle : labelTop}
-                		            ]
-                		        },
-                		        {
-                		            type : 'pie',
-                		            center : ['10%', '70%'],
-                		            radius : radius,
-                		            y: '55%',   // for funnel
-                		            x: '0%',    // for funnel
-                		            itemStyle : labelFromatter,
-                		            data : [
-                		                {name:'other', value:78, itemStyle : labelBottom},
-                		                {name:'disk', value:22,itemStyle : labelTop}
-                		            ]
-                		        },
-                		        {
-                		            type : 'pie',
-                		            center : ['30%', '70%'],
-                		            radius : radius,
-                		            y: '55%',   // for funnel
-                		            x:'20%',    // for funnel
-                		            itemStyle : labelFromatter,
-                		            data : [
-                		                {name:'other', value:78, itemStyle : labelBottom},
-                		                {name:'disk', value:22,itemStyle : labelTop}
-                		            ]
-                		        },
-                		        {
-                		            type : 'pie',
-                		            center : ['50%', '70%'],
-                		            radius : radius,
-                		            y: '55%',   // for funnel
-                		            x:'40%', // for funnel
-                		            itemStyle : labelFromatter,
-                		            data : [
-                		                {name:'other', value:78, itemStyle : labelBottom},
-                		                {name:'disk', value:22,itemStyle : labelTop}
-                		            ]
-                		        },
-                		        {
-                		            type : 'pie',
-                		            center : ['70%', '70%'],
-                		            radius : radius,
-                		            y: '55%',   // for funnel
-                		            x:'60%', // for funnel
-                		            itemStyle : labelFromatter,
-                		            data : [
-                		                {name:'other', value:83, itemStyle : labelBottom},
-                		                {name:'disk', value:17,itemStyle : labelTop}
-                		            ]
-                		        },
-                		        {
-                		            type : 'pie',
-                		            center : ['90%', '70%'],
-                		            radius : radius,
-                		            y: '55%',   // for funnel
-                		            x:'80%', // for funnel
-                		            itemStyle : labelFromatter,
-                		            data : [
-                		                {name:'other', value:89, itemStyle : labelBottom},
-                		                {name:'disk', value:11,itemStyle : labelTop}
-                		            ]
-                		        }
-                		    ]
+                		    };
+                		
+                		
+                		function seriesItemDisk(centerX, path, rate){
+                			return {
+            		            type : 'pie',
+            		            center : [centerX+'%', '55%'],
+            		            radius : radius,
+            		            itemStyle : labelFromatter,
+            		            data : [
+            		                {name:'other', value:100-rate, itemStyle : labelBottom},
+            		                {name:path, value:rate,itemStyle : labelTop}
+            		            ]
+            		        }
                 		};
-                		myChartDisk.setOption(option2,true);  
+                <%
+                for(var i = 0; i < groupDisk; i++){ 
+                	var disk1 = diskInfoList[i*4 + 0];
+                	var disk2 = diskInfoList[i*4 + 1];
+                	var disk3 = diskInfoList[i*4 + 2];
+                	var disk4 = diskInfoList[i*4 + 3];
+                %>
+               
+                   	var myDisk${i} = ec.init(document.getElementById('mainDisk${i}'));
+                   	var optionDisk${i} = {
+                       	    title : titleDisk,
+                       	    toolbox: { show : true},
+                       	    series : [
+                       	    	seriesItemDisk(15,  '${disk1.path}', ${disk1.rate}),
+                       	    	seriesItemDisk(38,   '${disk2.path}', ${disk2.rate}),
+                       	    	seriesItemDisk( 62, '${disk3.path}', ${disk3.rate}),
+                       	    	seriesItemDisk(85,  '${disk4.path}', ${disk4.rate})
+                       	    ]
+                   	};
+                   	myDisk${i}.setOption(optionDisk${i},true);
+               <% }%>
+               
             }
         );
 	</script>

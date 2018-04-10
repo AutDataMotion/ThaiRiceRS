@@ -14,7 +14,6 @@ import org.hyperic.sigar.CpuPerc;
 import org.hyperic.sigar.Mem;
 import org.hyperic.sigar.Sigar;
 import org.hyperic.sigar.SigarException;
-import org.hyperic.sigar.Swap;
 
 import com.jfinal.aop.Clear;
 import com.jfinal.log.Logger;
@@ -72,6 +71,10 @@ public class SysmonitorController extends BaseController {
 		// 磁盘信息 主动触发
 
 		setAttr("groupCpu", groupCpu);
+		List<MdlUsedInfo> diskInfos = getDiskInfo();
+		int cntDiskGroup = Math.max(1, diskInfos.size() / 4);
+		setAttr("diskInfoList", diskInfos);
+		setAttr("groupDisk", cntDiskGroup);
 		renderWithPath(pthv + pthvm);
 	}
 
@@ -105,11 +108,11 @@ public class SysmonitorController extends BaseController {
 			memInfo[0] = mem.getUsed() / 1024L / 1024L;
 			// 内存剩余量
 			memInfo[1] = mem.getFree() / 1024L / 1024L;
-			Swap swap = sigar.getSwap();
-			// swap已使用量
-			memInfo[2] = swap.getUsed() / 1024L / 1024L;
-			// swap剩余量
-			memInfo[3] = swap.getFree() / 1024L / 1024L;
+			// Swap swap = sigar.getSwap();
+			// // swap已使用量
+			// memInfo[2] = swap.getUsed() / 1024L / 1024L;
+			// // swap剩余量
+			// memInfo[3] = swap.getFree() / 1024L / 1024L;
 		} catch (SigarException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
