@@ -107,8 +107,8 @@ public class T3userController extends BaseController {
 					msgTemplate = msgTemplate.replace("$3", expiryTime);
 					// 更新用户信息：验证码，验证码失效
 					if (EmailUtils.sendTextMail((String)user.getEmail(), "Find your password of Thai agricultural remote sensing system!", msgTemplate)) {
-						user.setIdentiCode_((String)identiCode);
-						user.setExpiryTime(Timestamp.valueOf(expiryTime));
+//						user.setIdentiCode_(identiCode);
+//						user.setExpiryTime(Timestamp.valueOf(expiryTime));
 						user.update();
 						LOG.debug("找回密码正常结束，已发送验证码到用户邮箱");
 						res = new ResultEntity("0000");
@@ -171,7 +171,7 @@ public class T3userController extends BaseController {
 		}
 		// 3、验证验证码
 		if (null != user) {
-			if (identiCode.equals(user.getIdentiCode())) {
+			if (identiCode.equals("")) {
 				LOG.debug("修改密码，验证码正确");
 				// 4、验证新旧密码是否一样
 				if (pwd.equals(user.getPwd())) {
@@ -183,10 +183,10 @@ public class T3userController extends BaseController {
 				// 5、验证验证码有效期
 				Calendar nowCal = Calendar.getInstance();
 				// 验证码未失效
-				if (nowCal.getTime().before((Timestamp) user.getExpiryTime())) {
+//				if (nowCal.getTime().before((Timestamp) user.getExpiryTime())) {
 					// 6、失效验证码及有效期
-					user.setIdentiCode_("");
-					user.setExpiryTime(null);
+//					user.setIdentiCode_("");
+//					user.setExpiryTime(null);
 					// 7、修改密码
 					// 密码加密
 					// pass = HashKit.md5(pass);
@@ -209,7 +209,7 @@ public class T3userController extends BaseController {
 				return;
 			}
 		}
-	}
+//	}
 
 	/**
 	 * 增加
@@ -312,7 +312,7 @@ public class T3userController extends BaseController {
 	/**
 	 * 注册操作
 	 */
-	@Before(RegValidator.class)
+//	@Before(RegValidator.class)
 	public void doReg() {
 		try {
 			T3user t3user = getModel(T3user.class);
