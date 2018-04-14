@@ -53,6 +53,15 @@ public class T1parameterController extends BaseController {
 		setAttr("blogPage", page);
 		renderWithPath("/adm2018/production_configuration.html");
 	}
+	
+	/**
+	 * 列表
+	 */
+	public void queryAllParm() {
+		Page page = T1parameter.dao.paginate(getParaToInt(0, 1), 1000, "select *", "from T1parameter order by id asc");
+		setAttr("blogPage", page);
+		renderWithPath("/adm2018/production_configuration.html");
+	}
 
 	/**
 	 * ftp源路径查询 zhuchaobin, 2018-03-13
