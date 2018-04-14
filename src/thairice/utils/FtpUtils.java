@@ -701,23 +701,28 @@ public class FtpUtils {
 				return null;
 			}
 			FTPFile[] remoteFiles;
-//			ftpClient.enterLocalPassiveMode();
-//			remoteFiles = ftpClient.listFiles();
-//			if (remoteFiles != null) {
-//				LOG.debug("远程目录下文件数remoteFiles.length：" + remoteFiles.length);
-//				for (int i = 0; i < remoteFiles.length; i++) {
-//					String remoteFileName = remoteFiles[i].getName();
-//					remoteFiles[i].getTimestamp();
-//					// System.out.println("第一次检测到文件:"+ ftpPath + remoteFileName);
-//					remoteFilePathMap.put(remoteFileName, remoteFiles[i].getSize());
-//				}
-//				// return remoteFilePathList;
-//			} else {
-//				LOG.debug(ftpPath + "目录下没有文件");
-//				return null;
-//			}
-//			LOG.debug("暂停20毫秒.");
-//			Thread.sleep(20);
+			ftpClient.enterLocalPassiveMode();
+			remoteFiles = ftpClient.listFiles();
+			if (remoteFiles != null) {
+				LOG.debug("远程目录下文件数remoteFiles.length：" + remoteFiles.length);
+				for (int i = 0; i < remoteFiles.length; i++) {
+					String remoteFileName = remoteFiles[i].getName();
+					remoteFiles[i].getTimestamp();
+					// System.out.println("第一次检测到文件:"+ ftpPath + remoteFileName);
+					// 判定是否为泰国境内条带
+					if(FileUtils.isThairHV(remoteFileName)) {
+						remoteFilePathMap.put(remoteFileName, remoteFiles[i].getSize());
+					} else {
+						LOG.debug("非泰国境内条带:" + remoteFileName);
+					}
+				}
+				// return remoteFilePathList;
+			} else {
+				LOG.debug(ftpPath + "目录下没有文件");
+				return null;
+			}
+			LOG.debug("暂停20毫秒.");
+			Thread.sleep(20);
 			// 第二次检测目录下文件并比对文件个数和文件大小
 			ftpClient.enterLocalPassiveMode();
 			changDirRlt = ftpClient.changeWorkingDirectory(ftpPath);
@@ -731,20 +736,27 @@ public class FtpUtils {
 					System.out.println("---" + remoteFiles.length);
 					for (int i = 0; i < remoteFiles.length; i++) {
 						String remoteFileName = remoteFiles[i].getName();
-						Long secSize= remoteFiles[i].getSize();
-//						Long fstSize  = (Long) remoteFilePathMap.get(remoteFileName);
-//						if (fstSize.equals(secSize)) {
-							remoteFilePathList.add(ftpPath + remoteFileName);
-							T6org_data org_data = new T6org_data();
-							// 解析文件属性
-							org_data = FileUtils.parseOrgDataDir(ftpPath + remoteFileName);
-							// 文件大小
-							org_data.setSize_(Float.parseFloat(String.valueOf(secSize)));
-							T6org_data_list.add(org_data);
-//						} else {
-//							// 两次比对文件大小不一致
-//							LOG.debug("两次比对文件大小不一致");
-//						}
+						// 判定是否为泰国境内条带
+						if(FileUtils.isThairHV(remoteFileName)) {
+							Long secSize= remoteFiles[i].getSize();
+							Long fstSize  = (Long) remoteFilePathMap.get(remoteFileName);
+							if (fstSize.equals(secSize)) {
+								remoteFilePathList.add(ftpPath + remoteFileName);
+								T6org_data org_data = new T6org_data();
+								// 解析文件属性
+								org_data = FileUtils.parseOrgDataDir(ftpPath + remoteFileName);
+								if(null != org_data) {
+									// 文件大小
+									org_data.setSize_(Float.parseFloat(String.valueOf(secSize)));
+									T6org_data_list.add(org_data);
+								}
+							} else {
+								// 两次比对文件大小不一致
+								LOG.debug("两次比对文件大小不一致");
+							}
+						} else {
+							LOG.debug("非泰国境内条带:" + remoteFileName);
+						}
 					}
 					return T6org_data_list;
 				} else {
