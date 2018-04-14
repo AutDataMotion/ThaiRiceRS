@@ -1,0 +1,648 @@
+<!DOCTYPE html>
+<!-- saved from url=(0042)https://v3.bootcss.com/examples/dashboard/ -->
+<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!--<link rel="icon" href="https://v3.bootcss.com/favicon.ico">-->
+
+    <title>生产配置</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href="datetime-picker/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    <link href="CSS/base.css" rel="stylesheet">
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="./data_files/ie10-viewport-bug-workaround.css" rel="stylesheet">
+	<link href="CSS/dataTables.bootstrap4.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="./data_files/dashboard.css" rel="stylesheet">
+	<link rel="stylesheet" href="CSS/nav_css.css">
+    <link rel="stylesheet" href="CSS/operator_management.css">
+    <link rel="stylesheet" href="CSS/user_management.css">
+    <link rel="stylesheet" href="CSS/data_management.css">
+    <link rel="stylesheet" href="bootstrap-fileinput-master/css/fileinput.min.css">
+    <link rel="stylesheet" href="CSS/production.css">
+    <link rel="stylesheet" href="bootstrap-colorpicker-master/bootstrap-colorpicker-master/dist/css/bootstrap-colorpicker.min.css">
+    <style>
+    	.colorpicker-2x {
+                /*这里设置top left的偏移量*/
+                margin-top: -80px;
+                margin-left: 50px;
+            }
+          .colorpicker-2x .colorpicker-saturation {
+              width: 200px;
+              height: 200px;
+          }
+       
+          .colorpicker-2x .colorpicker-hue,
+          .colorpicker-2x .colorpicker-alpha {
+              width: 30px;
+              height: 200px;
+          }
+       
+          .colorpicker-2x .colorpicker-color,
+          .colorpicker-2x .colorpicker-color div {
+              height: 30px;
+          }
+    </style>
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="./data_files/ie-emulation-modes-warning.js"></script>
+
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    
+<script type="text/javascript"> 
+    function updateParams(flag){
+	$.ajax({
+		  type: 'POST',
+		  url: '/jf/thairice/t1parameter/updateParams',
+		  data: {flag:flag,ftpSrcPath0:$("#ftpSrcPath0").val(),ftpSrcPath1:$("#ftpSrcPath1").val(),ftpSrcPath2:$("#ftpSrcPath2").val(),ftpSrcPath3:$("#ftpSrcPath3").val(),droughtThreshold1:$("#droughtThreshold1").val(),droughtThreshold2:$("#droughtThreshold2").val(),droughtThreshold3:$("#droughtThreshold3").val(),droughtThreshold4:$("#droughtThreshold4").val(),conditionThreshold1:$("#conditionThreshold1").val(),conditionThreshold2:$("#conditionThreshold2").val(),conditionThreshold3:$("#conditionThreshold3").val(),conditionThreshold4:$("#conditionThreshold4").val(),inStartYear:$("#inStartYear").val(),inEndYear:$("#inEndYear").val()},	
+		  success: function(res){
+/* 			if(res.code == "0003" || res.code == "0001"){
+					document.getElementById("account").style.backgroundColor = "#faa390";
+			} */
+/* 			document.setElementById("ftpSrcPath0").value = "55555"; */
+			alert(res.desc);
+		  },
+		  dataType: "json"
+		});
+	}
+    
+    function queryParams(flag){	
+    	$.ajax({
+    		  type: 'POST',
+    		  url: '/jf/thairice/t1parameter/queryParams',
+    		  data: {flag:flag},
+    		  success: function(res){
+    			if(res.code == "0000"){
+    				if(res.flag == "001"){
+    			 		if(res.ftpSrcPath0 != undefined)
+		    				document.getElementById("ftpSrcPath0").value = res.ftpSrcPath0;
+    			 		else
+    			 			document.getElementById("ftpSrcPath0").value = "";
+    			 		
+    			 		if(res.ftpSrcPath1 != undefined)
+		    				document.getElementById("ftpSrcPath1").value = res.ftpSrcPath1;
+    			 		else
+    			 			document.getElementById("ftpSrcPath1").value = "";
+    			 		
+    			 		if(res.ftpSrcPath2 != undefined)
+		    				document.getElementById("ftpSrcPath2").value = res.ftpSrcPath2;
+    			 		else
+    			 			document.getElementById("ftpSrcPath2").value = "";
+    			 		
+		    			if(res.ftpSrcPath3 != undefined)
+		    				document.getElementById("ftpSrcPath3").value = res.ftpSrcPath3;
+		    			else
+		    				document.getElementById("ftpSrcPath3").value = "";
+    				} else if(res.flag == "002"){
+		    			document.getElementById("droughtThreshold4").value = res.droughtThreshold4;
+		    			document.getElementById("droughtThreshold1").value = res.droughtThreshold1;
+		    			document.getElementById("droughtThreshold2").value = res.droughtThreshold2;
+		    			document.getElementById("droughtThreshold3").value = res.droughtThreshold3;
+    				} else if(res.flag == "003"){
+		    			document.getElementById("conditionThreshold1").value = res.conditionThreshold1;
+		    			document.getElementById("conditionThreshold2").value = res.conditionThreshold2;
+		    			document.getElementById("conditionThreshold3").value = res.conditionThreshold3;
+		    			document.getElementById("conditionThreshold4").value = res.conditionThreshold4;
+		    			document.getElementById("inStartYear").value = res.inStartYear;
+		    			document.getElementById("inEndYear").value = res.inEndYear;
+		    			
+    				} else{
+    					alert(res.desc);
+    				}
+    			} else {
+    				alert(res.desc);
+    			}
+    		  },
+    		  dataType: "json"
+    		});
+    	}
+</script> 
+  </head>
+
+  <body>
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <p class="navbar-brand">Thai agricultural remote sensing monitoring platform</p>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#"><i class="glyphicon glyphicon-user"></i>Admin</a></li>
+            <li><a href="#" data-toggle="modal" data-target="#exampleModal"><i class="glyphicon glyphicon-log-out"></i>Log out</a></li>
+            <li><a href="#"><i class="glyphicon glyphicon-question-sign"></i></a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li style="margin-bottom:20px;"><p class="function_text">Function menu</p></li>
+            <li><a href="data.html">Operator management <span class="sr-only">(current)</span></a></li>
+            <li><a href="user_management.html">User management</a></li>
+            <li><a href="index.html">Product data query</a></li>
+            <li><a href="data_management.html">Data management</a></li>
+            <li><a href="#">System state</a></li>
+            <li><a href="system_configuration.html">System configuration</a></li>
+            <li class="active"><a href="#">Production configuration</a></li>
+            <li><a href="log_management.html">Log management</a></li>
+            <li><a href="data_selfinfo.html">Personal center</a></li>
+            <li><a href="data_message.html">My message</a></li>
+          </ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <!--Nav tabs-->
+          <ul class="nav nav-tabs" role="tablist">
+            <li role="presentation" class="active">
+                <a href="#production01" aria-controls="production01" role="tab" data-toggle="tab">Monitoring samples</a>
+            </li>
+            <li role="presentation">
+                <a href="#production02" onclick="queryParams('001')"  aria-controls="production02" role="tab" data-toggle="tab">Data of area</a>
+            </li>
+            <li role="presentation">
+                <a href="#production03" onclick="queryParams('002')"  aria-controls="production03" role="tab" data-toggle="tab">Drought monitoring</a>
+            </li>
+            <li role="presentation">
+                <a href="#production04" onclick="queryParams('003')"  aria-controls="production04" role="tab" data-toggle="tab">Condition monitoring</a>
+            </li>
+            <li role="presentation">
+                <a href="#production05" aria-controls="production05" role="tab" data-toggle="tab">Production estimates</a>
+            </li>
+          </ul>
+          <!--Tab panes-->
+          <div class="tab-content" style="position:relative;">
+            <div role="tabpanel" class="tab-pane active" id="production01">
+                <div class="form-group">
+                	<ul class="operation_tools">
+                    	<li class="one"><a href="#" data-toggle="modal" data-target="#fileModal" title="click to start"></a></li>
+                        <li class="two"><a href="#" title="zoom in"></a></li>
+                        <li class="three"><a href="#" title="zoom out"></a></li>
+                        <li class="four"><a href="#" title="remove"></a></li>
+                        <li class="five"><a href="#" title="crop"></a></li>
+                        <li class="six"><a href="#" title="save"></a></li>
+                    </ul>
+                </div>
+                    <!--进度条-->
+                    <div class="barline" id="probar">
+                        <div id="line" w="100" style="width:0px;"></div>	
+                    </div>
+                    <!--显示模式和分类样本-->
+                    <div class="modes_samples">
+                    	<div class="block"><span></span></div>
+                        <div class="modes">
+                        	<div class="BbProductMenu">
+                                <div class="list-group">
+                                  <div class="list-group-item">
+                                    <h4 class="list-group-item-heading">Display mode</h4>
+                                    <ul class="modes_ul">
+                                    	<li>
+                                        	<input type="radio"> 
+                                            <span>R</span>
+                                            <span class="color red"></span>
+                                            <select class="form-control" style="float:left; width:150px; height:30px; margin-right:0; margin-left:15px;">
+                                            	<option>band001</option>
+                                                <option>band002</option>
+                                                <option>band003</option>
+                                                <option>band004</option>
+                                            </select>
+                                        </li>
+                                        <li>
+                                        	<input type="radio"> 
+                                            <span>G</span>
+                                            <span class="color green"></span>
+                                            <select class="form-control" style="float:left; width:150px; height:30px; margin-right:0; margin-left:15px;">
+                                            	<option>band001</option>
+                                                <option>band002</option>
+                                                <option>band003</option>
+                                                <option>band004</option>
+                                            </select>
+                                        </li>
+                                        <li>
+                                        	<input type="radio"> 
+                                            <span>B</span>
+                                            <span class="color blue"></span>
+                                            <select class="form-control" style="float:left; width:150px; height:30px; margin-right:0; margin-left:15px;">
+                                            	<option>band001</option>
+                                                <option>band002</option>
+                                                <option>band003</option>
+                                                <option>band004</option>
+                                            </select>
+                                        </li>
+                                    </ul>
+                                  </div>
+                            </div>
+
+                        </div>
+                    	</div>
+                        <div class="samples">
+                        	<div class="BbProductMenu">
+                                <div class="list-group">
+                                  <div class="list-group-item" style="padding-bottom:0;">
+                                    <h4 class="list-group-item-heading">Sample classification</h4>
+                                    <span><i class="glyphicon glyphicon-plus plus"></i></span>
+                                    <div class="table-wrap">
+                                    	<table class="table table-bordered" align="center">
+                                        	<tr class="title">
+                                            	<td>sample name</td>
+                                                <td>color</td>
+                                                <td>number</td>
+                                                <td>delete</td>
+                                            <tr>
+                                            <tr>
+                                            	<td>rice</td>
+                                                <td>
+                                                	<input id="mycp" type="text" class="form-control" value="pink">
+                                                </td>
+                                                <td>1</td>
+                                                <td><span><i class="glyphicon glyphicon-remove-sign"></i></span></td>
+                                            <tr>
+                                            <tr>
+                                            	<td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            <tr>
+                                            <tr>
+                                            	<td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            <tr>
+                                            <tr>
+                                            	<td></td>
+                                                <td></td>
+                                                <td></td>
+                                                <td></td>
+                                            <tr>
+                                        </table>
+                                    </div>
+                                  </div>
+                            </div>
+
+                        </div>
+                        </div>
+                        <button class="btn btn-primary okay_btn" type="button" data-toggle="modal" data-target="#RunModal">OK</button>
+                </div>
+            </div>
+            <div role="tabpanel" class="tab-pane" id="production02" style="text-align:center;">
+<!--             	<form class="form-horizontal tab-form" style="width:500px; margin:100px auto 0; background:#fff; border-radius:5px; padding:5px 20px;"> -->
+                	<h4> < MODIS Upload >  </h4>
+                <!-- 	zhuchaobin, 20180313 -->
+<!--                     <input type="file" name="txt_file" id="txt_file02" multiple class="file" />
+                    <input type="file" name="txt_file" id="txt_file03" multiple class="file" />
+                    <input type="file" name="txt_file" id="txt_file04" multiple class="file" />
+                    <input type="file" name="txt_file" id="txt_file05" multiple class="file" /> -->
+            <div class="form-group" style="text-align:center;">        
+<!--            	<div class="input-group">
+           		<input type="text" name="ftpSrcPath0" id="ftpSrcPath0"  size = '100' value=${ftpSrcPath0!} >  
+           	</div>
+			<div class="input-group">
+           		<input type="text" name="ftpSrcPath1" id="ftpSrcPath1"  size = '100' value=${ftpSrcPath1!} >
+    		</div>
+			<div class="input-group">
+           		<input type="text" name="ftpSrcPath2" id="ftpSrcPath2"  size = '100' value=${ftpSrcPath2!} >
+  			</div> -->
+<!-- 			<div class="input-group">
+           		<input type="text" name="ftpSrcPath3" id="ftpSrcPath3"  size = '100' value=${ftpSrcPath3!} >  
+  			</div> -->
+
+
+  			</div>
+  			<table align="center">
+					<div class="form-group" style="margin-bottom:0;" style="text-align:center;">
+                        <div class="input-group" style="text-align:center;">
+							<input type="text" class="form-control" name="ftpSrcPath0" id="ftpSrcPath0"  size = '50' value=${ftpSrcPath0!} >           
+                        </div>
+                    </div>
+					<div class="form-group" style="margin-bottom:0;">
+                        <div class="input-group">
+							<input type="text" class="form-control" name="ftpSrcPath1" id="ftpSrcPath1"  size = '50' value=${ftpSrcPath1!} >           
+                        </div>
+                    </div>
+					<div class="form-group" style="margin-bottom:0;">
+                        <div class="input-group">
+							<input type="text" class="form-control" name="ftpSrcPath2" id="ftpSrcPath2"  size = '50' value=${ftpSrcPath2!} >           
+                        </div>
+                    </div>
+					<div class="form-group" style="margin-bottom:0;">
+                        <div class="input-group">
+							<input type="text" class="form-control" name="ftpSrcPath3" id="ftpSrcPath3"  size = '50' value=${ftpSrcPath3!} >           
+                        </div>
+                    </div>
+
+                    <div class="form-group" style="text-align:center;">
+                    	<button class="btn btn-primary" onclick="updateParams('001')">submit</button>
+                    	<button class="btn btn-default">reset</button>
+                    </div>
+                    </table>
+<!--                 </form> -->
+            </div>
+            <div role="tabpanel" class="tab-pane" id="production03">
+ <!--            	<form class="form-horizontal tab-form" style="width:500px; margin:100px auto 0; background:#fff; border-radius:5px; padding:5px 20px;"> -->
+                	<h4> < Classification threshold > </h4>
+                    <div class="form-group" style="margin-bottom:0;">
+                        <div class="input-group">
+                          <div class="input-group-addon color-one">driest to drought</div>
+                          <input type="text" class="form-control" name="droughtThreshold1" id="droughtThreshold1" placeholder="0.35" >
+                          <div class="input-group-addon" style="background:none;">value:0.3 - 0.4</div>
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-bottom:0;">
+                        <div class="input-group">
+                          <div class="input-group-addon color-two">drought to normal</div>
+                          <input type="text" class="form-control" name="droughtThreshold2" id="droughtThreshold2" placeholder="0.35" >
+                          <div class="input-group-addon" style="background:none;">value:0.4 - 0.5</div>
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-bottom:0;">
+                        <div class="input-group">
+                          <div class="input-group-addon color-three">normal to little wet</div>
+                          <input type="text" class="form-control" name="droughtThreshold3" id="droughtThreshold3" placeholder="0.35" >
+                          <div class="input-group-addon" style="background:none;">value:0.5 - 0.6</div>
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-bottom:0;">
+                        <div class="input-group">
+                          <div class="input-group-addon color-four"> little wet to wet</div>
+                          <input type="text" class="form-control" name="droughtThreshold4" id="droughtThreshold4" placeholder="0.35" >
+                          <div class="input-group-addon" style="background:none;">value:0.6 - 0.7</div>
+                        </div>
+                    </div>
+                    <div class="form-group" style="text-align:center;">
+                    	<button class="btn btn-primary" onclick="updateParams('002')">submit</button>
+                    	<button class="btn btn-default">reset</button>
+                    </div>
+<!--                 </form> -->
+            </div>
+            <div role="tabpanel" class="tab-pane" id="production04">
+ <!--            	<form class="form-horizontal tab-form" style="width:500px; margin:100px auto 0; background:#fff; border-radius:5px; padding:5px 20px;"> -->
+                	<h4> < Classification threshold > </h4>
+                    <div class="form-group">
+                        <input type="text" class="form-control" name="inStartYear" id="inStartYear" placeholder="input year as 2018" style="float:left; width:200px;">
+                        <label class="control-label" style="float:left; width:60px; height:34px; line-height:34px; padding-top:0; text-align:center;">To</label>
+                        <input type="text" class="form-control" name="inEndYear" id="inEndYear" placeholder="input year as 2020" style="float:left; width:200px;">
+                    </div> 
+                    <div class="form-group" style="margin-bottom:0;">
+                        <div class="input-group">
+                          <div class="input-group-addon color-one">worst to poor</div>
+                          <input type="text" class="form-control" name="conditionThreshold1" id="conditionThreshold1" placeholder="0.35" >
+                          <div class="input-group-addon" style="background:none;">value:0.3 - 0.4</div>
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-bottom:0;">
+                        <div class="input-group">
+                          <div class="input-group-addon color-two">poor to normal</div>
+                          <input type="text" class="form-control" name="conditionThreshold2" id="conditionThreshold2" placeholder="0.35" >
+                          <div class="input-group-addon" style="background:none;">value:0.4 - 0.5</div>
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-bottom:0;">
+                        <div class="input-group">
+                          <div class="input-group-addon color-three">normal to better</div>
+                          <input type="text" class="form-control" name="conditionThreshold3" id="conditionThreshold3" placeholder="0.35" >
+                          <div class="input-group-addon" style="background:none;">value:0.5 - 0.6</div>
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-bottom:0;">
+                        <div class="input-group">
+                          <div class="input-group-addon color-four">better to best</div>
+                          <input type="text" class="form-control" name="conditionThreshold4" id="conditionThreshold4" placeholder="0.35" >
+                          <div class="input-group-addon" style="background:none;">value:0.6 - 0.7</div>
+                        </div>
+                    </div>
+                    <div class="form-group" style="text-align:center;">
+                    	<button class="btn btn-primary" onclick="updateParams('003')">submit</button>
+                    	<button class="btn btn-default">reset</button>
+                    </div>
+<!--                 </form> -->
+            </div>
+            <div role="tabpanel" class="tab-pane" id="production05">
+            	<form class="form-horizontal tab-form" style="width:500px; margin:100px auto 0; background:#fff; border-radius:5px; padding:5px 20px;">
+                	<h4> < Production estimates data upload > </h4>
+                    <input type="file" name="txt_file" id="txt_file06" multiple class="file" />
+                    <div class="form-group" style="text-align:center;">
+                    	<button class="btn btn-success">submit</button>
+                    	<button class="btn btn-default">reset</button>
+                    </div>
+                </form>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+	<!-- Logout Modal-->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+            <a class="btn btn-primary" href="login.html">Logout</a>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- upload Modal-->
+    <div class="modal fade" id="fileModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">File upload</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+          	<input type="file" name="txt_file" id="txt_file01" multiple class="file" />
+          </div>
+          <div class="modal-footer" style="text-align:center;">
+            <button class="btn btn-primary upload_btn" type="button" data-dismiss="modal" onClick="processerbar(3000)">Upload</button>
+          </div>
+        </div>
+      </div>
+    </div>
+	<!-- Run Modal-->
+    <div class="modal fade" id="RunModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Perform parameter</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+          	<form role="form" class="form-horizontal user_form">
+            	  <div class="form-group" style="margin-bottom:0;">
+                    <label class="col-sm-4">service band</label>
+                    <div class="col-sm-8" style="line-height:40px;">
+                    	<input type="checkbox" checked style="margin-top:10px; margin-right:8px;">select all
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-4"></label>
+                    <div class="col-sm-8">
+                    	<label class="checkbox-inline">
+                          <input type="checkbox" checked style="margin-top:10px; margin-right:8px;" value="option1"> band1
+                        </label>
+                        <label class="checkbox-inline">
+                          <input type="checkbox" checked style="margin-top:10px; margin-right:8px;" value="option2"> band2
+                        </label>
+                        <label class="checkbox-inline">
+                          <input type="checkbox" checked style="margin-top:10px; margin-right:8px;" value="option3"> band3
+                        </label>
+                        <label class="checkbox-inline">
+                          <input type="checkbox" checked style="margin-top:10px; margin-right:8px;" value="option4"> band4
+                        </label>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-4">Selection algorithm:</label>
+                    <div class="col-sm-8">
+                      <label>
+                          <input type="radio" value="option1"> Minimum likelihood classification
+                      </label><br>
+                      <label>
+                          <input type="radio" value="option1"> Spectral Angle Mapper
+                      </label><br>
+                    </div>
+                  </div>
+
+            </form>
+          </div>
+          <div class="modal-footer" style="text-align:center;">
+            <button class="btn btn-primary run_btn" type="button" data-dismiss="modal" data-toggle="modal" data-target="#RunResultModal">Run</button>
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- RunResult Modal-->
+    <div class="modal fade" id="RunResultModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog dialog-special" role="document" style="margin-top:100px;">
+        <div class="modal-content">
+          <div class="modal-header" style="height:45px;">
+            <h5 class="modal-title" id="exampleModalLabel" style="height:45px; line-height:45px;">The results</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close" style="margin-top:13px;">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+          	<div class="container-fluid">
+            	<div class="row">
+                	<div class="col-sm-6 col-md-6">
+                    	<p class="text">The original image</p>
+                        <img class="img-responsive" src="Images/production/img01.jpg">
+                    </div>
+                    <div class="col-sm-6 col-md-6">
+                    	<p class="text">Results the image</p>
+                        <img class="img-responsive" src="Images/production/img01.jpg">
+                    </div>
+                </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <input type="radio" name="rice">Rice
+            <input type="radio" name="rice" style="margin-left:10px;">Not rice
+            <button class="btn btn-primary result_btn" type="button" style="margin-left:10px;" data-dismiss="modal">Run</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="./data_files/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <script src="datetime-picker/moment.js"></script>
+    <script src="datetime-picker/bootstrap-datetimepicker.min.js"></script>
+    <script src="JS/jquery.dataTables.js"></script>
+    <script src="JS/dataTables.bootstrap4.js"></script>
+    <script src="JS/sb-admin-datatables.min.js"></script>
+    <script src="bootstrap-fileinput-master/js/fileinput.min.js"></script>
+    <script src="bootstrap-fileinput-master/js/locales/zh.js"></script>
+    
+    <script src="JS/production.js"></script>
+    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+    <script src="./data_files/holder.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="./data_files/ie10-viewport-bug-workaround.js"></script>
+    <script src="bootstrap-colorpicker-master/bootstrap-colorpicker-master/dist/js/bootstrap-colorpicker.min.js"></script>
+    
+  	<script>
+    	function processerbar(time){
+			document.getElementById('probar').style.display="block";
+			$("#line").each(function(i,item){
+				var a=parseInt($(item).attr("w"));
+				$(item).animate({
+					width: a+"%"
+				},time);
+			});
+			var timer = time + 500;
+			setTimeout(function(){
+				$('#probar').hide();
+				$('.block').show();
+				$('.samples').slideDown();
+				$('.modes').slideDown();
+				$('.okay_btn').show();
+			},timer)
+		};
+		$(function(){
+			//日期选择插件
+			$('#starttime6').datetimepicker({  
+				format: 'YYYY-MM-DD',  
+				locale: moment.locale('zh-cn')  
+			}); 
+			$('#endtime6').datetimepicker({  
+				format: 'YYYY-MM-DD',  
+				locale: moment.locale('zh-cn')  
+			});
+			$('.data-table tbody tr:odd td').css('background-color','#dbeff6');
+			$('.upload_btn').click(function(e) {
+                //processerbar(2000);
+				$('#probar').show().delay(3000).hide();
+            });
+			$('#mycp').colorpicker({
+                  align: 'left',
+                  customClass: 'colorpicker-2x',
+                  sliders: {
+                      saturation: {
+                          maxLeft: 200,
+                          maxTop: 200
+                      },
+                      hue: {
+                          maxTop: 200
+                      },
+                      alpha: {
+                          maxTop: 200
+                      }
+                  }
+			})
+		})
+    </script>
+</body>
+</html>
