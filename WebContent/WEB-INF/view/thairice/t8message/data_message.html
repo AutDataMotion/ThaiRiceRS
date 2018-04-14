@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<!-- saved from url=(0042)https://v3.bootcss.com/examples/dashboard/ -->
+<html lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+<meta name="description" content="">
+<meta name="author" content="">
+<!--<link rel="icon" href="https://v3.bootcss.com/favicon.ico">-->
+
+<title>管理员-我的消息</title>
+
+  <!-- Bootstrap core CSS -->
+  <link href="${cxt!}/ui/thairice/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+  <link href="${cxt!}/ui/thairice/data_files/ie10-viewport-bug-workaround.css" rel="stylesheet">
+  <link href="${cxt!}/ui/thairice/CSS/dataTables.bootstrap4.css" rel="stylesheet">
+  <link href="${cxt!}/ui/thairice/data_files/dashboard.css" rel="stylesheet">
+  <link href="${cxt!}/ui/thairice/CSS/nav_css.css" rel="stylesheet" >
+  <link rel="stylesheet" href="${cxt!}/ui/thairice/CSS/operator_management.css">
+  <script src="${cxt!}/ui/thairice/data_files/ie-emulation-modes-warning.js"></script>
+</head>
+
+<body>
+<!--公共的头部start-->
+<%includeFileTemplate("/thairice/common/top.html"){}%>
+<!--公共的头部end-->
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-3 col-md-2 sidebar">
+      <ul class="nav nav-sidebar">
+            <li style="margin-bottom:20px;"><p class="function_text">Function menu</p></li>
+             <% if(session.admin.type_=='03系统管理员'){ %>
+            <li><a href="${cxt!}/jf/thairice/admin/user/main">Operator management <span class="sr-only">(current)</span></a></li>
+            <% }%>
+            <li><a href="${cxt!}/jf/thairice/admin/user/user_management">User management</a></li>
+            <li><a href="index.html">Product data query</a></li>
+            <li><a href="data_management.html">Data management</a></li>
+            <li><a href="#">System state</a></li>
+            <li><a href="system_configuration.html">System configuration</a></li>
+            <li><a href="production_configuration.html">Production configuration</a></li>
+            <li><a href="log_management.html">Log management</a></li>
+            <li><a href="${cxt!}/jf/thairice/admin/user/data_selfinfo">Personal center</a></li>
+            <li class="active"><a>My message</a></li>
+       </ul>
+    </div>
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+    	<div class="BbMessage">
+      <div class="tab_btns" style="margin:15px 0;">
+        <select class="form-control" style="width:180px; float:left; margin-right:15px;" id="type">
+            <option value="">ALL</option>
+            <option value="01通知">Notice</option>
+            <option value="02公告">Announcement</option>
+            <option value="03提醒">Remind</option>
+        </select>
+        <button type="button" class="btn btn-danger" style="margin-right:10px;" id="btn-del">Delete the selected</button>
+        <button type="button" class="btn btn-info" id="empty"><i class="glyphicon glyphicon-warning-sign"></i>Empty the list</button>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-bordered data-table" id="dataTable01" width="100%" cellspacing="0" align="center">
+          <thead>
+            <tr>
+              <th width="10%" style="border-bottom:none;"> <input type="checkbox" name="cb-check-all">
+                Select all </th>
+              <th style="border-bottom:none;">Type</th>
+              <th style="border-bottom:none;">Content</th>
+              <th style="border-bottom:none;">Time</th>
+            </tr>
+          </thead>
+        </table>
+      </div>
+  </div>
+    </div>
+  </div>
+</div>
+<!-- Bootstrap core JavaScript
+    ================================================== -->
+<script src="${cxt!}/ui/thairice/data_files/jquery.min.js"></script>
+<script src="${cxt!}/ui/thairice/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+<script src="${cxt!}/ui/thairice/JS/jquery.dataTables.js"></script>
+<script src="${cxt!}/ui/thairice/JS/dataTables.bootstrap4.js"></script>
+<script src="${cxt!}/ui/thairice/JS/sb-admin-datatables.min.js"></script>
+<script src="${cxt!}/ui/thairice/data_files/holder.min.js"></script>
+<script src="${cxt!}/ui/thairice/data_files/ie10-viewport-bug-workaround.js"></script>
+<script type="text/javascript" src="${cxt!}/ui/thairice/JS/layer/layer.js"></script>
+<script src="${cxt!}/ui/common.js"></script>
+<script>
+    var $wrapper = $('#div-table-container');
+    var $table = $('#dataTable01');
+    var columns=[
+      CONSTANT.DATA_TABLES.COLUMN.CHECKBOX,
+      { "data": "type_",orderable: false},
+      { "data": "content",orderable: false},
+      { "data": "add_time"}
+    ]
+    //初始化表格
+    var _table = table.initTable($wrapper, $table, '${cxt!}/jf/thairice/t8message/jsonList', columns);
+    table.checkboxClick($table);
+    //删除选中的行
+    $("#btn-del").click(function(){
+        deleteRows('${cxt!}/jf/thairice/t8message/delete', $table, _table);
+    });
+    //选择消息类型
+    $("#type").change(function () {
+        _table.draw();
+    });
+    //清空全部消息
+    $("#empty").click(function () {
+        layer.confirm('Make sure to clear all messages?', {icon: 2,title:'prompt',btn: ['confirm','cancel']}, function (index) {
+            sendAjax("${cxt!}/jf/thairice/t8message/empty_message",null,function(res){
+                showMessage(res.errorMsg);
+                if(res.rc==1){
+                    _table.draw();
+                }
+            })
+            layer.close(index);
+        });
+    });
+    //拼装查询条件
+    function getQueryCondition(data){
+        var param = {};
+        //组装排序参数
+        if (data.order&&data.order.length&&data.order[0]) {
+            switch (data.order[0].column) {
+                case 1:
+                    param.orderColumn = "id";//数据库列名称
+                    break;
+                case 1:
+                    param.orderColumn = "id";//数据库列名称
+                    break;
+            }
+            param.orderDir = data.order[0].dir;
+        }
+        param.type_ =$("#type").val();
+        param.start = data.start;
+        param.pageSize = data.length;
+        param.draw = data.draw;
+        param.name =data.name;
+        return param;
+    }
+</script>
+</body>
+</html>

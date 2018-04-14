@@ -1,0 +1,400 @@
+<!DOCTYPE html>
+<!-- saved from url=(0042)https://v3.bootcss.com/examples/dashboard/ -->
+<html lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+<meta name="description" content="">
+<meta name="author" content="">
+<!--<link rel="icon" href="https://v3.bootcss.com/favicon.ico">-->
+
+<title>管理员-个人中心</title>
+
+<!-- Bootstrap core CSS -->
+<link href="${cxt!}/ui/thairice/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="${cxt!}/ui/thairice/datetime-picker/bootstrap-datetimepicker.min.css" rel="stylesheet">
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<link href="${cxt!}/ui/thairice/data/ie10-viewport-bug-workaround.css" rel="stylesheet">
+<link href="${cxt!}/ui/thairice/CSS/dataTables.bootstrap4.css" rel="stylesheet">
+<!-- Custom styles for this template -->
+<link href="${cxt!}/ui/thairice/data/dashboard.css" rel="stylesheet">
+<link rel="stylesheet" href="${cxt!}/ui/thairice/CSS/nav_css.css">
+<link rel="stylesheet" href="${cxt!}/ui/thairice/CSS/operator_management.css">
+<link rel="stylesheet" href="${cxt!}/ui/thairice/CSS/bootstrap-imginput.css">
+<link rel="stylesheet" href="${cxt!}/ui/thairice/CSS/data_selfinfo.css">
+<script src="${cxt!}/ui/thairice/data/ie-emulation-modes-warning.js"></script>
+<script src="${cxt!}/ui/thairice/JS/ie-open.js"></script>
+<style type="text/css">
+   .btn-file{background-color: #0c7897;}
+        .btn-primary:hover{background-color: #337ab7;}
+        .r{height: 500px;text-align: center;overflow: hidden;}
+        .r img{max-width: 300px!important;max-height: 300px!important;}
+</style>
+</head>
+<body>
+<!--公共的头部start-->
+<%includeFileTemplate("/thairice/common/top.html"){}%>
+<!--公共的头部end-->
+<div class="container-fluid">
+  <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            <ul class="nav nav-sidebar">
+                <li style="margin-bottom:20px;"><p class="function_text">Function menu</p></li>
+                <% if(session.admin.type_=='03系统管理员'){ %>
+                <li><a href="${cxt!}/jf/thairice/admin/user/main">Operator management</a></li>
+                <% }%>
+                <li><a href="${cxt!}/jf/thairice/admin/user/user_management">User management</a></li>
+                <li><a href="index.html">Product data query</a></li>
+                <li><a href="data_management.html">Data management</a></li>
+                <li><a href="#">System state</a></li>
+                <li><a href="system_configuration.html">System configuration</a></li>
+                <li><a href="production_configuration.html">Production configuration</a></li>
+                <li><a href="log_management.html">Log management</a></li>
+                <li class="active"><a>Personal center</a></li>
+                <li><a href="${cxt!}/jf/thairice/t8message">My message</a></li>
+            </ul>
+        </div>
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" style="position:relative;">
+    	<div>
+        	<div class="self_left" style="position:fixed; left:16.5%;">
+            	<div class="self_info">
+                  <p class="self_title text-center">Personal center</p>
+                  <dl class="dl-horizontal">
+                      <dt class="self_photo">
+                    <form id="uploadForm">
+                        <div class="form-group" data-toggle="modal" data-target="#upload">
+                            <div class="fileinput fileinput-new" data-provides="fileinput" id="exampleInputUpload" style="background-color: none;">
+                                <div class="fileinput-new thumbnail"
+                                     style="width: 100px;height: 100px; border:none; padding:0;">
+                                    <img src="${cxt!}${admin.heading!'/ui/thairice/Images/self_info/photo.jpg'}" id='picImg' alt=""/>
+                                </div>
+                                <div class="fileinput-preview fileinput-exists thumbnail"
+                                     style="width: 100px;height: 100px; border:none; padding:0;"></div>
+                                <div style="cursor:pointer;">
+                            <span class="btn-file" style="cursor: pointer;background-color: rgba(240, 248, 255, 0);">
+                            <span class="fileinput-new">change picture</span>
+                            <span class="fileinput-exists">change picture</span>
+                            </span>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                      </dt>
+                      <dd class="self_dd">
+                        <p class="name">${admin.name_}</p>
+                        <p>928078226</p>
+                      </dd>
+                  </dl>
+                   <button type="button" class="btn btn-primary btn-lg btn-block reset_btn" data-toggle="modal" data-target="#passwordModal">Reset password</button>
+                   <a href="${cxt!}/jf/thairice/admin/user/exit" type="button" class="btn btn-primary btn-lg btn-block logout_btn"  role="button">Log out</a>
+                </div>
+            </div>
+            <div class="self_content">
+            	<p class="personal_text"><span>Personal information</span></p>
+                <form class="form-horizontal tab-form"  id="info"  style="width:640px; margin:0 auto;">
+                      <p class="text-center form_title"> < user information > </p>
+                                        <div class="form-group">
+                            <label class="col-md-3 control-label" style="width:120px;">Username</label>
+                            <div class="col-md-9" style="width:470px;">
+                                <input type="text" class="form-control" readonly value="${admin.account}"
+                                       placeholder="Jone">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" style="width:120px;">Phonenumber</label>
+                            <div class="col-md-9" style="width:470px;">
+                                <input type="text" class="form-control" name="t3user.phone" value="${admin.phone}"
+                                       placeholder="+66 08088999999999">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" style="width:120px;">E-mail</label>
+                            <div class="col-md-9" style="width:470px;">
+                                <input type="email" class="form-control" name="t3user.email" value="${admin.email}"
+                                       placeholder="jone@example.com">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" style="width:120px;">Yourname</label>
+                            <div class="col-md-9" style="width:470px;">
+                                <input type="text" class="form-control" name="t3user.name_" value="${admin.name_}"
+                                       placeholder="Yingluck Chinnawat">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" style="width:120px;">Company</label>
+                            <div class="col-md-9" style="width:470px;">
+                                <input type="text" class="form-control" name="t3user.company" value="${admin.company}"
+                                       placeholder="Company">
+                            </div>
+                        </div>
+                         <div class="form-group">
+                            <label class="col-md-3 control-label" style="width:120px;">Zip code</label>
+                            <div class="col-md-9" style="width:470px;">
+                                <input type="text" class="form-control" name="t3user.zip_encode" value="${admin.zip_encode}"
+                                       placeholder="Company">
+                            </div>
+                        </div>
+                          <div class="form-group">
+                            <label class="col-md-3 control-label" style="width:120px;">address</label>
+                            <div class="col-md-9" style="width:470px;">
+                                <input type="text" class="form-control" name="t3user.address" value="${admin.address}"
+                                       placeholder="Company">
+                            </div>
+                        </div> 
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" style="width:120px;">Industry</label>
+                            <div class="col-md-9" style="width:470px;">
+                                <input type="text" class="form-control" name="t3user.industry" value="${admin.industry}"
+                                       placeholder="Company">
+                            </div>
+                        </div>
+                      <div class="form-group">
+                        <button type="button" class="btn btn-primary btn-lg btn-block modify_btn" id="modify_btn" style="width:360px; margin:10px auto;">Modify the information</button>
+                      </div>
+                      <input type="hidden" value="${admin.id}" name="t3user.id">
+                    </form>
+            </div>
+        </div>
+    </div>
+  </div>
+</div>
+<!--system message modal-->
+<div class="modal fade" id="systemModal" tabindex="-1" role="dialog" aria-labelledby="systemModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">System message</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body">Congratulations on your revision of the password<br>
+                and you will jump to the login page after&nbsp;&nbsp;&nbsp;&nbsp;<span>5</span> s
+            </div>
+            <div class="modal-footer" style="text-align:center;">
+                <a href="${cxt!}/jf/thairice/t3user/exit" class="btn btn-primary go_btn" type="button"
+                   data-dismiss="modal">Go now</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!--upload head modal-->
+<div class="modal fade" id="upload" tabindex="-1" role="dialog" aria-labelledby="systemModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">upload head</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="r">
+                    <input id="file-Portrait1" name="head"  type="file" style="background-color: none;">
+                </div>
+            </div>
+            <div class="modal-footer" style="text-align:center;">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--password modify modal-->
+<div class="modal fade" id="passwordModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Reset password</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="edit_pass">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Password</label>
+                        <div class="col-sm-9">
+                            <input type="password"  name="pwd" class="form-control"  placeholder="The Passward is made up of 6 to 12 letters and Numbers">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">NewPassword</label>
+                        <div class="col-sm-9">
+                            <input type="password" class="form-control" name="again" placeholder="verify password">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">E-mail</label>
+                        <div class="col-sm-9">
+                        <div class="input-group">
+                              <input type="email" class="form-control" placeholder="your E-mai like someone@exmaple.com"  name="email"  id="email"  value="${admin.email}" readonly>
+                              <span class="input-group-addon" id="send_email" style="background-color:#5cb85c;color: #fff;background-color: #5cb85c;cursor: pointer;">发送授权码</span>
+                         </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Verification code</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" placeholder="Enter your email address received the authentication code"  name="code" >
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary system_btn" id="pass_btn" type="button">Reset</button>
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Bootstrap core JavaScript
+    ================================================== --> 
+<!-- Placed at the end of the document so the pages load faster --> 
+<script src="${cxt!}/ui/thairice/JS/jquery-2.0.0.min.js"></script>
+<script src="${cxt!}/ui/thairice/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+<script src="${cxt!}/ui/thairice/JS/bootstrap-imginput.js"></script>
+<script src="${cxt!}/ui/thairice/bootstrap-fileinput-master/js/fileinput.min.js"></script>
+<script src="${cxt!}/ui/thairice/datetime-picker/moment.js"></script>
+<script src="${cxt!}/ui/thairice/datetime-picker/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="${cxt!}/ui/thairice/JS/layer/layer.js"></script>
+<script src="${cxt!}/ui/thairice/JS/bootstrapValidator.js"></script>
+<script type="text/javascript" src="${cxt!}/ui/common.js"></script>
+<!-- Just to make our placeholder images work. Don't actually copy the next line! --> 
+<script src="${cxt!}/ui/thairice/data/holder.min.js"></script> 
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug --> 
+<script src="${cxt!}/ui/thairice/data/ie10-viewport-bug-workaround.js"></script> 
+<script>
+//修改个人信息
+$('#modify_btn').click(function () {
+	 $("#info").bootstrapValidator('validate');
+	 if (!$("#info").data('bootstrapValidator').isValid()) {return;}
+    sendAjax('${cxt!}/jf/thairice/admin/user/edit_info', $("#info").serialize(), function (res) {
+        showMessage(res.errorMsg);
+    });
+})
+//发送邮箱授权码
+$('#send_email').click(function () {
+   sendAjax("${cxt!}/jf/thairice/t3user/send_code",{email:$("#email").val()},function(res){
+       showMessage(res.errorMsg);
+   });    
+})
+//修改密码
+$('#pass_btn').click(function () {
+	 $("#edit_pass").bootstrapValidator('validate');
+	 if (!$("#edit_pass").data('bootstrapValidator').isValid()) {return;}
+    sendAjax('${cxt!}/jf/thairice/admin/user/edit_pass', $("#edit_pass").serialize(), function (res) {
+        layer.msg(res.errorMsg);
+        if (res.rc == 1) {
+        	$("#passwordModal").modal("hide");
+        	$("#systemModal").modal("show");
+            setTimeout(function () {
+                window.location.href = "${cxt!}/jf/thairice/admin/user/exit"
+            }, 5000);
+        }
+    });
+})
+//上传头像
+$("#file-Portrait1").fileinput({
+    language: 'zh', //设置语言
+    uploadExtraData: {id: '${admin.id}'},
+    uploadUrl: '${cxt!}/jf/thairice/admin/user/upload_head', //上传的地址
+    allowedFileExtensions: ['jpg', 'png'],//接收的文件后缀
+    showUpload: false, //是否显示上传按钮
+    showCaption: false,//是否显示标题
+    showCancel: false,
+    autoReplace: true,
+    showBrowse: true,
+    showClose:false,
+    dropZoneEnabled: false,//是否允许拖拽
+    uploadAsync: true,
+    maxFileSize:1024,
+    maxFileCount: 1,
+    browseClass: "btn btn-primary", //按钮样式
+    previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
+});
+//异步上传返回结果处理
+$("#file-Portrait1").on("fileuploaded", function (event, data, previewId, index) {
+    console.log(JSON.stringify(data));
+    if(data.response.rc==1){
+        layer.msg('上传成功');
+        $('#picImg').attr("src","${cxt!}"+data.response.errorMsg);
+    }
+});
+//修改密码参数校验 
+ $("#edit_pass").bootstrapValidator({
+    message: 'This value is not valid',
+    feedbackIcons: {
+        /*输入框不同状态，显示图片的样式*/
+        valid: 'glyphicon glyphicon-ok',
+        validating: 'glyphicon glyphicon-refresh'
+    },
+    fields: {
+        /*验证*/
+        'pwd': {
+            validators: {
+                notEmpty: {
+                    message: 'The pwd is  required and can\'t be empty '
+                },
+                regexp: {
+                	regexp: /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,12}$/,
+                    message: 'The user name is made up of 6 to 12 letters and Numbers'
+                }
+            }
+        },
+        'again': {
+            message: 'Password is invalid',
+            validators: {
+                notEmpty: {
+                    message: 'Password is  required and can\'t be empty'
+                },
+                identical: {//相同
+                    field: 'pwd',
+                    message: ' Two input password must be consistent'
+                }
+            }
+        },
+     'code': {
+            message: 'Password is invalid',
+            validators: {
+                notEmpty: {
+                    message: 'authentication code is  required and can\'t be empty'
+                }
+            }
+        }
+  }
+});
+//修改个人信息参数校验 
+$("#info").bootstrapValidator({
+   message: 'This value is not valid',
+   feedbackIcons: {
+       /*输入框不同状态，显示图片的样式*/
+       valid: 'glyphicon glyphicon-ok',
+       validating: 'glyphicon glyphicon-refresh'
+   },
+   fields: {
+       /*验证*/
+       't3user.phone': {
+           validators: {
+               notEmpty: {
+                   message: 'Phone is  required and can\'t be empty'
+               },
+               stringLength: {
+                   /*长度提示*/
+                   min: 6,
+                   max: 12,
+                   message: 'Phone  length is 11'
+               },
+               regexp: {
+                   regexp: /^1\d{10}$/,
+                   message: 'The Phone format is not correct'
+               }
+           }
+       }
+ }
+});
+</script>
+</body>
+</html>

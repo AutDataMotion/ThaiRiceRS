@@ -1,19 +1,26 @@
 package thairice.mvc.t8message;
 
+import com.jfinal.aop.Before;
+import com.jfinal.aop.Duang;
+import com.jfinal.plugin.activerecord.Db;
+import com.jfinal.plugin.activerecord.Page;
 import com.platform.constant.ConstantRender;
 import com.platform.mvc.base.BaseController;
-import com.platform.mvc.base.BaseModel;
-
 import org.apache.log4j.Logger;
-import com.jfinal.aop.Before;
 
 import thairice.constant.ConstantInitMy;
+import thairice.entity.Result;
+import thairice.interceptor.AdminLoginInterceptor;
+import thairice.mvc.t3user.T3user;
+
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
- * XXX 管理	
+ * XXX 管理
  * 描述：
- * 
+ * <p>
  * /jf/thairice/t8message
  * /jf/thairice/t8message/save
  * /jf/thairice/t8message/edit
@@ -21,80 +28,62 @@ import thairice.constant.ConstantInitMy;
  * /jf/thairice/t8message/view
  * /jf/thairice/t8message/delete
  * /thairice/t8message/add.html
- * 
  */
-//@Controller(controllerKey = "/jf/thairice/t8message")
+@Before(AdminLoginInterceptor.class)
 public class T8messageController extends BaseController {
 
-	@SuppressWarnings("unused")
-	private static Logger log = Logger.getLogger(T8messageController.class);
+    private static Logger log = Logger.getLogger(T8messageController.class);
 
-	public static final String pthc = "/jf/thairice/t8message/";
-	public static final String pthv = "/thairice/t8message/";
+    public static final String pthc = "/jf/thairice/t8message/";
+    public static final String pthv = "/thairice/t8message/";
+    private static final T8messageService service = Duang.duang(T8messageService.class);
 
-	/**
-	 * 列表
-	 */
-	public void index() {
-		paging(ConstantInitMy.db_dataSource_main, splitPage, BaseModel.sqlId_splitPage_select, T8message.sqlId_splitPage_from);
-		renderWithPath(pthv+"list.html");
-	}
-	
-	/**
-	 * 保存
-	 */
-	@Before(T8messageValidator.class)
-	public void save() {
-		T8message t8message = getModel(T8message.class);
-		//other set 
-		
-		//t8message.save();		//guiid
-		t8message.saveGenIntId();	//serial int id
-		renderWithPath(pthv+"add.html");
-	}
-	
-	/**
-	 * 准备更新
-	 */
-	public void edit() {
-		//T8message t8message = T8message.dao.findById(getPara());	//guuid
-		T8message t8message = T8messageService.service.SelectById(getParaToInt());		//serial int id
-		setAttr("t8message", t8message);
-		renderWithPath(pthv+"update.html");
+    /**
+     * 列表
+     */
+    public void index() {
+        renderWithPath(pthv + "data_message.html");
+    }
 
-	}
-	
+    public void jsonList() {
+        int pages = getParaToInt("start", 0) == 0 ? 1 : getParaToInt("start") / getParaToInt("pageSize", 3) + 1;
+        Page<T8message> page = service.selectByPage(pages, getParaToInt("pageSize", 3), getPara("type_"), getPara("orderColumn", "id"), getPara("orderDir", "desc"));
+        Map record = new HashMap();
+        record.put("sEcho", false);
+        record.put("aaData", page.getList());
+        record.put("recordsFiltered", page.getTotalRow());
+        record.put("total", page.getTotalRow());
+        renderJson(record);
+    }
+
+    /**
+     * 删除多个
+     */
+    public void delete() {
+        int rows = service.deletes(getPara("ids"));
+        if (rows > 0) {
+            renderJson(new Result(1, "successfully deleted"));
+        } else {
+            renderJson(new Result(0, "failed to delete"));
+        }
+    }
+    
 	/**
-	 * 更新
+	 * 清空全部消息
 	 */
-	@Before(T8messageValidator.class)
-	public void update() {
-		getModel(T8message.class).update();
-		redirect(pthc);
+	public void empty_message() {
+		int row = Db.use(ConstantInitMy.db_dataSource_main).update("DELETE FROM t8message");
+		if (row > 0) {
+			Db.use(ConstantInitMy.db_dataSource_main).update("DELETE FROM r4message_send");
+			renderJson(new Result(1, "Cleared successfully"));
+		} else {
+			renderJson(new Result(1, "operation failed"));
+		}
 	}
 
-	/**
-	 * 查看
-	 */
-	public void view() {
-		//T8message t8message = T8message.dao.findById(getPara());	//guuid
-		T8message t8message = T8messageService.service.SelectById(getParaToInt());		//serial int id
-		setAttr("t8message", t8message);
-		renderWithPath(pthv+"view.html");
-	}
-	
-	/**
-	 * 删除
-	 */
-	public void delete() {
-		//T8messageService.service.delete("t8message", getPara() == null ? ids : getPara());	//guuid
-		T8messageService.service.deleteById("t8message", getPara() == null ? ids : getPara());	//serial int id
-		redirect(pthc);
-	}
-	
-	public void setViewPath(){
-		setAttr(ConstantRender.PATH_CTL_NAME, pthc);
-		setAttr(ConstantRender.PATH_VIEW_NAME, pthv);
-	}
-	
+    public void setViewPath() {
+        setAttr(ConstantRender.PATH_CTL_NAME, pthc);
+        setAttr(ConstantRender.PATH_VIEW_NAME, pthv);
+    }
+
 }
