@@ -1,173 +1,8 @@
-<!DOCTYPE html>
-<!-- saved from url=(0042)https://v3.bootcss.com/examples/dashboard/ -->
-<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <!--<link rel="icon" href="https://v3.bootcss.com/favicon.ico">-->
+<% var cssSec={ %>
+<style>
+</style>
+<% }; %> <% var contSec={ %>
 
-    <title>生产配置</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
-	<link href="datetime-picker/bootstrap-datetimepicker.min.css" rel="stylesheet">
-    <link href="CSS/base.css" rel="stylesheet">
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <link href="./data_files/ie10-viewport-bug-workaround.css" rel="stylesheet">
-	<link href="CSS/dataTables.bootstrap4.css" rel="stylesheet">
-    <!-- Custom styles for this template -->
-    <link href="./data_files/dashboard.css" rel="stylesheet">
-	<link rel="stylesheet" href="CSS/nav_css.css">
-    <link rel="stylesheet" href="CSS/operator_management.css">
-    <link rel="stylesheet" href="CSS/user_management.css">
-    <link rel="stylesheet" href="CSS/data_management.css">
-    <link rel="stylesheet" href="bootstrap-fileinput-master/css/fileinput.min.css">
-    <link rel="stylesheet" href="CSS/production.css">
-    <link rel="stylesheet" href="bootstrap-colorpicker-master/bootstrap-colorpicker-master/dist/css/bootstrap-colorpicker.min.css">
-    <style>
-    	.colorpicker-2x {
-                /*这里设置top left的偏移量*/
-                margin-top: -80px;
-                margin-left: 50px;
-            }
-          .colorpicker-2x .colorpicker-saturation {
-              width: 200px;
-              height: 200px;
-          }
-       
-          .colorpicker-2x .colorpicker-hue,
-          .colorpicker-2x .colorpicker-alpha {
-              width: 30px;
-              height: 200px;
-          }
-       
-          .colorpicker-2x .colorpicker-color,
-          .colorpicker-2x .colorpicker-color div {
-              height: 30px;
-          }
-    </style>
-    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
-    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
-    <script src="./data_files/ie-emulation-modes-warning.js"></script>
-
-    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
-    <!--[if lt IE 9]>
-      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
-    <![endif]-->
-    
-<script type="text/javascript"> 
-    function updateParams(flag){
-	$.ajax({
-		  type: 'POST',
-		  url: '/jf/thairice/t1parameter/updateParams',
-		  data: {flag:flag,ftpSrcPath0:$("#ftpSrcPath0").val(),ftpSrcPath1:$("#ftpSrcPath1").val(),ftpSrcPath2:$("#ftpSrcPath2").val(),ftpSrcPath3:$("#ftpSrcPath3").val(),droughtThreshold1:$("#droughtThreshold1").val(),droughtThreshold2:$("#droughtThreshold2").val(),droughtThreshold3:$("#droughtThreshold3").val(),droughtThreshold4:$("#droughtThreshold4").val(),conditionThreshold1:$("#conditionThreshold1").val(),conditionThreshold2:$("#conditionThreshold2").val(),conditionThreshold3:$("#conditionThreshold3").val(),conditionThreshold4:$("#conditionThreshold4").val(),inStartYear:$("#inStartYear").val(),inEndYear:$("#inEndYear").val()},	
-		  success: function(res){
-/* 			if(res.code == "0003" || res.code == "0001"){
-					document.getElementById("account").style.backgroundColor = "#faa390";
-			} */
-/* 			document.setElementById("ftpSrcPath0").value = "55555"; */
-			alert(res.desc);
-		  },
-		  dataType: "json"
-		});
-	}
-    
-    function queryParams(flag){	
-    	$.ajax({
-    		  type: 'POST',
-    		  url: '/jf/thairice/t1parameter/queryParams',
-    		  data: {flag:flag},
-    		  success: function(res){
-    			if(res.code == "0000"){
-    				if(res.flag == "001"){
-    			 		if(res.ftpSrcPath0 != undefined)
-		    				document.getElementById("ftpSrcPath0").value = res.ftpSrcPath0;
-    			 		else
-    			 			document.getElementById("ftpSrcPath0").value = "";
-    			 		
-    			 		if(res.ftpSrcPath1 != undefined)
-		    				document.getElementById("ftpSrcPath1").value = res.ftpSrcPath1;
-    			 		else
-    			 			document.getElementById("ftpSrcPath1").value = "";
-    			 		
-    			 		if(res.ftpSrcPath2 != undefined)
-		    				document.getElementById("ftpSrcPath2").value = res.ftpSrcPath2;
-    			 		else
-    			 			document.getElementById("ftpSrcPath2").value = "";
-    			 		
-		    			if(res.ftpSrcPath3 != undefined)
-		    				document.getElementById("ftpSrcPath3").value = res.ftpSrcPath3;
-		    			else
-		    				document.getElementById("ftpSrcPath3").value = "";
-    				} else if(res.flag == "002"){
-		    			document.getElementById("droughtThreshold4").value = res.droughtThreshold4;
-		    			document.getElementById("droughtThreshold1").value = res.droughtThreshold1;
-		    			document.getElementById("droughtThreshold2").value = res.droughtThreshold2;
-		    			document.getElementById("droughtThreshold3").value = res.droughtThreshold3;
-    				} else if(res.flag == "003"){
-		    			document.getElementById("conditionThreshold1").value = res.conditionThreshold1;
-		    			document.getElementById("conditionThreshold2").value = res.conditionThreshold2;
-		    			document.getElementById("conditionThreshold3").value = res.conditionThreshold3;
-		    			document.getElementById("conditionThreshold4").value = res.conditionThreshold4;
-		    			document.getElementById("inStartYear").value = res.inStartYear;
-		    			document.getElementById("inEndYear").value = res.inEndYear;
-		    			
-    				} else{
-    					alert(res.desc);
-    				}
-    			} else {
-    				alert(res.desc);
-    			}
-    		  },
-    		  dataType: "json"
-    		});
-    	}
-</script> 
-  </head>
-
-  <body>
-    <nav class="navbar navbar-inverse navbar-fixed-top">
-      <div class="container-fluid">
-        <div class="navbar-header">
-          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
-            <span class="sr-only">Toggle navigation</span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-            <span class="icon-bar"></span>
-          </button>
-          <p class="navbar-brand">Thai agricultural remote sensing monitoring platform</p>
-        </div>
-        <div id="navbar" class="navbar-collapse collapse">
-          <ul class="nav navbar-nav navbar-right">
-            <li><a href="#"><i class="glyphicon glyphicon-user"></i>Admin</a></li>
-            <li><a href="#" data-toggle="modal" data-target="#exampleModal"><i class="glyphicon glyphicon-log-out"></i>Log out</a></li>
-            <li><a href="#"><i class="glyphicon glyphicon-question-sign"></i></a></li>
-          </ul>
-        </div>
-      </div>
-    </nav>
-    <div class="container-fluid">
-      <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar">
-          <ul class="nav nav-sidebar">
-            <li style="margin-bottom:20px;"><p class="function_text">Function menu</p></li>
-            <li><a href="data.html">Operator management <span class="sr-only">(current)</span></a></li>
-            <li><a href="user_management.html">User management</a></li>
-            <li><a href="index.html">Product data query</a></li>
-            <li><a href="data_management.html">Data management</a></li>
-            <li><a href="#">System state</a></li>
-            <li><a href="system_configuration.html">System configuration</a></li>
-            <li class="active"><a href="#">Production configuration</a></li>
-            <li><a href="log_management.html">Log management</a></li>
-            <li><a href="data_selfinfo.html">Personal center</a></li>
-            <li><a href="data_message.html">My message</a></li>
-          </ul>
-        </div>
-        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <!--Nav tabs-->
           <ul class="nav nav-tabs" role="tablist">
             <li role="presentation" class="active">
@@ -570,29 +405,9 @@
             <button class="btn btn-primary result_btn" type="button" style="margin-left:10px;" data-dismiss="modal">Run</button>
           </div>
         </div>
-      </div>
-    </div>
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
-    <script src="./data_files/jquery.min.js"></script>
-    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
-    <script src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-    <script src="datetime-picker/moment.js"></script>
-    <script src="datetime-picker/bootstrap-datetimepicker.min.js"></script>
-    <script src="JS/jquery.dataTables.js"></script>
-    <script src="JS/dataTables.bootstrap4.js"></script>
-    <script src="JS/sb-admin-datatables.min.js"></script>
-    <script src="bootstrap-fileinput-master/js/fileinput.min.js"></script>
-    <script src="bootstrap-fileinput-master/js/locales/zh.js"></script>
-    
-    <script src="JS/production.js"></script>
-    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
-    <script src="./data_files/holder.min.js"></script>
-    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-    <script src="./data_files/ie10-viewport-bug-workaround.js"></script>
-    <script src="bootstrap-colorpicker-master/bootstrap-colorpicker-master/dist/js/bootstrap-colorpicker.min.js"></script>
-    
+ 
+ <% }; %> <% var jsSec={ %>
+
   	<script>
     	function processerbar(time){
 			document.getElementById('probar').style.display="block";
@@ -644,5 +459,75 @@
 			})
 		})
     </script>
-</body>
-</html>
+       
+<script type="text/javascript"> 
+    function updateParams(flag){
+	$.ajax({
+		  type: 'POST',
+		  url: '/jf/thairice/t1parameter/updateParams',
+		  data: {flag:flag,ftpSrcPath0:$("#ftpSrcPath0").val(),ftpSrcPath1:$("#ftpSrcPath1").val(),ftpSrcPath2:$("#ftpSrcPath2").val(),ftpSrcPath3:$("#ftpSrcPath3").val(),droughtThreshold1:$("#droughtThreshold1").val(),droughtThreshold2:$("#droughtThreshold2").val(),droughtThreshold3:$("#droughtThreshold3").val(),droughtThreshold4:$("#droughtThreshold4").val(),conditionThreshold1:$("#conditionThreshold1").val(),conditionThreshold2:$("#conditionThreshold2").val(),conditionThreshold3:$("#conditionThreshold3").val(),conditionThreshold4:$("#conditionThreshold4").val(),inStartYear:$("#inStartYear").val(),inEndYear:$("#inEndYear").val()},	
+		  success: function(res){
+/* 			if(res.code == "0003" || res.code == "0001"){
+					document.getElementById("account").style.backgroundColor = "#faa390";
+			} */
+/* 			document.setElementById("ftpSrcPath0").value = "55555"; */
+			alert(res.desc);
+		  },
+		  dataType: "json"
+		});
+	}
+    
+    function queryParams(flag){	
+    	$.ajax({
+    		  type: 'POST',
+    		  url: '/jf/thairice/t1parameter/queryParams',
+    		  data: {flag:flag},
+    		  success: function(res){
+    			if(res.code == "0000"){
+    				if(res.flag == "001"){
+    			 		if(res.ftpSrcPath0 != undefined)
+		    				document.getElementById("ftpSrcPath0").value = res.ftpSrcPath0;
+    			 		else
+    			 			document.getElementById("ftpSrcPath0").value = "";
+    			 		
+    			 		if(res.ftpSrcPath1 != undefined)
+		    				document.getElementById("ftpSrcPath1").value = res.ftpSrcPath1;
+    			 		else
+    			 			document.getElementById("ftpSrcPath1").value = "";
+    			 		
+    			 		if(res.ftpSrcPath2 != undefined)
+		    				document.getElementById("ftpSrcPath2").value = res.ftpSrcPath2;
+    			 		else
+    			 			document.getElementById("ftpSrcPath2").value = "";
+    			 		
+		    			if(res.ftpSrcPath3 != undefined)
+		    				document.getElementById("ftpSrcPath3").value = res.ftpSrcPath3;
+		    			else
+		    				document.getElementById("ftpSrcPath3").value = "";
+    				} else if(res.flag == "002"){
+		    			document.getElementById("droughtThreshold4").value = res.droughtThreshold4;
+		    			document.getElementById("droughtThreshold1").value = res.droughtThreshold1;
+		    			document.getElementById("droughtThreshold2").value = res.droughtThreshold2;
+		    			document.getElementById("droughtThreshold3").value = res.droughtThreshold3;
+    				} else if(res.flag == "003"){
+		    			document.getElementById("conditionThreshold1").value = res.conditionThreshold1;
+		    			document.getElementById("conditionThreshold2").value = res.conditionThreshold2;
+		    			document.getElementById("conditionThreshold3").value = res.conditionThreshold3;
+		    			document.getElementById("conditionThreshold4").value = res.conditionThreshold4;
+		    			document.getElementById("inStartYear").value = res.inStartYear;
+		    			document.getElementById("inEndYear").value = res.inEndYear;
+		    			
+    				} else{
+    					alert(res.desc);
+    				}
+    			} else {
+    				alert(res.desc);
+    			}
+    		  },
+    		  dataType: "json"
+    		});
+    	}
+</script> 
+<% }; %> <%
+include("operator_layout.html",{cssSec:cssSec,contSec:contSec,jsSec:jsSec}){}
+%>
