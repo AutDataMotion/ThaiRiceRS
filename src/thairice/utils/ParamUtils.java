@@ -2,13 +2,19 @@ package thairice.utils;
 
 import java.io.IOException;
 import java.math.BigInteger;
+import java.sql.Timestamp;
 import java.text.ParseException;
 import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.lang3.StringUtils;
+import org.apache.commons.net.ntp.TimeStamp;
 import org.apache.log4j.Logger;
 
+import com.jfinal.kit.Prop;
+import com.jfinal.kit.PropKit;
+
+import thairice.entity.EmailEntity;
 import thairice.mvc.t1parameter.T1parameter;
 
 public class ParamUtils {
@@ -105,6 +111,7 @@ public class ParamUtils {
 				if(null != rltList) {
 					T1parameter elem = rltList.get(0);
 					elem.setValue_(value);
+					elem.setDatetime_(new Timestamp(System.currentTimeMillis()));
 					elem.update();
 					return true;
 				}
@@ -154,4 +161,20 @@ public class ParamUtils {
 		}
 		return paramValueList;
 	}
+	
+	   /**
+	    * 初始化发送邮件参数
+	    * 
+	    * @throws Exception
+	    */
+	   public static EmailEntity initEmailParm(){
+		   EmailEntity entity = new EmailEntity();
+		   Prop p =PropKit.use("email.properties");
+//		   PropKit.use("email.properties");
+		   entity.setHost(p.get("config.email.host"));
+		   entity.setPort(Integer.parseInt((p.get("config.email.port"))));
+		   entity.setHost(p.get("config.email.userName"));
+		   entity.setHost(p.get("config.email.password"));
+		   return entity;
+	   }
 }
