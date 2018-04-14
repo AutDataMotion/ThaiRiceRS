@@ -12,8 +12,6 @@ import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Page;
 import com.platform.mvc.base.BaseService;
 
-import thairice.entity.Result;
-
 public class T3userService extends BaseService {
 
 	@SuppressWarnings("unused")
@@ -90,7 +88,7 @@ public class T3userService extends BaseService {
 	public List<T3user> selectOperators() {
 		return T3user.dao.find("select * from t3user where type_='02系统操作员'");
 	}
-	
+
 	public List<T3user> selectOperatorsByChoose(String ids) {
 		return T3user.dao.find("select * from t3user where type_='02系统操作员' and id in(" + ids + ")");
 	}
@@ -149,9 +147,10 @@ public class T3userService extends BaseService {
 	public Page<T3user> selectByPage(int page, int row, String name, String orderColumn, String orderDir) {
 		StringBuilder sb = new StringBuilder();
 		sb.append(" FROM t3user  WHERE 1=1");
-		//多条件模糊查询
+		// 多条件模糊查询
 		if (StrKit.notBlank(name)) {
-			sb.append(" AND CONCAT(IFNULL(name_,''),IFNULL(phone,''),IFNULL(email,''))  LIKE '%" + name.trim().toLowerCase()+ "%'");
+			sb.append(" AND CONCAT(IFNULL(name_,''),IFNULL(phone,''),IFNULL(email,''))  LIKE '%"
+					+ name.trim().toLowerCase() + "%'");
 		}
 		sb.append(" AND (type_='02系统操作员' OR type_='03系统管理员')");
 		sb.append(" ORDER BY " + orderColumn + " " + orderDir);
@@ -187,7 +186,8 @@ public class T3userService extends BaseService {
 			sb.append(" AND id=" + userId);
 		}
 		if (StrKit.notBlank(name)) {
-			sb.append(" AND CONCAT(IFNULL(name_,''),IFNULL(phone,''),IFNULL(email,''))  LIKE '%" + name.trim().toLowerCase()+ "%'");
+			sb.append(" AND CONCAT(IFNULL(name_,''),IFNULL(phone,''),IFNULL(email,''))  LIKE '%"
+					+ name.trim().toLowerCase() + "%'");
 		}
 		if (StrKit.notBlank(min)) {
 			max = StrKit.isBlank(max) ? TimeUtil.getNow() : max;

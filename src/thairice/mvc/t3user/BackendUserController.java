@@ -17,7 +17,6 @@ import com.platform.dto.SplitPage;
 import com.platform.mvc.base.BaseController;
 
 import thairice.constant.ConstantInitMy;
-import thairice.entity.Result;
 import thairice.interceptor.AdminLoginInterceptor;
 import thairice.mvc.r4message_send.R4message_send;
 import thairice.mvc.t8message.T8message;
@@ -130,11 +129,11 @@ public class BackendUserController extends BaseController {
 	 * 导出用户
 	 */
 	public void export() {
-		//全部导出
-		if(getPara("select").equals("all")){
+		// 全部导出
+		if (getPara("select").equals("all")) {
 			List<T3user> rates = service.selectUsers();
 			ExportService.service.export("Export user data", "thairice.t3user", getResponse(), getRequest(), rates);
-		}else{
+		} else {
 			List<T3user> rates = service.selectUsersByChoose(getPara("ids"));
 			ExportService.service.export("Export user data", "thairice.t3user", getResponse(), getRequest(), rates);
 		}
@@ -145,11 +144,11 @@ public class BackendUserController extends BaseController {
 	 * 导出操作员
 	 */
 	public void export_operator() {
-		//全部导出
-		if(getPara("select").equals("all")){
+		// 全部导出
+		if (getPara("select").equals("all")) {
 			List<T3user> rates = service.selectOperators();
 			ExportService.service.export("Export operator data", "thairice.t3user", getResponse(), getRequest(), rates);
-		}else{
+		} else {
 			List<T3user> rates = service.selectOperatorsByChoose(getPara("ids"));
 			ExportService.service.export("Export operator data", "thairice.t3user", getResponse(), getRequest(), rates);
 		}

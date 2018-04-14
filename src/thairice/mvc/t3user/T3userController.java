@@ -20,7 +20,6 @@ import com.platform.constant.ConstantRender;
 import com.platform.mvc.base.BaseController;
 
 import thairice.constant.ConstantInitMy;
-import thairice.entity.Result;
 import thairice.interceptor.UserLoginInterceptor;
 import thairice.mvc.r4message_send.R4message_send;
 import thairice.mvc.t8message.T8message;
@@ -93,11 +92,11 @@ public class T3userController extends BaseController {
 	@Before(T3userValidator.class)
 	public void doReg() {
 		T3user t3user = getModel(T3user.class);
-		//如果邮编为空默认000
-		t3user.setZip_encode(getPara("t3user.zip_encode","000"));
+		// 如果邮编为空默认000
+		t3user.setZip_encode(getPara("t3user.zip_encode", "000"));
 		t3user.setCreate_time(new Timestamp(new Date().getTime()));
-		t3user.set("Prdt_EfDt", Timestamp.valueOf(getPara("Prdt_EfDt") +" 00:00:00"));
-		t3user.set("PD_ExDat", Timestamp.valueOf(getPara("PD_ExDat") +" 00:00:00"));
+		t3user.set("Prdt_EfDt", Timestamp.valueOf(getPara("Prdt_EfDt") + " 00:00:00"));
+		t3user.set("PD_ExDat", Timestamp.valueOf(getPara("PD_ExDat") + " 00:00:00"));
 		String l = "";
 		for (String str : getParas("PD_TpCd")) {
 			l += str + ",";
@@ -108,10 +107,13 @@ public class T3userController extends BaseController {
 			String authCode = codeService.createAuthCode(new BigInteger(t3user.get("id").toString()), 0, 3600);
 			if (StrKit.notBlank(authCode)) {
 				String url = PropKit.get("activation_url") + authCode;
-				String content = "Visit the activation link below to complete account activation：\n\n" + "<a href=" + url + ">" + url + "</a>";
-				boolean success = Mail.sendEmail("Account activation", content, t3user.getEmail().toString(), Mail.MODE_HTML);
+				String content = "Visit the activation link below to complete account activation：\n\n" + "<a href="
+						+ url + ">" + url + "</a>";
+				boolean success = Mail.sendEmail("Account activation", content, t3user.getEmail().toString(),
+						Mail.MODE_HTML);
 				if (success) {
-					renderJson(new Result(1, "Registration is successful, activation email has been sent, please check and activate the account"));
+					renderJson(new Result(1,
+							"Registration is successful, activation email has been sent, please check and activate the account"));
 				} else {
 					renderJson(new Result(1, "Registration was successful but the mailbox failed to send"));
 				}
@@ -135,7 +137,7 @@ public class T3userController extends BaseController {
 	@Clear
 	public void activate() {
 		Result result = codeService.activate(getPara("authCode"));
-		setAttr("activate", result.getErrorMsg());
+		setAttr("activate", "result error message");
 		render(pthv + "not_activated.html");
 	}
 
@@ -167,6 +169,7 @@ public class T3userController extends BaseController {
 		boolean bool = T3userService.service.valiMailBox(mailBox);
 		renderJson("valid", bool);
 	}
+
 	/**
 	 * 验证邮箱是否可用(用于密码找回)
 	 */
@@ -199,7 +202,8 @@ public class T3userController extends BaseController {
 	public void message_list() {
 		int pages = getParaToInt("start", 0) == 0 ? 1 : getParaToInt("start") / getParaToInt("pageSize", 3) + 1;
 		T3user user = getSessionAttr("user");
-		Page<T8message> page = message_service.selectByUserPage(pages, getParaToInt("pageSize", 3), getPara("state"),getPara("search"),user.getBigInteger("id"));
+		Page<T8message> page = message_service.selectByUserPage(pages, getParaToInt("pageSize", 3), getPara("state"),
+				getPara("search"), user.getBigInteger("id"));
 		Map record = new HashMap();
 		record.put("sEcho", false);
 		record.put("aaData", page.getList());
@@ -308,7 +312,8 @@ public class T3userController extends BaseController {
 		}
 		// 创建授权码
 		String authCode = codeService.createAuthCode(t3user.getBigInteger("id"), 0, 3600);
-		boolean success = Mail.sendEmail(getParaToInt("type",0)==0?"Recover password":"change Password", "Your email authorization code is:\n\n" + authCode, getPara("email"), Mail.MODE_TEXT);
+		boolean success = Mail.sendEmail(getParaToInt("type", 0) == 0 ? "Recover password" : "change Password",
+				"Your email authorization code is:\n\n" + authCode, getPara("email"), Mail.MODE_TEXT);
 		if (success) {
 			renderJson(new Result(1, "Successfully sent, please go to email"));
 		} else {

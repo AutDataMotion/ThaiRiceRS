@@ -8,7 +8,6 @@ import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Record;
 
 import thairice.constant.ConstantInitMy;
-import thairice.entity.Result;
 
 /**
  * 授权码业务 用于一切需要授权的业务，例如： 1：邮件激活 2：密码找回 3：未来一切需要授权码的场景
@@ -64,7 +63,8 @@ public class AuthCodeService {
 		boolean row = t3user.update();
 		if (row) {
 			// 使用后删除授权码
-			//Db.update("delete from thairice.auth_code where id=?", authCodeId);
+			// Db.update("delete from thairice.auth_code where id=?",
+			// authCodeId);
 			return new Result(1, "Recovery success");
 		} else {
 			return new Result(1, "Recovery failed");
