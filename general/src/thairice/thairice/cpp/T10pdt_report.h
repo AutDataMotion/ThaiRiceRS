@@ -69,9 +69,14 @@ private:
 	string pdt_type;
 	/**
 	 * 字段描述：报告格式代码 
-	 * 字段类型：enum  长度：4
+	 * 字段类型：enum  长度：2
 	 */
 	string suffix;
+	/**
+	 * 字段描述：下载路径 
+	 * 字段类型：varchar  长度：256
+	 */
+	string download_path;
 public:
 	
 	
@@ -179,6 +184,17 @@ public:
 	}
 	string getSuffix() {
 		return suffix;
+	}
+	
+	
+	T10pdt_report& setDownload_path(string adownload_path){
+		download_path = adownload_path;
+		
+		mapSQLTokens["download_path"] = "'"+download_path+"'";
+		return *this;
+	}
+	string getDownload_path() {
+		return download_path;
 	}
 	
 };

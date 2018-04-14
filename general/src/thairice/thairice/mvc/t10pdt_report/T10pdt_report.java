@@ -79,9 +79,15 @@ public class T10pdt_report extends BaseModel<T10pdt_report> {
 	
 	/**
 	 * 字段描述：报告格式代码 
-	 * 字段类型：enum  长度：4
+	 * 字段类型：enum  长度：2
 	 */
 	public static final String column_suffix = "suffix";
+	
+	/**
+	 * 字段描述：下载路径 
+	 * 字段类型：varchar  长度：256
+	 */
+	public static final String column_download_path = "download_path";
 	
 	
 	/**
@@ -100,6 +106,7 @@ public class T10pdt_report extends BaseModel<T10pdt_report> {
 	private String crop_type;
 	private String pdt_type;
 	private String suffix;
+	private String download_path;
 
 	public void setId(BigInteger id){
 		set(column_id, id);
@@ -160,6 +167,12 @@ public class T10pdt_report extends BaseModel<T10pdt_report> {
 	}
 	public <T> T getSuffix() {
 		return get(column_suffix);
+	}
+	public void setDownload_path(String download_path){
+		set(column_download_path, download_path);
+	}
+	public <T> T getDownload_path() {
+		return get(column_download_path);
 	}
 	
 }

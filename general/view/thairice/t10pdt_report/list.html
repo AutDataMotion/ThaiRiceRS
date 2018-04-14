@@ -130,6 +130,10 @@
 										'mainPanel', 'splitPage', 'suffix')">
 									报告格式代码	${orderBy("suffix")}
 								</th>
+								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
+										'mainPanel', 'splitPage', 'download_path')">
+									下载路径	${orderBy("download_path")}
+								</th>
 								<th class="hidden-xs">
 									${i18nMap["admin.common.operation"]}
 								</th>
@@ -203,6 +207,13 @@
 							${item["suffix"]!}
 
 								</td>
+								
+								<td>
+
+								${escapeXml(item["download_path"]!)}
+
+								</td>
+							
 								
 								
 

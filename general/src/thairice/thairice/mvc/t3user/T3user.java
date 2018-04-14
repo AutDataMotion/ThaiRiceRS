@@ -31,7 +31,7 @@ public class T3user extends BaseModel<T3user> {
 	
 	/**
 	 * 字段描述：用户类型代码 
-	 * 字段类型：enum  长度：5
+	 * 字段类型：enum  长度：7
 	 */
 	public static final String column_type_ = "type_";
 	
@@ -103,9 +103,45 @@ public class T3user extends BaseModel<T3user> {
 	
 	/**
 	 * 字段描述：用户审核状态代码 
-	 * 字段类型：enum  长度：5
+	 * 字段类型：enum  长度：7
 	 */
 	public static final String column_status_ = "status_";
+	
+	/**
+	 * 字段描述：忘记密码校验码 
+	 * 字段类型：varchar  长度：6
+	 */
+	public static final String column_identiCode = "identiCode";
+	
+	/**
+	 * 字段描述：校验码到期时间 
+	 * 字段类型：datetime  长度：null
+	 */
+	public static final String column_expirTime = "expirTime";
+	
+	/**
+	 * 字段描述：产品生效日期 
+	 * 字段类型：datetime  长度：null
+	 */
+	public static final String column_Prdt_EfDt = "Prdt_EfDt";
+	
+	/**
+	 * 字段描述：产品到期日期 
+	 * 字段类型：datetime  长度：null
+	 */
+	public static final String column_PD_ExDat = "PD_ExDat";
+	
+	/**
+	 * 字段描述：账号是否激活 
+	 * 字段类型：int  长度：null
+	 */
+	public static final String column_activation = "activation";
+	
+	/**
+	 * 字段描述：产品类型代码 
+	 * 字段类型：varchar  长度：50
+	 */
+	public static final String column_PD_TpCd = "PD_TpCd";
 	
 	
 	/**
@@ -128,6 +164,12 @@ public class T3user extends BaseModel<T3user> {
 	private String industry;
 	private Timestamp create_time;
 	private String status_;
+	private String identiCode;
+	private Timestamp expirTime;
+	private Timestamp Prdt_EfDt;
+	private Timestamp PD_ExDat;
+	private Integer activation;
+	private String PD_TpCd;
 
 	public void setId(BigInteger id){
 		set(column_id, id);
@@ -212,6 +254,42 @@ public class T3user extends BaseModel<T3user> {
 	}
 	public <T> T getStatus_() {
 		return get(column_status_);
+	}
+	public void setIdentiCode(String identiCode){
+		set(column_identiCode, identiCode);
+	}
+	public <T> T getIdentiCode() {
+		return get(column_identiCode);
+	}
+	public void setExpirTime(Timestamp expirTime){
+		set(column_expirTime, expirTime);
+	}
+	public <T> T getExpirTime() {
+		return get(column_expirTime);
+	}
+	public void setPrdt_EfDt(Timestamp Prdt_EfDt){
+		set(column_Prdt_EfDt, Prdt_EfDt);
+	}
+	public <T> T getPrdt_EfDt() {
+		return get(column_Prdt_EfDt);
+	}
+	public void setPD_ExDat(Timestamp PD_ExDat){
+		set(column_PD_ExDat, PD_ExDat);
+	}
+	public <T> T getPD_ExDat() {
+		return get(column_PD_ExDat);
+	}
+	public void setActivation(Integer activation){
+		set(column_activation, activation);
+	}
+	public <T> T getActivation() {
+		return get(column_activation);
+	}
+	public void setPD_TpCd(String PD_TpCd){
+		set(column_PD_TpCd, PD_TpCd);
+	}
+	public <T> T getPD_TpCd() {
+		return get(column_PD_TpCd);
 	}
 	
 }

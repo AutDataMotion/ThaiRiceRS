@@ -130,3 +130,66 @@
 	</div>
 	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
 </div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">忘记密码校验码</label>
+	<div class="col-sm-7">
+		<input type="text" name="t3user.identiCode" value="${escapeXml(t3user.identiCode!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">校验码到期时间</label>
+	<div class="col-sm-7">
+		<div class="input-group">
+		<input type="text" name="t3user.expirTime" date-data-format="yyyy-mm-dd" data-data-viewmode="years" class="form-control data-picker" value="${t3user.expirTime!, dateFormat="yyyy-MM-dd HH:mm:ss"}">
+		<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+		</div>
+		<span class="help-inline col-sm-2"></span>
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">产品生效日期</label>
+	<div class="col-sm-7">
+		<div class="input-group">
+		<input type="text" name="t3user.Prdt_EfDt" date-data-format="yyyy-mm-dd" data-data-viewmode="years" class="form-control data-picker" value="${t3user.Prdt_EfDt!, dateFormat="yyyy-MM-dd HH:mm:ss"}">
+		<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+		</div>
+		<span class="help-inline col-sm-2"></span>
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">产品到期日期</label>
+	<div class="col-sm-7">
+		<div class="input-group">
+		<input type="text" name="t3user.PD_ExDat" date-data-format="yyyy-mm-dd" data-data-viewmode="years" class="form-control data-picker" value="${t3user.PD_ExDat!, dateFormat="yyyy-MM-dd HH:mm:ss"}">
+		<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+		</div>
+		<span class="help-inline col-sm-2"></span>
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">账号是否激活</label>
+	<div class="col-sm-7">
+		<input type="text" name="t3user.activation" value="${t3user.activation!}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">产品类型代码</label>
+	<div class="col-sm-7">
+		<input type="text" name="t3user.PD_TpCd" value="${escapeXml(t3user.PD_TpCd!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>

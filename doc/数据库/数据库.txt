@@ -1,5 +1,16 @@
+  日志维度：时间、用户、操作、详细内容                                                                                 
+      
+1 数据库增加、修改、删除
+    用户类（用户、操作员、管理员）
+    数据算法处理类
+    数据管理类（备份、删除、）
+    审批类的（通过、驳回）
+    登录、注册、注销、修改个人信息、下载报告
+    管理员（新增、删除操作员）
+   
+    系统级别（cpu/磁盘、内存）
 
-/jf/platform/resources/refreshParamCache
-/jf/platform/resources/refreshSqlCache
-
-/platform/login/lock_screen.html
+    ==数据库修改
+    t10pdt_report
+    t3user
+    

@@ -146,6 +146,30 @@
 										'mainPanel', 'splitPage', 'status_')">
 									用户审核状态代码	${orderBy("status_")}
 								</th>
+								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
+										'mainPanel', 'splitPage', 'identiCode')">
+									忘记密码校验码	${orderBy("identiCode")}
+								</th>
+								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
+										'mainPanel', 'splitPage', 'expirTime')">
+									校验码到期时间	${orderBy("expirTime")}
+								</th>
+								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
+										'mainPanel', 'splitPage', 'Prdt_EfDt')">
+									产品生效日期	${orderBy("Prdt_EfDt")}
+								</th>
+								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
+										'mainPanel', 'splitPage', 'PD_ExDat')">
+									产品到期日期	${orderBy("PD_ExDat")}
+								</th>
+								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
+										'mainPanel', 'splitPage', 'activation')">
+									账号是否激活	${orderBy("activation")}
+								</th>
+								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
+										'mainPanel', 'splitPage', 'PD_TpCd')">
+									产品类型代码	${orderBy("PD_TpCd")}
+								</th>
 								<th class="hidden-xs">
 									${i18nMap["admin.common.operation"]}
 								</th>
@@ -253,6 +277,44 @@
 							${item["status_"]!}
 
 								</td>
+								
+								<td>
+
+								${escapeXml(item["identiCode"]!)}
+
+								</td>
+							
+								
+								<td>
+
+							${item["expirTime"]!, dateFormat="yyyy-MM-dd HH:mm:ss"}
+
+								</td>
+								
+								<td>
+
+							${item["Prdt_EfDt"]!, dateFormat="yyyy-MM-dd HH:mm:ss"}
+
+								</td>
+								
+								<td>
+
+							${item["PD_ExDat"]!, dateFormat="yyyy-MM-dd HH:mm:ss"}
+
+								</td>
+								
+								<td>
+
+							${item["activation"]!}
+
+								</td>
+								
+								<td>
+
+								${escapeXml(item["PD_TpCd"]!)}
+
+								</td>
+							
 								
 								
 
