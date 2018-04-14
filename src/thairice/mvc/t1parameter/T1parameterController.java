@@ -51,7 +51,7 @@ public class T1parameterController extends BaseController {
 		//
 		Page page = T1parameter.dao.paginate(getParaToInt(0, 1), 10, "select *", "from T1parameter order by id asc");
 		setAttr("blogPage", page);
-		renderWithPath("/ui/thairice/production_configuration.html");
+		renderWithPath("/adm2018/production_configuration.html");
 	}
 
 	/**
