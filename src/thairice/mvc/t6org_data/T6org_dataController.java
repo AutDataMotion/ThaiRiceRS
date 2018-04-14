@@ -6,6 +6,7 @@ import com.platform.mvc.base.BaseModel;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
+
 import com.jfinal.aop.Before;
 import com.jfinal.plugin.activerecord.Page;
 
