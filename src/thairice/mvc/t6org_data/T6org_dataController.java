@@ -33,7 +33,7 @@ import thairice.utils.DataConstants;
 public class T6org_dataController extends BaseController {
 
 	@SuppressWarnings("unused")
-	private static Logger log = Logger.getLogger(T6org_dataController.class);
+	private static Logger LOG = Logger.getLogger(T6org_dataController.class);
 
 	public static final String pthc = "/jf/thairice/t6org_data/";
 	public static final String pthv = "/thairice/t6org_data/";
