@@ -8,10 +8,13 @@
 <link type="text/css" rel="stylesheet" href="CSS/base.css">
 <link type="text/css" rel="stylesheet" href="bootstrap-3.3.7-dist/css/bootstrap.min.css">
 <link type="text/css" rel="stylesheet" href="CSS/self_info.css">
+<link type="text/css" rel="stylesheet" href="CSS/select2.min.css">
 <link type="text/css" rel="stylesheet" href="CSS/nav_css.css">
 
-<link type="text/css" rel="stylesheet" href="data_files/dashboard.css">
+<link type="text/css" rel="stylesheet" href="data/dashboard.css">
 <link rel="stylesheet" href="CSS/bootstrap-imginput.css">
+<link type="text/css" rel="stylesheet" href="CSS/dataTables.bootstrap4.css">
+<link type="text/css" rel="stylesheet" href="bootstrap-multiselect-master/dist/css/bootstrap-multiselect.css">
 <link type="text/css" id="skin" rel="stylesheet" href="CSS/skin/color_one.css">
 <script src="JS/jquery-2.0.0.min.js"></script>
 <script src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
@@ -125,6 +128,18 @@
                         </div>
                       </div>
                       <div class="form-group">
+                        <label class="col-md-3 control-label" style="width:120px;">Post Code</label>
+                        <div class="col-md-9" style="width:470px;">
+                          <input type="text" class="form-control" placeholder="Post Code">
+                        </div>
+                      </div>
+                      <div class="form-group">
+                        <label class="col-md-3 control-label" style="width:120px;">Address</label>
+                        <div class="col-md-9" style="width:470px;">
+                          <input type="text" class="form-control" placeholder="Address">
+                        </div>
+                      </div>
+                      <div class="form-group">
                         <label class="col-md-3 control-label" style="width:120px;">Industry</label>
                         <div class="col-md-9" style="width:470px;">
                           <select class="form-control">
@@ -136,9 +151,22 @@
                       <div class="form-group">
                         <label class="col-md-3 control-label" style="width:120px;">Select area</label>
                         <div class="col-md-9" style="width:470px;">
-                          <select class="form-control">
-                              <option>Mangu</option>
-                          </select>
+                          <div class="form-group">
+                        	<select class="js-example-basic-multiple form-group" style="width:460px;" name="states[]" multiple="multiple">
+                              <option>Bangkok</option>
+                              <option>Samut Prakan</option>
+                              <option>Nonthaburi</option>
+                              <option>Pathum Thani</option>
+                              <option>Phra Nakhon Si Ayutthaya</option>
+                              <option>Ang Thong</option>
+                              <option>Lop Buri</option>
+                              <option>Sing Buri</option>
+                              <option>Chai Nat</option>
+                              <option>Chon Buri</option>
+                              <option>Chanthaburi</option>
+                              <option>Prachin Buri</option>
+                            </select>
+                        </div>
                         </div>
                       </div>
                       <div class="form-group">
@@ -202,12 +230,11 @@
                 <div class="tab-pane fade" id="tab_two">
                 	<div class="tab_btns">
                     	<button type="button" class="btn btn-success">Download the selected</button>
-                        <button type="button" class="btn btn-warning">Batch download</button>
                         <button type="button" class="btn btn-info">Merging download</button>
                     </div>
-                    <div class="tab_table_wrap">
-                    	<table class="table table-bordered table-condensed" align="center" cellpadding="0" cellspacing="0">
-                        	<thead>
+                    <div class="table-responsive">
+                        <table class="table table-bordered data-table table-special" id="dataTable15" width="100%" cellspacing="0" align="center">
+                          <thead>
                             	<tr>
                                 	<th style="border-bottom:none;">
                                     	<input type="checkbox">Select all
@@ -219,7 +246,7 @@
                                     <th style="border-bottom:none;">Creation time</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                          <tbody>
                             	<tr>
                                 	<td><input type="checkbox"></td>
                                     <td>&nbsp;</td>
@@ -229,7 +256,7 @@
                                     <td>&nbsp;</td>
                                 </tr>
                                 <tr>
-                                	<td>&nbsp;</td>
+                                	<td><input type="checkbox"></td>
                                     <td>&nbsp;</td>
                                     <td>&nbsp;</td>
                                     <td>&nbsp;</td>
@@ -245,7 +272,7 @@
                                     <td>&nbsp;</td>
                                 </tr>
                                 <tr>
-                                	<td>&nbsp;</td>
+                                	<td><input type="checkbox"></td>
                                     <td>&nbsp;</td>
                                     <td>&nbsp;</td>
                                     <td>&nbsp;</td>
@@ -261,7 +288,7 @@
                                     <td>&nbsp;</td>
                                 </tr>
                                 <tr>
-                                	<td>&nbsp;</td>
+                                	<td><input type="checkbox"></td>
                                     <td>&nbsp;</td>
                                     <td>&nbsp;</td>
                                     <td>&nbsp;</td>
@@ -277,7 +304,7 @@
                                     <td>&nbsp;</td>
                                 </tr>
                                 <tr>
-                                	<td>&nbsp;</td>
+                                	<td><input type="checkbox"></td>
                                     <td>&nbsp;</td>
                                     <td>&nbsp;</td>
                                     <td>&nbsp;</td>
@@ -293,7 +320,7 @@
                                     <td>&nbsp;</td>
                                 </tr>
                                 <tr>
-                                	<td>&nbsp;</td>
+                                	<td><input type="checkbox"></td>
                                     <td>&nbsp;</td>
                                     <td>&nbsp;</td>
                                     <td>&nbsp;</td>
@@ -309,7 +336,7 @@
                                     <td>&nbsp;</td>
                                 </tr>
                                 <tr>
-                                	<td>&nbsp;</td>
+                                	<td><input type="checkbox"></td>
                                     <td>&nbsp;</td>
                                     <td>&nbsp;</td>
                                     <td>&nbsp;</td>
@@ -325,7 +352,7 @@
                                     <td>&nbsp;</td>
                                 </tr>
                                 <tr>
-                                	<td>&nbsp;</td>
+                                	<td><input type="checkbox"></td>
                                     <td>&nbsp;</td>
                                     <td>&nbsp;</td>
                                     <td>&nbsp;</td>
@@ -341,7 +368,7 @@
                                     <td>&nbsp;</td>
                                 </tr>
                                 <tr>
-                                	<td>&nbsp;</td>
+                                	<td><input type="checkbox"></td>
                                     <td>&nbsp;</td>
                                     <td>&nbsp;</td>
                                     <td>&nbsp;</td>
@@ -350,18 +377,7 @@
                                 </tr>
                             </tbody>
                         </table>
-                        <nav aria-label="...">
-                          <ul class="pager">
-                            <li><a href="#">Previous</a></li>
-                            <li><a href="#">1</a>
-                            <li><a href="#">2</a>
-                            <li><a href="#">3</a>
-                            <li><a href="#">4</a>
-                            <li><a href="#">5</a>
-                            <li><a href="#">Next</a></li>
-                          </ul>
-                        </nav>
-                    </div>
+                      </div>
                 </div>
             </div>
         </div>
@@ -449,6 +465,9 @@ and you will jump to the login page after&nbsp;&nbsp;&nbsp;&nbsp;<span>5</span> 
 </html>
 <script src="datetime-picker/moment.js"></script>
 <script src="datetime-picker/bootstrap-datetimepicker.min.js"></script>
+<script src="JS/jquery.dataTables.js"></script>
+<script src="JS/dataTables.bootstrap4.js"></script>
+<script src="JS/select2.min.js"></script>
 <script>
 	/*换肤*/
 	function skin1() {
@@ -487,6 +506,13 @@ and you will jump to the login page after&nbsp;&nbsp;&nbsp;&nbsp;<span>5</span> 
 		})
 		$('.go_btn').click(function(e) {
             window.location='welcome.html#page4';
+        });
+		$("#dataTable15").DataTable();
+		$('.data-table tbody tr:odd td').css('background-color','#dbeff6');
+		$('.js-example-basic-multiple').select2();
+		$('.tab-form .form-control').attr('disabled','disabled');
+		$('.modify_btn').click(function(e) {
+           $('.tab-form .form-control').attr('disabled',false); 
         });
 	})
 </script>

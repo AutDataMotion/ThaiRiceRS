@@ -105,3 +105,49 @@ label{
 	background:none;
 	border:none;
 }
+.self_tablist{
+	margin:0 15px;
+	border-bottom:1px solid #d4d4d4;
+}
+#mytabs{
+	width:435px;
+	height:52px;
+	margin:0 auto;
+}
+#mytabs li{
+	width:215px;
+	height:48px;
+	line-height:48px;
+	float:left;
+	text-align:center;
+	font-size:20px;
+}
+#mytabs li.active{
+	border-bottom:4px solid #06a6ce;
+}
+#mytabs li.active a{
+	color:#06a6ce;
+	background:none;
+	font-weight:bold;
+}
+#mytabs li a{
+	background:none;
+	color:#666;
+	padding:0;
+}
+.tab-content>.tab-pane{
+	margin:0 15px;
+}
+.tab-form{
+	width:635px;
+	margin:15px auto;
+}
+.form-horizontal .checkbox{
+	padding-top:4px;
+}
+.form_title{
+	font-size:18px;
+	font-weight:bold;
+	color:#00aace;
+	padding-top:10px;
+}

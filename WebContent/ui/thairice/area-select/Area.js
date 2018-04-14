@@ -81,12 +81,12 @@ function changeCity(c, a, t) {
     $("#" + a).html('<option value="0" >请选择</option>');
     $("#" + a).unbind("change");
     c = parseInt(c); 
-    var _d = sub_arr[c];
+    var d = sub_arr[c];
     var str = "";     
     str += "<option value='0' >请选择</option>";
-    for (var i = c * 100; i < _d.length; i++) {
-        if (_d[i] == undefined) continue; 
-        str += "<option value='" + i + "' >" + _d[i] + "</option>";
+    for (var i = c * 100; i < d.length; i++) {
+        if (d[i] == undefined) continue; 
+        str += "<option value='" + i + "' >" + d[i] + "</option>";
     }
     $("#" + a).html(str);
     

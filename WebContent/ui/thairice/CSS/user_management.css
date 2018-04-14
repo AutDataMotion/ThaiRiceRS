@@ -31,4 +31,35 @@ label{
 	width:auto;
 	margin-right:5px;
 }
+.user_query .form-inline .form-group{
+	margin-bottom:15px;
+}
+.approve_text{
+	color:blue;
+	cursor:pointer;
+	text-decoration:underline;
+}
+.form-horizontal.form_selfinfo{
+	display:block;
+}
+.form-horizontal.form_serviceinfo{
+	display:none;
+}
+.form-group .service label{
+	display:block;
+	height:30px;
+	margin-top:8px;
+}
+.account_in{
+	font-size:18px;
+	color:#999;
+	margin-top:10px;
+}
+.account_in a{
+	color:#00d8ff;
+}
+.account_in a:hover{
+	text-decoration:none;
+}
+
 

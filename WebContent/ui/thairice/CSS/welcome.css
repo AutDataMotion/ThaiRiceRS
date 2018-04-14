@@ -180,7 +180,7 @@
 	height:410px;
 	position:absolute;
 	top:50%;
-	margin-top:-185px;
+	margin-top:-205px;
 	left:50%;
 	margin-left:-275px;
 }
@@ -194,8 +194,8 @@
 	background:#06111c;
 	border:1px solid #1e5f99;
 	height:38px;
-	line-height:38px;
-	padding-left:20px;
+	/*line-height:38px;*/
+	padding:0 0 0 20px;
 	color:#515e6c;
 	font-size:18px;
 	margin:15px 0;
@@ -315,4 +315,19 @@
 	bottom:0;
 	z-index:100;
 	text-align:center;
+}
+.checkcode_img{
+	float:left;
+	margin:4px 8px 0;
+	height:32px;
+	width:80px;
+	background:url(../Images/welcome/checkcode_img.jpg) no-repeat;
+}
+.checkcode_text{
+	font-size:14px;
+	color:#00b4ff;
+	cursor:pointer;
+	text-decoration:underline;
+	height:38px;
+	line-height:38px;
 }

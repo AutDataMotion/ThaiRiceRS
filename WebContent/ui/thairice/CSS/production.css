@@ -217,10 +217,21 @@ a:focus{
 	font-size:20px;
 	color:#00aace;
 }
-.tab-form .input-group{
+.tab-box{
+	width:500px; 
+	margin:100px auto 0; 
+	background:#fff; 
+	border-radius:5px; 
+	padding:5px 20px;
+}
+.tab-box .form-group{
+	margin-left:0;
+	margin-right:0;
+}
+.tab-box .input-group{
 	margin-bottom:20px;
 }
-.tab-form h4{
+.tab-box h4{
 	font-size:20px;
 	font-weight:bold;
 	color:#06a6ce;
@@ -228,7 +239,7 @@ a:focus{
 	line-height:65px;
 	text-align:center;
 }
-.tab-form .form-group .btn{
+.tab-box .form-group .btn{
 	width:180px;
 	margin:5px 10px;
 }
@@ -252,8 +263,12 @@ a:focus{
 	width:180px;
 	color:#fff;
 }
-
-.form-horizontal .form-group{
-	margin-left:0;
-	margin-right:0;
+.BbProductMenu td button{
+	background:none;
+	border:none;
+}
+.BbProductMenu td button:focus{
+	border:none;
+	background:none;
+	outline:none;
 }

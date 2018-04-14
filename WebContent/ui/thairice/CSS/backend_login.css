@@ -72,3 +72,19 @@
 	color:#00fff6;
 	text-decoration:none;
 }
+.checkcode_img{
+	float:left;
+	margin:4px 8px 0;
+	height:32px;
+	width:80px;
+	background:url(../Images/welcome/checkcode_img.jpg) no-repeat;
+}
+.checkcode_text{
+	font-size:14px;
+	color:#00b4ff;
+	cursor:pointer;
+	text-decoration:underline;
+	height:38px;
+	line-height:38px;
+}
+

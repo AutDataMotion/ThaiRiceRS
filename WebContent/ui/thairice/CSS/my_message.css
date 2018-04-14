@@ -82,5 +82,11 @@ html,body{
 .pager{
 	margin:0;
 }
+.data-table .unread td{
+	font-weight:bold;
+}
+.data-table tr td{
+	vertical-align:middle;
+}
 
 

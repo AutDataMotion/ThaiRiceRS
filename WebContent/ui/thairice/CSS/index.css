@@ -46,6 +46,7 @@ body {
 .BbAreaSelect .form-group{
 	height:50px;
 	font-size:16px;
+	line-height:46px;
 }
 #seachprov{
 	border:none;
