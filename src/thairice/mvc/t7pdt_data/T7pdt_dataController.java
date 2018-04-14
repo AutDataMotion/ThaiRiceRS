@@ -103,11 +103,12 @@ public class T7pdt_dataController extends BaseController {
 			/*
 			 * res = new ResultEntity("0001"); LOG.debug(res.getDesc()); renderJson(res);
 			 */
-			renderWithPath("/thairice/test.html");
+			setAttr("page_head", "Data management");
+			renderWithPath("/f/data_management.html");
 		} catch (Exception e) {
 			setAttr("flag", "9");
 			LOG.error("查询数据产品信息发生异常:" + e);
-			renderWithPath("/thairice/test.html");
+			renderWithPath("/f/data_management.html");
 		}
 	}
 	
