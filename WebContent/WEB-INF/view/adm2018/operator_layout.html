@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<!--[if IE 9 ]>
+<html class="ie9"><![endif]-->
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">  
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
+    <meta name="format-detection" content="telephone=no">
+    <meta charset="UTF-8">
+    <meta name="description" content="">
+    <meta name="keywords" content="">
+
+    <title>Thai agricultural remote sensing monitoring platform</title>
+	<script type="text/javascript">
+		var cxt = '${cxt!}';
+	</script>
+    <!-- CSS -->
+   <!-- Bootstrap core CSS -->
+<link href="${cxt!}/ui/thairice/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="${cxt!}/ui/thairice/datetime-picker/bootstrap-datetimepicker.min.css" rel="stylesheet">
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<link href="${cxt!}/ui/thairice/data_files/ie10-viewport-bug-workaround.css" rel="stylesheet">
+<link href="${cxt!}/ui/thairice/CSS/dataTables.bootstrap4.css" rel="stylesheet">
+<!-- Custom styles for this template -->
+<link href="${cxt!}/ui/thairice/data_files/dashboard.css" rel="stylesheet">
+<link rel="stylesheet" href="${cxt!}/ui/thairice/CSS/nav_css.css">
+<link rel="stylesheet" href="${cxt!}/ui/thairice/CSS/operator_management.css">
+<link rel="stylesheet" href="${cxt!}/ui/thairice/CSS/user_management.css">
+
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    ${cssSec!}
+    <style>
+     
+    </style>
+</head>
+<body id="skin-6">
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+      <p class="navbar-brand">Thai agricultural remote sensing monitoring platform</p>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#"><i class="glyphicon glyphicon-user"></i>Admin</a></li>
+        <li><a href="#" data-toggle="modal" data-target="#exampleModal"><i class="glyphicon glyphicon-log-out"></i>Log out</a></li>
+        <li><a href="#"><i class="glyphicon glyphicon-question-sign"></i></a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="container-fluid">
+  <div class="row" style="margin-top: 50px;">
+    <div class="col-sm-3 col-md-2 sidebar">
+    <!-- Sidebar -->
+    <% include("sidebarOper.html"){}%>
+   </div>
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+   <!-- Content -->
+	${contSec!}
+    </div>
+   </div>
+</div>
+
+<!-- Logout Modal-->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">×</span> </button>
+      </div>
+      <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+        <a class="btn btn-primary" href="login.html">Logout</a> </div>
+    </div>
+  </div>
+</div>
+
+	
+<!-- Javascript Libraries -->
+<!-- jQuery -->
+<script src="${cxt!}/ui/thairice/data_files/jquery.min.js"></script> 
+<!-- Bootstrap -->
+<script src="${cxt!}/ui/thairice/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+<script src="${cxt!}/ui/thairice/datetime-picker/moment.js"></script> 
+<script src="${cxt!}/ui/thairice/datetime-picker/bootstrap-datetimepicker.min.js"></script> 
+<!-- Just to make our placeholder images work. Don't actually copy the next line! --> 
+<script src="${cxt!}/ui/thairice/data_files/holder.min.js"></script> 
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug --> 
+<script src="${cxt!}/ui/thairice/data_files/ie10-viewport-bug-workaround.js"></script> 
+<!-- Charts -->
+
+<!--  Form Related -->
+
+<!-- UX -->
+
+<!-- Other -->
+
+<!-- All JS functions -->
+
+${jsSec!}
+</body>
+</html>
+
+
