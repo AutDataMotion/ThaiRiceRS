@@ -8,6 +8,7 @@ public class FtpInfoEntity {
 	public String getFtpHost() {
 		return ftpHost;
 	}
+	
 	public void setFtpHost(String ftpHost) {
 		this.ftpHost = ftpHost;
 	}
