@@ -218,7 +218,7 @@ public class T3userController extends BaseController {
 	public void all_read() {
 		T3user user = getSessionAttr("user");
 		int row = Db.use(ConstantInitMy.db_dataSource_main)
-				.update("UPDATE r4message_send SET status_='02已读' WHERE receive_userid=?", user.getBigInteger("id"));
+				.update("UPDATE r4message_send SET status_='02' WHERE receive_userid=?", user.getBigInteger("id"));
 		if (row > 0) {
 			renderJson(new Result(1, "Successful operation"));
 		} else {
@@ -260,8 +260,8 @@ public class T3userController extends BaseController {
 	 */
 	public void read_message() {
 		R4message_send send = getModel(R4message_send.class);
-		if (send.getStatus_().equals("01未读")) {
-			send.set("status_", "02已读");
+		if (send.getStatus_().equals("01")) {
+			send.set("status_", "02");
 			send.update();
 		}
 		renderJson(new Result(1, "failed to delete"));

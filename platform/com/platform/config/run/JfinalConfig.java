@@ -21,7 +21,6 @@ import com.platform.config.routes.PlatformRoutes;
 import com.platform.constant.ConstantCache;
 import com.platform.constant.ConstantInit;
 import com.platform.handler.GlobalHandler;
-import com.platform.interceptor.AuthInterceptor;
 import com.platform.interceptor.ParamPkgInterceptor;
 import com.platform.plugin.ControllerPlugin;
 import com.platform.plugin.FileRenamePlugin;
@@ -140,8 +139,8 @@ public class JfinalConfig extends JFinalConfig {
 		// log.info("configInterceptor 支持使用session");
 		// me.add(new SessionInViewInterceptor());
 
-		log.info("configInterceptor 权限认证拦截器");
-		interceptors.add(new AuthInterceptor());
+		// log.info("configInterceptor 权限认证拦截器");
+		// interceptors.add(new AuthInterceptor());
 
 		log.info("configInterceptor 参数封装拦截器");
 		interceptors.add(new ParamPkgInterceptor());
