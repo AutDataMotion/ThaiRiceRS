@@ -1,111 +1,228 @@
 <!DOCTYPE html>
-<!--[if IE 9 ]>
-<html class="ie9"><![endif]-->
-<head>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0"/>
-    <meta name="format-detection" content="telephone=no">
-    <meta charset="UTF-8">
-    <meta name="description" content="Violate Responsive Admin Template">
-    <meta name="keywords" content="Super Admin, Admin, Template, Bootstrap">
+<!-- saved from url=(0042)https://v3.bootcss.com/examples/dashboard/ -->
+<html lang="zh-CN"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!--<link rel="icon" href="https://v3.bootcss.com/favicon.ico">-->
 
-    <title>自动运营平台</title>
-	<script type="text/javascript">
-		var cxt = '${cxt!}';
-	</script>
-    <!-- CSS -->
-    <link href="${cxt!}/ui/SuperAdmin/css/bootstrap.min.css" rel="stylesheet">
-    <link href="${cxt!}/ui/SuperAdmin/css/animate.min.css" rel="stylesheet">
-    <link href="${cxt!}/ui/SuperAdmin/css/font-awesome.min.css" rel="stylesheet">
-    <link href="${cxt!}/ui/SuperAdmin/css/form.css" rel="stylesheet">
-    <link href="${cxt!}/ui/SuperAdmin/css/calendar.css" rel="stylesheet">
-    <link href="${cxt!}/ui/SuperAdmin/css/style.css" rel="stylesheet">
-        <link href="${cxt!}/ui/SuperAdmin/css/style-my.css" rel="stylesheet">
-    <link href="${cxt!}/ui/SuperAdmin/css/icons.css" rel="stylesheet">
-    <link href="${cxt!}/ui/SuperAdmin/css/generics.css" rel="stylesheet">
-    <link href="${cxt!}/ui/SuperAdmin/css/zTreeStyle/zTreeStyle.css" rel="stylesheet">
-    ${cssSec!}
-    <style>
-        #sidebar {
-            width: 0px;
-        }
-        .block-area{
-        	margin-left: 0px;
-        }
-        #treeDemo {
-           min-width: 250px;
-            max-width:300px;
-            min-height: 600px;
-            overflow-x: auto;
-            overflow-y: scroll;
-            border-right: 1px solid rgba(255, 255, 255, 0.15);
-        }
-        #treeDemo::-webkit-scrollbar {
-            width: 5px;
-            height: 5px;
-        }
+    <title>${page_head!"Thai Agricultural Remote Sensing System!"}</title>
 
-        #treeDemo::-webkit-scrollbar-thumb {
-            background-color: rgba(0, 0, 0, 0.5);;
-        }
-    </style>
-</head>
-<body id="skin-6">
-<header id="header" class="media">
-    <a href="" id="menu-toggle"></a>
-    <a class="logo pull-left" href="#">自动运营平台
-	    <div id="time" class="pull-right">
-	        <span id="hours"></span>
-	        :
-	        <span id="min"></span>
-	        :
-	        <span id="sec"></span>
-	    </div>
-     </a>
-</header>
-<section id="main" class="p-relative" role="main">
-    <!-- Sidebar -->
-    <% include("sidebar.html"){}%>
-    <section id="content" class="container">
-   <h4 class="page-title">菜单标题</h4> 
-    <!-- Content -->
-				${contSec!}
-   </section>
-</section>
+    <!-- Bootstrap core CSS -->
+    <link href="/ui/thairice/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href="/ui/thairice/datetime-picker/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="/ui/thairice/data/ie10-viewport-bug-workaround.css" rel="stylesheet">
+	<link href="/ui/thairice/CSS/dataTables.bootstrap4.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="/ui/thairice/data/dashboard.css" rel="stylesheet">
+    <link rel="stylesheet" href="/ui/thairice/bootstrap-fileinput-master/css/fileinput.min.css">
+	<link rel="stylesheet" href="/ui/thairice/CSS/nav_css.css">
+    <link rel="stylesheet" href="/ui/thairice/CSS/operator_management.css">
+    <link rel="stylesheet" href="/ui/thairice/CSS/user_management.css">
+    <link rel="stylesheet" href="/ui/thairice/CSS/data_management.css">
+    <link rel="stylesheet" href="/ui/thairice/CSS/production.css">
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="/ui/thairice/data/ie-emulation-modes-warning.js"></script>
+	<script src="/ui/thairice/JS/ie-open.js"></script>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
 
-<!-- Javascript Libraries -->
-<!-- jQuery -->
-<script src="${cxt!}/ui/SuperAdmin/js/jquery.min.js"></script> <!-- jQuery Library -->
-<script src="${cxt!}/ui/SuperAdmin/js/jquery-ui.min.js"></script> <!-- jQuery UI -->
-<script src="${cxt!}/ui/SuperAdmin/js/jquery.easing.1.3.js"></script> <!-- jQuery Easing - Requirred for Lightbox + Pie Charts-->
+  <body>
 
-<!-- Bootstrap -->
-<script src="${cxt!}/ui/SuperAdmin/js/bootstrap.min.js"></script>
-<!-- Charts -->
-<script src="${cxt!}/ui/SuperAdmin/js/charts/jquery.flot.js"></script> <!-- Flot Main -->
-<script src="${cxt!}/ui/SuperAdmin/js/charts/jquery.flot.time.js"></script> <!-- Flot sub -->
-<script src="${cxt!}/ui/SuperAdmin/js/charts/jquery.flot.animator.min.js"></script> <!-- Flot sub -->
-<script src="${cxt!}/ui/SuperAdmin/js/charts/jquery.flot.resize.min.js"></script> <!-- Flot sub - for repaint when resizing the screen -->
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <p class="navbar-brand">Thai agricultural remote sensing monitoring platform</p>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#"><i class="glyphicon glyphicon-user"></i>Admin</a></li>
+            <li><a href="#" data-toggle="modal" data-target="#exampleModal"><i class="glyphicon glyphicon-log-out"></i>Log out</a></li>
+            <li><a href="#"><i class="glyphicon glyphicon-question-sign"></i></a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
 
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li style="margin-bottom:20px;"><p class="function_text">Function menu</p></li>
+            <li><a href="user_management.html">User management</a></li>
+            <!--<li><a class="special" href="index.html" target="_blank">Product data query</a></li>-->
+       		<li><a class="special" href="#" onclick="open_win()" >Product data query</a></li>
+            <li class="active"><a href="#">Data management</a></li>
+            <li><a href="production_configuration.html">Production configuration</a></li>
+            <li><a href="log_management.html">Log management</a></li>
+            <li><a href="data_selfinfo.html">Personal center</a></li>
+            <li><a href="data_message.html">My message</a></li>
+          </ul>
+        </div>     
+        
+    <div class="main">
+			${layoutContent}
+		</div>
+			
+      </div>
+    </div>
+	<!-- Logout Modal-->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">×</span> </button>
+      </div>
+      <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+        <a class="btn btn-primary" href="backend_login.html">Logout</a> </div> 
+    </div>
+  </div>
+</div>
+	<!-- delete Modal-->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">System message</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div>
+          <div class="modal-body">
+            Are you sure to delete?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Sure</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div>
+    <!-- backup Modal-->
+    <div class="modal fade" id="BackupModal" tabindex="-1" role="dialog" aria-labelledby="BackupModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Back up</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div>
+          <div class="modal-body" style="padding-bottom:25px;">
+          	<h5 style="color:#00aace; font-weight:bold; margin-bottom:20px;">Please backup each time for 7days</h5>
+            <div class="container backup" style="width:570px;">
+            	<div class="row">
+                	<div class="col-sm-5" style="border:1px solid #ccc; border-radius:5px; height:175px; overflow-y:auto;">
+                    	<h5>source file</h5>
+                        <div class="form-group">
+                        	<label><i class="glyphicon glyphicon-folder-open"></i>file01</label>
+                        </div>
+                        <div class="form-group">
+                        	<label><i class="glyphicon glyphicon-folder-open"></i>file02</label>
+                        </div>
+                        <div class="form-group">
+                        	<label><i class="glyphicon glyphicon-folder-open"></i>file03</label>
+                        </div>
+                        <div class="form-group">
+                        	<label><i class="glyphicon glyphicon-folder-open"></i>file04</label>
+                        </div>
+                    </div>
+                    <div class="col-sm-2" style="text-align:center; margin:40px 0;">
+                    	<button type="button" class="btn btn-default" style="margin-bottom:10px;"><i class="glyphicon glyphicon-triangle-right"></i></button>
+                        <button type="button" class="btn btn-default"><i class="glyphicon glyphicon-triangle-left"></i></button>
+                    </div>
+                    <div class="col-sm-5" style="border:1px solid #ccc; border-radius:5px; height:175px; overflow-y:auto;">
+                    	<h5>object file</h5>
+                        <div class="form-group">
+                        	<label><i class="glyphicon glyphicon-folder-open"></i>file01</label>
+                        </div>
+                    </div>
+                </div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Sure</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="/ui/thairice/data/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="/ui/thairice/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <script src="/ui/thairice/datetime-picker/moment.js"></script>
+    <script src="/ui/thairice/datetime-picker/bootstrap-datetimepicker.min.js"></script>
+    <script src="/ui/thairice/JS/jquery.dataTables.js"></script>
+    <script src="/ui/thairice/JS/dataTables.bootstrap4.js"></script>
+    <script src="/ui/thairice/JS/sb-admin-datatables.min.js"></script>
+    <script src="/ui/thairice/bootstrap-fileinput-master/js/fileinput.min.js"></script>
+    <script src="/ui/thairice/bootstrap-fileinput-master/js/locales/zh.js"></script>
+    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+    <script src="/ui/thairice/data/holder.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="/ui/thairice/data/ie10-viewport-bug-workaround.js"></script>
+  	<script>
+    	$(function(){
+			//日期选择插件
+			$('#starttime6').datetimepicker({  
+				format: 'YYYY-MM-DD',  
+				locale: moment.locale('zh-cn')  
+			}); 
+			$('#endtime6').datetimepicker({  
+				format: 'YYYY-MM-DD',  
+				locale: moment.locale('zh-cn')  
+			});
+			$('#starttime7').datetimepicker({  
+				format: 'YYYY-MM-DD',  
+				locale: moment.locale('zh-cn')  
+			}); 
+			$('#endtime7').datetimepicker({  
+				format: 'YYYY-MM-DD',  
+				locale: moment.locale('zh-cn')  
+			});
+			$('#starttime8').datetimepicker({  
+				format: 'YYYY-MM-DD',  
+				locale: moment.locale('zh-cn')  
+			}); 
+			$('#endtime8').datetimepicker({  
+				format: 'YYYY-MM-DD',  
+				locale: moment.locale('zh-cn')  
+			});
+			$('#starttime9').datetimepicker({  
+				format: 'YYYY-MM-DD',  
+				locale: moment.locale('zh-cn')  
+			}); 
+			$('#endtime9').datetimepicker({  
+				format: 'YYYY-MM-DD',  
+				locale: moment.locale('zh-cn')  
+			});
+			$('#starttime10').datetimepicker({  
+				format: 'YYYY-MM-DD',  
+				locale: moment.locale('zh-cn')  
+			}); 
+			$('#endtime10').datetimepicker({  
+				format: 'YYYY-MM-DD',  
+				locale: moment.locale('zh-cn')  
+			});
+			$('.data-table tbody tr:odd td').css('background-color','#dbeff6');
+		})
+    </script>
 
-<!--  Form Related -->
-<script src="${cxt!}/ui/SuperAdmin/js/select.min.js"></script> <!-- Custom Select -->
-<script src="${cxt!}/ui/SuperAdmin/js/chosen.min.js"></script> <!-- Custom Multi Select -->
-<script src="${cxt!}/ui/SuperAdmin/js/icheck.js"></script> <!-- Custom Checkbox + Radio -->
-
-<!-- UX -->
-<script src="${cxt!}/ui/SuperAdmin/js/scroll.min.js"></script> <!-- Custom Scrollbar -->
-
-<!-- Other -->
-<script src="${cxt!}/ui/SuperAdmin/js/calendar.min.js"></script> <!-- Calendar -->
- <script src="${cxt!}/ui/SuperAdmin/js/datetimepicker.min.js"></script> <!-- Date & Time Picker -->
-<script src="${cxt!}/ui/SuperAdmin/js/feeds.min.js"></script> <!-- News Feeds -->
-<script src="${cxt!}/ui/SuperAdmin/js/jquery.cookie.js"></script>
-
-<!-- All JS functions -->
-<script src="${cxt!}/ui/SuperAdmin/js/functions.js"></script>
-
-${jsSec!}
-</body>
-</html>
-
-
+</body></html>
