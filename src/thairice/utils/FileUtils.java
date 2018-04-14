@@ -20,6 +20,7 @@ import java.net.SocketException;
 import java.nio.file.CopyOption;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.sql.Timestamp;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -136,6 +137,20 @@ public class FileUtils {
 			// 文件路径
 			String ftpPath = fileDir.substring(0, fileDir.lastIndexOf("/"));
 			orgDataObj.setDownload_path(ftpPath);
+			// 解析源路径，得到归档目录
+			// 解析文件名
+			String[] filePathAttr = ftpPath.split("//");
+			String storage_path = "";
+			if(5 <= filePathAttr.length) {
+				storage_path += (("//") + filePathAttr[2]);
+				Timestamp fileDate = DatesUtils.getDateOfJL(filePathAttr[3], filePathAttr[4]);
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+				String strFileDate = sdf.format(fileDate);//时间存储为字符串
+				storage_path += (("//") + strFileDate);
+				orgDataObj.setStorage_path(storage_path);
+			} else {
+				LOG.error("解析数据采集日期并生成归档目录失败，文件名格式不对！");
+			}
 			// 解析文件名
 			String[] fileAttr = fileName.split("\\.");
 			// 文件状态代码

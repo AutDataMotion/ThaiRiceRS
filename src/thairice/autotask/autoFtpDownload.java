@@ -58,7 +58,8 @@ public class autoFtpDownload extends Controller implements ITask {
 					org_data.setDload_start_time(new Timestamp(System.currentTimeMillis()));
 					org_data.setStatus_(DataConstants.DOWNLOAD_ING);
 					org_data.update();
-					if(FtpUtils.downloadFile2(ftpClient, ftpDir, localfilePath)) {
+					// 下载后存放到本地归档目录
+					if(FtpUtils.downloadFile2(ftpClient, ftpDir, localfilePath + org_data.getStorage_path())) {
 						org_data.setStatus_(DataConstants.DOWNLOAD_SUCCE);
 						org_data.setDload_end_time(new Timestamp(System.currentTimeMillis()));
 						org_data.setUserid(DataConstants.SYS_USER_ID);

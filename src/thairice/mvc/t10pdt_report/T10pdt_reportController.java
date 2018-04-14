@@ -55,7 +55,8 @@ public class T10pdt_reportController extends BaseController {
 		}
 		Page page  = T10pdt_report.dao.paginate(getParaToInt(0, 1), 10, "select *", "from T10pdt_report t where t.userid = '" + account + "' order by id asc");
 		setAttr("blogPage",page );
-		renderWithPath("/ui/thairice/self_center.html");
+//		renderWithPath("/ui/thairice/test.html");
+		renderWithPath("/thairice/self_center.html");
 	}
 	
 	/**
@@ -64,8 +65,7 @@ public class T10pdt_reportController extends BaseController {
 	@Before(T10pdt_reportValidator.class)
 	public void save() {
 		T10pdt_report t10pdt_report = getModel(T10pdt_report.class);
-		//other set 
-		
+		//other set 		
 		//t10pdt_report.save();		//guiid
 		t10pdt_report.saveGenIntId();	//serial int id
 		renderWithPath(pthv+"add.html");

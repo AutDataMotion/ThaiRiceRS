@@ -114,7 +114,7 @@ public class MsgUtils {
 				// 刷新界面用户未读消息数
 			}
 		} catch (Exception e) {
-			LOG.error("邮件发送发生异常：" + e);
+			LOG.error("消息发送发生异常：" + e);
 		}
 	}
 
@@ -145,9 +145,10 @@ public class MsgUtils {
 	}
 
 	public static void main(String[] args) throws Exception {
-		// String str = "MOD13Q1.A2001033.h00v08.006.2015141152020.hdf";
-		// String[] fileAttr = str.split("\\.");
-		// System.out.println(fileAttr.length);
+//		 String str = "MOD13Q1.A2001033.h00v08.006.2015141152020.hdf";
+		 String str = "MOD13Q1|A2001033|h00v08|006|2015141152020|hdf";
+		 String[] fileAttr = str.split("\\|");
+		 System.out.println(fileAttr.length);
 		// for(int i = 0; i < 100; i ++)
 		// System.out.println(getRadSix());
 	}
