@@ -1,0 +1,619 @@
+<!DOCTYPE html>
+<!-- saved from url=(0042)https://v3.bootcss.com/examples/dashboard/ -->
+<html lang="zh-CN">
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+    
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!--<link rel="icon" href="https://v3.bootcss.com/favicon.ico">-->
+
+    <title>用户管理</title>
+
+    <!-- Bootstrap core CSS -->
+    <link href="bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+	<link href="datetime-picker/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="data/ie10-viewport-bug-workaround.css" rel="stylesheet">
+	<link href="CSS/dataTables.bootstrap4.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="data/dashboard.css" rel="stylesheet">
+	<link rel="stylesheet" href="CSS/nav_css.css">
+    <link rel="stylesheet" href="CSS/operator_management.css">
+    <link rel="stylesheet" href="CSS/user_management.css">
+    <!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+    <!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+    <script src="data/ie-emulation-modes-warning.js"></script>
+	<script src="JS/ie-open.js"></script>
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+  </head>
+
+  <body>
+
+    <nav class="navbar navbar-inverse navbar-fixed-top">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <p class="navbar-brand">Thai agricultural remote sensing monitoring platform</p>
+        </div>
+        <div id="navbar" class="navbar-collapse collapse">
+          <ul class="nav navbar-nav navbar-right">
+            <li><a href="#"><i class="glyphicon glyphicon-user"></i>Admin</a></li>
+            <li><a href="#" data-toggle="modal" data-target="#exampleModal"><i class="glyphicon glyphicon-log-out"></i>Log out</a></li>
+            <li><a href="#"><i class="glyphicon glyphicon-question-sign"></i></a></li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+
+    <div class="container-fluid">
+      <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+          <ul class="nav nav-sidebar">
+            <li style="margin-bottom:20px;"><p class="function_text">Function menu</p></li>
+            <li><a href="data.html">Operator management <span class="sr-only">(current)</span></a></li>
+            <li class="active"><a href="#">User management</a></li>
+            <!--<li><a class="special" href="index.html" target="_blank">Product data query</a></li>-->
+        	<li><a class="special" href="#" onclick="open_win()" >Product data query</a></li>
+            <li><a href="data_management.html">Data management</a></li>
+            <li><a href="#">System state</a></li>
+            <li><a href="production_configuration.html">Production configuration</a></li>
+            <li><a href="log_management.html">Log management</a></li>
+            <li><a href="data_selfinfo.html">Personal center</a></li>
+            <li><a href="data_message.html">My message</a></li>
+          </ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+          <div class="user_query">
+      		<form role="form" class="form-inline" style="margin:15px 0 0;">
+        	<div class="form-group">
+            	<label>UserName</label>
+                <input type="text" placeholder="UserName" class="form-control" style="padding:0 5px;">
+            </div>
+            <div class="form-group pull-right">
+                <button type="button" class="btn btn-primary" style="width:150px;">Export to Excel</button>
+            </div>
+            <div class="form-group">
+            	<label class="control-label">Time:</label>
+                <div class="input-group" id="starttime3" style="width:160px;"><input type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span></div>
+                <label class="control-label">to</label>
+                <div class="input-group" id="endtime3" style="width:160px;"><input type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span></div>
+            </div>
+            <div class="form-group" style="margin-right:20px;">
+            	<label>Region</label>
+                <select class="form-control">
+                  <option>ALL</option>
+                </select>
+            </div>
+            <div class="form-group">
+            	<label>Audit</label>
+                <select class="form-control">
+                  <option>ALL</option>
+                </select>
+            </div>
+            <div class="form-group">
+            	<label>Service type</label>
+                <select class="form-control">
+                  <option>proportion</option>
+                  <option>yield</option>
+                </select>
+            </div>
+            <div class="form-group">
+            	<button type="button" class="btn btn-info">search</button>
+                <button type="button" class="btn btn-warning" style="margin-left:15px;" data-toggle="modal" data-target="#groupmessage_modal">group-sent message</button>
+            </div>
+        </form>
+      </div>          
+      <div class="table-responsive">
+            <table class="table table-bordered data-table" id="dataTable02" width="100%" cellspacing="0" align="center">
+              <thead>
+                <tr>
+                  <th><input type="checkbox">Select all</th>
+                  <th>Username</th>
+                  <th>Phonenumber</th>
+                  <th>E-mail</th>
+                  <th>Service area</th>
+                  <th>Service time</th>
+                  <th>Service type</th>
+                  <th>Audit</th>
+                  <th>Send a message</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><input type="checkbox">&nbsp;</td>
+                  <td>Jone</td>
+                  <td>+66 188990333</td>
+                  <td>someone@example.com</td>
+                  <td>Thailand</td>
+                  <td>2018-01-01 2020-01-01</td>
+                  <td>modis</td>
+                  <td>
+                  	<span class="approved" data-toggle="modal" data-target="#approved_modal">approved</span>
+                    <span class="rejected" data-toggle="modal" data-target="#rejected_modal">rejected</span>
+                  </td>
+                  <td><span data-toggle="modal" data-target="#message_modal"><i class="glyphicon glyphicon-comment message"></i></span></td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox">&nbsp;</td>
+                  <td>A0001</td>
+                  <td>Jone</td>
+                  <td>+66 188990333</td>
+                  <td>someone@example.com</td>
+                  <td>Thailand</td>
+                  <td>2018-01-01 2020-01-01</td>
+                  <td>
+                  	<span class="approve_text" data-toggle="modal" data-target="#approve_text_modal">approved</span>
+                    <span data-toggle="modal" data-target="#edit_modal"><i class="glyphicon glyphicon-edit edit"></i></span>
+                  </td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox">&nbsp;</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox">&nbsp;</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox">&nbsp;</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox">&nbsp;</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox">&nbsp;</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox">&nbsp;</td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </div>
+      </div>
+    </div>
+	<!-- Logout Modal-->
+    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+            <a class="btn btn-primary" href="backend_login.html">Logout</a>
+          </div>
+        </div>
+      </div>
+    </div>
+	<!-- approved Modal-->
+    <div class="modal fade" id="approved_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">user service information</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+          	<form role="form" class="form-horizontal user_form">
+            	  <div class="form-group">
+                    <label class="col-sm-3">service area</label>
+                    <div class="col-sm-9">
+                      <select class="form-control">
+                          <option>area1</option>
+                          <option>area2</option>
+                          <option>area3</option>
+                          <option>area4</option>
+                          <option>area5</option>
+                      </select>
+                      <select class="form-control">
+                          <option>area1</option>
+                          <option>area2</option>
+                          <option>area3</option>
+                          <option>area4</option>
+                          <option>area5</option>
+                      </select>
+                      <select class="form-control">
+                          <option>area1</option>
+                          <option>area2</option>
+                          <option>area3</option>
+                          <option>area4</option>
+                          <option>area5</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-3">service time</label>
+                    <div class="input-group" id="starttime4" style="padding-left:15px; width:120px;"><input type="text" class="form-control" style="width:110px; margin-right:0;"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span></div>
+                    <label style="margin:0 10px; float:left;">to</label>
+                    <div class="input-group" id="endtime4" style="width:120px;"><input type="text" class="form-control" style="width:110px; margin-right:0;"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span></div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-3">service selection</label>
+                    <div class="col-sm-9">
+                      <label>
+                          <input type="checkbox" value="option1"> Rice planting area monitoring
+                      </label><br>
+                      <label>
+                          <input type="checkbox" value="option1"> Rice drought monitoring
+                      </label><br>
+                      <label>
+                          <input type="checkbox" value="option1"> Rice condition monitoring
+                      </label><br>
+                      <label>
+                          <input type="checkbox" value="option1"> Rice production estimates
+                      </label>
+                    </div>
+                  </div>
+
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-primary" type="button" data-dismiss="modal">Through the review</button>
+            <button class="btn btn-default" type="button" data-dismiss="modal">cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+	<!-- edit Modal-->
+    <div class="modal fade" id="edit_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Modify the user service</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+          	<form role="form" class="form-horizontal user_form">
+            	  <div class="form-group">
+                    <label class="col-sm-3">service area</label>
+                    <div class="col-sm-9">
+                      <select class="form-control">
+                          <option>area1</option>
+                          <option>area2</option>
+                          <option>area3</option>
+                          <option>area4</option>
+                          <option>area5</option>
+                      </select>
+                      <select class="form-control">
+                          <option>area1</option>
+                          <option>area2</option>
+                          <option>area3</option>
+                          <option>area4</option>
+                          <option>area5</option>
+                      </select>
+                      <select class="form-control">
+                          <option>area1</option>
+                          <option>area2</option>
+                          <option>area3</option>
+                          <option>area4</option>
+                          <option>area5</option>
+                      </select>
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-3">service time</label>
+                    <div class="input-group" id="starttime5" style="padding-left:15px; width:120px;"><input type="text" class="form-control" style="width:110px; margin-right:0;"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span></div>
+                    <label style="margin:0 10px; float:left;">to</label>
+                    <div class="input-group" id="endtime5" style="width:120px;"><input type="text" class="form-control" style="width:110px; margin-right:0;"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span></div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-3">service selection</label>
+                    <div class="col-sm-9">
+                      <label>
+                          <input type="checkbox" value="option1"> Rice planting area monitoring
+                      </label><br>
+                      <label>
+                          <input type="checkbox" value="option1"> Rice drought monitoring
+                      </label><br>
+                      <label>
+                          <input type="checkbox" value="option1"> Rice condition monitoring
+                      </label><br>
+                      <label>
+                          <input type="checkbox" value="option1"> Rice production estimates
+                      </label>
+                    </div>
+                  </div>
+
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-primary" type="button" data-dismiss="modal">submit</button>
+            <button class="btn btn-default" type="button" data-dismiss="modal">cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- rejected Modal-->
+    <div class="modal fade" id="rejected_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Modify the user service</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+          	<form role="form">
+            	<div class="form-group">
+                	<label>Reasons for audit failed</label>
+                    <select class="form-control">
+                    	<option>the service information is wrong</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                	<label>Details</label>
+                    <textarea class="form-control" rows="7" placeholder="0/400" style="resize:none;">
+                    
+                    </textarea>
+                </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-primary" type="button" data-dismiss="modal">submit</button>
+            <button class="btn btn-default" type="button" data-dismiss="modal">cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- message Modal-->
+    <div class="modal fade" id="message_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Modify the user service</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+          	<form role="form">
+            	<div class="form-group">
+                	<label>The title</label>
+                    <select class="form-control">
+                    	<option>the service information is wrong</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                	<label>Details</label>
+                    <textarea class="form-control" rows="7" placeholder="0/400" style="resize:none;">
+                    
+                    </textarea>
+                </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-primary" type="button" data-dismiss="modal">send</button>
+            <button class="btn btn-default" type="button" data-dismiss="modal">cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+	<!-- group message Modal-->
+    <div class="modal fade" id="groupmessage_modal" tabindex="-1" role="dialog" aria-labelledby="groupmessageModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">Group sent message</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+          	<form role="form">
+            	<div class="form-group">
+                	<label>The title</label>
+                    <input type="text" class="form-control">
+                </div>
+                <div class="form-group">
+                	<label>Details</label>
+                    <textarea class="form-control" rows="7" placeholder="0/400" style="resize:none;">
+                    
+                    </textarea>
+                </div>
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-primary" type="button" data-dismiss="modal">send</button>
+            <button class="btn btn-default" type="button" data-dismiss="modal">cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- approve_text Modal-->
+    <div class="modal fade" id="approve_text_modal" tabindex="-1" role="dialog" aria-labelledby="approvetextModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">user message</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body">
+          	<form class="form-horizontal form_selfinfo" style="width:510px; margin:0 auto;">
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label">Username</label>
+                    <div class="col-sm-8">
+                      <input type="text" class="form-control" placeholder="6 to 12 letters and Numbers">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label">Password</label>
+                    <div class="col-sm-8">
+                      <input type="password" class="form-control" placeholder="6 to 12 letters and Numbers">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label">Verify Password</label>
+                    <div class="col-sm-8">
+                      <input type="password" class="form-control" placeholder="Verify password">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label">Phonenumber</label>
+                    <div class="col-sm-8">
+                      <input type="password" class="form-control" placeholder="You commonly used the phone number">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label">E-mail</label>
+                    <div class="col-sm-8">
+                      <input type="email" class="form-control" placeholder="your E-mai like someone@exmaple.com">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label">Yourname</label>
+                    <div class="col-sm-8">
+                      <input type="email" class="form-control" placeholder="Your real name">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label">Company</label>
+                    <div class="col-sm-8">
+                      <input type="email" class="form-control" placeholder="Your work unit">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label">Post Code</label>
+                    <div class="col-sm-8">
+                      <input type="email" class="form-control" placeholder="Post Code">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label">Address</label>
+                    <div class="col-sm-8">
+                      <input type="email" class="form-control" placeholder="Address">
+                    </div>
+                  </div>
+                  <div class="form-group">
+                    <label class="col-sm-3 control-label">Industry</label>
+                    <div class="col-sm-8">
+                      <input type="email" class="form-control" placeholder="Select your industry">
+                    </div>
+                  </div>
+                </form>
+          </div>
+          <div class="modal-footer">
+            <button class="btn btn-primary" type="button" data-dismiss="modal">ok</button>
+            <button class="btn btn-default" type="button" data-dismiss="modal">cancel</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="data/jquery.min.js"></script>
+    <script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script>
+    <script src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+    <script src="datetime-picker/moment.js"></script>
+    <script src="datetime-picker/bootstrap-datetimepicker.min.js"></script>
+    <script src="JS/jquery.dataTables.js"></script>
+    <script src="JS/dataTables.bootstrap4.js"></script>
+    <script src="JS/sb-admin-datatables.min.js"></script>
+    <!-- Just to make our placeholder images work. Don't actually copy the next line! -->
+    <script src="data/holder.min.js"></script>
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <script src="data/ie10-viewport-bug-workaround.js"></script>
+  	<script>
+    	$(function(){
+			//日期选择插件
+			$('#starttime3').datetimepicker({  
+				format: 'YYYY-MM-DD',  
+				locale: moment.locale('zh-cn')  
+			}); 
+			$('#endtime3').datetimepicker({  
+				format: 'YYYY-MM-DD',  
+				locale: moment.locale('zh-cn')  
+			});
+			$('#starttime4').datetimepicker({  
+				format: 'YYYY-MM-DD',  
+				locale: moment.locale('zh-cn')  
+			}); 
+			$('#endtime4').datetimepicker({  
+				format: 'YYYY-MM-DD',  
+				locale: moment.locale('zh-cn')  
+			});
+			$('#starttime5').datetimepicker({  
+				format: 'YYYY-MM-DD',  
+				locale: moment.locale('zh-cn')  
+			}); 
+			$('#endtime5').datetimepicker({  
+				format: 'YYYY-MM-DD',  
+				locale: moment.locale('zh-cn')  
+			});
+			$('.data-table tbody tr:odd td').css('background-color','#dbeff6');
+		})
+    </script>
+
+</body></html>

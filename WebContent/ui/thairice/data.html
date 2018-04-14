@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<!-- saved from url=(0042)https://v3.bootcss.com/examples/dashboard/ -->
+<html lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+<meta name="description" content="">
+<meta name="author" content="">
+<!--<link rel="icon" href="https://v3.bootcss.com/favicon.ico">-->
+
+<title>操作员管理</title>
+
+<!-- Bootstrap core CSS -->
+<link href="bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<link href="data/ie10-viewport-bug-workaround.css" rel="stylesheet">
+<link href="CSS/dataTables.bootstrap4.css" rel="stylesheet">
+<!-- Custom styles for this template -->
+<link href="data/dashboard.css" rel="stylesheet">
+<link rel="stylesheet" href="CSS/nav_css.css">
+<link rel="stylesheet" href="CSS/operator_management.css">
+<!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+<!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+<script src="data/ie-emulation-modes-warning.js"></script>
+<script src="JS/ie-open.js"></script>
+
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+      <p class="navbar-brand">Thai agricultural remote sensing monitoring platform</p>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#"><i class="glyphicon glyphicon-user"></i>Admin</a></li>
+        <li><a href="#" data-toggle="modal" data-target="#exampleModal"><i class="glyphicon glyphicon-log-out"></i>Log out</a></li>
+        <li><a href="#"><i class="glyphicon glyphicon-question-sign"></i></a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-3 col-md-2 sidebar">
+      <ul class="nav nav-sidebar">
+        <li style="margin-bottom:20px;">
+          <p class="function_text">Function menu</p>
+        </li>
+        <li class="active"><a href="#">Operator management <span class="sr-only">(current)</span></a></li>
+        <li><a href="user_management.html">User management</a></li>
+        <!--<li><a class="special" href="index.html" target="_blank">Product data query</a></li>-->
+        <li><a class="special" href="#" onclick="open_win()" >Product data query</a></li>
+        <li><a href="data_management.html">Data management</a></li>
+        <li><a href="#">System state</a></li>
+        <li><a href="production_configuration.html">Production configuration</a></li>
+        <li><a href="log_management.html">Log management</a></li>
+        <li><a href="data_selfinfo.html">Personal center</a></li>
+        <li><a href="data_message.html">My message</a></li>
+      </ul>
+    </div>
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+      <div class="data-btns clearfix">
+        <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#addModal"><i class="glyphicon glyphicon-plus"></i>Add</button>
+        <button type="button" class="btn btn-warning btn-sm" data-toggle="modal" data-target="#editModal"><i class="glyphicon glyphicon-edit"></i>Edit</button>
+        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal"><i class="glyphicon glyphicon-trash"></i>Delete</button>
+        <button type="button" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-refresh"></i>Refresh</button>
+        <button type="button" class="btn btn-primary pull-right" style="width:150px;">Export to Excel</button>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-bordered data-table" id="dataTable01" width="100%" cellspacing="0" align="center">
+          <thead>
+            <tr>
+              <th><input type="checkbox">
+                Select all</th>
+              <th>ID</th>
+              <th>Username</th>
+              <th>Phonenumber</th>
+              <th>E-mail</th>
+              <th>Permissions</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><input type="checkbox">
+                &nbsp;</td>
+              <td>A0001</td>
+              <td>Jone</td>
+              <td>+66 188990333</td>
+              <td>someone@example.com</td>
+              <td>cancel the permissions</td>
+            </tr>
+            <tr>
+              <td><input type="checkbox">
+                &nbsp;</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox">
+                &nbsp;</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox">
+                &nbsp;</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox">
+                &nbsp;</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox">
+                &nbsp;</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox">
+                &nbsp;</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox">
+                &nbsp;</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox">
+                &nbsp;</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox">
+                &nbsp;</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox">
+                &nbsp;</td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- Logout Modal-->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">×</span> </button>
+      </div>
+      <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+        <a class="btn btn-primary" href="backend_login.html">Logout</a> </div>
+    </div>
+  </div>
+</div>
+<!-- add Modal-->
+<div class="modal fade" id="addModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add data</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">×</span> </button>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" style="width:640px; margin:0 auto;">
+          <div class="form-group">
+            <label class="col-md-3 control-label" style="width:120px;">Username</label>
+            <div class="col-md-9" style="width:470px;">
+              <input type="text" class="form-control" placeholder="Jone">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-3 control-label" style="width:120px;">Phonenumber</label>
+            <div class="col-md-9" style="width:470px;">
+              <input type="text" class="form-control" placeholder="+66 08088999999999">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-3 control-label" style="width:120px;">E-mail</label>
+            <div class="col-md-9" style="width:470px;">
+              <input type="email" class="form-control" placeholder="jone@example.com">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-3 control-label" style="width:120px;">Yourname</label>
+            <div class="col-md-9" style="width:470px;">
+              <input type="text" class="form-control" placeholder="Yingluck Chinnawat">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-3 control-label" style="width:120px;">Company</label>
+            <div class="col-md-9" style="width:470px;">
+              <input type="text" class="form-control" placeholder="Company">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-3 control-label" style="width:120px;">Post Code</label>
+            <div class="col-md-9" style="width:470px;">
+              <input type="text" class="form-control" placeholder="Post Code">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-3 control-label" style="width:120px;">Address</label>
+            <div class="col-md-9" style="width:470px;">
+              <input type="text" class="form-control" placeholder="Address">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-3 control-label" style="width:120px;">Industry</label>
+            <div class="col-md-9" style="width:470px;">
+              <select class="form-control">
+                <option>agricultural</option>
+              </select>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" type="button" data-dismiss="modal">Sure</button>
+        <button class="btn btn-default" type="button" data-dismiss="modal">Cancel</button>
+    </div>
+  </div>
+</div>
+</div>
+<!-- edit Modal-->
+<div class="modal fade" id="editModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true" data-show="false">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit data</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">×</span> </button>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" style="width:640px; margin:0 auto;">
+          <div class="form-group">
+            <label class="col-md-3 control-label" style="width:120px;">Username</label>
+            <div class="col-md-9" style="width:470px;">
+              <input type="text" class="form-control" placeholder="Jone">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-3 control-label" style="width:120px;">Phonenumber</label>
+            <div class="col-md-9" style="width:470px;">
+              <input type="text" class="form-control" placeholder="+66 08088999999999">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-3 control-label" style="width:120px;">E-mail</label>
+            <div class="col-md-9" style="width:470px;">
+              <input type="email" class="form-control" placeholder="jone@example.com">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-3 control-label" style="width:120px;">Yourname</label>
+            <div class="col-md-9" style="width:470px;">
+              <input type="text" class="form-control" placeholder="Yingluck Chinnawat">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-3 control-label" style="width:120px;">Company</label>
+            <div class="col-md-9" style="width:470px;">
+              <input type="text" class="form-control" placeholder="Company">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-3 control-label" style="width:120px;">Post Code</label>
+            <div class="col-md-9" style="width:470px;">
+              <input type="text" class="form-control" placeholder="Post Code">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-3 control-label" style="width:120px;">Address</label>
+            <div class="col-md-9" style="width:470px;">
+              <input type="text" class="form-control" placeholder="Address">
+            </div>
+          </div>
+          <div class="form-group">
+            <label class="col-md-3 control-label" style="width:120px;">Industry</label>
+            <div class="col-md-9" style="width:470px;">
+              <select class="form-control">
+                <option>agricultural</option>
+              </select>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" type="button" data-dismiss="modal">Sure</button>
+        <button class="btn btn-default" type="button" data-dismiss="modal">Cancel</button>
+    </div>
+  </div>
+</div>
+</div>
+	<!-- delete Modal-->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">System message</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div>
+          <div class="modal-body">
+            Are you sure to delete?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Sure</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div>
+
+<!-- Bootstrap core JavaScript
+    ================================================== --> 
+<!-- Placed at the end of the document so the pages load faster --> 
+<script src="data/jquery.min.js"></script> 
+<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script> 
+<script src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script> 
+<script src="JS/jquery.dataTables.js"></script> 
+<script src="JS/dataTables.bootstrap4.js"></script> 
+<script src="JS/sb-admin-datatables.min.js"></script> 
+<!-- Just to make our placeholder images work. Don't actually copy the next line! --> 
+<script src="data/holder.min.js"></script> 
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug --> 
+<script src="data/ie10-viewport-bug-workaround.js"></script> 
+<script>
+    	$(function(){
+			$('.data-table tbody tr:odd td').css('background-color','#dbeff6');
+			/*模态框点击空白处不关闭，要在div上加data-show="false"及下列代码*/
+			$('#editModal').modal({backdrop: 'static', keyboard: true});
+			/*$('#addModal').modal({backdrop: 'static', keyboard: true});
+			$('#deleteModal').modal({backdrop: 'static', keyboard: true});
+			$('#editModal').modal({backdrop: 'static', keyboard: true});*/
+		})
+    </script>
+</body>
+</html>

@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<!-- saved from url=(0042)https://v3.bootcss.com/examples/dashboard/ -->
+<html lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+<meta name="description" content="">
+<meta name="author" content="">
+<!--<link rel="icon" href="https://v3.bootcss.com/favicon.ico">-->
+
+<title>系统配置</title>
+
+<!-- Bootstrap core CSS -->
+<link href="bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<link href="./data_files/ie10-viewport-bug-workaround.css" rel="stylesheet">
+<link href="datetime-picker/bootstrap-datetimepicker.min.css" rel="stylesheet">
+<link rel="stylesheet" href="bootstrap-fileinput-master/css/fileinput.min.css">
+<!-- Custom styles for this template -->
+<link href="./data_files/dashboard.css" rel="stylesheet">
+<link rel="stylesheet" href="CSS/nav_css.css">
+<link rel="stylesheet" href="CSS/system_configuration.css">
+<!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+<!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+<script src="./data_files/ie-emulation-modes-warning.js"></script>
+
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+      <p class="navbar-brand">Thai agricultural remote sensing monitoring platform</p>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="#"><i class="glyphicon glyphicon-user"></i>Admin</a></li>
+        <li><a href="#" data-toggle="modal" data-target="#exampleModal"><i class="glyphicon glyphicon-log-out"></i>Log out</a></li>
+        <li><a href="#"><i class="glyphicon glyphicon-question-sign"></i></a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-3 col-md-2 sidebar">
+      <ul class="nav nav-sidebar">
+            <li style="margin-bottom:20px;"><p class="function_text">Function menu</p></li>
+            <li><a href="data.html">Operator management <span class="sr-only">(current)</span></a></li>
+            <li><a href="user_management.html">User management</a></li>
+            <li><a href="index.html">Product data query</a></li>
+            <li><a href="data_management.html">Data management</a></li>
+            <li><a href="#">System state</a></li>
+            <li class="active"><a href="#">System configuration</a></li>
+            <li><a href="production_configuration.html">Production configuration</a></li>
+            <li><a href="log_management.html">Log management</a></li>
+            <li><a href="data_selfinfo.html">Personal center</a></li>
+            <li><a href="data_message.html">My message</a></li>
+          </ul>
+    </div>
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+      <h3 class="sub-header">System configuration parameters</h3>
+      <form class="form-inline">
+        <div class="form-group">
+          <div class="form-group">
+            <label>Server IP</label>
+            <input type="text" class="form-control">
+          </div>
+          <div class="form-group">
+            <label>Login account</label>
+            <input type="text" class="form-control">
+          </div>
+          <div class="form-group">
+            <label>Login password</label>
+            <input type="password" class="form-control">
+          </div>
+          <div class="form-group">
+            <label>Other parameters</label>
+            <input type="text" class="form-control">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="form-group">
+            <label>Internal interface IP</label>
+            <input type="text" class="form-control">
+          </div>
+          <div class="form-group">
+            <label>Login account</label>
+            <input type="text" class="form-control">
+          </div>
+          <div class="form-group">
+            <label>Login password</label>
+            <input type="password" class="form-control">
+          </div>
+          <div class="form-group">
+            <label>Other parameters</label>
+            <input type="text" class="form-control">
+          </div>
+        </div>
+        <div class="form-group">
+          <div class="form-group">
+            <label>Internal interface IP</label>
+            <input type="text" class="form-control">
+          </div>
+          <div class="form-group">
+            <label>Login account</label>
+            <input type="text" class="form-control">
+          </div>
+          <div class="form-group">
+            <label>Login password</label>
+            <input type="password" class="form-control">
+          </div>
+          <div class="form-group">
+            <label>Other parameters</label>
+            <input type="text" class="form-control">
+          </div>
+        </div>
+        <hr>
+        <div class="form-group">
+        	<div class="form-group">
+            	<label>file catalog</label>
+                <input type="file" name="txt_file" id="txt_file07" multiple class="file" />
+            </div>
+            <div class="form-group">
+            	<label>file name</label>
+                <input type="text" class="form-control">
+            </div>
+        </div>
+        <br>
+        <div class="form-group">
+           	<div class="form-group">
+            	<label>cookie ex-time</label>
+                <div class="input-group" id="date" style="width:120px;">
+                    <input type="text" class="form-control" style="width:110px; margin-right:0;">
+                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                </div>
+            </div>
+            <div class="form-group">
+            	<label>System connection number</label>
+                <input type="text" class="form-control">
+            </div>
+        </div>
+        <hr>
+        <div class="form-group">
+          <div class="form-group">
+            <label>Datebase connection number</label>
+            <input type="text" class="form-control">
+          </div>
+          <div class="form-group">
+            <label>Username</label>
+            <input type="text" class="form-control">
+          </div>
+          <div class="form-group">
+            <label>Password</label>
+            <input type="password" class="form-control">
+          </div>
+          <div class="form-group">
+            <label>Backup cycle</label>
+            <input type="text" class="form-control">
+          </div>
+        </div>
+        <div class="form-group" style="text-align:center; display:block;">
+        	<button class="btn btn-primary submit_btn" type="submit">submit</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+<!-- Logout Modal-->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">×</span> </button>
+      </div>
+      <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+        <a class="btn btn-primary" href="backend_login.html">Logout</a> </div>
+    </div>
+  </div>
+</div>
+
+<!-- Bootstrap core JavaScript
+    ================================================== --> 
+<!-- Placed at the end of the document so the pages load faster --> 
+<script src="./data_files/jquery.min.js"></script> 
+<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script> 
+<script src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script> 
+<script src="datetime-picker/moment.js"></script>
+<script src="datetime-picker/bootstrap-datetimepicker.min.js"></script>
+<script src="bootstrap-fileinput-master/js/fileinput.min.js"></script>
+<!-- Just to make our placeholder images work. Don't actually copy the next line! --> 
+<script src="./data_files/holder.min.js"></script> 
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug --> 
+<script src="./data_files/ie10-viewport-bug-workaround.js"></script>
+<script>
+    	$(function(){
+			//日期选择插件
+			$('#date').datetimepicker({  
+				format: 'YYYY-MM-DD',  
+				locale: moment.locale('zh-cn')  
+			});
+			function initFileInput(ctrlName, uploadUrl) { 
+		 var control = $('#' + ctrlName); 
+		 control.fileinput({
+		 language: 'zh',
+		 uploadUrl: uploadUrl,
+		 allowedFileExtensions : ['jpg', 'png','gif'],
+		 showUpload: false, 
+		 showCaption: false,
+		 browseClass: "btn btn-primary", //按钮样式 
+		 previewFileIcon: "<i class='glyphicon glyphicon-king'></i>", 
+		 });
+		}
+		initFileInput("txt_file07", "" ,"primary",false); 
+		})
+    </script>
+</body>
+</html>

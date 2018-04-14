@@ -1,0 +1,88 @@
+@charset "utf-8";
+/* CSS Document */
+.content-wrapper .user_query .form-control{
+	padding:0 5px;
+	margin-left:5px;
+}
+.content-wrapper .user_query select.form-control{
+	padding:5px 8px;
+	height:auto;
+}
+.user_query .form-group{
+	margin-right:16px;
+	margin-bottom:10px;
+}
+.user_query .form-group .input-group{
+	/*margin-right:10px;*/
+}
+.user_query .btn-primary{
+	background-color:#04bce3;
+	height:30px;
+	padding:0 10px;
+}
+.user_query .btn-primary:hover{
+	background-color:#00aace;
+}
+.modal-title{
+	color:#00aace;
+}
+.close:not(:disabled):not(.disabled){
+	color:#00aace;
+}
+.close:focus, .close:hover{
+	color:#0191af;
+}
+.fa-comment-o{
+	color:#0568e3;
+	cursor:pointer;
+}
+.approved{
+	color:#07b117;
+	text-decoration:underline;
+	cursor:pointer;
+}
+.rejected{
+	color:#ef4f4f;
+	text-decoration:underline;
+	cursor:pointer;
+}
+.edit{
+	color:#0568e3;
+	cursor:pointer;
+}
+label{
+	font-weight:normal;
+}
+.user_form .form-group{
+	line-height:38px;
+	clear:both;
+}
+.user_form .form-group .form-control,.user_form .form-group .input-group{
+	float:left;
+	width:auto;
+	margin-right:5px;
+}
+/*select.form-control{
+	padding:0 20px;
+}*/
+.user_form .form-group .col-sm-3{
+	float:left;
+	padding-right:0;
+}
+.user_form .form-group .col-sm-9{
+	float:left;
+}
+.modal-header{
+	height:60px;
+	padding:0 15px;
+	line-height:60px;
+}
+.modal-title{
+	height:60px;
+	line-height:60px;
+	font-size:16px;
+	float:left;
+}
+.modal-header .close{
+	margin-top:20px;
+}

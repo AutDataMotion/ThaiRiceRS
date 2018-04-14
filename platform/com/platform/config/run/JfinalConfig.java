@@ -4,6 +4,7 @@ import org.apache.log4j.Logger;
 
 import thairice.config.DBMappingMy;
 import thairice.constant.PropertiesInitMy;
+import thairice.utils.FtpUtils;
 import zeroc.util.IceClientUtil;
 
 import com.jfinal.config.Constants;
@@ -175,6 +176,8 @@ public class JfinalConfig extends JFinalConfig {
 	 * 系统启动完成后执行
 	 */
 	public void afterJFinalStart() {
+
+		System.out.println("afterJFinalStart");	
 		// 加载子系统
 //		 thairice.mvc.MainConf.GetInstance().init();
 //		 thairice.mvc.MainConf.GetInstance().start();
@@ -193,6 +196,8 @@ public class JfinalConfig extends JFinalConfig {
 //
 //		log.info("afterJFinalStart 数据清理");
 //		DataClear.start();
+//		FtpUtils.initScanFtp();
+
 	}
 
 	/**
@@ -201,7 +206,7 @@ public class JfinalConfig extends JFinalConfig {
 	public void beforeJFinalStop() {
 
 		// Zeroc Ice Util 销毁
-		IceClientUtil.closeCommunicator(true);
+//		IceClientUtil.closeCommunicator(true);
 
 		// cms 释放资源
 //		thairice.mvc.cms.MainConf.GetInstance().stop();

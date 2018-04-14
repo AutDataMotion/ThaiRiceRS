@@ -1,0 +1,391 @@
+<%layout("layout.html"){ %>
+<script type="text/javascript">
+  $(document).ready(function(){
+		var flag = "${flag!}";
+			if(flag == 1){
+				document.getElementById("tab01").className = "active"; 
+	 			document.getElementById("tab02").className = ""; 			
+				document.getElementById("data01_content").className = "tab-pane fade in active";
+				document.getElementById("data02_content").className = "tab-pane fade";
+			}
+			if(flag == 2){
+				document.getElementById("tab02").className = "active"; 
+	 			document.getElementById("tab01").className = ""; 				
+				document.getElementById("data02_content").className = "tab-pane fade in active";
+				document.getElementById("data01_content").className = "tab-pane fade";
+			}
+			if(flag == 9){
+				alert(查询失败！);
+			}
+});
+</script>
+<script type="text/javascript"> 
+var dataQuery = function(v) {   
+ 	if(v == 1){
+		document.getElementById("tab01").className = "active"; 
+		document.getElementById("tab02").className = ""; 			
+		document.getElementById("data01_content").className = "tab-pane fade in active";
+		document.getElementById("data02_content").className = "tab-pane fade";
+		window.location.href="/jf/thairice/t6org_data?flag=" + v + "&status=" + $("#status").val() + "&starttime=" + $("#starttime1").val() + "&endtime=" + $("#endtime1").val();
+ 	}
+	if(v == 2){
+		document.getElementById("tab02").className = "active"; 
+		document.getElementById("tab01").className = ""; 				
+		document.getElementById("data02_content").className = "tab-pane fade in active";
+		document.getElementById("data01_content").className = "tab-pane fade";
+		window.location.href="/jf/thairice/t7pdt_data?flag=" + v + "&datatype=" + $("#datatype").val() + "&starttime=" + $("#starttime2").val() + "&endtime=" + $("#endtime2").val(); 
+	}                                                   
+}  
+
+//选择多项
+function checkBoxCheckMore(flag)
+{
+  var dataSet=new Array();
+  var userIdArray = null;
+  if(flag == 1){
+		userIdArray = document.getElementsByName("orgDataId");
+  } else if(flag == 2){
+		userIdArray = document.getElementsByName("pdtDataId");
+  }
+  var selectedNum = 0;
+  for(var i = 0; i < userIdArray.length; i++)
+  {
+      if(userIdArray[i].checked)
+	  {		   
+		   selectedNum = selectedNum + 1;
+	   }
+  }
+  if(selectedNum == 0)
+  {
+  	alert("一个都没有选中！");
+	return false;
+  } else
+  	return true;
+}
+
+//选择全部
+function selectAll(flag)
+{
+	if(flag == 1){
+	  var checkAll1 = document.getElementsByName("checkAll1");
+	  var orgIdArray = document.getElementsByName("orgDataId");
+	  for(var i = 0; i < orgIdArray.length; i++)
+	  {
+		  orgIdArray[i].checked = checkAll1[0].checked;
+	  }
+	} else	if(flag == 2){
+		  var checkAll2 = document.getElementsByName("checkAll2");
+		  var pdtIdArray = document.getElementsByName("pdtDataId");
+		  for(var i = 0; i < pdtIdArray.length; i++)
+		  {
+			  pdtIdArray[i].checked = checkAll2[0].checked;
+		  }
+	} 
+}
+
+//删除操作确认
+function del(){
+	var msg = "您真的确定要删除吗?\n\n请确认！";
+	if(confirm(msg) == true){
+		return true;
+	} else {
+		return false;
+	}
+}
+//批量删除
+function batchDelete(flag)
+{
+	if(!checkBoxCheckMore(flag))
+		return;
+	if(!del())
+		return;
+	  var dataSet=new Array();
+	  var userIdArray = null;
+	  if(flag == 1){
+			userIdArray = document.getElementsByName("orgDataId");
+	  } else if(flag == 2){
+			userIdArray = document.getElementsByName("pdtDataId");
+	  }
+	  
+	  var selectedNum = 0;
+	  for(var i = 0; i < userIdArray.length; i++)
+	  {
+	      if(userIdArray[i].checked)
+		  {		   
+			   dataSet.push(userIdArray[i].value);
+			   selectedNum = selectedNum + 1;
+		   }
+	  }
+	  var url;
+	  if(flag == 1){
+		  url = '/jf/thairice/t6org_data/batchDelete';
+	  } else if(flag == 2){
+		  url = '/jf/thairice/t7pdt_data/batchDelete';
+	  }
+	  
+	$.ajax({
+		  type: 'POST',
+		  url: url,
+	      dataType: "json",
+	      traditional: true,
+		  data: {dataSet:dataSet},
+		  success: function(res){
+			if(res.code == "0000"){
+				alert(res.desc);	
+				dataQuery(flag);
+			} else {
+				alert(res.desc);
+			}
+		  },
+		  dataType: "json"
+		});
+}
+</script>
+
+<script>
+    	$(function(){
+			//日期选择插件
+			$('#starttime1C').datetimepicker({  
+				format: 'YYYY-MM-DD',  
+				locale: moment.locale('zh-cn')  
+			}); 
+			$('#starttime2C').datetimepicker({  
+				format: 'YYYY-MM-DD',  
+				locale: moment.locale('zh-cn')  
+			}); 
+			$('#endtime1C').datetimepicker({  
+				format: 'YYYY-MM-DD',  
+				locale: moment.locale('zh-cn')  
+			});
+			$('#endtime2C').datetimepicker({  
+				format: 'YYYY-MM-DD',  
+				locale: moment.locale('zh-cn')  
+			});
+			$('.data-table tbody tr:odd td').css('background-color','#dbeff6');
+		})
+    </script>
+<div class="table_box">
+	<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+		<div class="self_tablist">
+			<ul class="nav nav-tabs" role="tablist">
+				<li role="presentation" id="tab01" ><a onclick="dataQuery(1)"
+					aria-controls="data01" role="tab" data-toggle="tab">Original
+						data</a></li>
+				<li role="presentation" id="tab02"><a onclick="dataQuery(2)"
+					aria-controls="data02" role="tab" data-toggle="tab">Product
+						data</a></li>
+			</ul>
+		</div>
+		<div class="tab-content">
+				
+			<div class="tab-pane fade in active" id="data01_content">
+
+				<div class="tab_query">
+					<form role="form" class="form-inline"
+						style="margin: 15px 0 15px 15px;">
+						
+						            <div class="form-group">
+            	<label>Status</label>
+                <select class="form-control" id="status">
+                  			<option value=${status!}>${status_eng!"ALL"}</option>
+							<option value="01">Download success</option>
+							<option value="02">Download failed</option>
+							<option value="03">Downloading</option>
+							<option value="04">Process success</option>
+							<option value="05">Process failed</option>
+							<option value="06">Processing</option>
+							<option value="07">Not download</option>
+                </select>
+            </div>
+						<div class="form-group" style="margin-left: 5px;">
+							<label class="control-label">Collect time</label>
+							<div class="input-group" id="starttime1C">
+								<input type="text" id="starttime1" class="form-control"
+									value=${starttime!}><span class="input-group-addon"><i
+									class="glyphicon glyphicon-calendar"></i></span>
+							</div>
+							<!-- style="margin-right: 6px;" -->
+							<label class="control-label" >-</label>
+							<div class="input-group" id="endtime1C">
+								<input type="text" id="endtime1" class="form-control"
+									value=${endtime!}><span class="input-group-addon"><i
+									class="glyphicon glyphicon-calendar"></i></span>
+							</div>
+						</div>
+						<div class="form-group" style="margin-left: 5px;">
+							<button type="button" onclick="dataQuery(1)"
+								class="btn btn-primary">Search</button>
+						</div>
+						<div class="form-group" style="margin-left: 20px;">
+							<button type="button" class="btn btn-success">
+								<i class="glyphicon glyphicon-duplicate"
+									style="margin-right: 3px;"></i>Backup
+							</button>
+						</div>
+						<div class="form-group" style="margin-left: 5px;">
+							<button type="button" class="btn btn-primary">
+								<i class="glyphicon glyphicon-paste" style="margin-right: 3px;"></i>Migrate
+							</button>
+						</div>
+						<div class="form-group" style="margin-left: 5px;">
+							<button type="button" class="btn btn-danger" onclick="batchDelete('1')">
+								Delete
+							</button>
+						</div>
+					</form>
+				</div>
+<!-- 				                <div class="table-responsive">
+                    <table class="table table-bordered data-table table-special" id="dataTable03" width="100%" cellspacing="0" align="center"> -->
+                    
+				<div class="tab_table_wrap">
+					<table class="table table-bordered data-table table-special"
+						align="center" cellpadding="0" cellspacing="0">
+						<thead>
+							<tr>
+								<th style="border-bottom: none;"><input type="checkbox"
+									align="center"  name="checkAll1" onclick="selectAll('1')">All</th>
+								<th style="border-bottom: none;">File name</th>
+								<th style="border-bottom: none;">Size(MB)</th>
+								<th style="border-bottom: none;">Type</th>
+								<th style="border-bottom: none;">Status</th>
+								<th style="border-bottom: none;">Row column</th>
+								<th style="border-bottom: none;">Collect date</th>
+								<th style="border-bottom: none;">Download time</th>
+						<!-- 		<th style="border-bottom: none;">Option</th> -->
+							</tr>
+						</thead>
+						<tbody>
+							<%for(x in T6orgDataPage.list){ %>
+							<tr>
+								<td style="text-align: center;"><input type="checkbox"
+									name="orgDataId" value=${x.id}></td>
+								<td style="text-align: center;">${x.name_}</td>
+								<td style="text-align: center;">${x.size_}</td>
+								<td style="text-align: center;">${x.type_}</td>
+								<td style="text-align: center;">${x.status_}</td>
+								<td style="text-align: center;">${x.row_column}</td>
+								<td style="text-align: center;">${x.collect_time}</td>
+								<td style="text-align: center;">${x.dload_end_time}</td>
+<!-- 								<td style="text-align: center;"><a
+									href="/jf/thairice/t6org_data/delete/${x.id}">删除</a></td> -->
+							</tr>
+							<%}%>
+						</tbody>
+					</table>
+					<div align="center"><%
+						includeFileTemplate("/common/_paginate.html",
+						{"currentPage":T6orgDataPage.pageNumber,"totalPage":T6orgDataPage.totalPage,"actionUrl":"/jf/thairice/t6org_data/"})
+						{} %></div>
+				</div>
+			</div>
+			<!-- tab3start -->
+			<div class="tab-pane fade" id="data02_content">
+
+				<div class="tab_query">
+					<form role="form" class="form-inline"
+						style="margin: 15px 0 15px 15px;">
+
+		            	<label>Type</label>
+		                <select class="form-control" id="datatype">
+		                  			<option value=${datatype!""}>${datatype_eng!"ALL"}</option>
+									<option value="01">Area monitoring</option>
+									<option value="02">Drought monitoring</option>
+									<option value="03">Production estimates</option>
+									<option value="04">Condition monitoring</option>
+		                </select>
+						<div class="form-group" style="margin-left: 5px;">
+							<label class="control-label">Collect time</label>
+							<div class="input-group" id="starttime2C">
+								<input type="text" id="starttime2" class="form-control"
+									value=${starttime!}><span class="input-group-addon"><i
+									class="glyphicon glyphicon-calendar"></i></span>
+							</div>
+							<!-- style="margin-right: 6px;" -->
+							<label class="control-label" >-</label>
+							<div class="input-group" id="endtime2C">
+								<input type="text" id="endtime2" class="form-control"
+									value=${endtime!}><span class="input-group-addon"><i
+									class="glyphicon glyphicon-calendar"></i></span>
+							</div>
+						</div>
+						<div class="form-group" style="margin-left: 5px;">
+							<button type="button" onclick="dataQuery(2)"
+								class="btn btn-primary">Search</button>
+						</div>
+						<div class="form-group" style="margin-left: 20px;">
+							<button type="button" class="btn btn-success">
+								<i class="glyphicon glyphicon-duplicate"
+									style="margin-right: 3px;"></i>Backup
+							</button>
+						</div>
+						<div class="form-group" style="margin-left: 5px;">
+							<button type="button" class="btn btn-primary">
+								<i class="glyphicon glyphicon-paste" style="margin-right: 3px;"></i>Migrate
+							</button>
+						</div>
+						<div class="form-group" style="margin-left: 5px;">
+							<button type="button" class="btn btn-danger" onclick="batchDelete('2')">
+								Delete
+							</button>
+						</div>
+					</form>
+				</div>
+					
+				<div class="tab_table_wrap">
+					<table class="table table-bordered data-table table-special" align="center"
+						cellpadding="0" cellspacing="0">
+						<thead>
+							<tr>
+								<th style="border-bottom: none;"><input type="checkbox"
+									align="center" name="checkAll2" onclick="selectAll('2')">All</th>	
+								<th style="border-bottom: none;">Type</th>
+								<th style="border-bottom: none;">Sample path</th>
+								<th style="border-bottom: none;">Product path</th>
+								<th style="border-bottom: none;">Collect date</th>
+								<th style="border-bottom: none;">Generate time</th>
+								<th style="border-bottom: none;">Zone code</th>
+								<th style="border-bottom: none;">Summary</th>
+							<!-- 	<th style="border-bottom: none;">Option</th> -->
+							</tr>
+						</thead>
+						<tbody>
+							<%for(x in T7pdtDataPage.list){ %>
+							<tr>
+								<td style="text-align: center;"><input type="checkbox"
+									name="pdtDataId" value=${x.id}></td>
+								<td style="text-align: center;">${x.type_}</td>
+								<td style="text-align: center;">${x.sample_path}</td>
+								<td style="text-align: center;">${x.product_path}</td>
+								<td style="text-align: center;">${x.collect_time}</td>
+								<td style="text-align: center;">${x.generate_time}</td>
+								<td style="text-align: center;">${x.zone_code}</td>
+								<td style="text-align: center;">${x.fail_code}</td>								
+<!-- 								<td style="text-align: center;"><a
+									href="/jf/thairice/t6org_data/delete/${x.id}">删除</a></td> -->
+							</tr>
+							<%}%>
+						</tbody>
+					</table>
+					<div align="center">
+					<%includeFileTemplate("/common/_paginate.html",
+					{"currentPage":T7pdtDataPage.pageNumber,"totalPage":T7pdtDataPage.totalPage,"actionUrl":"/jf/thairice/t7pdt_data/"})
+					{} %>
+					</div>>
+					<!-- <nav aria-label="...">
+                          <ul class="pager">
+                            <li><a href="#">Previous</a></li>
+                            <li><a href="#">1</a>
+                            <li><a href="#">2</a>
+                            <li><a href="#">3</a>
+                            <li><a href="#">4</a>
+                            <li><a href="#">5</a>
+                            <li><a href="#">Next</a></li>
+                          </ul>
+                        </nav> -->
+				</div>
+			</div>
+			<!-- tab3end -->
+		</div>
+	</div>
+</div>
+<%}%>

@@ -7,9 +7,27 @@
 		<![CDATA[ 
         	from 
         		t2syslog
-			
 			where 1=1 
-				
+    	]]>
+	</sql>
+	
+	<sql id="searchPage">
+		<![CDATA[ 
+		select *
+        	from 
+        		t2syslog l
+			where 1=1 
+			<% if(!isEmpty(userId)){ %>
+					and l.userid = #$userId$#
+			<% } %>
+			<% if(!isEmpty(dateTimeBeg)){ %>
+					and l.add_time >= #'$dateTimeBeg$'#
+			<% } %>
+			<% if(!isEmpty(dateTimeBeg)&&!isEmpty(dateTimeEnd)){ %>
+					and l.add_time between #'$dateTimeBeg$'# and #'$dateTimeEnd$'#
+			<% } %>
+			order by id desc
+			limit #$pageIndex$#, #$pageSize$#
     	]]>
 	</sql>
 	

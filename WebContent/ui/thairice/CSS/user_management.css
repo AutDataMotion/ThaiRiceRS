@@ -1,0 +1,65 @@
+@charset "utf-8";
+/* CSS Document */
+.approved{
+	color:#07b117;
+	text-decoration:underline;
+	cursor:pointer;
+}
+.rejected{
+	color:#ef4f4f;
+	text-decoration:underline;
+	cursor:pointer;
+}
+.edit{
+	color:#0568e3;
+	cursor:pointer;
+}
+label{
+	font-weight:normal;
+	height:34px;
+	line-height:34px;
+}
+.glyphicon-comment{
+	color:#0568e3;
+	cursor:pointer;
+}
+.form-inline .form-group{
+	margin-right:8px;
+}
+.user_form .form-group .form-control,.user_form .form-group .input-group{
+	float:left;
+	width:auto;
+	margin-right:5px;
+}
+.user_query .form-inline .form-group{
+	margin-bottom:15px;
+}
+.approve_text{
+	color:blue;
+	cursor:pointer;
+	text-decoration:underline;
+}
+.form-horizontal.form_selfinfo{
+	display:block;
+}
+.form-horizontal.form_serviceinfo{
+	display:none;
+}
+.form-group .service label{
+	display:block;
+	height:30px;
+	margin-top:8px;
+}
+.account_in{
+	font-size:18px;
+	color:#999;
+	margin-top:10px;
+}
+.account_in a{
+	color:#00d8ff;
+}
+.account_in a:hover{
+	text-decoration:none;
+}
+
+

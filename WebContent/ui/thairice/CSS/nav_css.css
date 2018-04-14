@@ -1,0 +1,81 @@
+@charset "utf-8";
+/* CSS Document */
+.navbar-inverse .navbar-toggle{
+	border-color:#fff;
+}
+.navbar-inverse .navbar-toggle:focus, .navbar-inverse .navbar-toggle:hover{
+	background-color:inherit;
+}
+.navbar-inverse .navbar-brand{
+	text-shadow:0 2px 2px #006a85;
+	color:#fff;
+	font-size:24px;
+	height:60px;
+	line-height:60px;
+	padding:0 15px;
+	background:url(../Images/index/nav_brand_icon.png) no-repeat left center;
+	padding-left:70px;
+	margin:0;
+	width:auto;
+}
+.navbar-inverse .navbar-brand:focus, .navbar-inverse .navbar-brand:hover{
+	color:#fff;
+}
+.function_text{
+	font-size:20px;
+	font-weight:bold;
+	color:#fff;
+	text-align:center;
+	border-bottom:1px solid #006980;
+	height:56px;
+	line-height:56px;
+}
+.nav-sidebar:first-child{
+	margin-top:-20px;
+}
+.navbar-inverse .navbar-nav>li>a{
+	color:#fff;
+	font-size:16px;
+	padding-top:20px;
+	padding-bottom:20px;
+}
+.glyphicon{
+	margin-right:3px;
+}
+.nav-sidebar > li{
+	margin-top:6px;
+	margin-bottom:6px;
+}
+.nav-sidebar > li > a{
+	color:#a2e6ff;
+}
+.nav>li>a:focus, .nav>li>a:hover{
+	background-color:#05506b;
+	color:#a2e6ff;
+}
+
+/*模态框*/
+.close:not(:disabled):not(.disabled){
+	color:#00aace;
+}
+.close:focus, .close:hover{
+	color:#0191af;
+}
+.modal-header{
+	height:60px;
+	padding:0 15px;
+	line-height:60px;
+}
+.modal-title{
+	height:60px;
+	line-height:60px;
+	font-size:16px;
+	float:left;
+	color:#00aace;
+}
+.modal-header .close{
+	margin-top:20px;
+}
+.modal-dialog{
+	margin-top:100px;
+}

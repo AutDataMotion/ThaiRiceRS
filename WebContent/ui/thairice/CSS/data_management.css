@@ -1,0 +1,93 @@
+@charset "utf-8";
+/* CSS Document */
+*{
+	padding:0;
+	margin:0;
+	list-style:none;
+}
+.nav-tabs{
+	font-size:14px;
+	margin-top:15px;
+}
+.nav-tabs>li.active>a, .nav-tabs>li.active>a:focus, .nav-tabs>li.active>a:hover{
+	color:#06a6ce;
+}
+.nav-tabs>li>a{
+	color:#666;
+}
+.download{
+	cursor:pointer;
+	text-decoration:underline;
+	color:#07b117;
+	margin-right:6px;
+	border:none;
+	background:none;
+}
+.delete{
+	cursor:pointer;
+	text-decoration:underline;
+	color:#ef4f4f;
+	border:none;
+	background:none;
+}
+.delete:focus,.download:focus{
+	outline:none;
+}
+.form-inline .form-group {
+    display: inline-block;
+    margin-bottom: 0;
+    vertical-align: middle;
+	margin-right: 8px;
+}
+.backup .form-group{
+	margin-bottom:0;
+	height:32px;
+	margin-left:15px;
+}
+.backup .form-group label i{
+	margin-right:8px;
+}
+.glyphicon-folder-open{
+	color:#00aace;
+}
+.btn.btn-default.checked{
+	background:#337ab7;
+	color:#fff;
+}
+.list-tab{
+	border-bottom:none;
+	position:absolute;
+	left:0;
+	top:0;
+	margin-top:0;
+	z-index:9;
+}
+.list-tab>li>a{
+	padding:7px 15px;
+	background-color:#fff;
+	border-radius:
+}
+.list-tab>li.active>a{
+	background:#337ab7;
+	color:#fff;
+}
+.list-tab>li.active>a, .list-tab>li.active>a:focus, .list-tab>li.active>a:hover{
+	background:#337ab7;
+	color:#fff;
+	border-radius: 4px;
+}
+#list01_txt{
+	border-radius:4px 0 0 4px;
+	border:1px solid #ccc;
+	margin-right:-1px;
+}
+#list02_txt{
+	border-radius:0 4px 4px 0;
+	border:1px solid #ccc;
+}
+.tab-content>.tab-pane{
+	position:relative;
+}
+.tab_query .form-group{
+	margin-bottom:15px;
+}

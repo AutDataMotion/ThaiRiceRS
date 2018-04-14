@@ -162,7 +162,7 @@
     jeDt.isValHtml = function(that) {
         return /textarea|input/.test(that.tagName.toLocaleLowerCase());
     };
-    jeDt.weeks = [ "日", "一", "二", "三", "四", "五", "六" ];
+    jeDt.weeks = [ "Day", "一", "二", "三", "四", "五", "六" ];
     //节日
     jeDt.festival = function(md, n) {
         var str = "";
@@ -194,7 +194,7 @@
     var config = {
         dateCell:"#dateval",
         format:"YYYY-MM-DD hh:mm:ss", //日期格式
-        minDate:"1900-01-01 00:00:00", //最小日期
+        minDate:"2000-01-01 00:00:00", //最小日期
         maxDate:"2099-12-31 23:59:59", //最大日期
         isinitVal:false, //是否初始化时间
         isTime:false, //是否开启时间选择
@@ -259,7 +259,7 @@
             var datetopStr = '<div class="jedatetop">' + topymSty + "</div>";
             var dateymList = !isformat ? '<div class="jedatetopym" style="display: none;">' + '<ul class="ymdropul"></ul><p><span class="jedateymchle">&#8592;</span><span class="jedateymchri">&#8594;</span><span class="jedateymchok">关闭</span></p>' + "</div>" :'<ul class="jedaym"></ul>';
             var dateriList = '<ol class="jedaol"></ol><ul class="jedaul"></ul>';
-            var bothmsStr = !isformat ? '<ul class="botflex jedatehms"><li><em data-hms="24"></em><i>:</i></li><li><em data-hms="60"></em><i>:</i></li><li><em data-hms="60"></em></li></ul>' + '<div class="botflex jedatebtn"><span class="jedateclear" style="width:31%;">清空</span><span class="jedatetodaymonth" style="width:31%;">今天</span><span class="jedateok" style="width:31%;">确认</span></div>' :'<div class="botflex jedatebtn"><span class="jedateclear" style="width:31%;">清空</span><span class="jedatetodaymonth" style="width:31%;">本月</span><span class="jedateok" style="width:31%;">确认</span></div>';
+            var bothmsStr = !isformat ? '<ul class="botflex jedatehms"><li><em data-hms="24"></em><i>:</i></li><li><em data-hms="60"></em><i>:</i></li><li><em data-hms="60"></em></li></ul>' + '<div class="botflex jedatebtn"><span class="jedateclear" style="width:31%;">清空</span><span class="jedatetodaymonth" style="width:31%;">今天</span><span class="jedateok" style="width:31%;">确认</span></div>' :'<div class="botflex jedatebtn"><span class="jedateclear" style="width:31%;">清空</span><span class="jedatetodaymonth" style="width:31%;">month</span><span class="jedateok" style="width:31%;">确认</span></div>';
             var datebotStr = '<div class="jedatebot">' + bothmsStr + "</div>";
             var dateHtmStr = isformat ? datetopStr + dateymList + datebotStr :datetopStr + dateymList + dateriList + datebotStr + '<div class="jedateprophms"></div>';
             jeDt.html(QD(Cell)[0], dateHtmStr);
@@ -282,7 +282,7 @@
                 that.YearAndMonth(that, opts, self, arrTime);
             } else {
                 jeDt.html(QD(Cell + " .jedaym")[0], that.onlyYMStr(arrTime[0], arrTime[1]));
-                jeDt.text(QD(Cell + " .jedateym .jedateyearmonth")[0], arrTime[0] + "年" + jeDt.digit(arrTime[1]) + "月");
+                jeDt.text(QD(Cell + " .jedateym .jedateyearmonth")[0], arrTime[0] + "year" + jeDt.digit(arrTime[1]) + "month");
                 that.onlyYMevents(that, opts, self, arrTime);
             }
             jeDt.shdeCell(false);
@@ -292,7 +292,7 @@
         onlyYMStr:function(y, m) {
             var onlyYM = "";
             jeDt.each(jeDt.montharr, function(i, val) {
-                onlyYM += "<li " + (m == val ? 'class="action"' :"") + ' data-onym="' + y + "-" + jeDt.digit(val) + '">' + y + "年" + jeDt.digit(val) + "月</li>";
+                onlyYM += "<li " + (m == val ? 'class="action"' :"") + ' data-onym="' + y + "-" + jeDt.digit(val) + '">' + y + "year" + jeDt.digit(val) + "month</li>";
             });
             return onlyYM;
         },
@@ -317,8 +317,8 @@
         },
         getDateStr:function(y, m, d) {
             var that = this, opts = that.config, dayStr = "", m = jeDt.digit(m);
-            jeDt.text(QD(Cell + " .jedateyear")[0], y + "年").attr(QD(Cell + " .jedateyear")[0], "data-year", y);
-            jeDt.text(QD(Cell + " .jedatemonth")[0], m + "月").attr(QD(Cell + " .jedatemonth")[0], "data-month", m);
+            jeDt.text(QD(Cell + " .jedateyear")[0], y + "year").attr(QD(Cell + " .jedateyear")[0], "data-year", y);
+            jeDt.text(QD(Cell + " .jedatemonth")[0], m + "month").attr(QD(Cell + " .jedatemonth")[0], "data-month", m);
             //是否显示节日
             var isfestival = function(day, n) {
                 return opts.festival ? jeDt.festival(day, n) :n;
@@ -540,9 +540,9 @@
                 jeDt.each(new Array(15), function(i) {
                     if (i === 7) {
                         var getyear = jeDt.attr(jedateyear, "data-year");
-                        eachStr += "<li " + (getyear == YY ? 'class="action"' :"") + ' data-y="' + YY + '">' + YY + "年</li>";
+                        eachStr += "<li " + (getyear == YY ? 'class="action"' :"") + ' data-y="' + YY + '">' + YY + "year</li>";
                     } else {
-                        eachStr += '<li data-y="' + (YY - 7 + i) + '">' + (YY - 7 + i) + "年</li>";
+                        eachStr += '<li data-y="' + (YY - 7 + i) + '">' + (YY - 7 + i) + "year</li>";
                     }
                 });
                 return eachStr;
@@ -552,7 +552,7 @@
                 if (ymlen == 12) {
                     jeDt.each(jeDt.montharr, function(i, val) {
                         var getmonth = jeDt.attr(jedatemonth, "data-month"), val = jeDt.digit(val);
-                        ymStr += "<li " + (getmonth == val ? 'class="action"' :"") + ' data-m="' + val + '">' + val + "月</li>";
+                        ymStr += "<li " + (getmonth == val ? 'class="action"' :"") + ' data-m="' + val + '">' + val + "month</li>";
                     });
                     jeDt.each([ mchri, mchle ], function(c, cls) {
                         cls.style.display = "none";

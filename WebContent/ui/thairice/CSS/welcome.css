@@ -1,0 +1,333 @@
+@charset "utf-8";
+/* CSS Document */
+.section1 {
+	background: url(../Images/welcome/section1_bg.jpg) no-repeat center center;
+}
+.section2 {
+	background: url(../Images/welcome/section2_bg.jpg) no-repeat center center;
+}
+.section3 {
+	background: url(../Images/welcome/section3_bg.jpg) no-repeat center center;
+}
+.section4 {
+	background: url(../Images/welcome/section4_bg.jpg) no-repeat center center;
+}
+.section5 {
+	background: url(../Images/welcome/section5_bg.jpg) no-repeat center center;
+	position:relative;
+}
+#fullpageMenu {
+	height: 70px;
+	width: 750px;
+	position: fixed;
+	top: 0;
+	z-index: 999;
+	left:50%;
+	margin-left:-375px;
+}
+#fullpageMenu li {
+	float: left;
+	width: 150px;
+	height: 70px;
+	line-height: 70px;
+	color: #fff;
+	text-align: center;
+	font-size: 20px;
+}
+#fullpageMenu li a {
+	color: #fff;
+	text-decoration: none;
+	text-align: center;
+}
+#fullpageMenu li.active a {
+	color: #00c6ff;
+}
+.jumbotron{
+	background:none;
+	border-radius:0;
+	color:#fff;
+}
+.description{
+	width:50%;
+	height:230px;
+	position:absolute;
+	top:50%;
+	margin-top:-115px;
+	text-align:center;
+}
+.announce_title{
+	font-size:36px;
+	color:#fff;
+	font-weight:bold;
+	background:url(../Images/welcome/announce_icon.png) no-repeat left center;
+	height:80px;
+	line-height:65px;
+	padding-left:100px;
+	margin-bottom:0;
+}
+.announce_title span{
+	color:#00c6ff;
+}
+.list-group{
+	padding-left:23px;
+	color:#fff;
+}
+.list-group-item{
+	border:none;
+	border-radius:0;
+	background:url(../Images/welcome/announce_li_bg.png) no-repeat left center;
+	font-size:20px;
+	padding-left:50px;
+	height:72px;
+	line-height:55px;
+}
+.list-group-item.last{
+	background:url(../Images/welcome/announce_li_bg_list.png) no-repeat left top;
+	height:105px;
+}
+.samples_wrap{
+	width:660px;
+	height:700px;
+	position:relative;
+	left:50%;
+	margin-left:-330px;
+}
+.samples{
+	width:100%;
+	height:100%;
+}
+.samples_down{
+	width:100%;
+	height:400px;
+	margin-top:-140px;
+}
+.samples_down .img{
+	width:660px;
+	height:340px;
+	display:block;
+}
+.samples_down .text{
+	width:100%;
+	height:60px;
+	line-height:60px;
+	font-size:18px;
+	text-align:center;
+	color:#fff;
+}
+.samples_top{
+	width:530px;
+	height:420px;
+	background:url(../Images/welcome/sample_board_bg.png) no-repeat;
+	margin-left:60px;
+	position:relative;
+	z-index:10;
+	/*display:none;*/
+}
+.sample_parameter{
+	width:360px;
+	height:210px;
+	margin-left:110px;
+	padding-top:50px;
+	/*display:none;
+	position:absolute;
+	left:110px;
+	top:50px;*/
+}
+.parameter_left{
+	float:left;
+	width:210px;
+	height:100%;
+}
+.parameter_left p{
+	font-size:16px;
+	padding-left:45px;
+	line-height:45px;
+	color:#fff;
+	margin:0;
+}
+.parameter_left p:first-child{
+	background:url(../Images/welcome/sample_icon01.png) no-repeat left center;
+}
+.parameter_left p:nth-child(2){
+	background:url(../Images/welcome/sample_icon02.png) no-repeat left center;
+}
+.parameter_left p:nth-child(3){
+	background:url(../Images/welcome/sample_icon03.png) no-repeat left center;
+}
+.parameter_left p:last-child{
+	background:url(../Images/welcome/sample_icon04.png) no-repeat left center;
+}
+.parameter_right{
+	width:150px;
+	text-align:center;
+	font-size:18px;
+	color:#00c4ff;
+	float:left;
+	line-height:45px;
+}
+@font-face {
+	font-family: 'DIGITAL-7MONO';
+	src:url(../Images/welcome/DIGITAL-7MONO.TTF);
+}
+.parameter_right p{
+	margin:0;
+	font-family: "DIGITAL-7MONO";
+	font-weight:bold;
+	letter-spacing:2px;
+}
+.welcome_login{
+	width:550px;
+	height:410px;
+	position:absolute;
+	top:50%;
+	margin-top:-205px;
+	left:50%;
+	margin-left:-275px;
+}
+.welcome_login h2{
+	width:550px;
+	height:70px;
+	background:url(../Images/welcome/yourlogo.png) no-repeat center center;
+	margin-bottom:20px;
+}
+.welcome_login input{
+	background:#06111c;
+	border:1px solid #1e5f99;
+	height:38px;
+	/*line-height:38px;*/
+	padding:0 0 0 20px;
+	color:#515e6c;
+	font-size:18px;
+	margin:15px 0;
+}
+.welcome_login .form-group{
+	margin-bottom:20px;
+}
+.form-group .line{
+	height:30px;
+	line-height:30px;
+	background:url(../Images/welcome/or_bg.png) no-repeat center center;
+	font-size:18px;
+	color:#515e6c;
+	text-align:center;
+}
+.welcome_btn1{
+	width:100%;
+	height:40px;
+	color:#fff;
+	border-radius:0;
+	line-height:40px;
+	padding:0;
+}
+.forget_password{
+	text-align:center;
+	font-size:18px;
+	color:#3e7dba;
+	height:25px;
+	line-height:25px;
+	font-family:'microsoft yahei light';
+	display:block;
+}
+.forget_password:hover{
+	color:#00fff6;
+	text-decoration:none;
+}
+.BbContact{
+	width:100%;
+	height:100%;
+}
+@media (min-width: 768px) {
+  .BbContact h2 {
+    text-align:center;
+	color:#fff;
+	font-size:36px;
+	margin-top:0;
+	margin-bottom:0;
+	position:absolute;
+	top:0px;
+	width:250px;
+	left:50%;
+	margin-left:-125px;
+  }
+}
+.BbContact h2{
+	text-align:center;
+	color:#fff;
+	font-size:36px;
+	margin-top:0;
+	margin-bottom:0;
+	position:absolute;
+	top:30px;
+	width:250px;
+	left:50%;
+	margin-left:-125px;
+}
+.Contact_infowrap{
+	width:100%;
+	height:630px;
+	background:url(../Images/welcome/contact_bg.png) repeat-x bottom center;
+	position:absolute;
+	bottom:0;
+	z-index:99;
+}
+.Contact_info{
+	width:100%;
+	height:100%;
+	position:relative;
+}
+.Contact_info .row{
+	width:1000px;
+	height:310px;
+	margin:0 auto;
+	color:#fff;
+	font-size:18px;
+	padding-top:130px;
+}
+.Contact_info .one{
+	background:url(../Images/welcome/contact_address_icon.png) no-repeat center top;
+	height:130px;
+	padding:180px 0 0 0;
+}
+.Contact_info .one address{
+	width:280px;
+	margin:0 auto;
+	height:105px;
+}
+.Contact_info .two{
+	background:url(../Images/welcome/contact_phone_icon.png) no-repeat center top;
+	padding:180px 0 0 0;
+	height:130px;
+	text-align:center;
+}
+.Contact_info .three{
+	background:url(../Images/welcome/contact_mail_icon.png) no-repeat center top;
+	padding:180px 0 0 0;
+	height:130px;
+	text-align:center;
+}
+.copyrights{
+	width:100%;
+	height:40px;
+	line-height:40px;
+	color:#a4a4a4;
+	font-size:14px;
+	position:absolute;
+	bottom:0;
+	z-index:100;
+	text-align:center;
+}
+.checkcode_img{
+	float:left;
+	margin:4px 8px 0;
+	height:32px;
+	width:80px;
+	background:url(../Images/welcome/checkcode_img.jpg) no-repeat;
+}
+.checkcode_text{
+	font-size:14px;
+	color:#00b4ff;
+	cursor:pointer;
+	text-decoration:underline;
+	height:38px;
+	line-height:38px;
+}

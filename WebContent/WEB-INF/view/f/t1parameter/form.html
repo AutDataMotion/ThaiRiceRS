@@ -1,0 +1,286 @@
+
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">唯一key</label>
+	<div class="col-sm-7">
+		<input type="text" name="t12_initmodule.key_" value="${escapeXml(t12_initmodule.key_!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">配置节点keys串</label>
+	<div class="col-sm-7">
+		<textarea name="t12_initmodule.fkeystreenode" class="autosize form-control">${escapeXml(t12_initmodule.fkeystreenode!)}</textarea>
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">接收站名称</label>
+	<div class="col-sm-7">
+		<input type="text" name="t12_initmodule.station" value="${escapeXml(t12_initmodule.station!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">飞行器</label>
+	<div class="col-sm-7">
+		<input type="text" name="t12_initmodule.aircraft" value="${escapeXml(t12_initmodule.aircraft!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">载荷名称</label>
+	<div class="col-sm-7">
+		<input type="text" name="t12_initmodule.sensor" value="${escapeXml(t12_initmodule.sensor!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">数据类型</label>
+	<div class="col-sm-7">
+		<input type="text" name="t12_initmodule.datatype" value="${escapeXml(t12_initmodule.datatype!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">数据级别</label>
+	<div class="col-sm-7">
+		<input type="text" name="t12_initmodule.datalevel" value="${escapeXml(t12_initmodule.datalevel!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">产品标识</label>
+	<div class="col-sm-7">
+		<input type="text" name="t12_initmodule.camera" value="${escapeXml(t12_initmodule.camera!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">ftp 地址ip:port</label>
+	<div class="col-sm-7">
+		<input type="text" name="t12_initmodule.ftpaddr" value="${escapeXml(t12_initmodule.ftpaddr!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">ftp用户名</label>
+	<div class="col-sm-7">
+		<input type="text" name="t12_initmodule.ftpusername" value="${escapeXml(t12_initmodule.ftpusername!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">ftp密码</label>
+	<div class="col-sm-7">
+		<input type="text" name="t12_initmodule.ftpuserpwd" value="${escapeXml(t12_initmodule.ftpuserpwd!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">ftp路径</label>
+	<div class="col-sm-7">
+		<input type="text" name="t12_initmodule.pathftp" value="${escapeXml(t12_initmodule.pathftp!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">是否自动下载</label>
+	<div class="col-sm-7">
+		<select name="t12_initmodule.isdwnload" class="combox">
+		<option value="0" ${t12_initmodule.isdwnload! == 0 ? "selected='selected'":"" }>${i18nMap["admin.common.no"]}</option>
+		<option value="1" ${t12_initmodule.isdwnload! == 1 ? "selected='selected'":"" }>${i18nMap["admin.common.yes"]}</option>
+		</select>
+		<span class="help-inline col-sm-2"></span>
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">下载路径</label>
+	<div class="col-sm-7">
+		<input type="text" name="t12_initmodule.pathdwnload" value="${escapeXml(t12_initmodule.pathdwnload!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">是否自动备份</label>
+	<div class="col-sm-7">
+		<select name="t12_initmodule.isbackup" class="combox">
+		<option value="0" ${t12_initmodule.isbackup! == 0 ? "selected='selected'":"" }>${i18nMap["admin.common.no"]}</option>
+		<option value="1" ${t12_initmodule.isbackup! == 1 ? "selected='selected'":"" }>${i18nMap["admin.common.yes"]}</option>
+		</select>
+		<span class="help-inline col-sm-2"></span>
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">备份路径</label>
+	<div class="col-sm-7">
+		<input type="text" name="t12_initmodule.pathbackup" value="${escapeXml(t12_initmodule.pathbackup!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">是否自动归档</label>
+	<div class="col-sm-7">
+		<select name="t12_initmodule.isarchive" class="combox">
+		<option value="0" ${t12_initmodule.isarchive! == 0 ? "selected='selected'":"" }>${i18nMap["admin.common.no"]}</option>
+		<option value="1" ${t12_initmodule.isarchive! == 1 ? "selected='selected'":"" }>${i18nMap["admin.common.yes"]}</option>
+		</select>
+		<span class="help-inline col-sm-2"></span>
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">归档路径</label>
+	<div class="col-sm-7">
+		<input type="text" name="t12_initmodule.patharchive" value="${escapeXml(t12_initmodule.patharchive!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">是否自动检出</label>
+	<div class="col-sm-7">
+		<select name="t12_initmodule.ischeckout" class="combox">
+		<option value="0" ${t12_initmodule.ischeckout! == 0 ? "selected='selected'":"" }>${i18nMap["admin.common.no"]}</option>
+		<option value="1" ${t12_initmodule.ischeckout! == 1 ? "selected='selected'":"" }>${i18nMap["admin.common.yes"]}</option>
+		</select>
+		<span class="help-inline col-sm-2"></span>
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">源名称模式</label>
+	<div class="col-sm-7">
+		<input type="text" name="t12_initmodule.namemdlsrc" value="${escapeXml(t12_initmodule.namemdlsrc!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">检出路径</label>
+	<div class="col-sm-7">
+		<input type="text" name="t12_initmodule.pathcheckout" value="${escapeXml(t12_initmodule.pathcheckout!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">检出名称模式</label>
+	<div class="col-sm-7">
+		<input type="text" name="t12_initmodule.namemdldes" value="${escapeXml(t12_initmodule.namemdldes!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">是否有辅助文件</label>
+	<div class="col-sm-7">
+		<select name="t12_initmodule.ishavaaux" class="combox">
+		<option value="0" ${t12_initmodule.ishavaaux! == 0 ? "selected='selected'":"" }>${i18nMap["admin.common.no"]}</option>
+		<option value="1" ${t12_initmodule.ishavaaux! == 1 ? "selected='selected'":"" }>${i18nMap["admin.common.yes"]}</option>
+		</select>
+		<span class="help-inline col-sm-2"></span>
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">辅助文件类型</label>
+	<div class="col-sm-7">
+		<input type="text" name="t12_initmodule.auxfiletypes" value="${escapeXml(t12_initmodule.auxfiletypes!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">状态</label>
+	<div class="col-sm-7">
+		<input type="text" name="t12_initmodule.status_" value="${t12_initmodule.status_!}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">添加时间</label>
+	<div class="col-sm-7">
+		<div class="input-group">
+		<input type="text" name="t12_initmodule.timeadd" date-data-format="yyyy-mm-dd" data-data-viewmode="years" class="form-control data-picker" value="${t12_initmodule.timeadd!, dateFormat="yyyy-MM-dd HH:mm:ss"}">
+		<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+		</div>
+		<span class="help-inline col-sm-2"></span>
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">更新时间</label>
+	<div class="col-sm-7">
+		<div class="input-group">
+		<input type="text" name="t12_initmodule.timeupdate" date-data-format="yyyy-mm-dd" data-data-viewmode="years" class="form-control data-picker" value="${t12_initmodule.timeupdate!, dateFormat="yyyy-MM-dd HH:mm:ss"}">
+		<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+		</div>
+		<span class="help-inline col-sm-2"></span>
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">标签id串</label>
+	<div class="col-sm-7">
+		<textarea name="t12_initmodule.labelids" class="autosize form-control">${escapeXml(t12_initmodule.labelids!)}</textarea>
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>

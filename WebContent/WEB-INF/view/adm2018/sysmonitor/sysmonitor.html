@@ -1,0 +1,308 @@
+<% var cssSec={ %>
+<style>
+</style>
+<% }; %> <% var contSec={ %>
+<!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+<%for(var i = 0; i < groupCpu; i++){ %>
+<div id="mainCpu${i}" style="height: 300px"></div>
+<% }%>
+<div id="mainMem" style="height: 300px"></div>
+ <%for(var i = 0; i < groupDisk; i++){ %>
+<div id="mainDisk${i}" style="height: 300px"></div>
+<% }%> <% }; %> <% var jsSec={ %>
+<!-- ECharts单文件引入 -->
+<script src="http://echarts.baidu.com/build/dist/echarts.js"></script>
+<script type="text/javascript">
+		// 路径配置
+		require.config({
+			paths : {
+				echarts : 'http://echarts.baidu.com/build/dist'
+			}
+		});
+		 // 使用
+        require(
+            [
+                'echarts',
+                'echarts/chart/bar', // 使用柱状图就加载bar模块，按需加载
+                 'echarts/chart/gauge', // pie
+                  'echarts/chart/pie' // pie
+            ],
+            function (ec) {
+            	
+            	var cpuTitle = {
+        		        text: 'CPU monitor',
+        		        textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+    	                    fontWeight: 'bolder',
+    	                    fontSize: 18,
+    	                    fontStyle: 'italic',
+    	                    color: '#fff',
+    	                    shadowColor : '#fff', //默认透明
+    	                    shadowBlur: 10
+    	                },
+        		        x: 'center'
+        		    }// end cpuTitle
+        		    
+        		    function seriesItem(i, acenterX, aradius)  {
+            			return {
+            				name:'CPU-'+i,
+        	            type:'gauge',
+        	            center : [acenterX+'%', '55%'],    // 默认全局居中
+        	            radius : aradius+'%',
+        	            min:0,
+        	            max:100,
+        	            splitNumber:10,
+        	            axisLine: {            // 坐标轴线
+        	                lineStyle: {       // 属性lineStyle控制线条样式
+        	                    color: [[0.2, 'lime'],[0.6, '#1e90ff'],[0.8, 'orange'],[1, '#ff4500']],
+        	                    width: 3,
+        	                    shadowColor : '#fff', //默认透明
+        	                    shadowBlur: 10
+        	                }
+        	            },
+        	            axisLabel: {            // 坐标轴小标记
+        	                textStyle: {       // 属性lineStyle控制线条样式
+        	                    fontWeight: 'bolder',
+        	                    color: '#fff',
+        	                    shadowColor : '#fff', //默认透明
+        	                    shadowBlur: 10
+        	                }
+        	            },
+        	            axisTick: {            // 坐标轴小标记
+        	                length :15,        // 属性length控制线长
+        	                lineStyle: {       // 属性lineStyle控制线条样式
+        	                    color: 'auto',
+        	                    shadowColor : '#fff', //默认透明
+        	                    shadowBlur: 10
+        	                }
+        	            },
+        	            splitLine: {           // 分隔线
+        	                length :25,         // 属性length控制线长
+        	                lineStyle: {       // 属性lineStyle（详见lineStyle）控制线条样式
+        	                    width:3,
+        	                    color: '#fff',
+        	                    shadowColor : '#fff', //默认透明
+        	                    shadowBlur: 10
+        	                }
+        	            },
+        	            pointer: {           // 分隔线
+        	                shadowColor : '#fff', //默认透明
+        	                shadowBlur: 5
+        	            },
+        	            title : {
+        	                textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+        	                    fontWeight: 'bolder',
+        	                    fontSize: 15,
+        	                    fontStyle: 'italic',
+        	                    color: '#fff',
+        	                    shadowColor : '#fff', //默认透明
+        	                    shadowBlur: 10
+        	                }
+        	            },
+        	            detail : {
+        	                backgroundColor: 'rgba(30,144,255,0.8)',
+        	                borderWidth: 0.5,
+        	                borderColor: '#fff',
+        	                shadowColor : '#fff', //默认透明
+        	                shadowBlur: 5,
+        	                offsetCenter: [0, '50%'],       // x, y，单位px
+        	                textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+        	                    fontWeight: 'bolder',
+        	                    color: '#fff'
+        	                }
+        	            },
+        	            data:[{value: 20, name: 'rate'}]
+            			}
+            	} // end seriesItem
+            
+                // 基于准备好的dom，初始化echarts图表
+            	<%for(var i = 0; i < groupCpu; i++){ %>
+            	 var myChart${i} = ec.init(document.getElementById('mainCpu${i}'));
+            	var option${i} = {
+                	    backgroundColor: '#1b1b1b',
+                	    tooltip : { formatter: "{a} <br/>{c} {b}" },
+                	    title : cpuTitle,
+                	    toolbox: { show : false},
+                	    series : [
+                	    	seriesItem(0, 15, 65),
+                	    	seriesItem(1, 38, 65),
+                	    	seriesItem(2, 62, 65),
+                	    	seriesItem(3, 85, 65)
+                	    ]
+            	};
+            	 <% }%>
+            	 
+            	// ------内存
+            	var myMem = ec.init(document.getElementById('mainMem'));
+                 var optionMem = {
+              		    tooltip : {
+              		        trigger: 'axis',
+              		        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
+              		            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
+              		        }
+              		    },
+              		    legend: {
+              		        data:['已使用(MB)','未使用(MB)']
+              		    },
+              		    calculable : true,
+              		    xAxis : [
+              		        {
+              		            type : 'value'
+              		        }
+              		    ],
+              		    yAxis : [
+              		        {
+              		            type : 'category',
+              		            data : ['内存容量(MB)']
+              		        }
+              		    ],
+              		    series : [
+              		        {
+              		            name:'已使用',
+              		            type:'bar',
+              		            stack: '总量',
+              		            itemStyle : { normal: {label : {show: true, position: 'insideRight'}}},
+              		            data:[1024]
+              		        },
+              		        {
+              		            name:'未使用',
+              		            type:'bar',
+              		            stack: '总量',
+              		            itemStyle : { normal: {label : {show: true, position: 'insideRight'}}},
+              		            data:[1024]
+              		        }
+              		    ]
+              		}; // end Mem Option
+              		
+                	//clearInterval(timeTicket);
+                	timeTicket = setInterval(function (){
+                	 // 发送查询请求
+                		$.ajax({
+                			type : "get",
+                			url : encodeURI(encodeURI(cxt + "/jf/thairice/sysmonitor/ajaxGetCpuAndMem")),
+                			dataType : 'json',
+                			contentType : "application/json",
+                			success : function(response) {
+                				var cpuInfo = response.cpus;
+                				console.log(cpuInfo);
+                				var memInfo = response.mems;
+                				console.log(memInfo);
+                				// ajax获取cpu信息
+                        		<%for(var i = 0; i < groupCpu; i++){ %>
+                        		option${i}.series[0].data[0].value = cpuInfo[${i*4+0}];
+                        	    option${i}.series[1].data[0].value = cpuInfo[${i*4+1}];
+                        	    option${i}.series[2].data[0].value = cpuInfo[${i*4+2}];;
+                        	    option${i}.series[3].data[0].value = cpuInfo[${i*4+3}];;
+                        	    
+                        	    myChart${i}.setOption(option${i},true);
+                        	    <% }%>
+                        	    // mem 信息
+                        	    optionMem.series[0].data[0] = memInfo[0];
+                        	    optionMem.series[1].data[0] = memInfo[1];
+                        	    myMem.setOption(optionMem,true);
+                			}
+                		});
+                	    // 获取网络信息
+                	   
+                	},4000);
+                	
+                	// 磁盘信息 只有页面加载时初始化一次
+                	var labelTop = {
+                		    normal : {
+                		        label : {
+                		            show : true,
+                		            position : 'center',
+                		            formatter : '{b}',
+                		            textStyle: {
+                		                baseline : 'bottom',
+                		                fontSize:14
+                		            }
+                		        },
+                		        labelLine : {
+                		            show : false
+                		        }
+                		    }
+                		};
+                		var labelFromatter = {
+                		    normal : {
+                		        label : {
+                		            formatter : function (params){
+                		                return 100 - params.value + '%'
+                		            },
+                		            textStyle: {
+                		                baseline : 'top'
+                		            }
+                		        }
+                		    },
+                		}
+                		var labelBottom = {
+                		    normal : {
+                		        color: '#ccc',
+                		        label : {
+                		            show : true,
+                		            position : 'center',
+                		            textStyle: {
+                		                fontSize:16
+                		            }
+                		        },
+                		        labelLine : {
+                		            show : false
+                		        }
+                		    },
+                		    emphasis: {
+                		        color: 'rgba(0,0,0,0)'
+                		    }
+                		};
+                		var radius = [60, 86];
+                		
+                		var titleDisk = {
+                		        text: 'disk monitor',
+                		        textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+            	                    fontWeight: 'bolder',
+            	                    fontSize: 18,
+            	                    fontStyle: 'italic',
+            	                    shadowBlur: 10
+            	                },
+                		        x: 'center'
+                		    };
+                		
+                		
+                		function seriesItemDisk(centerX, path, rate){
+                			return {
+            		            type : 'pie',
+            		            center : [centerX+'%', '55%'],
+            		            radius : radius,
+            		            itemStyle : labelFromatter,
+            		            data : [
+            		                {name:'other', value:100-rate, itemStyle : labelBottom},
+            		                {name:path, value:rate,itemStyle : labelTop}
+            		            ]
+            		        }
+                		};
+                <%
+                for(var i = 0; i < groupDisk; i++){ 
+                	var disk1 = diskInfoList[i*4 + 0];
+                	var disk2 = diskInfoList[i*4 + 1];
+                	var disk3 = diskInfoList[i*4 + 2];
+                	var disk4 = diskInfoList[i*4 + 3];
+                %>
+               
+                   	var myDisk${i} = ec.init(document.getElementById('mainDisk${i}'));
+                   	var optionDisk${i} = {
+                       	    title : titleDisk,
+                       	    toolbox: { show : true},
+                       	    series : [
+                       	    	seriesItemDisk(15,  '${disk1.path}', ${disk1.rate}),
+                       	    	seriesItemDisk(38,   '${disk2.path}', ${disk2.rate}),
+                       	    	seriesItemDisk( 62, '${disk3.path}', ${disk3.rate}),
+                       	    	seriesItemDisk(85,  '${disk4.path}', ${disk4.rate})
+                       	    ]
+                   	};
+                   	myDisk${i}.setOption(optionDisk${i},true);
+               <% }%>
+               
+            }
+        );
+	</script>
+<% }; %> <%
+include("../layout.html",{cssSec:cssSec,contSec:contSec,jsSec:jsSec}){}
+%>

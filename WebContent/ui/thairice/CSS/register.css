@@ -1,0 +1,148 @@
+@charset "utf-8";
+/* CSS Document */
+html,body{
+	width:100%;
+	height:100%;
+	overflow:hidden;
+	overflow-y:auto;
+}
+.BbRegisterWrap{
+	width:830px;
+	/*height:650px;*/
+	min-height:650px;
+	position:absolute;
+	margin-left:-415px;
+	margin-top:-385px;
+	left:50%;
+	top:50%;
+	padding:5px 0;
+}
+.BbRegister{
+	width:830px;
+	/*height:650px;*/
+	margin:0 auto;
+	position:relative;
+}
+.BbRegister h2{
+	width:100%;
+	height:70px;
+	background:url(../Images/welcome/yourlogo.png) no-repeat center center;
+	/*margin-bottom:20px;*/
+}
+.container{
+	width:830px;
+	/*height:590px;*/
+	/*background:url(../Images/register/register_cons_bg.png) no-repeat;*/
+	border-radius:15px;
+	-webkit-box-shadow: 0 0 5px rgba(6,0,1,0.5); 
+	-moz-box-shadow: 0 0 5px rgba(6,0,1,0.5);
+	box-shadow: 0 0 5px rgba(6,0,1,0.5);
+	background:#fff;
+}
+.container .title{
+	font-size:18px;
+	color:#00ccff;
+	height:50px;
+	line-height:50px;
+	text-align:center;
+	margin-top:10px;
+	font-weight:bold;
+	margin-bottom:0;
+}
+.container p{
+	text-align:center;
+}
+.BbRegister .form-horizontal .form-group{
+	margin:0;
+	margin-bottom:12px;
+}
+.BbRegister label{
+	font-weight:normal;
+}
+.BbRegister .form-horizontal.form_selfinfo{
+	display:block;
+}
+.BbRegister .form-horizontal.form_serviceinfo{
+	display:none;
+}
+.form-group .service label{
+	display:block;
+	height:30px;
+	margin-top:8px;
+}
+.account_in{
+	font-size:18px;
+	color:#999;
+	margin-top:10px;
+}
+.account_in a{
+	color:#00d8ff;
+}
+.account_in a:hover{
+	text-decoration:none;
+}
+.open>.dropdown-menu{
+	display: block;
+    height: 250px;
+    overflow-y: auto;
+}
+/*模态框*/
+.close:not(:disabled):not(.disabled){
+	color:#00aace;
+}
+.close:focus, .close:hover{
+	color:#0191af;
+}
+.modal-header{
+	height:60px;
+	padding:0 15px;
+	line-height:60px;
+}
+.modal-title{
+	height:60px;
+	line-height:60px;
+	font-size:16px;
+	float:left;
+	color:#00aace;
+}
+.modal-header .close{
+	margin-top:20px;
+}
+.modal-dialog{
+	margin-top:100px;
+}
+.BbRegister .form-horizontal .form-group.area{
+	font-size:16px;
+	float:left;
+	margin-right:10px;
+	margin-bottom:0;
+}
+#seachprov1{
+	padding:5px 10px;
+	border-radius:5px;
+}
+#seachcity1{
+	padding:5px 10px;
+	border-radius:5px;
+}
+#seachdistrict_div1 select{
+	padding:5px 10px;
+	border-radius:5px;
+}
+#area_code .form-control{
+	overflow:hidden;
+	height:auto;
+	min-height:34px;
+}
+#area_code .form-control span{
+	height:34px;
+	line-height:34px;
+	padding:0 5px;
+	float:left;
+}
+.select2-hidden-accessible{
+	min-width:100px !important
+}
+
+
+

@@ -1,0 +1,30 @@
+@charset "utf-8";
+/* CSS Document */
+.data-btns button{
+	margin-right:10px;
+	width:90px;
+	margin-bottom:10px;
+	font-size:14px;
+}
+.data-table tr th{
+	font-weight:normal;
+	border-bottom:none;
+	text-align:center;
+	background:#06a6cd;
+	color:#fff;
+}
+.data-table tr th,.data-table tr td{
+	text-align:center;
+	height:32px;
+	line-height:32px;
+	padding:0;
+	vertical-align:middle;
+}
+.table-responsive .container-fluid{
+	padding-left:0;
+	padding-right:0;
+}
+label{
+	font-weight:normal;
+}
+
