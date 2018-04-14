@@ -58,7 +58,7 @@ public class T3userController extends BaseController {
 	 */
 	public void getPassword() {
 		setAttr("path", "/ui/thairice/");
-		renderWithPath("/ui/thairice/password_getback.html");
+		renderWithPath("/thairice/password_getback.html");
 	}
 
 	/**
@@ -106,7 +106,7 @@ public class T3userController extends BaseController {
 					String expiryTime = dateFormat.format(calendar.getTime());
 					msgTemplate = msgTemplate.replace("$3", expiryTime);
 					// 更新用户信息：验证码，验证码失效
-					if (EmailUtils.sendTextMail(user.getEmail(), "泰国农业遥感系统找回密码", msgTemplate)) {
+					if (EmailUtils.sendTextMail(user.getEmail(), "Find your password of Thai agricultural remote sensing system!", msgTemplate)) {
 						user.setIdentiCode_(identiCode);
 						user.setExpiryTime(Timestamp.valueOf(expiryTime));
 						user.update();
@@ -119,7 +119,6 @@ public class T3userController extends BaseController {
 						LOG.error(res.getDesc());
 						renderJson(res);
 					}
-
 				}
 			}
 		} catch (Exception e) {
