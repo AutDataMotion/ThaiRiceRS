@@ -141,8 +141,8 @@ end_time datetime   COMMENT'查询产品结束日期',
 zone_code INT(16) COMMENT'查询行政区域代码',
 crop_type ENUM ('01') COMMENT'查询作物种类代码',
 pdt_type ENUM ('01','02','03','04') COMMENT'产品类型代码',
-suffix ENUM ('01','02') COMMENT'报告格式代码'
-
+suffix ENUM ('01','02') COMMENT'报告格式代码',
+download_path VARCHAR(256) COMMENT'文件下载地址'
 )ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8;
 
 

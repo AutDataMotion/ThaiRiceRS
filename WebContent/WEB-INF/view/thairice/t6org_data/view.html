@@ -1,0 +1,114 @@
+
+<div class="row">
+	<div class="col-md-12">
+		<ol class="breadcrumb">
+			<li><a href="#" onclick="common_ajax.ajaxMainPanel('/thairice/index');">${i18nMap["admin.common.mainPage"]}</a></li>
+			<li><a href="#" onclick="common_ajax.ajaxMainPanel('${pthc}');">原始数据信息管理</a></li>
+			<li class="active">查看</li>
+		</ol>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		<!-- start: BORDERED TABLE PANEL -->
+		<div class="panel panel-white">
+			
+			<div class="panel-heading">
+				<h4 class="panel-title"><span class="text-bold">查看</span></h4>
+				<div class="panel-tools">										
+					<% include("/common/panel-tools.html"){} %>
+				</div>
+			</div>
+			<div class="panel-body">	
+				<form role="form" class="form-horizontal">
+						<div class="form-group">
+							<label class="col-sm-2 control-label">源文件编号 </label>
+							<div class="col-sm-7">
+							<input type="text" class="form-control" readonly="readonly" value="${t6org_data.id!}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">用户ID </label>
+							<div class="col-sm-7">
+							<input type="text" class="form-control" readonly="readonly" value="${t6org_data.userid!}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">文件名称 </label>
+							<div class="col-sm-7">
+							<input type="text" class="form-control" readonly="readonly" value="${escapeXml(t6org_data.name_!)}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">文件大小 </label>
+							<div class="col-sm-7">
+							<input type="text" class="form-control" readonly="readonly" value="${t6org_data.size_!}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">文件下载地址 </label>
+							<div class="col-sm-7">
+							<input type="text" class="form-control" readonly="readonly" value="${escapeXml(t6org_data.download_path!)}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">文件存放地址 </label>
+							<div class="col-sm-7">
+							<input type="text" class="form-control" readonly="readonly" value="${escapeXml(t6org_data.storage_path!)}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">文件类型代码 </label>
+							<div class="col-sm-7">
+							<input type="text" class="form-control" readonly="readonly" value="${t6org_data.type_!}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">文件行列号 </label>
+							<div class="col-sm-7">
+							<input type="text" class="form-control" readonly="readonly" value="${escapeXml(t6org_data.row_column!)}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">波段数编码 </label>
+							<div class="col-sm-7">
+							<input type="text" class="form-control" readonly="readonly" value="${escapeXml(t6org_data.band_number!)}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">文件状态代码 </label>
+							<div class="col-sm-7">
+							<input type="text" class="form-control" readonly="readonly" value="${t6org_data.status_!}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">文件下载失败原因代码 </label>
+							<div class="col-sm-7">
+							<input type="text" class="form-control" readonly="readonly" value="${t6org_data.fail_code!}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">数据采集时间 </label>
+							<div class="col-sm-7">
+							<input type="text" class="form-control" readonly="readonly" value="${t6org_data.collect_time!, dateFormat="yyyy-MM-dd HH:mm:ss"}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">文件下载开始时间 </label>
+							<div class="col-sm-7">
+							<input type="text" class="form-control" readonly="readonly" value="${t6org_data.dload_start_time!, dateFormat="yyyy-MM-dd HH:mm:ss"}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">文件下载结束时间 </label>
+							<div class="col-sm-7">
+							<input type="text" class="form-control" readonly="readonly" value="${t6org_data.dload_end_time!, dateFormat="yyyy-MM-dd HH:mm:ss"}">
+							</div>
+						</div>
+				</form>
+			</div>
+		
+		</div>
+	</div>
+</div>	

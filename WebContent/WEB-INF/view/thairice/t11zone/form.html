@@ -1,0 +1,31 @@
+
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">行政区划代码</label>
+	<div class="col-sm-7">
+		<input type="text" name="t11zone.code_" value="${t11zone.code_!}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">产品类型代码</label>
+	<div class="col-sm-7">
+		<input type="text" name="t11zone.type_" value="${t11zone.type_!}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">行政区划名称</label>
+	<div class="col-sm-7">
+		<input type="text" name="t11zone.name_" value="${escapeXml(t11zone.name_!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>

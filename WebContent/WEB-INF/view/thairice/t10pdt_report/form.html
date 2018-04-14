@@ -1,0 +1,95 @@
+
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">用户ID</label>
+	<div class="col-sm-7">
+		<input type="text" name="t10pdt_report.userid" value="${t10pdt_report.userid!}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">报告创建时间</label>
+	<div class="col-sm-7">
+		<div class="input-group">
+		<input type="text" name="t10pdt_report.add_time" date-data-format="yyyy-mm-dd" data-data-viewmode="years" class="form-control data-picker" value="${t10pdt_report.add_time!, dateFormat="yyyy-MM-dd HH:mm:ss"}">
+		<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+		</div>
+		<span class="help-inline col-sm-2"></span>
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">采集日期</label>
+	<div class="col-sm-7">
+		<div class="input-group">
+		<input type="text" name="t10pdt_report.collect_time" date-data-format="yyyy-mm-dd" data-data-viewmode="years" class="form-control data-picker" value="${t10pdt_report.collect_time!, dateFormat="yyyy-MM-dd HH:mm:ss"}">
+		<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+		</div>
+		<span class="help-inline col-sm-2"></span>
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">查询产品开始日期</label>
+	<div class="col-sm-7">
+		<div class="input-group">
+		<input type="text" name="t10pdt_report.start_time" date-data-format="yyyy-mm-dd" data-data-viewmode="years" class="form-control data-picker" value="${t10pdt_report.start_time!, dateFormat="yyyy-MM-dd HH:mm:ss"}">
+		<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+		</div>
+		<span class="help-inline col-sm-2"></span>
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">查询产品结束日期</label>
+	<div class="col-sm-7">
+		<div class="input-group">
+		<input type="text" name="t10pdt_report.end_time" date-data-format="yyyy-mm-dd" data-data-viewmode="years" class="form-control data-picker" value="${t10pdt_report.end_time!, dateFormat="yyyy-MM-dd HH:mm:ss"}">
+		<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+		</div>
+		<span class="help-inline col-sm-2"></span>
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">查询行政区域代码</label>
+	<div class="col-sm-7">
+		<input type="text" name="t10pdt_report.zone_code" value="${t10pdt_report.zone_code!}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">查询作物种类代码</label>
+	<div class="col-sm-7">
+		<input type="text" name="t10pdt_report.crop_type" value="${t10pdt_report.crop_type!}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">产品类型代码</label>
+	<div class="col-sm-7">
+		<input type="text" name="t10pdt_report.pdt_type" value="${t10pdt_report.pdt_type!}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">报告格式代码</label>
+	<div class="col-sm-7">
+		<input type="text" name="t10pdt_report.suffix" value="${t10pdt_report.suffix!}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>

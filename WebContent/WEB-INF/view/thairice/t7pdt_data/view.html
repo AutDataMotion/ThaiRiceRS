@@ -1,0 +1,84 @@
+
+<div class="row">
+	<div class="col-md-12">
+		<ol class="breadcrumb">
+			<li><a href="#" onclick="common_ajax.ajaxMainPanel('/thairice/index');">${i18nMap["admin.common.mainPage"]}</a></li>
+			<li><a href="#" onclick="common_ajax.ajaxMainPanel('${pthc}');">产品数据信息管理</a></li>
+			<li class="active">查看</li>
+		</ol>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		<!-- start: BORDERED TABLE PANEL -->
+		<div class="panel panel-white">
+			
+			<div class="panel-heading">
+				<h4 class="panel-title"><span class="text-bold">查看</span></h4>
+				<div class="panel-tools">										
+					<% include("/common/panel-tools.html"){} %>
+				</div>
+			</div>
+			<div class="panel-body">	
+				<form role="form" class="form-horizontal">
+						<div class="form-group">
+							<label class="col-sm-2 control-label">数据产品编号 </label>
+							<div class="col-sm-7">
+							<input type="text" class="form-control" readonly="readonly" value="${t7pdt_data.id!}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">产品类型代码 </label>
+							<div class="col-sm-7">
+							<input type="text" class="form-control" readonly="readonly" value="${t7pdt_data.type_!}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">源文件列表 </label>
+							<div class="col-sm-7">
+							<input type="text" class="form-control" readonly="readonly" value="${escapeXml(t7pdt_data.source_file_list!)}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">样本路径 </label>
+							<div class="col-sm-7">
+							<input type="text" class="form-control" readonly="readonly" value="${escapeXml(t7pdt_data.sample_path!)}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">产品路径 </label>
+							<div class="col-sm-7">
+							<input type="text" class="form-control" readonly="readonly" value="${escapeXml(t7pdt_data.product_path!)}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">数据采集时间 </label>
+							<div class="col-sm-7">
+							<input type="text" class="form-control" readonly="readonly" value="${t7pdt_data.collect_time!, dateFormat="yyyy-MM-dd HH:mm:ss"}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">产品生成时间 </label>
+							<div class="col-sm-7">
+							<input type="text" class="form-control" readonly="readonly" value="${t7pdt_data.generate_time!, dateFormat="yyyy-MM-dd HH:mm:ss"}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">行政区域代码 </label>
+							<div class="col-sm-7">
+							<input type="text" class="form-control" readonly="readonly" value="${escapeXml(t7pdt_data.zone_code!)}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">文件下载失败原因代码 </label>
+							<div class="col-sm-7">
+							<input type="text" class="form-control" readonly="readonly" value="${t7pdt_data.fail_code!}">
+							</div>
+						</div>
+				</form>
+			</div>
+		
+		</div>
+	</div>
+</div>	

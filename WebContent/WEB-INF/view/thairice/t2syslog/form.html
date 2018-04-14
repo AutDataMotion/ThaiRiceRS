@@ -1,0 +1,51 @@
+
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">系统日志类型代码</label>
+	<div class="col-sm-7">
+		<input type="text" name="t2syslog.type_" value="${escapeXml(t2syslog.type_!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">用户ID</label>
+	<div class="col-sm-7">
+		<input type="text" name="t2syslog.userid" value="${t2syslog.userid!}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">操作</label>
+	<div class="col-sm-7">
+		<input type="text" name="t2syslog.action_" value="${escapeXml(t2syslog.action_!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">系统日志内容</label>
+	<div class="col-sm-7">
+		<textarea name="t2syslog.content" class="autosize form-control">${escapeXml(t2syslog.content!)}</textarea>
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">系统日志生成日期</label>
+	<div class="col-sm-7">
+		<div class="input-group">
+		<input type="text" name="t2syslog.add_time" date-data-format="yyyy-mm-dd" data-data-viewmode="years" class="form-control data-picker" value="${t2syslog.add_time!, dateFormat="yyyy-MM-dd HH:mm:ss"}">
+		<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+		</div>
+		<span class="help-inline col-sm-2"></span>
+	</div>
+</div>

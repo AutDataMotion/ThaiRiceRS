@@ -1,0 +1,72 @@
+
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">用户ID</label>
+	<div class="col-sm-7">
+		<input type="text" name="t9sample_info.userid" value="${t9sample_info.userid!}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">源文件编号</label>
+	<div class="col-sm-7">
+		<input type="text" name="t9sample_info.identifier" value="${t9sample_info.identifier!}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">样本名称</label>
+	<div class="col-sm-7">
+		<input type="text" name="t9sample_info.name_" value="${escapeXml(t9sample_info.name_!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">样本数量</label>
+	<div class="col-sm-7">
+		<input type="text" name="t9sample_info.number_" value="${escapeXml(t9sample_info.number_!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">样本路径</label>
+	<div class="col-sm-7">
+		<input type="text" name="t9sample_info.path_" value="${escapeXml(t9sample_info.path_!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">样本类型内容</label>
+	<div class="col-sm-7">
+		<input type="text" name="t9sample_info.type_content" value="${escapeXml(t9sample_info.type_content!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">样本时间</label>
+	<div class="col-sm-7">
+		<div class="input-group">
+		<input type="text" name="t9sample_info.datetime_" date-data-format="yyyy-mm-dd" data-data-viewmode="years" class="form-control data-picker" value="${t9sample_info.datetime_!, dateFormat="yyyy-MM-dd HH:mm:ss"}">
+		<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+		</div>
+		<span class="help-inline col-sm-2"></span>
+	</div>
+</div>

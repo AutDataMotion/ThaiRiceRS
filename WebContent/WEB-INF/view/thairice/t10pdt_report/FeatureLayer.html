@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<link rel="stylesheet" href="https://js.arcgis.com/3.23/esri/css/esri.css"/>
+    <style>
+      html, body, #mapDiv{
+        padding: 0;
+        margin: 0;
+        height: 100%;
+      }
+       #legendinfo {
+	    background-color: #000;
+	    z-index: 92;
+	    left: 0;
+	    bottom: 0;
+	    position: absolute;  
+	    padding: 10px;
+	    font-family: Segoe UI;
+	    color: #fff;
+	    width: 200px;
+	    border-top-right-radius: 8px;
+	    opacity: 0.8;
+	    max-height: 80%;
+	    overflow-y: scroll;
+  }
+  #stainfo {
+	    background-color: #000;
+	    z-index: 92;
+	    right: 0;
+	    bottom: 0;
+	    position: absolute;  
+	    padding: 10px;
+	    font-family: Segoe UI;
+	    color: #fff;
+	    width: 800px;
+	    border-top-right-radius: 8px;
+	    opacity: 0.8;
+	    max-height: 80%;
+	    overflow-y: scroll;
+  }
+   #staDiv{
+	    
+	    height: 200px;
+	   
+  }
+    </style>
+    
+<script src="${cxt!}/jsFile/t10pdt_report/html2canvas.min.js"></script>
+<script src="${cxt!}/jsFile/echarts/echarts.min.js"></script>
+<script src="https://js.arcgis.com/3.23/"></script>
+<script src="${cxt!}/jsFile/t10pdt_report/initapp.js"></script>
+<script src="${cxt!}/jsFile/jquery/jquery-1.11.2.min.js"></script>
+<script src="${cxt!}/jsFile/t10pdt_report/t10.js"></script>
+
+<script>
+	initapp();
+</script>
+</head>
+<body>
+	<div id="mapDiv"></div>
+	 <div id="legendinfo">
+	 	<div id="legendDiv"></div>
+	 </div>
+	 <div id="stainfo">
+	 	<div id="staDiv"></div>
+	 </div>
+	 <button id="btn_addLayer">add layer</button>
+	 <button id="btn_staData">sta layer</button>
+	 <button id="btn_preview">preview</button>
+	 <button id="btn_report_doc">report_doc</button>
+	 <button id="btn_report_pdf">report_pdf</button>
+</body>
+</html>

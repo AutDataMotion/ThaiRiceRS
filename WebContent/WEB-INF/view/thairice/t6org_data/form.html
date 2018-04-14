@@ -1,0 +1,134 @@
+
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">用户ID</label>
+	<div class="col-sm-7">
+		<input type="text" name="t6org_data.userid" value="${t6org_data.userid!}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">文件名称</label>
+	<div class="col-sm-7">
+		<input type="text" name="t6org_data.name_" value="${escapeXml(t6org_data.name_!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">文件大小</label>
+	<div class="col-sm-7">
+		<input type="text" name="t6org_data.size_" value="${t6org_data.size_!}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">文件下载地址</label>
+	<div class="col-sm-7">
+		<input type="text" name="t6org_data.download_path" value="${escapeXml(t6org_data.download_path!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">文件存放地址</label>
+	<div class="col-sm-7">
+		<input type="text" name="t6org_data.storage_path" value="${escapeXml(t6org_data.storage_path!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">文件类型代码</label>
+	<div class="col-sm-7">
+		<input type="text" name="t6org_data.type_" value="${t6org_data.type_!}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">文件行列号</label>
+	<div class="col-sm-7">
+		<input type="text" name="t6org_data.row_column" value="${escapeXml(t6org_data.row_column!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">波段数编码</label>
+	<div class="col-sm-7">
+		<input type="text" name="t6org_data.band_number" value="${escapeXml(t6org_data.band_number!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">文件状态代码</label>
+	<div class="col-sm-7">
+		<input type="text" name="t6org_data.status_" value="${t6org_data.status_!}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">文件下载失败原因代码</label>
+	<div class="col-sm-7">
+		<input type="text" name="t6org_data.fail_code" value="${t6org_data.fail_code!}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">数据采集时间</label>
+	<div class="col-sm-7">
+		<div class="input-group">
+		<input type="text" name="t6org_data.collect_time" date-data-format="yyyy-mm-dd" data-data-viewmode="years" class="form-control data-picker" value="${t6org_data.collect_time!, dateFormat="yyyy-MM-dd HH:mm:ss"}">
+		<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+		</div>
+		<span class="help-inline col-sm-2"></span>
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">文件下载开始时间</label>
+	<div class="col-sm-7">
+		<div class="input-group">
+		<input type="text" name="t6org_data.dload_start_time" date-data-format="yyyy-mm-dd" data-data-viewmode="years" class="form-control data-picker" value="${t6org_data.dload_start_time!, dateFormat="yyyy-MM-dd HH:mm:ss"}">
+		<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+		</div>
+		<span class="help-inline col-sm-2"></span>
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">文件下载结束时间</label>
+	<div class="col-sm-7">
+		<div class="input-group">
+		<input type="text" name="t6org_data.dload_end_time" date-data-format="yyyy-mm-dd" data-data-viewmode="years" class="form-control data-picker" value="${t6org_data.dload_end_time!, dateFormat="yyyy-MM-dd HH:mm:ss"}">
+		<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+		</div>
+		<span class="help-inline col-sm-2"></span>
+	</div>
+</div>

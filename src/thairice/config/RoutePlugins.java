@@ -9,6 +9,7 @@ package thairice.config;
 import thairice.mvc.t1parameter.T1parameterController;
 import thairice.mvc.t2syslog.T2syslogController;
 import thairice.mvc.t3user.T3userController;
+import thairice.mvc.pages.pagesController;
 import thairice.mvc.r4message_send.R4message_sendController;
 import thairice.mvc.t5parameter_type.T5parameter_typeController;
 import thairice.mvc.t6org_data.T6org_dataController;
@@ -41,6 +42,7 @@ import com.jfinal.config.Routes;
 public class RoutePlugins extends Routes {
 	@Override
 	public void config() {
+		add("/jf/thairice/pagesController", pagesController.class);
 		add("/jf/thairice/t1parameter", T1parameterController.class);
 		add("/jf/thairice/t2syslog", T2syslogController.class);
 		add("/jf/thairice/t3user", T3userController.class);
