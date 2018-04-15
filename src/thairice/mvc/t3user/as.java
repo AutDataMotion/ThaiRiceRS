@@ -10,5 +10,6 @@ public class as {
         System.out.println(TimeUtil.dateDiff("2018-03-05 10:09:00", "2018-02-04 14:10:23", "yyyy-MM-dd HH:mm:ss", "d")<=0);
 		//System.out.println(TimeUtil.getHour());
 	}
+	// --test
 
 }
