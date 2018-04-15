@@ -3,4 +3,5 @@
 <%
 	//response.sendRedirect("/jf/platform/login");
 	request.getRequestDispatcher("/jf/targrecog/index/shw").forward(request, response);
+	// --test zw
 %>
