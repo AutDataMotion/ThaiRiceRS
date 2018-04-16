@@ -9,9 +9,7 @@ package thairice.mvc.t2syslog;
  * @author zw
  *
  */
-public interface EnumT2sysLog {
-	
-	enum Type implements EnumT2sysLog{
+public enum EnumT2sysLog {
 		ERROR_S("1", "严重错误"),
 		ERROR_N("2", "一般错误"),
 		WARN("3", "一般警告"),
@@ -19,13 +17,13 @@ public interface EnumT2sysLog {
 		private String id;
 		private String name;
 		
-		private Type(String aid, String aname){
+		private EnumT2sysLog(String aid, String aname){
 			id = aid;
 			name = aname;
 		}
 
 		public static String getNameById(String aid){
-			for (Type item : Type.values()) {
+			for (EnumT2sysLog item : EnumT2sysLog.values()) {
 				if (item.getId().equals(aid)) {
 					return item.getName();
 				}
@@ -61,6 +59,4 @@ public interface EnumT2sysLog {
 		public void setName(String name) {
 			this.name = name;
 		}
-		
-	}
 }
