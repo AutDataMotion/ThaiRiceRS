@@ -4,6 +4,8 @@ import org.apache.log4j.Logger;
 
 import com.platform.config.run.BaseConfMain;
 
+import thairice.mvc.t2syslog.T2syslogService;
+
 /**  
  * 创建时间：2016年1月26日 上午11:13:45  
  * 项目名称：DUCPlatFormWeb   
@@ -22,5 +24,18 @@ public class ConfMain extends BaseConfMain{
 	
 	public static ConfMain getInstance(){
 		return single;
+	}
+	
+	public static boolean init(){
+		return true;
+	}
+	public static  boolean start(){
+		// 启动日志线程
+		T2syslogService.startLogThread();
+		return true;
+	}
+	
+	public static  void stop(){
+		T2syslogService.setThreadRun(false);
 	}
 }

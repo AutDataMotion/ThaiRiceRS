@@ -115,6 +115,7 @@ public class T2syslogService extends BaseService {
 				 while (threadRun) {
 						try {
 							// 取队列数据
+							System.out.println("--syslogService run...");
 							Record sysLog = queue.poll();
 							if(null == sysLog){
 								Thread.sleep(1000);

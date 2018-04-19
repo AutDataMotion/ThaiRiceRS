@@ -10,10 +10,10 @@ package thairice.mvc.t2syslog;
  *
  */
 public enum EnumT2sysLog {
-		ERROR_S("1", "严重错误"),
-		ERROR_N("2", "一般错误"),
-		WARN("3", "一般警告"),
-		INFO("4", "正常信息");
+		ERROR_S("1", "serious error"),
+		ERROR_N("2", "normal error"),
+		WARN("3", "warnning"),
+		INFO("4", "information");
 		private String id;
 		private String name;
 		
