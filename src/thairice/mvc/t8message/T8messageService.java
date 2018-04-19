@@ -58,7 +58,7 @@ public class T8messageService extends BaseService {
         sb.append(" LEFT JOIN t8message m ON m.id=s.message_id");
         sb.append(" LEFT JOIN t3user u ON u.id=s.receive_userid");
         sb.append(" WHERE 1=1");
-        sb.append(" AND u.type_='01普通用户'");
+        sb.append(" AND u.type_='01'");
         sb.append(" AND s.receive_userid=?");
         if (StrKit.notBlank(search)) {
             sb.append(" AND m.content LIKE '%" + search + "%'");

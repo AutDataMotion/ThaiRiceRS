@@ -225,10 +225,10 @@ public class Cron4jPlugin implements IPlugin {
 
 		TaskInfo(String cron, Object task, boolean daemon, boolean enable) {
 			if (StrKit.isBlank(cron)) {
-				throw new IllegalArgumentException("cron 不能为空.");
+				throw new IllegalArgumentException("cron can not be empty.");
 			}
 			if (task == null) {
-				throw new IllegalArgumentException("task 不能为 null.");
+				throw new IllegalArgumentException("task can not be null.");
 			}
 
 			this.cron = cron.trim();

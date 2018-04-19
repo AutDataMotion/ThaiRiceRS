@@ -15,7 +15,7 @@ $(function () {
             $('.form_serviceinfo').show();
         }
     });
-    $('#multiple_select').multiselect();
+    //$('#multiple_select').multiselect();
     $("#fm").bootstrapValidator({
         message: 'This value is not valid',
         feedbackIcons: {
@@ -112,6 +112,13 @@ $(function () {
                     }
                 }
             },
+            'PD_TpCd': {
+                validators: {
+                    notEmpty: {
+                        message: 'must choose a'
+                    }
+                }
+            },
             'Prdt_EfDt': {
                 validators: {
                     notEmpty: {
@@ -154,8 +161,8 @@ function submitForm() {
     showLoading();
     sendAjax("/jf/thairice/t3user/doReg", $("#fm").serialize(), function (res) {
     	cancelLoading();
-        showMessage(res.errorMsg);
-        if (res.rc == 1) {
+        showMessage(res.desc);
+        if (res.code == 1) {
         	  setTimeout(function(){
         		  window.location.href = "/jf/thairice/t3user/notActivated";
               },500);

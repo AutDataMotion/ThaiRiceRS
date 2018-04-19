@@ -1,0 +1,114 @@
+
+<div class="row">
+	<div class="col-md-12">
+		<ol class="breadcrumb">
+			<li><a href="#" onclick="common_ajax.ajaxMainPanel('/thairice/index');">${i18nMap["admin.common.mainPage"]}</a></li>
+			<li><a href="#" onclick="common_ajax.ajaxMainPanel('${pthc}');">用户管理</a></li>
+			<li class="active">查看</li>
+		</ol>
+	</div>
+</div>
+
+<div class="row">
+	<div class="col-md-12">
+		<!-- start: BORDERED TABLE PANEL -->
+		<div class="panel panel-white">
+			
+			<div class="panel-heading">
+				<h4 class="panel-title"><span class="text-bold">查看</span></h4>
+				<div class="panel-tools">										
+					<% include("/common/panel-tools.html"){} %>
+				</div>
+			</div>
+			<div class="panel-body">	
+				<form role="form" class="form-horizontal">
+						<div class="form-group">
+							<label class="col-sm-2 control-label">用户ID </label>
+							<div class="col-sm-7">
+							<input type="text" class="form-control" readonly="readonly" value="${t3user.id!}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">用户类型代码 </label>
+							<div class="col-sm-7">
+							<input type="text" class="form-control" readonly="readonly" value="${t3user.type_!}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">用户名 </label>
+							<div class="col-sm-7">
+							<input type="text" class="form-control" readonly="readonly" value="${escapeXml(t3user.account!)}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">密码 </label>
+							<div class="col-sm-7">
+							<input type="text" class="form-control" readonly="readonly" value="${escapeXml(t3user.pwd!)}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">姓名 </label>
+							<div class="col-sm-7">
+							<input type="text" class="form-control" readonly="readonly" value="${escapeXml(t3user.name_!)}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">手机号码 </label>
+							<div class="col-sm-7">
+							<input type="text" class="form-control" readonly="readonly" value="${escapeXml(t3user.phone!)}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">电子邮箱地址 </label>
+							<div class="col-sm-7">
+							<input type="text" class="form-control" readonly="readonly" value="${escapeXml(t3user.email!)}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">通讯地址 </label>
+							<div class="col-sm-7">
+							<input type="text" class="form-control" readonly="readonly" value="${escapeXml(t3user.address!)}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">邮政编码 </label>
+							<div class="col-sm-7">
+							<input type="text" class="form-control" readonly="readonly" value="${escapeXml(t3user.zip_encode!)}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">头像 </label>
+							<div class="col-sm-7">
+							<input type="text" class="form-control" readonly="readonly" value="${escapeXml(t3user.heading!)}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">公司名称 </label>
+							<div class="col-sm-7">
+							<input type="text" class="form-control" readonly="readonly" value="${escapeXml(t3user.company!)}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">行业 </label>
+							<div class="col-sm-7">
+							<input type="text" class="form-control" readonly="readonly" value="${escapeXml(t3user.industry!)}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">创建时间 </label>
+							<div class="col-sm-7">
+							<input type="text" class="form-control" readonly="readonly" value="${t3user.create_time!, dateFormat="yyyy-MM-dd HH:mm:ss"}">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">用户审核状态代码 </label>
+							<div class="col-sm-7">
+							<input type="text" class="form-control" readonly="readonly" value="${t3user.status_!}">
+							</div>
+						</div>
+				</form>
+			</div>
+		
+		</div>
+	</div>
+</div>	

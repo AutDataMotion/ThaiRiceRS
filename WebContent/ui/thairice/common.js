@@ -79,8 +79,8 @@ function deleteRows(url, $table, _table) {
                 list.push(item.id);
             });
             sendAjax(url, {ids: list.toString()}, function (res) {
-                showMessage(res.errorMsg);
-                if (res.rc == 1) {
+                showMessage(res.desc);
+                if (res.code == 1) {
                     _table.draw();
                 }
             })

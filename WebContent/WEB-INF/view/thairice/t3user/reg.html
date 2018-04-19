@@ -1,177 +1,200 @@
 <!doctype html>
 <html>
 <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width,initial-scale-1">
-    <title>注册</title>
-    <link type="text/css" rel="stylesheet" href="${cxt!}/ui/thairice/CSS/base.css">
-    <link type="text/css" rel="stylesheet" href="${cxt!}/ui/thairice/bootstrap-3.3.7-dist/css/bootstrap.min.css">
-    <link type="text/css" rel="stylesheet" href="${cxt!}/ui/thairice/datetime-picker/bootstrap-datetimepicker.min.css">
-    <link type="text/css" rel="stylesheet" href="${cxt!}/ui/thairice/CSS/register.css">
-    <link type="text/css" rel="stylesheet" href="${cxt!}/ui/thairice/bootstrap-multiselect-master/dist/css/bootstrap-multiselect.css">
-    <link type="text/css" rel="stylesheet" href="${cxt!}/ui/thairice/CSS/bootstrapValidator.css">
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale-1">
+<title>注册</title>
+<link type="text/css" rel="stylesheet"
+	href="${cxt!}/ui/thairice/CSS/base.css">
+<link type="text/css" rel="stylesheet"
+	href="${cxt!}/ui/thairice/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+<link type="text/css" rel="stylesheet"
+	href="${cxt!}/ui/thairice/datetime-picker/bootstrap-datetimepicker.min.css">
+<link type="text/css" rel="stylesheet"
+	href="${cxt!}/ui/thairice/CSS/register.css">
+<link type="text/css" rel="stylesheet"
+	href="${cxt!}/ui/thairice/CSS/bootstrapValidator.css">
 </head>
 
-<body style="background:url(${cxt!}/ui/thairice/Images/register/section4_bg.jpg) no-repeat center center;">
-<div class="BbRegisterWrap">
-    <div class="BbRegister">
-        <h2></h2>
-        <div class="container">
-            <form id="fm" class="form-horizontal" style="width:800px; margin:0 auto;" method="post">
-                <div class="form_selfinfo" >
-                    <p class="title">Create account- user information</p>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">Username</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" placeholder="The user name is made up of 6 to 12 letters and Numbers" name="t3user.account">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">Password</label>
-                        <div class="col-sm-8">
-                            <input type="password" class="form-control" placeholder="The Passward is made up of 6 to 12 letters and Numbers" id="pwd" name="t3user.pwd">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">Verify Password</label>
-                        <div class="col-sm-8">
-                            <input type="password" class="form-control" placeholder="Verify password" name="confirmPass">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">Phonenumber</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" placeholder="You commonly used the phone number"  name="t3user.phone">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">E-mail</label>
-                        <div class="col-sm-8">
-                            <input id="email" type="email" class="form-control" placeholder="your E-mai like someone@exmaple.com" name="t3user.email">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">Yourname</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" placeholder="Your real name" name="t3user.name_">
-                        </div>
-                    </div>
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">Company</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" placeholder="Your work unit" name="t3user.company">
-                        </div>
-                    </div>
-                 <div class="form-group">
-                        <label class="col-sm-2 control-label">Post Code</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control"  placeholder="Post Code" name="t3user.zip_encode">
-                        </div>
-                    </div> 
-                  <div class="form-group">
-                        <label class="col-sm-2 control-label">Address</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" placeholder="Address" name="t3user.address">
-                        </div>
-                    </div>      
-                    <div class="form-group">
-                        <label class="col-sm-2 control-label">Industry</label>
-                        <div class="col-sm-8">
-                            <input type="text" class="form-control" placeholder="Select your industry" name="t3user.industry">
-                        </div>
-                    </div>
-                    <div class="form-group" style="margin-top:25px;">
-                        <p>
-                            <button type="button" class="btn btn-primary btn-lg btn_selfinfo">service information  >></button>
-                        </p>
-                    </div>
-                </div>
-                <div class="form-horizontal form_serviceinfo" style="width:800px; margin:0 auto;">
-                    <p class="title">Create account- Service information</p>
-        <div class="form-group" style="margin-top:20px;">
-                    <label class="col-sm-2 control-label">Select area</label>
-                    <div class="col-sm-8">
-                      <select id="multiple_select" multiple="multiple" class="form-control">
-                          <optgroup label="province">
-                          	<option>provice_01</option>
-                            <option>provice_02</option>
-                            <option>provice_03</option>
-                            <option>provice_04</option>
-                            <option>provice_05</option>
-                          </optgroup>
-                          <optgroup label="city">
-                          	<option>city01</option>
-                            <option>city02</option>
-                            <option>city03</option>
-                          </optgroup>
-                          <optgroup label="area">
-                          	<option>area1</option>
-                            <option>area2</option>
-                            <option>area3</option>
-                            <option>area4</option>
-                            <option>area5</option>
-                            <option>area6</option>
-                            <option>area7</option>
-                          </optgroup>
-                      </select>
-                    </div>
-                  </div>
-                    <div class="form-group" style="margin-top:20px;">
-                        <label class="col-sm-2 control-label">Select services</label>
-                        <div class="col-sm-8 service">
-                            <label><input type="checkbox" value="01" name="PD_TpCd"> Rice planting area monitoring</label>
-                            <label><input type="checkbox" value="02" name="PD_TpCd"> Rice drought monitoring</label>
-                            <label><input type="checkbox" value="03" name="PD_TpCd"> Rice condition monitoring</label>
-                            <label><input type="checkbox" value="04" name="PD_TpCd"> Rice production estimates</label>
-                        </div>
-                    </div>
-                    <div class="form-group" style="margin-top:20px;">
-                        <label class="col-sm-2 control-label">Service cycle</label>
-                        <div class="col-sm-9">
-                            <div class="col-sm-4">
-                                <div class="input-group date" id="Prdt_EfDt" >
-                                    <input type="text" class="form-control" name="Prdt_EfDt" >
-                                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                                </div>
-                            </div>
-                            <div class="col-sm-1" style="text-align:center;">
-                                <label class="control-label">to</label>
-                            </div>
-                            <div class="col-sm-4">
-                                <div class="input-group date" id='PD_ExDat' >
-                                    <input type="text" class="form-control" name="PD_ExDat">
-                                    <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="form-group" style="margin:35px 0 0;">
-                        <p><button type="button" class="btn btn-primary btn-lg" onclick="submitForm()">Create Account</button></p>
-                    </div>
-                    <div class="form-group">
-                        <p class="account_in">Already have an account?
-                            <a href="welcome.html#page4">Sign In</a>
-                        </p>
-                    </div>
-                </div>
-                <input type="hidden"  name="t3user.heading">
-            </form>
-        </div>
+<body
+	style="background: url(${cxt!}/ui/thairice/Images/register/section4_bg.jpg) no-repeat center center;">
+	<div class="BbRegisterWrap">
+		<div class="BbRegister">
+			<h2></h2>
+			<div class="container">
+				<form id="fm" class="form-horizontal"
+					style="width: 800px; margin: 0 auto;" method="post">
+					<div class="form_selfinfo">
+						<p class="title">Create account- user information</p>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Username</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control"
+									placeholder="The user name is made up of 6 to 12 letters and Numbers"
+									name="t3user.account">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Password</label>
+							<div class="col-sm-8">
+								<input type="password" class="form-control"
+									placeholder="The Passward is made up of 6 to 12 letters and Numbers"
+									id="pwd" name="t3user.pwd">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Verify Password</label>
+							<div class="col-sm-8">
+								<input type="password" class="form-control"
+									placeholder="Verify password" name="confirmPass">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Phonenumber</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control"
+									placeholder="You commonly used the phone number"
+									name="t3user.phone">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">E-mail</label>
+							<div class="col-sm-8">
+								<input id="email" type="email" class="form-control"
+									placeholder="your E-mai like someone@exmaple.com"
+									name="t3user.email">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Yourname</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control"
+									placeholder="Your real name" name="t3user.name_">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Company</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control"
+									placeholder="Your work unit" name="t3user.company">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Post Code</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" placeholder="Post Code"
+									name="t3user.zip_encode">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Address</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control" placeholder="Address"
+									name="t3user.address">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-2 control-label">Industry</label>
+							<div class="col-sm-8">
+								<input type="text" class="form-control"
+									placeholder="Select your industry" name="t3user.industry">
+							</div>
+						</div>
+						<div class="form-group" style="margin-top: 25px;">
+							<p>
+								<button type="button"
+									class="btn btn-primary btn-lg btn_selfinfo">service
+									information >></button>
+							</p>
+						</div>
+					</div>
+					<div class="form-horizontal form_serviceinfo"
+						style="width: 800px; margin: 0 auto;">
+						<p class="title">Create account- Service information</p>
+						<div class="form-group" style="margin-top: 20px;">
+							<label class="col-sm-2 control-label">Select area</label>
+							<div class="col-sm-8">
+							<div id="city_china_val" style="float: left;">
+					         <p>
+						      <select class="province cxselect" data-value="北京市" data-required="true" name="province"  data-first-title="选择省" disabled="disabled" style="padding: 8px;"></select>
+						      <select class="city cxselect" data-value="东城区" data-required="true" name="city"  data-first-title="选择市" disabled="disabled" style="padding: 8px;"></select> 
+						      <select class="area cxselect" name="area"  data-first-title="选择地区" disabled="disabled" style="padding: 8px;"></select>
+					          </p>
+						     </div>
+							</div>
+						</div>
+						<div class="form-group" style="margin-top: 20px;">
+							<label class="col-sm-2 control-label">Select services</label>
+							<div class="col-sm-8 service">
+								<label><input type="checkbox" value="01" name="PD_TpCd">
+									Rice planting area monitoring</label> <label><input
+									type="checkbox" value="02" name="PD_TpCd"> Rice drought
+									monitoring</label> <label><input type="checkbox" value="03"
+									name="PD_TpCd"> Rice condition monitoring</label> <label><input
+									type="checkbox" value="04" name="PD_TpCd"> Rice
+									production estimates</label>
+							</div>
+						</div>
+						<div class="form-group" style="margin-top: 20px;">
+							<label class="col-sm-2 control-label">Service cycle</label>
+							<div class="col-sm-9">
+								<div class="col-sm-4">
+									<div class="input-group date" id="Prdt_EfDt">
+										<input type="text" class="form-control" name="Prdt_EfDt">
+										<span class="input-group-addon"><i
+											class="glyphicon glyphicon-calendar"></i></span>
+									</div>
+								</div>
+								<div class="col-sm-1" style="text-align: center;">
+									<label class="control-label">to</label>
+								</div>
+								<div class="col-sm-4">
+									<div class="input-group date" id='PD_ExDat'>
+										<input type="text" class="form-control" name="PD_ExDat">
+										<span class="input-group-addon"><i
+											class="glyphicon glyphicon-calendar"></i></span>
+									</div>
+								</div>
+							</div>
+						</div>
+						<div class="form-group" style="margin: 35px 0 0;">
+							<p>
+								<button type="button" class="btn btn-primary btn-lg"
+									onclick="submitForm()">Create Account</button>
+							</p>
+						</div>
+						<div class="form-group">
+							<p class="account_in">
+								Already have an account? <a href="welcome.html#page4">Sign
+									In</a>
+							</p>
+						</div>
+					</div>
+					<input type="hidden" name="t3user.heading">
+				</form>
+			</div>
 
-    </div>
-</div>
-<script src="${cxt!}/ui/thairice/JS/jquery.min.js"></script>
-<script src="${cxt!}/ui/thairice/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-<script src="${cxt!}/ui/thairice/datetime-picker/moment.js"></script>
-<script src="${cxt!}/ui/thairice/datetime-picker/bootstrap-datetimepicker.min.js"></script>
-<script src="${cxt!}/ui/thairice/JS/bootstrapValidator.js"></script>
-<script type="text/javascript" src="${cxt!}/ui/thairice/JS/layer/layer.js"></script>
-<script type="text/javascript" src="${cxt!}/ui/thairice/JS/md5.js"></script>
-<script src="${cxt!}/ui/thairice/bootstrap-multiselect-master/dist/js/bootstrap-multiselect.js"></script>
-<script src="${cxt!}/ui/thairice/JS/index.js"></script>
-<script src="${cxt!}/ui/common.js"></script>
-<script type="text/javascript">
-</script>
+		</div>
+	</div>
+	<script src="${cxt!}/ui/thairice/JS/jquery.min.js"></script>
+	<script
+		src="${cxt!}/ui/thairice/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+	<script src="${cxt!}/ui/thairice/datetime-picker/moment.js"></script>
+	<script
+		src="${cxt!}/ui/thairice/datetime-picker/bootstrap-datetimepicker.min.js"></script>
+	<script src="${cxt!}/ui/thairice/JS/bootstrapValidator.js"></script>
+	<script type="text/javascript" src="${cxt!}/ui/thairice/JS/layer/layer.js"></script>
+	<script type="text/javascript" src="${cxt!}/ui/thairice/JS/md5.js"></script>
+	<script src="${cxt!}/ui/thairice/area/jquery.cxselect.min.js"></script>
+	<script src="${cxt!}/ui/thairice/JS/index.js"></script>
+	<script src="${cxt!}/ui/thairice/common.js"></script>
+	<script type="text/javascript">
+	$.cxSelect.defaults.url = '${cxt!}/ui/thairice/area/cityData.min.json';
+	$('#city_china_val').cxSelect({
+		selects: ['province', 'city', 'area'],
+		nodata: 'none'
+	});
+	</script>
 </body>
 </html>

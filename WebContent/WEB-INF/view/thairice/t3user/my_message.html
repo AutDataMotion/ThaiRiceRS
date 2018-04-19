@@ -44,7 +44,9 @@
                     <th width="10%" style="border-bottom:none;"><input type="checkbox" name="cb-check-all">Select all</th>
                     <th style="border-bottom:none;">Type</th>
                     <th style="border-bottom:none;">Content</th>
+                    <th style="border-bottom:none;">STATUS</th>
                     <th style="border-bottom:none;">Time</th>
+                    <th style="border-bottom:none;">View</th>
                 </tr>
                 </thead>
             </table>
@@ -88,7 +90,7 @@
 <script src="${cxt!}/ui/thairice/JS/dataTables.bootstrap4.js"></script>
 <script src="${cxt!}/ui/thairice/JS/sb-admin-datatables.min.js"></script>
 <script type="text/javascript" src="${cxt!}/ui/thairice/JS/layer/layer.js"></script>
-<script type="text/javascript" src="${cxt!}/ui/common.js"></script>
+<script type="text/javascript" src="${cxt!}/ui/thairice/common.js"></script>
 <script>
     var $wrapper = $('#div-table-container');
     var $table = $('#dataTable01');
@@ -96,7 +98,19 @@
         CONSTANT.DATA_TABLES.COLUMN.CHECKBOX,
         {"data": "type_", orderable: false},
         {"data": "content", orderable: false},
-        {"data": "add_time", orderable: false}
+        { "data": null,render: function (data, type, row, meta) {
+        	  if(data.status_=='01'){
+        		  return '<span style="color:red;">未读</span>'
+        	  }else{
+        		  return '<span style="color:blue;">已读</span>'
+        	  }
+        }},
+        {"data": "add_time", orderable: false},
+        {"data": null, width: 180,
+            render: function (data, type, row, meta) {
+                return '<button type="button" class="btn btn-success view">view</button>'
+            }
+        }
     ];
     //初始化表格
     var _table = table.initTable($wrapper, $table, '${cxt!}/jf/thairice/t3user/message_list', columns);
@@ -113,8 +127,8 @@
     $("#all_read").click(function () {
         layer.confirm('Make sure to mark all messages as read?', {icon: 3,title:'prompt',btn: ['confirm','cancel']}, function (index) {
             sendAjax("${cxt!}/jf/thairice/t3user/all_read",null,function(res){
-                showMessage(res.errorMsg);
-                if(res.rc==1){
+                showMessage(res.desc);
+                if(res.code==1){
                     _table.draw();
                 }
             })
@@ -125,13 +139,27 @@
     $("#empty").click(function () {
         layer.confirm('Make sure to clear all messages?', {icon: 2,title:'prompt',btn: ['confirm','cancel']}, function (index) {
             sendAjax("${cxt!}/jf/thairice/t3user/empty_message",null,function(res){
-                showMessage(res.errorMsg);
-                if(res.rc==1){
+                showMessage(res.desc);
+                if(res.code==1){
                     _table.draw();
                 }
             })
             layer.close(index);
         });
+    });
+    //查看消息并设置已读
+    $table.on("click",".view",function() {
+        var item = _table.row($(this).closest('tr')).data();
+        $("#id").val(item.id);
+        $("#status_").val(item.status_);
+        $("#type_").val(item.type_);
+        $("#content").val(item.content);
+        $("#message_modal").modal('show');
+        setTimeout(function(){
+            if(item.status_=='01'){
+                sendAjax("${cxt!}/jf/thairice/t3user/read_message",$("#read_message").serialize(),function(){_table.draw();});
+            }
+        },500);
     });
     //拼装查询条件
     function getQueryCondition(data) {

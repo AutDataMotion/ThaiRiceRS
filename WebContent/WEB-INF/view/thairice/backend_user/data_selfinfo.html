@@ -42,7 +42,7 @@
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
                 <li style="margin-bottom:20px;"><p class="function_text">Function menu</p></li>
-                <% if(session.admin.type_=='03系统管理员'){ %>
+                <% if(session.admin.type_=='03'){ %>
                 <li><a href="${cxt!}/jf/thairice/admin/user/main">Operator management</a></li>
                 <% }%>
                 <li><a href="${cxt!}/jf/thairice/admin/user/user_management">User management</a></li>
@@ -231,7 +231,7 @@
                         <div class="col-sm-9">
                         <div class="input-group">
                               <input type="email" class="form-control" placeholder="your E-mai like someone@exmaple.com"  name="email"  id="email"  value="${admin.email}" readonly>
-                              <span class="input-group-addon" id="send_email" style="background-color:#5cb85c;color: #fff;background-color: #5cb85c;cursor: pointer;">发送授权码</span>
+                              <span class="input-group-addon" id="send_email" style="background-color:#5cb85c;color: #fff;background-color: #5cb85c;cursor: pointer;">Send authorization code</span>
                          </div>
                         </div>
                     </div>
@@ -261,7 +261,7 @@
 <script src="${cxt!}/ui/thairice/datetime-picker/bootstrap-datetimepicker.min.js"></script>
 <script type="text/javascript" src="${cxt!}/ui/thairice/JS/layer/layer.js"></script>
 <script src="${cxt!}/ui/thairice/JS/bootstrapValidator.js"></script>
-<script type="text/javascript" src="${cxt!}/ui/common.js"></script>
+<script type="text/javascript" src="${cxt!}/ui/thairice/common.js"></script>
 <!-- Just to make our placeholder images work. Don't actually copy the next line! --> 
 <script src="${cxt!}/ui/thairice/data/holder.min.js"></script> 
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug --> 
@@ -272,13 +272,13 @@ $('#modify_btn').click(function () {
 	 $("#info").bootstrapValidator('validate');
 	 if (!$("#info").data('bootstrapValidator').isValid()) {return;}
     sendAjax('${cxt!}/jf/thairice/admin/user/edit_info', $("#info").serialize(), function (res) {
-        showMessage(res.errorMsg);
+        showMessage(res.desc);
     });
 })
 //发送邮箱授权码
 $('#send_email').click(function () {
    sendAjax("${cxt!}/jf/thairice/t3user/send_code",{email:$("#email").val()},function(res){
-       showMessage(res.errorMsg);
+       showMessage(res.desc);
    });    
 })
 //修改密码
@@ -286,8 +286,8 @@ $('#pass_btn').click(function () {
 	 $("#edit_pass").bootstrapValidator('validate');
 	 if (!$("#edit_pass").data('bootstrapValidator').isValid()) {return;}
     sendAjax('${cxt!}/jf/thairice/admin/user/edit_pass', $("#edit_pass").serialize(), function (res) {
-        layer.msg(res.errorMsg);
-        if (res.rc == 1) {
+        layer.msg(res.desc);
+        if (res.code == 1) {
         	$("#passwordModal").modal("hide");
         	$("#systemModal").modal("show");
             setTimeout(function () {
@@ -318,9 +318,9 @@ $("#file-Portrait1").fileinput({
 //异步上传返回结果处理
 $("#file-Portrait1").on("fileuploaded", function (event, data, previewId, index) {
     console.log(JSON.stringify(data));
-    if(data.response.rc==1){
+    if(data.response.code==1){
         layer.msg('上传成功');
-        $('#picImg').attr("src","${cxt!}"+data.response.errorMsg);
+        $('#picImg').attr("src","${cxt!}"+data.response.desc);
     }
 });
 //修改密码参数校验 

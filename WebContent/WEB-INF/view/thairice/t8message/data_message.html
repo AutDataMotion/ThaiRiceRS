@@ -50,9 +50,9 @@
       <div class="tab_btns" style="margin:15px 0;">
         <select class="form-control" style="width:180px; float:left; margin-right:15px;" id="type">
             <option value="">ALL</option>
-            <option value="01通知">Notice</option>
-            <option value="02公告">Announcement</option>
-            <option value="03提醒">Remind</option>
+            <option value="01">Notice</option>
+            <option value="02">Announcement</option>
+            <option value="03">Remind</option>
         </select>
         <button type="button" class="btn btn-danger" style="margin-right:10px;" id="btn-del">Delete the selected</button>
         <button type="button" class="btn btn-info" id="empty"><i class="glyphicon glyphicon-warning-sign"></i>Empty the list</button>
@@ -84,7 +84,7 @@
 <script src="${cxt!}/ui/thairice/data_files/holder.min.js"></script>
 <script src="${cxt!}/ui/thairice/data_files/ie10-viewport-bug-workaround.js"></script>
 <script type="text/javascript" src="${cxt!}/ui/thairice/JS/layer/layer.js"></script>
-<script src="${cxt!}/ui/common.js"></script>
+<script src="${cxt!}/ui/thairice/common.js"></script>
 <script>
     var $wrapper = $('#div-table-container');
     var $table = $('#dataTable01');
@@ -109,8 +109,8 @@
     $("#empty").click(function () {
         layer.confirm('Make sure to clear all messages?', {icon: 2,title:'prompt',btn: ['confirm','cancel']}, function (index) {
             sendAjax("${cxt!}/jf/thairice/t8message/empty_message",null,function(res){
-                showMessage(res.errorMsg);
-                if(res.rc==1){
+                showMessage(res.desc);
+                if(res.code==1){
                     _table.draw();
                 }
             })

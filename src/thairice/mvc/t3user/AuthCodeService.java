@@ -37,7 +37,7 @@ public class AuthCodeService {
 			Db.update("delete from thairice.auth_code where id=?", authCodeId);
 			return new Result(1, "Activated successfully");
 		} else {
-			return new Result(1, "Activation fails");
+			return new Result(0, "Activation fails");
 		}
 
 	}

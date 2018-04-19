@@ -75,7 +75,7 @@ public class BackendUserController extends BaseController {
 	// 后台首页界面
 	public void main() {
 		T3user u = getSessionAttr("admin");
-		if (u.getType_().equals("03系统管理员")) {
+		if (u.getType_().equals("03")) {
 			renderWithPath(pthv + "data.html");
 		} else {
 			renderWithPath(pthv + "user_management.html");
@@ -173,9 +173,9 @@ public class BackendUserController extends BaseController {
 				user.setCreate_time(new Timestamp(new Date().getTime()));
 				// 初始密码为123456,后期系统操作员自行修改
 				user.setPwd(HashKit.md5("123456"));
-				user.setType_("02系统操作员");
-				user.setStatus_("02审核通过");
-				user.setZip_encode("000");
+				user.setType_("02");
+				user.setStatus_("02");
+				user.setZip_encode("00000");
 				user.use(ConstantInitMy.db_dataSource_main).saveGenIntId();
 			} else {
 				user.update();
@@ -204,13 +204,13 @@ public class BackendUserController extends BaseController {
 				R4message_send send = new R4message_send();
 				send.set("message_id", t8message.getId());
 				send.set("receive_userid", getPara("receive_userid"));
-				send.setStatus_("01未读");
+				send.setStatus_("01");
 				send.use(ConstantInitMy.db_dataSource_main).saveGenIntId();
 				// 将普通用户状态标识为‘审核不通过’
 				if (getParaToInt("t8message.flag") == 3) {
 					T3user user = new T3user();
 					user.set("id", getPara("receive_userid"));
-					user.setStatus_("03审核未通过");
+					user.setStatus_("03");
 					user.use(ConstantInitMy.db_dataSource_main).update();
 					renderJson(new Result(2, "Sent successfully"));
 					return;
@@ -221,7 +221,7 @@ public class BackendUserController extends BaseController {
 					R4message_send send_all = new R4message_send();
 					send_all.set("message_id", t8message.getId());
 					send_all.set("receive_userid", user.getId());
-					send_all.setStatus_("01未读");
+					send_all.setStatus_("01");
 					send_all.use(ConstantInitMy.db_dataSource_main).saveGenIntId();
 				}
 			}
@@ -244,6 +244,7 @@ public class BackendUserController extends BaseController {
 			l += str + ",";
 		}
 		user.set("PD_TpCd", l);
+		user.set("area", getPara("province")+" "+getPara("city")+" "+getPara("area"));
 		user.use(ConstantInitMy.db_dataSource_main).update();
 		renderJson(new Result(1, "Successful operation"));
 	}

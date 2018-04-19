@@ -37,7 +37,7 @@
 <script src="${cxt!}/ui/thairice/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 <script type="text/javascript" src="${cxt!}/ui/thairice/JS/layer/layer.js"></script>
 <script type="text/javascript" src="${cxt!}/ui/thairice/JS/md5.js"></script>
-<script type="text/javascript" src="${cxt!}/ui/common.js"></script>
+<script type="text/javascript" src="${cxt!}/ui/thairice/common.js"></script>
 <script type="text/javascript"> 
     //刷新验证码
      function refresh (){
@@ -49,8 +49,8 @@
     	showLoading();
         sendAjax("${cxt!}/jf/thairice/admin/user/doLogin", $("#form").serialize()+'&pass='+hex_md5($("#pass").val()), function (res) {
         	  cancelLoading();   
-        	  layer.msg(res.errorMsg, {icon: 6});
-               if(res.rc==1){
+        	  layer.msg(res.desc, {icon: 6});
+               if(res.code==1){
                    if ("${returnUrl!}"== '') {
                        window.location.href = "${cxt!}/jf/thairice/admin/user/main";
                    } else {

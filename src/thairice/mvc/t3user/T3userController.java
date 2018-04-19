@@ -17,6 +17,7 @@ import com.jfinal.kit.StrKit;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Page;
 import com.platform.constant.ConstantRender;
+import com.platform.interceptor.ParamPkgInterceptor;
 import com.platform.mvc.base.BaseController;
 
 import thairice.constant.ConstantInitMy;
@@ -28,13 +29,14 @@ import thairice.mvc.t8message.T8messageService;
 /**
  * 前台用户中心
  */
+
 @Before(UserLoginInterceptor.class)
 public class T3userController extends BaseController {
 
 	private static Logger LOG = Logger.getLogger(T3userController.class);
 
 	public static final String pthc = "/jf/thairice/t3user/";
-	public static final String pthv = "/thairice/t3user/";
+	public static final String pthv = "/f/t3user/";
 
 	private static final thairice.mvc.t3user.T3userService srv = Duang.duang(T3userService.class);
 	private static final T8messageService message_service = Duang.duang(T8messageService.class);
@@ -101,6 +103,7 @@ public class T3userController extends BaseController {
 		for (String str : getParas("PD_TpCd")) {
 			l += str + ",";
 		}
+		t3user.set("area", getPara("province")+" "+getPara("city")+" "+getPara("area"));
 		t3user.set("PD_TpCd", l);
 		boolean rlt = t3user.use(ConstantInitMy.db_dataSource_main).saveGenIntId();
 		if (rlt) {
@@ -137,7 +140,7 @@ public class T3userController extends BaseController {
 	@Clear
 	public void activate() {
 		Result result = codeService.activate(getPara("authCode"));
-		setAttr("activate", "result error message");
+		setAttr("activate", result.getDesc());
 		render(pthv + "not_activated.html");
 	}
 
@@ -185,6 +188,10 @@ public class T3userController extends BaseController {
 	 */
 	public void self_center() {
 		T3user user = getSessionAttr("user");
+		String[]ad=user.getStr("area").split(" ");
+		setAttr("province", ad[0]);
+		setAttr("city", ad[1]);
+		setAttr("area", ad[2]);
 		setAttr("user", srv.SelectById(user.getBigInteger("id")));
 		renderWithPath(pthv + "self_center.html");
 	}
@@ -234,6 +241,8 @@ public class T3userController extends BaseController {
 		int row = Db.use(ConstantInitMy.db_dataSource_main).update("DELETE FROM r4message_send WHERE receive_userid=?",
 				user.getBigInteger("id"));
 		if (row > 0) {
+		    Db.use(ConstantInitMy.db_dataSource_main).update("DELETE FROM t8message WHERE send_userid=?",
+				user.getBigInteger("id"));
 			renderJson(new Result(1, "Cleared successfully"));
 		} else {
 			renderJson(new Result(1, "operation failed"));

@@ -32,7 +32,7 @@ public class T3userService extends BaseService {
 	 */
 	public long getCount(BigInteger id) {
 		long count = Db.queryLong(
-				"SELECT COUNT(*)AS c FROM thairice.r4message_send s LEFT JOIN thairice.t3user u ON u.id=s.receive_userid WHERE u.id=? and s.status_='01未读'",
+				"SELECT COUNT(*)AS c FROM thairice.r4message_send s LEFT JOIN thairice.t3user u ON u.id=s.receive_userid WHERE u.id=? and s.status_='01'",
 				id);
 		System.out.println("count:" + count);
 		return count;
@@ -78,19 +78,19 @@ public class T3userService extends BaseService {
 	}
 
 	public List<T3user> selectUsers() {
-		return T3user.dao.find("select * from t3user where type_='01普通用户'");
+		return T3user.dao.find("select * from t3user where type_='01'");
 	}
 
 	public List<T3user> selectUsersByChoose(String ids) {
-		return T3user.dao.find("select * from t3user where type_='01普通用户' and id in(" + ids + ")");
+		return T3user.dao.find("select * from t3user where type_='01' and id in(" + ids + ")");
 	}
 
 	public List<T3user> selectOperators() {
-		return T3user.dao.find("select * from t3user where type_='02系统操作员'");
+		return T3user.dao.find("select * from t3user where type_='02'");
 	}
 
 	public List<T3user> selectOperatorsByChoose(String ids) {
-		return T3user.dao.find("select * from t3user where type_='02系统操作员' and id in(" + ids + ")");
+		return T3user.dao.find("select * from t3user where type_='02' and id in(" + ids + ")");
 	}
 
 	public boolean valiUserName(String userName) {
@@ -125,7 +125,7 @@ public class T3userService extends BaseService {
 	 * @return
 	 */
 	public T3user login(String account) {
-		return T3user.dao.findFirst("select * from t3user where account=? and (type_='02系统操作员' or type_='03系统管理员')",
+		return T3user.dao.findFirst("select * from t3user where account=? and (type_='02' or type_='03')",
 				account);
 	}
 
@@ -152,7 +152,7 @@ public class T3userService extends BaseService {
 			sb.append(" AND CONCAT(IFNULL(name_,''),IFNULL(phone,''),IFNULL(email,''))  LIKE '%"
 					+ name.trim().toLowerCase() + "%'");
 		}
-		sb.append(" AND (type_='02系统操作员' OR type_='03系统管理员')");
+		sb.append(" AND (type_='02' OR type_='03')");
 		sb.append(" ORDER BY " + orderColumn + " " + orderDir);
 		return T3user.dao.paginate(page, row, "select *", sb.toString());
 	}
@@ -196,7 +196,7 @@ public class T3userService extends BaseService {
 		if (StrKit.notBlank(audit)) {
 			sb.append(" AND status_='" + audit + "'");
 		}
-		sb.append(" AND type_='01普通用户'");
+		sb.append(" AND type_='01'");
 		sb.append(" ORDER BY " + orderColumn + " " + orderDir);
 		return T3user.dao.paginate(page, row, "select *", sb.toString());
 	}

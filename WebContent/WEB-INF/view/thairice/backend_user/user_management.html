@@ -41,7 +41,7 @@
         <div class="col-sm-3 col-md-2 sidebar">
             <ul class="nav nav-sidebar">
                 <li style="margin-bottom:20px;"><p class="function_text">Function menu</p></li>
-                 <% if(session.admin.type_=='03系统管理员'){ %>
+                 <% if(session.admin.type_=='03'){ %>
                 <li><a href="${cxt!}/jf/thairice/admin/user/main">Operator management</a></li>
                 <% }%>
                 <li class="active"><a>User management</a></li>
@@ -81,10 +81,10 @@
                         <label>Audit</label>
                         <select class="form-control" id="audit">
                             <option value="">ALL</option>
-                            <option value="02审核通过">examination passed</option>
-                            <option value="01未审核">Unaudited</option>
-                            <option value="03审核未通过">Audit failed</option>
-                            <option value="04用户过期">User expired</option>
+                            <option value="02">examination passed</option>
+                            <option value="01">Unaudited</option>
+                            <option value="03">Audit failed</option>
+                            <option value="04">User expired</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -134,15 +134,12 @@
                     <div class="form-group">
                         <label class="col-sm-3">service area</label>
                         <div class="col-sm-9">
-                            <select class="form-control">
-                                <option>area1</option>
-                            </select>
-                            <select class="form-control">
-                                <option>area1</option>
-                            </select>
-                            <select class="form-control">
-                                <option>area1</option>
-                            </select>
+                              <div class="input-group">
+		                    	 <select id="seachprov" name="province" onChange="changeComplexProvince(this.value, sub_array, 'seachcity', 'seachdistrict');" style="padding: 8px;"></select>
+			                     <select id="seachcity" name="city" onChange="changeCity(this.value,'seachdistrict','seachdistrict');" style="padding: 8px;"></select>
+			                     <select id="seachdistrict" name="area" style="padding: 8px;"></select>
+		                      </div>
+                            
                         </div>
                     </div>
                     <div class="form-group">
@@ -192,9 +189,9 @@
                     <div class="form-group">
                         <label>The title</label>
                         <select class="form-control" name="t8message.type_">
-                            <option>01通知</option>
-                            <option>02公告</option>
-                            <option>03提醒</option>
+                            <option>Notice</option>
+                            <option>Announcement</option>
+                            <option>Remind</option>
                         </select>
                     </div>
                     <input type="hidden" id="receive_userid" name="receive_userid">
@@ -225,7 +222,9 @@
 <script src="${cxt!}/ui/thairice/data_files/holder.min.js"></script>
 <script src="${cxt!}/ui/thairice/data_files/ie10-viewport-bug-workaround.js"></script>
 <script type="text/javascript" src="${cxt!}/ui/thairice/JS/layer/layer.js"></script>
-<script type="text/javascript" src="${cxt!}/ui/common.js"></script>
+<script src="${cxt!}/ui/thairice/area-select/Area.js"></script>
+<script src="${cxt!}/ui/thairice/area-select/AreaData_min.js"></script>
+<script type="text/javascript" src="${cxt!}/ui/thairice/common.js"></script>
 <script>
     var $wrapper = $('#div-table-container');
     var $table = $('#dataTable01');
@@ -239,13 +238,13 @@
             return ''+data.prdt_efdt.substring(0,11)+'to '+data.pd_exdat.substring(0,11);
         }},
         {"data": null, render: function (data, type, row, meta) {
-                if (data.status_ == '01未审核') {
+                if (data.status_ == '01') {
                     return '<button type="button" class="btn btn-success btn-sm audit bc"> approved</button>&nbsp'
                          + '<button type="button" class="btn btn-danger btn-sm bc" onclick="open_message(' + data.id + ',' + 3 + ')">rejected</button>';
-                } else if (data.status_ == '02审核通过') {
-                    return '<span class="success">' + data.status_ + '</span> <i class="glyphicon glyphicon-edit edit"></i>';
+                } else if (data.status_ == '02') {
+                    return '<span class="success">Passed approval</span> <i class="glyphicon glyphicon-edit edit"></i>';
                 } else {
-                    return '<span class="error">' + data.status_ + '</span>';
+                    return '<span class="error">Audit failed</span>';
                 }
             }
         },
@@ -306,9 +305,16 @@
     //表单赋值
     function setData(obj){
         $("#userid").val(obj.id);
+        if(obj.area!=null){
+            var area=obj.area.split(" ");
+            //地区选择插件
+    		initComplexArea('seachprov', 'seachcity', 'seachdistrict', area_array, sub_array, area[0],area[1],area[2]);  
+        }else{
+        	initComplexArea('seachprov', 'seachcity', 'seachdistrict', area_array, sub_array, 0,0,0);  
+        }
         $("#Prdt_EfDt").val(obj.prdt_efdt);
         $("#PD_ExDat").val(obj.pd_exdat);
-        $("#status_").val('02审核通过');
+        $("#status_").val('02');
         obj.pd_tpcd.split(",").forEach(function(item){
             $("input[type=checkbox]").each(function(){
                 if(item==$(this).val()){
@@ -320,8 +326,8 @@
     //消息发送
     function send_message() {
         sendAjax("${cxt!}/jf/thairice/admin/user/send_message", $("#send_message").serialize(), function (res) {
-            showMessage(res.errorMsg);
-            if (res.rc == 2) {
+            showMessage(res.desc);
+            if (res.code == 2) {
                 _table.draw();
             }
         })
@@ -329,8 +335,8 @@
     //修改信息
     function edit_info() {
         sendAjax("${cxt!}/jf/thairice/admin/user/audit", $("#info").serialize(), function (res) {
-            showMessage(res.errorMsg);
-            if (res.rc == 1) {
+            showMessage(res.desc);
+            if (res.code == 1) {
                 _table.draw();
             }
         })

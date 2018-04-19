@@ -154,7 +154,7 @@
 <script src="${cxt!}/ui/thairice/JS/bootstrapValidator.js"></script>
 <script src="${cxt!}/ui/thairice/data_files/ie10-viewport-bug-workaround.js"></script>
 <script type="text/javascript" src="${cxt!}/ui/thairice/JS/layer/layer.js"></script>
-<script src="${cxt!}/ui/common.js"></script>
+<script src="${cxt!}/ui/thairice/common.js"></script>
 <script>
     var $wrapper = $('#div-table-container');
     var $table = $('#dataTable01');
@@ -216,9 +216,9 @@
     	 $("#addForm").bootstrapValidator('validate');
     	 if (!$("#addForm").data('bootstrapValidator').isValid()) {return;}
         sendAjax("${cxt!}/jf/thairice/admin/user/save", $("#addForm").serialize(), function (res) {
-            showMessage(res.errorMsg);
+            showMessage(res.desc);
             $("#addForm").bootstrapValidator('resetForm');
-            if (res.rc == 1) {
+            if (res.code == 1) {
                 _table.draw();
                 $("#addModal").modal('hide');
             }

@@ -30,11 +30,11 @@
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar left_menu">
             <div class="self_info">
-             <% if(user.status_=='02审核通过'){ %>
+             <% if(user.status_=='02'){ %>
              <div class="ribbon-wrapper"><div class="ribbon" style="background-color:#4CAF50">examination passed</div></div>
-             <% }else if(user.status_=='01未审核'){ %>
+             <% }else if(user.status_=='01'){ %>
               <div class="ribbon-wrapper"><div class="ribbon">Unaudited</div></div>
-             <% }else if(user.status_=='03审核未通过'){ %>
+             <% }else if(user.status_=='03'){ %>
              <div class="ribbon-wrapper"><div class="ribbon">Audit failed</div></div>
              <% }%>
                 <p class="self_title text-center">Personal center</p>
@@ -61,7 +61,7 @@
                     </dt>
                     <dd class="self_dd">
                         <p class="name">${user.name_}</p>
-                        <p>928078226</p>
+                      
                     </dd>
                 </dl>
                 <button type="button" class="btn btn-primary btn-lg btn-block reset_btn" data-toggle="modal"
@@ -99,7 +99,7 @@
                         <div class="form-group">
                             <label class="col-md-3 control-label" style="width:120px;">E-mail</label>
                             <div class="col-md-9" style="width:470px;">
-                                <input type="email" class="form-control" name="t3user.email" value="${user.email}"
+                                <input type="email" class="form-control" id="u_email" name="t3user.email" value="${user.email}"
                                        placeholder="jone@example.com">
                             </div>
                         </div>
@@ -144,9 +144,13 @@
                         <div class="form-group">
                             <label class="col-md-3 control-label" style="width:120px;">Select area</label>
                             <div class="col-md-9" style="width:470px;">
-                                <select class="form-control">
-                                    <option>Mangu</option>
-                                </select>
+                             <div id="city_china_val" style="float: left;">
+					         <p>
+						     <select class="province cxselect" name="province" data-value="${province}" data-first-title="选择省" disabled="disabled" style="padding:8px;"></select>
+						     <select class="city cxselect" name="city" data-value="${city}" data-first-title="选择市"   disabled="disabled" style="padding:8px;"></select> 
+						     <select class="area cxselect" name="area" data-value="${area}" data-first-title="选择地区"  disabled="disabled" style="padding:8px;"></select>
+					          </p>
+						     </div>
                             </div>
                         </div>
                         <div class="form-group">
@@ -349,8 +353,14 @@
 <script src="${cxt!}/ui/thairice/datetime-picker/bootstrap-datetimepicker.min.js"></script>
 <script type="text/javascript" src="${cxt!}/ui/thairice/JS/layer/layer.js"></script>
 <script src="${cxt!}/ui/thairice/JS/bootstrapValidator.js"></script>
-<script type="text/javascript" src="${cxt!}/ui/common.js"></script>
+<script src="${cxt!}/ui/thairice/area/jquery.cxselect.min.js"></script>
+<script type="text/javascript" src="${cxt!}/ui/thairice/common.js"></script>
 <script>
+$.cxSelect.defaults.url = '${cxt!}/ui/thairice/area/cityData.min.json';
+$('#city_china_val').cxSelect({
+	selects: ['province', 'city', 'area'],
+	nodata: 'none'
+});
     //初始化复选框
     '${user.PD_TpCd}'.split(",").forEach(function (item) {
         $("input[type=checkbox]").each(function () {
@@ -364,13 +374,14 @@
     	 $("#info").bootstrapValidator('validate');
     	 if (!$("#info").data('bootstrapValidator').isValid()) {return;}
         sendAjax('${cxt!}/jf/thairice/t3user/edit_info', $("#info").serialize(), function (res) {
-            showMessage(res.errorMsg);
+        	$('#email').val($('#u_email').val());
+            showMessage(res.desc);
         });
     })
     //发送邮箱授权码
    $('#send_email').click(function () {
 	   sendAjax("${cxt!}/jf/thairice/t3user/send_code",{email:$("#email").val()},function(res){
-           showMessage(res.errorMsg);
+           showMessage(res.desc);
 	   });    
     })
     //修改密码
@@ -379,7 +390,7 @@
     	 if (!$("#edit_pass").data('bootstrapValidator').isValid()) {return;}
         sendAjax('${cxt!}/jf/thairice/t3user/edit_pass', $("#edit_pass").serialize(), function (res) {
             layer.msg(res.errorMsg);
-            if (res.rc == 1) {
+            if (res.code == 1) {
             	$("#passwordModal").modal("hide");
             	$("#systemModal").modal("show");
                 setTimeout(function () {
@@ -410,9 +421,9 @@
     //异步上传返回结果处理
     $("#file-Portrait1").on("fileuploaded", function (event, data, previewId, index) {
         console.log(JSON.stringify(data));
-        if(data.response.rc==1){
+        if(data.response.code==1){
             layer.msg('Uploaded successfully');
-            $('#picImg').attr("src","${cxt!}"+data.response.errorMsg);
+            $('#picImg').attr("src","${cxt!}"+data.response.desc);
         }
     });
     /*换肤*/
