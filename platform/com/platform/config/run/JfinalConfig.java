@@ -31,6 +31,7 @@ import com.platform.plugin.SqlXmlPlugin;
 import com.platform.tools.ToolCache;
 import com.platform.tools.ToolString;
 
+import thairice.config.ConfMain;
 import thairice.config.DBMappingMy;
 import thairice.constant.PropertiesInitMy;
 
@@ -169,8 +170,8 @@ public class JfinalConfig extends JFinalConfig {
 
 		System.out.println("afterJFinalStart");
 		// 加载子系统
-		// thairice.mvc.MainConf.GetInstance().init();
-		// thairice.mvc.MainConf.GetInstance().start();
+		ConfMain.init();
+		ConfMain.start();
 
 		// Zeroc Ice Util 初始化
 		// IceClientUtil.init(60);
@@ -197,10 +198,7 @@ public class JfinalConfig extends JFinalConfig {
 
 		// Zeroc Ice Util 销毁
 		// IceClientUtil.closeCommunicator(true);
-
-		// cms 释放资源
-		// thairice.mvc.cms.MainConf.GetInstance().stop();
-
+		
 		// log.info("beforeJFinalStop 释放日志入库线程");
 		// ThreadSysLog.setThreadRun(false);
 		//
@@ -209,6 +207,10 @@ public class JfinalConfig extends JFinalConfig {
 		//
 		// log.info("beforeJFinalStop 数据清理");
 		// DataClear.stop();
+		
+		// 释放资源
+		ConfMain.stop();
+		
 	}
 
 	/**
