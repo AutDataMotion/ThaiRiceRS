@@ -54,9 +54,9 @@ $(function(){
 		$('.StaButton').toggle('normal');
 		$('#staChartModal').modal();
         //$('.BbReportcons .BbReportRight').fadeIn();
-		
-		printMap();//获取mapPicUrl 生成map缩略图
 		getCountry("72",app.featureLayer,"value");//统计
+		printMap();//获取mapPicUrl 生成map缩略图
+		
     });
 	$('#staChartModal .close').click(function(e) {
 		
@@ -71,7 +71,7 @@ $(function(){
 	$('#staChartModal .GenerateReportbtnDOC').click(function(e) {//生成报告 doc
 		if(app.productKind_code=='01')//area
 		{
-			
+			generateReport("doc",app.legendDiv,app.staChartDiv);
 		}
 		if(app.productKind_code=='02')//growth
 		{
@@ -93,7 +93,7 @@ $(function(){
 	$('#staChartModal .GenerateReportbtnPDF').click(function(e) {//生成报告 pdf
 		if(app.productKind_code=='01')//area
 		{
-			
+			generateReport("pdf",app.legendDiv,app.staChartDiv);
 		}
 		if(app.productKind_code=='02')//growth
 		{

@@ -44,11 +44,15 @@ function addProductLayer(areaCode,productDate,productKind_des)
 	var workspaceId = productKind_des;
 	//var dataSourceName = '72_Yield_2017_193.shp';
 	var dataSourceName = '';
-	if(productKind_des=="Yield")
+	if(productKind_des=="Yield")//估产
 	{
 		dataSourceName = '72_Yield_2017_193.shp';
 	}
-	if(productKind_des=="Drought")
+	if(productKind_des=="Drought")//干旱
+	{
+		dataSourceName = '72.shp';
+	}
+	if(productKind_des=="Area")//面积
 	{
 		dataSourceName = '72.shp';
 	}
@@ -100,6 +104,10 @@ function addProductLayer(areaCode,productDate,productKind_des)
     	if(productKind_des=="Drought")
     	{
     		createUniqueValueRenderLayer(app.featureLayer,app.renderLayer,Render_field,5,"Drought");
+    	}
+    	if(productKind_des=="Area")
+    	{
+    		createRenderLayer(app.featureLayer,app.renderLayer,Render_field,"Area");
     	}
         //createClassBreakRender(app.featureLayer,app.renderLayer,Render_field,5);
 	});
@@ -194,10 +202,10 @@ function createClassBreakRenderLayer(featureLayer,renderLayer,field,numbreaks,le
 	       	//地图添加动态图层
 	         app.map.addLayer(renderLayer);
 	         
-	         var layerExt = app.featureLayer.fullExtent;
+//	         var layerExt = app.featureLayer.fullExtent;
 	         //console.log(app.featureLayer);
 	         //console.log(layerExt);
-	         preview(layerExt);//缩放到指定范围
+	         preview(app.featureLayer);//缩放到指定范围
 	      	// create the legend if it doesn't exist
 	         //if (!app.hasOwnProperty("legend") ) {
 	         createLegend(app.map, featureLayer,legendTitle);
@@ -233,7 +241,7 @@ function createUniqueValueRenderLayer(featureLayer,renderLayer,field,uniqueKinds
 		var drawingOptions = new LayerDrawingOptions();
 		
 	    var renderer = new UniqueValueRenderer(null, field);
-	    var renderColor = [[56, 168, 0, 1],[139, 209, 0, 1],[255, 255, 0, 1],[255, 128, 0, 1],[255, 0, 0, 1]];
+	    var renderColor = [[0, 255, 127, 1],[152, 251, 152, 1],[255, 255, 0, 1],[255, 128, 0, 1],[255, 0, 0, 1]];
 	    
 	    var queryParams = new Query();
 	    queryParams.outFields = [field];
@@ -286,10 +294,10 @@ function createUniqueValueRenderLayer(featureLayer,renderLayer,field,uniqueKinds
 	       	//地图添加动态图层
 	          app.map.addLayer(renderLayer);
 	         
-	         var layerExt = app.featureLayer.fullExtent;
+//	         var layerExt = app.featureLayer.fullExtent;
 	         
 	         //console.log(layerExt);
-	         preview(layerExt);//缩放到指定范围
+	         preview(app.featureLayer);//缩放到指定范围
 	      	// create the legend if it doesn't exist
 	         //if (!app.hasOwnProperty("legend") ) {
 	         //createLegend(app.map, featureLayer,"Drought");
@@ -302,6 +310,48 @@ function createUniqueValueRenderLayer(featureLayer,renderLayer,field,uniqueKinds
 //	         }
 	    }
 	    
+	    
+	});
+}
+function createRenderLayer(featureLayer,renderLayer,field,legendTitle){
+	
+	require([
+		"esri/symbols/SimpleFillSymbol", 
+	    "esri/symbols/SimpleLineSymbol",
+	    "esri/renderers/SimpleRenderer",
+	    "esri/layers/LayerDrawingOptions",
+	    "esri/Color",
+	    "esri/tasks/query",
+	    "dojo/dom",
+	    "dojo/domReady!"],
+	    function(SimpleFillSymbol,SimpleLineSymbol,SimpleRenderer,LayerDrawingOptions,Color,Query,dom){
+		
+
+		var drawingOptions = new LayerDrawingOptions();
+		
+		var renderer = new SimpleRenderer(
+		          new SimpleFillSymbol("solid", null, new Color([255, 128, 0, 1]) // fuschia lakes!
+		));
+		drawingOptions.renderer = renderer;
+	          
+	      var options = [];
+	      options[0] = drawingOptions;
+	
+	      renderLayer.setLayerDrawingOptions(options);
+	     
+	      featureLayer.setRenderer(renderer);          
+	      featureLayer.refresh();
+	   	//地图添加动态图层
+	      app.map.addLayer(renderLayer);
+	     
+//	     var layerExt = app.featureLayer.fullExtent;
+//	     console.log(app.featureLayer);
+//	     console.log(app.featureLayer.fields);
+	     preview(app.featureLayer);//缩放到指定范围
+	  	
+	     createLegend(app.map, featureLayer,legendTitle);
+	     //}
+
 	    
 	});
 }
@@ -358,7 +408,7 @@ var sta = {};
 	function getCountry(Province,featureLayer,field)
 	{
 		//console.log(app.featureLayer);
-		var queryTask = new esri.tasks.QueryTask("http://localhost:6080/arcgis/rest/services/taicode/MapServer/0");
+		var queryTask = new esri.tasks.QueryTask("http://127.0.0.1:6080/arcgis/rest/services/taicode/MapServer/0");
         var query = new esri.tasks.Query();
         query.outFields = ["CODE","NAME"];//
         query.returnGeometry = true;
@@ -368,6 +418,7 @@ var sta = {};
         function handleQueryResult(results) {
             if ( ! results.hasOwnProperty("features") ||
                  results.features.length === 0 ) {
+            	alert("no");
               return; // no features, something went wrong
             }
             
@@ -406,12 +457,19 @@ var sta = {};
       		var data = {};
       		data.name = feature.attributes["NAME"];//
       		data.code = feature.attributes["CODE"];//
-      		
+//      		console.log(data.code);
       		  var queryParams = new esri.tasks.Query();
               queryParams.outFields = [field];
               //queryParams.outStatistics = [ minStatDef, maxStatDef];
+              if(app.productKind_code=="01"){//Area
+            	  //queryParams.where = "1=1";
+            	  queryParams.where = "code = '"+feature.attributes["CODE"]+"'";
+              }
               //queryParams.where = "1=1";
-              queryParams.geometry = feature.geometry;
+              else{
+            	  queryParams.geometry = feature.geometry;
+              }
+              
               featureLayer.queryFeatures(queryParams, getStats, errback);
               
               function getStats(results){
@@ -449,6 +507,16 @@ var sta = {};
 	}
 	function processData(features,field,data,staData)
 	{
+		if(app.productKind_code=="01"){//Area
+//			console.log(data);
+//			console.log(features);
+			var sum = 0;        
+	    	 dojo.forEach(features,function(feature) {
+	    		 sum += feature.attributes[field];
+	    	 });
+	    	 data.value = sum.toFixed(2)*900;
+	    	 staData.push(data);
+		} 
 		if(app.productKind_code=="03"){//Yield
 			
 			 var sum = 0;        
@@ -491,17 +559,27 @@ var sta = {};
 	    			heavyNum+=1;
     			 }
 	    	 });
-	    	 data.value = [toDecimal(moistNum/sum),
-	    		 toDecimal(normalNum/sum),
-	    		 toDecimal(lightDroughtNum/sum),
-	    		 toDecimal(middlingNum/sum),
-	    		 toDecimal(heavyNum/sum)];
+	    	 data.value = [toHundred(moistNum/sum),
+	    		 toHundred(normalNum/sum),
+	    		 toHundred(lightDroughtNum/sum),
+	    		 toHundred(middlingNum/sum),
+	    		 toHundred(heavyNum/sum)];
 	    	 staData.push(data);
 		}
-		 
+		
     	 
     	return staData;
 	}
+	
+	//功能：归100     
+	function toHundred(x) {   
+		var f = parseFloat(x);    
+		if (isNaN(f)) {   
+		  return;    
+		}          
+		f = Math.round(x*100);  
+		return f;        
+	} 
 	//保留两位小数    
 	//功能：将浮点数四舍五入，取小数点后2位     
 	function toDecimal(x) {   
@@ -511,7 +589,7 @@ var sta = {};
 		}          
 		f = Math.round(x*100)/100;  
 		return f;        
-	}       
+	}    
 	function ChartStaData(staData)
 	{
 		//console.log(staData);
@@ -527,7 +605,103 @@ var sta = {};
 		}
 		
 		app.staExcelInit = true;
-		
+		if(app.productKind_code=="01"){//Area
+        	
+        	var names = [];
+    		var datas = [];
+    		var dataSet = [];
+    		dojo.forEach(staData,function(stadata) {
+    			//console.log(stadata,i);
+        		 names.push(stadata["name"]);
+        		 datas.push(stadata["value"]);
+        		 var data = [];
+        		 data.push(stadata["name"]);
+        		 data.push(stadata["value"]);
+        		 dataSet.push(data);
+        	 });
+    		//统计表
+    		
+   		 	
+    		$('#sta_excel').DataTable({
+    		        data: dataSet,
+//    		        "filter": false,
+//    		        "destroy": true,
+    		        columns: [
+    		            { title: "Name" },
+    		            { title: "Value/m2" }
+    		        ]
+    		    });
+    		// 指定图表的配置项和数据
+            var option = {
+            	color: ['#3398DB'],
+                title: {
+                    text: 'TaiLand Area',
+                    textStyle:{
+                    	color:'#fff'
+                    }
+                },
+                tooltip: {},
+                toolbox: {
+                    show: true,
+                    orient: 'horizontal',
+                    left: 'right',
+                    //top: 'center',
+                    feature: {
+//                        mark: {show: true},
+//                        dataView: {show: true, readOnly: false},
+                        magicType: {show: true, type: ['line', 'bar']},
+//                        restore: {show: true},
+//                        saveAsImage: {show: true}
+                    }
+                },
+                legend: {
+                    data:['Area'],
+                    textStyle:{
+                    	color:'#fff'
+                    }
+                },
+                xAxis: {
+                	name:"Country",
+                	nameLocation:'end',
+                	nameTextStyle:{
+                		color:'#fff'
+                	},
+                	axisLabel:{
+                		color:'#fff'
+                	},
+                    data: names
+                },
+                yAxis: {
+                	name:"Area/m2",
+                	//nameLocation:'middle',
+                	nameTextStyle:{
+                		color:'#fff'
+                	},
+                	axisLabel:{
+                		color:'#fff'
+                	},
+                },
+                series: [{
+                    name: 'Area',
+                    type: 'bar',
+                    data: datas,
+                    markPoint : {
+                        data : [
+                            {type : 'max', name: 'MAX'},
+                            {type : 'min', name: 'MIN'}
+                        ]
+                    },
+                    markLine : {
+                        data : [
+                            {type : 'average', name: 'AVG'}
+                        ]
+                    }
+                }]
+            };
+            // 使用刚指定的配置项和数据显示图表。
+            app.staChart.clear();
+            app.staChart.setOption(option);
+		}
         if(app.productKind_code=="03"){//Yield
         	
         	var names = [];
@@ -551,7 +725,7 @@ var sta = {};
 //    		        "destroy": true,
     		        columns: [
     		            { title: "Name" },
-    		            { title: "Value" }
+    		            { title: "Value/ton" }
     		        ]
     		    });
     		// 指定图表的配置项和数据
@@ -595,7 +769,7 @@ var sta = {};
                     data: names
                 },
                 yAxis: {
-                	name:"Yield",
+                	name:"Yield/ton",
                 	//nameLocation:'middle',
                 	nameTextStyle:{
                 		color:'#fff'
@@ -669,7 +843,7 @@ var sta = {};
     		
     		// 指定图表的配置项和数据
             var option = {
-            	color: ['#38A800','#8BD100','#FFFF00','#FF8000','#FF0000'],
+            	color: ['#00FF7F','#98FB98','#FFFF00','#FF8000','#FF0000'],
                 title: {
                     text: 'TaiLand Drought',
                     textStyle:{
@@ -708,7 +882,7 @@ var sta = {};
                 	axisLabel:{
                 		color:'#fff'
                 	},
-                	max:1,
+                	max:100,
                 },
                 series: [
                 	{
@@ -757,10 +931,12 @@ var sta = {};
 	}
 //Preview
 /* ************************************************************************************************************/
-function preview(layerExt)
+function preview(featureLayer)
 {
-	//var layerExt = app.featureLayer.fullExtent;
- 	app.map.setExtent(layerExt.expand(1));
+//	var layerExt = featureLayer.fullExtent;
+// 	app.map.setExtent(layerExt.expand(1));
+	//alert(layerExt);
+	
 }
  /****************************************************************************************************************/
 /****************************************************************************/
