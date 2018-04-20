@@ -1,0 +1,526 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale-1">
+    <title>个人中心</title>
+    <link type="text/css" rel="stylesheet" href="${cxt!}/ui/thairice/CSS/base.css">
+    <link type="text/css" rel="stylesheet" href="${cxt!}/ui/thairice/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+    <link type="text/css" rel="stylesheet" href="${cxt!}/ui/thairice/CSS/self_info.css">
+    <link type="text/css" rel="stylesheet" href="${cxt!}/ui/thairice/CSS/nav_css.css">
+    <link type="text/css" rel="stylesheet" href="${cxt!}/ui/thairice/data_files/dashboard.css">
+    <link type="text/css" rel="stylesheet" href="${cxt!}/ui/thairice/CSS/bootstrapValidator.css">
+    <link rel="stylesheet" href="${cxt!}/ui/thairice/CSS/bootstrap-imginput.css">
+    <link type="text/css" id="skin" rel="stylesheet" href="${cxt!}/ui/thairice/CSS/skin/color_one.css">
+    <style>
+        .btn-file{background-color: #0c7897;}
+        .btn-primary:hover{background-color: #03A9F4;}
+        .r{height: 500px;text-align: center;overflow: hidden;}
+        .r img{max-width: 300px!important;max-height: 300px!important;}
+        .ribbon-wrapper{width:80px;height:88px;position:absolute;top:-3px;right:-3px;overflow:hidden}
+        .ribbon{text-align:center;color:#fff;font-weight:500;padding:7px 0;width:120px;background-color:#F44336;box-shadow:1px 1px 3px rgba(0,0,0,.2),inset 1px 1px 0 rgba(255,255,255,.1);font-size:16px;transform:rotate(45deg);position:relative;top:12px;left:-3px}
+    </style>
+</head>
+<body>
+<!--公共的头部start-->
+<%includeFileTemplate("/thairice/common/user_top.html"){}%>
+<!--公共的头部end-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar left_menu">
+            <div class="self_info">
+             <% if(user.status_=='02'){ %>
+             <div class="ribbon-wrapper"><div class="ribbon" style="background-color:#4CAF50">examination passed</div></div>
+             <% }else if(user.status_=='01'){ %>
+              <div class="ribbon-wrapper"><div class="ribbon">Unaudited</div></div>
+             <% }else if(user.status_=='03'){ %>
+             <div class="ribbon-wrapper"><div class="ribbon">Audit failed</div></div>
+             <% }%>
+                <p class="self_title text-center">Personal center</p>
+                <dl class="dl-horizontal">
+                    <dt class="self_photo">
+                    <form id="uploadForm">
+                        <div class="form-group" data-toggle="modal" data-target="#upload">
+                            <div class="fileinput fileinput-new" data-provides="fileinput" id="exampleInputUpload" style="background-color: none;">
+                                <div class="fileinput-new thumbnail"
+                                     style="width: 100px;height: 100px; border:none; padding:0;">
+                                    <img src="${cxt!}${user.heading!'/ui/thairice/Images/self_info/photo.jpg'}" id='picImg' alt=""/>
+                                </div>
+                                <div class="fileinput-preview fileinput-exists thumbnail"
+                                     style="width: 100px;height: 100px; border:none; padding:0;"></div>
+                                <div style="cursor:pointer;">
+                            <span class="btn-file" style="cursor: pointer;background-color: rgba(240, 248, 255, 0);">
+                            <span class="fileinput-new">change picture</span>
+                            <span class="fileinput-exists">change picture</span>
+                            </span>
+                                </div>
+                            </div>
+                        </div>
+                    </form>
+                    </dt>
+                    <dd class="self_dd">
+                        <p class="name">${user.name_}</p>
+                      
+                    </dd>
+                </dl>
+                <button type="button" class="btn btn-primary btn-lg btn-block reset_btn" data-toggle="modal"
+                        data-target="#passwordModal">Reset password
+                </button>
+                <a href="${cxt!}/jf/thairice/t3user/exit" type="button" class="btn btn-primary btn-lg btn-block logout_btn"
+                   role="button">Log out</a>
+            </div>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <div class="self_tablist">
+                <ul class="nav nav-pills" id="myTabs">
+                    <li class="active"><a href="#tab_one" data-toggle="tab">Personal information</a></li>
+                    <li><a href="#tab_two" data-toggle="tab">My report</a></li>
+                </ul>
+            </div>
+            <div class="tab-content">
+                <div class="tab-pane fade in active" id="tab_one">
+                    <form id="info" class="form-horizontal tab-form">
+                        <p class="text-center form_title"> < user information > </p>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" style="width:120px;">Username</label>
+                            <div class="col-md-9" style="width:470px;">
+                                <input type="text" class="form-control" readonly value="${user.account}"
+                                       placeholder="Jone">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" style="width:120px;">Phonenumber</label>
+                            <div class="col-md-9" style="width:470px;">
+                                <input type="text" class="form-control" name="t3user.phone" value="${user.phone}"
+                                       placeholder="+66 08088999999999">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" style="width:120px;">E-mail</label>
+                            <div class="col-md-9" style="width:470px;">
+                                <input type="email" class="form-control" id="u_email" name="t3user.email" value="${user.email}"
+                                       placeholder="jone@example.com">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" style="width:120px;">Yourname</label>
+                            <div class="col-md-9" style="width:470px;">
+                                <input type="text" class="form-control" name="t3user.name_" value="${user.name_}"
+                                       placeholder="Yingluck Chinnawat">
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" style="width:120px;">Company</label>
+                            <div class="col-md-9" style="width:470px;">
+                                <input type="text" class="form-control" name="t3user.company" value="${user.company}"
+                                       placeholder="Company">
+                            </div>
+                        </div>
+                         <div class="form-group">
+                            <label class="col-md-3 control-label" style="width:120px;">Zip code</label>
+                            <div class="col-md-9" style="width:470px;">
+                                <input type="text" class="form-control" name="t3user.zip_encode" value="${user.zip_encode}"
+                                       placeholder="Company">
+                            </div>
+                        </div>
+                          <div class="form-group">
+                            <label class="col-md-3 control-label" style="width:120px;">address</label>
+                            <div class="col-md-9" style="width:470px;">
+                                <input type="text" class="form-control" name="t3user.address" value="${user.address}"
+                                       placeholder="Company">
+                            </div>
+                        </div> 
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" style="width:120px;">Industry</label>
+                            <div class="col-md-9" style="width:470px;">
+                                <input type="text" class="form-control" name="t3user.industry" value="${user.industry}"
+                                       placeholder="Company">
+                            </div>
+                        </div>
+                        <p class="text-center form_title"> < Service information > </p>
+                        <div style="position: relative;background-color: white;padding: 12px 0px 15px 0px;">
+                        <div class="ribbon-wrapper"><div class="ribbon" style="background-color:#838883">Unchange</div></div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" style="width:120px;">Select area</label>
+                            <div class="col-md-9" style="width:470px;">
+                     			 <div class="input-group">
+		                    	 <select id="seachprov"  onChange="changeComplexProvince(this.value, sub_array, 'seachcity', 'seachdistrict');"  style="padding: 8px;"></select>
+			                     <select id="seachcity"  onChange="changeCity(this.value,'seachdistrict','seachdistrict');" style="padding: 8px;"></select>
+			                     <select id="seachdistrict" style="padding: 8px;"></select>
+		                         </div>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label class="col-md-3 control-label" style="width:120px; padding-left:0;">Select
+                                services</label>
+                            <div class="col-md-9" style="width:470px;">
+                                <div class="checkbox">
+                                    <label><input type="checkbox" name="PD_TpCd" value="01" disabled>Rice planting area
+                                        monitoring</label>
+                                </div>
+                                <div class="checkbox">
+                                    <label><input type="checkbox" name="PD_TpCd" value="02" disabled>Rice drought
+                                        monitoring</label>
+                                </div>
+                                <div class="checkbox">
+                                    <label><input type="checkbox" name="PD_TpCd" value="03" disabled>Rice condition
+                                        monitoring</label>
+                                </div>
+                                <div class="checkbox">
+                                    <label><input type="checkbox" name="PD_TpCd" value="04" disabled>Rice production
+                                        estimates</label>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="form-group" style="margin-top:100px;">
+                            <label class="col-sm-2 control-label" style="width:120px;">Service cycle</label>
+                            <div class="col-sm-10" style="width:540px;">
+                                <div class="col-sm-4">
+                                    <div class="input-group date" style="width:151px;">
+                                        <input type="text" id='starttime1' class="form-control" name="Prdt_EfDt"
+                                               value="${user.Prdt_EfDt}" disabled>
+                                        <span class="input-group-addon"><i
+                                                class="glyphicon glyphicon-calendar"></i></span>
+                                    </div>
+                                </div>
+                                <div class="col-sm-1" style="text-align:center;">
+                                    <label class="control-label">to</label>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="input-group date" style="width:151px;">
+                                        <input type="text" id='endtime1' class="form-control" name="PD_ExDat"
+                                               value="${user.PD_ExDat}" disabled>
+                                        <span class="input-group-addon"><i
+                                                class="glyphicon glyphicon-calendar"></i></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        </div>
+                        <input type="hidden" value="${user.id}" name="t3user.id">
+                        <div class="form-group">
+                            <button type="button" id="modify_btn" class="btn btn-primary btn-lg btn-block modify_btn">
+                                Modify the information
+                            </button>
+                        </div>
+                    </form>
+                </div>
+                <div class="tab-pane fade" id="tab_two">
+                    <div class="tab_btns">
+                        <button type="button" class="btn btn-success">Download the selected</button>
+                        <button type="button" class="btn btn-info">Merging download</button>
+                    </div>
+                    <div class="tab_table_wrap">
+                        <table class="table table-bordered table-condensed" align="center" cellpadding="0"
+                               cellspacing="0">
+                            <thead>
+                            <tr>
+                                <th style="border-bottom:none;">
+                                    <input type="checkbox">Select all
+                                </th>
+                                <th style="border-bottom:none;">ID</th>
+                                <th style="border-bottom:none;">Type</th>
+                                <th style="border-bottom:none;">Format</th>
+                                <th style="border-bottom:none;">Size</th>
+                                <th style="border-bottom:none;">Creation time</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <tr>
+                                <td><input type="checkbox"></td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                                <td>&nbsp;</td>
+                            </tr>
+                            </tbody>
+                        </table>
+                        <nav aria-label="...">
+                            <ul class="pager">
+                                <li><a href="#">Previous</a></li>
+                                <li><a href="#">1</a>
+                                <li><a href="#">2</a>
+                                <li><a href="#">3</a>
+                                <li><a href="#">Next</a></li>
+                            </ul>
+                        </nav>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!--system message modal-->
+<div class="modal fade" id="systemModal" tabindex="-1" role="dialog" aria-labelledby="systemModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">System message</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body">Congratulations on your revision of the password<br>
+                and you will jump to the login page after&nbsp;&nbsp;&nbsp;&nbsp;<span>5</span> s
+            </div>
+            <div class="modal-footer" style="text-align:center;">
+                <a href="${cxt!}/jf/thairice/t3user/exit" class="btn btn-primary go_btn" type="button"
+                   data-dismiss="modal">Go now</a>
+            </div>
+        </div>
+    </div>
+</div>
+<!--upload head modal-->
+<div class="modal fade" id="upload" tabindex="-1" role="dialog" aria-labelledby="systemModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">upload head</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body">
+                <div class="r">
+                    <input id="file-Portrait1" name="head"  type="file" style="background-color: none;">
+                </div>
+            </div>
+            <div class="modal-footer" style="text-align:center;">
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!--password modify modal-->
+<div class="modal fade" id="passwordModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="exampleModalLabel">Reset password</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal" id="edit_pass">
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Password</label>
+                        <div class="col-sm-9">
+                            <input type="password"  name="pwd" class="form-control"  placeholder="The Passward is made up of 6 to 12 letters and Numbers">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">NewPassword</label>
+                        <div class="col-sm-9">
+                            <input type="password" class="form-control" name="again" placeholder="verify password">
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">E-mail</label>
+                        <div class="col-sm-9">
+                        <div class="input-group">
+                              <input type="email" class="form-control" placeholder="your E-mai like someone@exmaple.com"  name="email"  id="email"  value="${user.email}" readonly>
+                              <span class="input-group-addon" id="send_email" style="background-color:#5cb85c;color: #fff;background-color: #5cb85c;cursor: pointer;">Send authorization code</span>
+                         </div>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3 control-label">Verification code</label>
+                        <div class="col-sm-9">
+                            <input type="text" class="form-control" placeholder="Enter your email address received the authentication code"  name="code" >
+                        </div>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary system_btn" id="pass_btn" type="button">Reset</button>
+                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
+<script src="${cxt!}/ui/thairice/JS/jquery-2.0.0.min.js"></script>
+<script src="${cxt!}/ui/thairice/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+<script src="${cxt!}/ui/thairice/JS/bootstrap-imginput.js"></script>
+<script src="${cxt!}/ui/thairice/bootstrap-fileinput-master/js/fileinput.min.js"></script>
+<script src="${cxt!}/ui/thairice/datetime-picker/moment.js"></script>
+<script src="${cxt!}/ui/thairice/datetime-picker/bootstrap-datetimepicker.min.js"></script>
+<script type="text/javascript" src="${cxt!}/ui/thairice/JS/layer/layer.js"></script>
+<script src="${cxt!}/ui/thairice/JS/bootstrapValidator.js"></script>
+<script src="${cxt!}/ui/thairice/area/jquery.cxselect.min.js"></script>
+<script src="${cxt!}/ui/thairice/area-select/Area.js"></script>
+<script src="${cxt!}/ui/thairice/area-select/AreaData_min.js"></script>
+<script type="text/javascript" src="${cxt!}/ui/thairice/common.js"></script>
+<script>
+    initComplexArea('seachprov', 'seachcity', 'seachdistrict', area_array, sub_array, '${province}','${city}','${area}');  
+    //初始化复选框
+    '${user.PD_TpCd}'.split(",").forEach(function (item) {
+        $("input[type=checkbox]").each(function () {
+            if (item == $(this).val()) {
+                $(this).attr("checked", "true");
+            }
+        });
+    });
+    //修改个人信息
+    $('#modify_btn').click(function () {
+    	 $("#info").bootstrapValidator('validate');
+    	 if (!$("#info").data('bootstrapValidator').isValid()) {return;}
+        sendAjax('${cxt!}/jf/thairice/t3user/edit_info', $("#info").serialize(), function (res) {
+        	$('#email').val($('#u_email').val());
+            showMessage(res.desc);
+        });
+    })
+    //发送邮箱授权码
+   $('#send_email').click(function () {
+	   sendAjax("${cxt!}/jf/thairice/t3user/send_code",{email:$("#email").val()},function(res){
+           showMessage(res.desc);
+	   });    
+    })
+    //修改密码
+    $('#pass_btn').click(function () {
+    	 $("#edit_pass").bootstrapValidator('validate');
+    	 if (!$("#edit_pass").data('bootstrapValidator').isValid()) {return;}
+        sendAjax('${cxt!}/jf/thairice/t3user/edit_pass', $("#edit_pass").serialize(), function (res) {
+            layer.msg(res.errorMsg);
+            if (res.code == 1) {
+            	$("#passwordModal").modal("hide");
+            	$("#systemModal").modal("show");
+                setTimeout(function () {
+                    window.location.href = "${cxt!}/jf/thairice/t3user/exit"
+                }, 5000);
+            }
+        });
+    })
+    //上传头像
+    $("#file-Portrait1").fileinput({
+        language: 'zh', //设置语言
+        uploadExtraData: {id: '${user.id}'},
+        uploadUrl: '${cxt!}/jf/thairice/t3user/upload_head', //上传的地址
+        allowedFileExtensions: ['jpg', 'png'],//接收的文件后缀
+        showUpload: false, //是否显示上传按钮
+        showCaption: false,//是否显示标题
+        showCancel: false,
+        autoReplace: true,
+        showBrowse: true,
+        showClose:false,
+        dropZoneEnabled: false,//是否允许拖拽
+        uploadAsync: true,
+        maxFileSize:1024,
+        maxFileCount: 1,
+        browseClass: "btn btn-primary", //按钮样式
+        previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
+    });
+    //异步上传返回结果处理
+    $("#file-Portrait1").on("fileuploaded", function (event, data, previewId, index) {
+        console.log(JSON.stringify(data));
+        if(data.response.code==1){
+            layer.msg('Uploaded successfully');
+            $('#picImg').attr("src","${cxt!}"+data.response.desc);
+        }
+    });
+    /*换肤*/
+    function skin1() {
+        var ob = document.getElementById('skin');
+        ob.href = 'CSS/skin/color_one.css';
+    }
+    function skin2() {
+        var ob = document.getElementById('skin');
+        ob.href = 'CSS/skin/color_two.css';
+    }
+    function skin3() {
+        var ob = document.getElementById('skin');
+        ob.href = 'CSS/skin/color_three.css';
+    }
+    $(function () {
+        $('#myTabs a').click(function (e) {
+            e.preventDefault()
+            $(this).tab('show')
+        });
+        //日期选择插件
+        $('#starttime1').datetimepicker({
+            format: 'YYYY-MM-DD',
+            locale: moment.locale('zh-cn')
+        });
+        $('#endtime1').datetimepicker({
+            format: 'YYYY-MM-DD',
+            locale: moment.locale('zh-cn')
+        });
+        $('.tab_table_wrap tbody tr:odd td').css('background-color', '#dbeff6');
+    })
+    //修改密码参数校验 
+     $("#edit_pass").bootstrapValidator({
+        message: 'This value is not valid',
+        feedbackIcons: {
+            /*输入框不同状态，显示图片的样式*/
+            valid: 'glyphicon glyphicon-ok',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            /*验证*/
+            'pwd': {
+                validators: {
+                    notEmpty: {
+                        message: 'The pwd is  required and can\'t be empty '
+                    },
+                    regexp: {
+                    	regexp: /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,12}$/,
+                        message: 'The password is made up of 6 to 12 letters and Numbers'
+                    }
+                }
+            },
+            'again': {
+                message: 'Password is invalid',
+                validators: {
+                    notEmpty: {
+                        message: 'Password is  required and can\'t be empty'
+                    },
+                    identical: {//相同
+                        field: 'pwd',
+                        message: ' Two input password must be consistent'
+                    }
+                }
+            },
+         'code': {
+                message: 'Password is invalid',
+                validators: {
+                    notEmpty: {
+                        message: 'Authentication code is  required and can\'t be empty'
+                    }
+                }
+            }
+      }
+  });
+    //修改个人信息参数校验 
+    $("#info").bootstrapValidator({
+       message: 'This value is not valid',
+       feedbackIcons: {
+           /*输入框不同状态，显示图片的样式*/
+           valid: 'glyphicon glyphicon-ok',
+           validating: 'glyphicon glyphicon-refresh'
+       },
+       fields: {
+           /*验证*/
+           't3user.phone': {
+               validators: {
+                   notEmpty: {
+                       message: 'Phone is  required and can\'t be empty'
+                   },
+                   stringLength: {
+                       /*长度提示*/
+                       min: 6,
+                       max: 12,
+                       message: 'Phone  length is 11'
+                   },
+                   regexp: {
+                       regexp: /^1\d{10}$/,
+                       message: 'The Phone format is not correct'
+                   }
+               }
+           }
+     }
+ });
+</script>

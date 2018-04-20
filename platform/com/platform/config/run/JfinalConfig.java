@@ -2,11 +2,6 @@ package com.platform.config.run;
 
 import org.apache.log4j.Logger;
 
-import thairice.config.DBMappingMy;
-import thairice.constant.PropertiesInitMy;
-import thairice.utils.FtpUtils;
-import zeroc.util.IceClientUtil;
-
 import com.jfinal.config.Constants;
 import com.jfinal.config.Handlers;
 import com.jfinal.config.Interceptors;
@@ -17,6 +12,7 @@ import com.jfinal.core.JFinal;
 import com.jfinal.i18n.I18nInterceptor;
 import com.jfinal.plugin.activerecord.tx.TxByMethods;
 import com.jfinal.plugin.activerecord.tx.TxByRegex;
+import com.jfinal.plugin.cron4j.Cron4jPlugin;
 import com.jfinal.plugin.ehcache.EhCachePlugin;
 import com.jfinal.plugin.redis.RedisPlugin;
 import com.platform.beetl.render.MyBeetlRenderFactory;
@@ -25,7 +21,6 @@ import com.platform.config.routes.PlatformRoutes;
 import com.platform.constant.ConstantCache;
 import com.platform.constant.ConstantInit;
 import com.platform.handler.GlobalHandler;
-import com.platform.interceptor.AuthInterceptor;
 import com.platform.interceptor.ParamPkgInterceptor;
 import com.platform.plugin.ControllerPlugin;
 import com.platform.plugin.FileRenamePlugin;
@@ -33,11 +28,12 @@ import com.platform.plugin.I18NPlugin;
 import com.platform.plugin.ParamInitPlugin;
 import com.platform.plugin.PropertiesPlugin;
 import com.platform.plugin.SqlXmlPlugin;
-import com.platform.thread.DataClear;
-import com.platform.thread.ThreadSysLog;
-import com.platform.thread.TimerResources;
 import com.platform.tools.ToolCache;
 import com.platform.tools.ToolString;
+
+import thairice.config.ConfMain;
+import thairice.config.DBMappingMy;
+import thairice.constant.PropertiesInitMy;
 
 /**
  * Jfinal API 引导式配置
@@ -55,22 +51,19 @@ public class JfinalConfig extends JFinalConfig {
 		// PropertiesPlugin(loadPropertyFile("init.properties"),true).start();
 		// 平台
 		com.platform.config.run.ConfMain.getInstance()
-				.setPropertyes(
-						new PropertiesPlugin(
-								loadPropertyFile("init.properties"), true));
+				.setPropertyes(new PropertiesPlugin(loadPropertyFile("init.properties"), true));
 		com.platform.config.run.ConfMain.getInstance().initProperties();
 
 		// 子系统配置初始化
-		 thairice.config.ConfMain.getInstance().setPropertyes(new
-		 PropertiesInitMy(loadPropertyFile("init_rice.properties"), false));
-		 thairice.config.ConfMain.getInstance().initProperties();
+		thairice.config.ConfMain.getInstance()
+				.setPropertyes(new PropertiesInitMy(loadPropertyFile("init_rice.properties"), false));
+		thairice.config.ConfMain.getInstance().initProperties();
 
 		log.info("configConstant 设置字符集");
 		constants.setEncoding(ToolString.encoding);
 
 		log.info("configConstant 设置是否开发模式");
-		constants.setDevMode(getPropertyToBoolean(ConstantInit.config_devMode,
-				true));
+		constants.setDevMode(getPropertyToBoolean(ConstantInit.config_devMode, true));
 
 		log.info("configConstant 视图Beetl设置");
 		constants.setMainRenderFactory(new MyBeetlRenderFactory());
@@ -82,6 +75,7 @@ public class JfinalConfig extends JFinalConfig {
 
 		log.info("configConstant i18n文件前缀设置设置");
 		constants.setI18nDefaultBaseName("message");
+
 	}
 
 	/**
@@ -93,9 +87,9 @@ public class JfinalConfig extends JFinalConfig {
 
 		log.info("configRoute 手动注册路由");
 		routes.add(new PlatformRoutes());
-		
-		//子系统路由
-		 routes.add(new thairice.config.RoutePlugins());
+
+		// 子系统路由
+		routes.add(new thairice.config.RoutePlugins());
 	}
 
 	/**
@@ -104,15 +98,13 @@ public class JfinalConfig extends JFinalConfig {
 	public void configPlugin(Plugins plugins) {
 		log.info("注册paltform ActiveRecordPlugin");
 		// 数据库层设置初始化 ---平台
-		com.platform.config.run.ConfMain.getInstance().setDBMapping(
-				new PlatformMapping());
+		com.platform.config.run.ConfMain.getInstance().setDBMapping(new PlatformMapping());
 		com.platform.config.run.ConfMain.getInstance().initDBMapping(plugins);
-		
+
 		// 数据库层设置初始化 ---子系统
 		thairice.config.ConfMain.getInstance().setDBMapping(new DBMappingMy());
 		thairice.config.ConfMain.getInstance().initDBMapping(plugins);
-		
-		
+
 		log.info("I18NPlugin 国际化键值对加载");
 		plugins.add(new I18NPlugin());
 
@@ -120,15 +112,11 @@ public class JfinalConfig extends JFinalConfig {
 			log.info("EhCachePlugin EhCache缓存");
 			plugins.add(new EhCachePlugin());
 
-		} else if (ToolCache.getCacheType().equals(
-				ConstantCache.cache_type_redis)) {
+		} else if (ToolCache.getCacheType().equals(ConstantCache.cache_type_redis)) {
 			log.info("RedisPlugin Redis缓存");
-			String redisIp = (String) PropertiesPlugin
-					.getParamMapValue(ConstantInit.config_redis_ip);
-			Integer redisPort = (Integer) PropertiesPlugin
-					.getParamMapValue(ConstantInit.config_redis_port);
-			RedisPlugin systemRedis = new RedisPlugin(
-					ConstantCache.cache_name_redis_system, redisIp, redisPort);
+			String redisIp = (String) PropertiesPlugin.getParamMapValue(ConstantInit.config_redis_ip);
+			Integer redisPort = (Integer) PropertiesPlugin.getParamMapValue(ConstantInit.config_redis_port);
+			RedisPlugin systemRedis = new RedisPlugin(ConstantCache.cache_name_redis_system, redisIp, redisPort);
 			plugins.add(systemRedis);
 		}
 
@@ -140,6 +128,9 @@ public class JfinalConfig extends JFinalConfig {
 
 		log.info("afterJFinalStart 配置文件上传命名策略插件");
 		plugins.add(new FileRenamePlugin());
+		// 配置定时任务插件
+		Cron4jPlugin cron4 = new Cron4jPlugin("overdueRemind.properties");
+		plugins.add(cron4);
 	}
 
 	/**
@@ -149,8 +140,8 @@ public class JfinalConfig extends JFinalConfig {
 		// log.info("configInterceptor 支持使用session");
 		// me.add(new SessionInViewInterceptor());
 
-		log.info("configInterceptor 权限认证拦截器");
-		interceptors.add(new AuthInterceptor());
+		// log.info("configInterceptor 权限认证拦截器");
+		// interceptors.add(new AuthInterceptor());
 
 		log.info("configInterceptor 参数封装拦截器");
 		interceptors.add(new ParamPkgInterceptor());
@@ -177,26 +168,26 @@ public class JfinalConfig extends JFinalConfig {
 	 */
 	public void afterJFinalStart() {
 
-		System.out.println("afterJFinalStart");	
+		System.out.println("afterJFinalStart");
 		// 加载子系统
-//		 thairice.mvc.MainConf.GetInstance().init();
-//		 thairice.mvc.MainConf.GetInstance().start();
+		ConfMain.init();
+		ConfMain.start();
 
 		// Zeroc Ice Util 初始化
-		//IceClientUtil.init(60);
+		// IceClientUtil.init(60);
 		// 初始化ftp地址
-		//com.platform.config.run.ConfMain.getInstance().initFtp();
+		// com.platform.config.run.ConfMain.getInstance().initFtp();
 		// targrecog.config.ConfMain.getInstance().initFtp();
 
-//		log.info("afterJFinalStart 启动操作日志入库线程");
-//		ThreadSysLog.startSaveDBThread();
-//
-//		log.info("afterJFinalStart 系统负载");
-//		TimerResources.start();
-//
-//		log.info("afterJFinalStart 数据清理");
-//		DataClear.start();
-//		FtpUtils.initScanFtp();
+		// log.info("afterJFinalStart 启动操作日志入库线程");
+		// ThreadSysLog.startSaveDBThread();
+		//
+		// log.info("afterJFinalStart 系统负载");
+		// TimerResources.start();
+		//
+		// log.info("afterJFinalStart 数据清理");
+		// DataClear.start();
+		// FtpUtils.initScanFtp();
 
 	}
 
@@ -206,19 +197,20 @@ public class JfinalConfig extends JFinalConfig {
 	public void beforeJFinalStop() {
 
 		// Zeroc Ice Util 销毁
-//		IceClientUtil.closeCommunicator(true);
-
-		// cms 释放资源
-//		thairice.mvc.cms.MainConf.GetInstance().stop();
-
-//		log.info("beforeJFinalStop 释放日志入库线程");
-//		ThreadSysLog.setThreadRun(false);
-//
-//		log.info("beforeJFinalStop 释放系统负载抓取线程");
-//		TimerResources.stop();
-//
-//		log.info("beforeJFinalStop 数据清理");
-//		DataClear.stop();
+		// IceClientUtil.closeCommunicator(true);
+		
+		// log.info("beforeJFinalStop 释放日志入库线程");
+		// ThreadSysLog.setThreadRun(false);
+		//
+		// log.info("beforeJFinalStop 释放系统负载抓取线程");
+		// TimerResources.stop();
+		//
+		// log.info("beforeJFinalStop 数据清理");
+		// DataClear.stop();
+		
+		// 释放资源
+		ConfMain.stop();
+		
 	}
 
 	/**

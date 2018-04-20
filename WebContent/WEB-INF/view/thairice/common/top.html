@@ -1,0 +1,44 @@
+	<head>
+	<meta charset="UTF-8" />
+	</head>
+	<nav class="navbar navbar-inverse navbar-fixed-top">
+		<div class="container-fluid">
+			<div class="navbar-header">
+				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"
+						aria-expanded="false" aria-controls="navbar">
+					<span class="sr-only">Toggle navigation</span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+					<span class="icon-bar"></span>
+				</button>
+				<p class="navbar-brand">Thai agricultural remote sensing monitoring platform</p>
+			</div>
+			<div id="navbar" class="navbar-collapse collapse">
+				<ul class="nav navbar-nav navbar-right">
+					<li><a href="#"><i class="glyphicon glyphicon-user"></i>${session.admin.account!}</a></li>
+					<li><a href="#" data-toggle="modal" data-target="#exampleModal"><i
+							class="glyphicon glyphicon-log-out"></i>Log out</a></li>
+					<li><a href="#"><i class="glyphicon glyphicon-question-sign"></i></a></li>
+				</ul>
+			</div>
+		</div>
+	</nav>
+	<!-- Logout Modal-->
+	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+		 aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+					<button class="close" type="button" data-dismiss="modal" aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+				<div class="modal-footer">
+					<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+					<a class="btn btn-primary" href="${cxt!}/jf/thairice/admin/user/exit">Logout</a>
+				</div>
+			</div>
+		</div>
+	</div>

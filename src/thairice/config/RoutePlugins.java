@@ -6,20 +6,6 @@
  * @version 1.0
  */
 package thairice.config;
-import thairice.mvc.t2syslog.T2syslogController;
-import thairice.mvc.t3user.T3userController;
-import thairice.mvc.pages.pagesController;
-import thairice.mvc.r4message_send.R4message_sendController;
-import thairice.mvc.sysmonitor.SysmonitorController;
-import thairice.mvc.t5parameter_type.T5parameter_typeController;
-import thairice.mvc.t6org_data.T6org_dataController;
-import thairice.mvc.t7pdt_data.T7pdt_dataController;
-import thairice.mvc.t8message.T8messageController;
-import thairice.mvc.t9sample_info.T9sample_infoController;
-import thairice.mvc.t10pdt_report.T10pdt_reportController;
-import thairice.mvc.t11zone.T11zoneController;
-import thairice.mvc.t1parameter.T1parameterController;
-import thairice.mvc.tkvalue.TkvalueController;
 
 import com.jfinal.config.Routes;
 /**
@@ -36,12 +22,28 @@ import com.jfinal.config.Routes;
  */
 import com.platform.mvc.login.LoginController;
 
-
-
+import thairice.mvc.pages.pagesController;
+import thairice.mvc.r4message_send.R4message_sendController;
+import thairice.mvc.sysmonitor.SysmonitorController;
+import thairice.mvc.t10pdt_report.T10pdt_reportController;
+import thairice.mvc.t11zone.T11zoneController;
+import thairice.mvc.t1parameter.T1parameterController;
+import thairice.mvc.t2syslog.T2syslogController;
+import thairice.mvc.t3user.BackendUserController;
+import thairice.mvc.t3user.T3userController;
+import thairice.mvc.t5parameter_type.T5parameter_typeController;
+import thairice.mvc.t6org_data.T6org_dataController;
+import thairice.mvc.t7pdt_data.T7pdt_dataController;
+import thairice.mvc.t8message.T8messageController;
+import thairice.mvc.t9sample_info.T9sample_infoController;
+import thairice.mvc.tkvalue.TkvalueController;
 
 /**
- * <p>Title: RoutePlugins<／p>
- * <p>Description: <／p>
+ * <p>
+ * Title: RoutePlugins<／p>
+ * <p>
+ * Description: <／p>
+ * 
  * @author ZhongwengHao
  * @date 2016年1月28日
  */
@@ -62,7 +64,9 @@ public class RoutePlugins extends Routes {
 		add("/jf/thairice/t11zone", T11zoneController.class);
 		add("/jf/thairice/tkvalue", TkvalueController.class);
 		add("/jf/targrecog/index/shw", LoginController.class);
-		
+
 		add("/jf/thairice/sysmonitor", SysmonitorController.class);
+		// 系统操作员和用户管理
+		add("/jf/thairice/admin/user", BackendUserController.class);
 	}
 }

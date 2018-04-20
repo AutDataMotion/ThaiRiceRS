@@ -1,0 +1,205 @@
+<!doctype html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width,initial-scale-1">
+    <title>my message</title>
+    <link type="text/css" rel="stylesheet" href="${cxt!}/ui/thairice/CSS/base.css">
+    <link type="text/css" rel="stylesheet" href="${cxt!}/ui/thairice/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+    <link href="${cxt!}/ui/thairice/CSS/dataTables.bootstrap4.css" rel="stylesheet">
+    <link type="text/css" rel="stylesheet" href="${cxt!}/ui/thairice/CSS/my_message.css">
+    <link type="text/css" rel="stylesheet" href="${cxt!}/ui/thairice/CSS/nav_css.css">
+    <link type="text/css" id="skin" rel="stylesheet" href="${cxt!}/ui/thairice/CSS/skin/color_one.css">
+    <style>
+        .tab_btns .btn{width: auto;padding: 0 10px 0 10px;}
+        .input-group{width: 250px;float: right;margin-right: 20px;}
+    </style>
+</head>
+<body>
+<!--公共的头部start-->
+<%includeFileTemplate("/thairice/common/user_top.html"){}%>
+<!--公共的头部end-->
+<div class="container-fluid">
+    <div class="row" style="padding-top:60px;">
+        <div class="tab_btns" style="margin-top:10px; margin-left:15px;">
+            <select class="form-control" style="width:180px; float:left; margin-right:15px;" id="state">
+                <option value="">all</option>
+                <option value="01未读">unread</option>
+                <option value="02已读">read</option>
+            </select>
+            <button type="button" class="btn btn-success btn-xs" id="all_read"><i class="glyphicon glyphicon-book"></i>All marked as read</button>
+            <button type="button" class="btn btn-danger btn-xs" id="btn-del"><i class="glyphicon glyphicon-remove"></i>Delete the selected</button>
+            <button type="button" class="btn btn-info btn-xs" id="empty"><i class="glyphicon glyphicon-warning-sign"></i>Empty the list</button>
+        </div>
+        <div class="table-responsive">
+             <!--搜索-->
+                <div class="input-group">
+                    <input type="text" id="search" class="form-control" placeholder="content">
+                    <span class="input-group-btn"><button id="btn_search" class="btn btn-primary" type="button">Search</button></span>
+                </div>
+            <table class="table table-bordered data-table" id="dataTable01" align="center" cellpadding="0" cellspacing="0">
+                <thead>
+                <tr>
+                    <th width="10%" style="border-bottom:none;"><input type="checkbox" name="cb-check-all">Select all</th>
+                    <th style="border-bottom:none;">Type</th>
+                    <th style="border-bottom:none;">Content</th>
+                    <th style="border-bottom:none;">STATUS</th>
+                    <th style="border-bottom:none;">Time</th>
+                    <th style="border-bottom:none;">View</th>
+                </tr>
+                </thead>
+            </table>
+        </div>
+    </div>
+</div>
+<!-- message Modal-->
+<div class="modal fade" id="message_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">To view the message</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form role="form" id="read_message">
+                    <div class="form-group">
+                        <label>The title</label>
+                        <input type="text" id="type_"  readonly class="form-control">
+                    </div>
+                    <input type="hidden" id="id" name="r4message_send.id">
+                    <input type="hidden" id="status_" name="r4message_send.status_">
+                    <div class="form-group">
+                        <label>Details</label>
+                        <textarea class="form-control" readonly id="content" rows="7" placeholder="0/400" style="resize:none;"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-default" type="button" data-dismiss="modal">cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="${cxt!}/ui/thairice/JS/jquery-2.0.0.min.js"></script>
+<script src="${cxt!}/ui/thairice/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+<script src="${cxt!}/ui/thairice/JS/jquery.dataTables.js"></script>
+<script src="${cxt!}/ui/thairice/JS/dataTables.bootstrap4.js"></script>
+<script src="${cxt!}/ui/thairice/JS/sb-admin-datatables.min.js"></script>
+<script type="text/javascript" src="${cxt!}/ui/thairice/JS/layer/layer.js"></script>
+<script type="text/javascript" src="${cxt!}/ui/thairice/common.js"></script>
+<script>
+    var $wrapper = $('#div-table-container');
+    var $table = $('#dataTable01');
+    var columns = [
+        CONSTANT.DATA_TABLES.COLUMN.CHECKBOX,
+        {"data": "type_", orderable: false},
+        {"data": "content", orderable: false},
+        { "data": null,render: function (data, type, row, meta) {
+        	  if(data.status_=='01'){
+        		  return '<span style="color:red;">未读</span>'
+        	  }else{
+        		  return '<span style="color:blue;">已读</span>'
+        	  }
+        }},
+        {"data": "add_time", orderable: false},
+        {"data": null, width: 180,
+            render: function (data, type, row, meta) {
+                return '<button type="button" class="btn btn-success view">view</button>'
+            }
+        }
+    ];
+    //初始化表格
+    var _table = table.initTable($wrapper, $table, '${cxt!}/jf/thairice/t3user/message_list', columns);
+    table.checkboxClick($table);
+    //删除选中的行
+    $("#btn-del").click(function () {
+        deleteRows('${cxt!}/jf/thairice/t3user/delete_message', $table, _table);
+    });
+    //查询
+    $("#btn_search").click(function () {
+        _table.draw();
+    });
+  //设置全部已读
+    $("#all_read").click(function () {
+        layer.confirm('Make sure to mark all messages as read?', {icon: 3,title:'prompt',btn: ['confirm','cancel']}, function (index) {
+            sendAjax("${cxt!}/jf/thairice/t3user/all_read",null,function(res){
+                showMessage(res.desc);
+                if(res.code==1){
+                    _table.draw();
+                }
+            })
+            layer.close(index);
+        });
+    });
+    //清空全部消息
+    $("#empty").click(function () {
+        layer.confirm('Make sure to clear all messages?', {icon: 2,title:'prompt',btn: ['confirm','cancel']}, function (index) {
+            sendAjax("${cxt!}/jf/thairice/t3user/empty_message",null,function(res){
+                showMessage(res.desc);
+                if(res.code==1){
+                    _table.draw();
+                }
+            })
+            layer.close(index);
+        });
+    });
+    //查看消息并设置已读
+    $table.on("click",".view",function() {
+        var item = _table.row($(this).closest('tr')).data();
+        $("#id").val(item.id);
+        $("#status_").val(item.status_);
+        $("#type_").val(item.type_);
+        $("#content").val(item.content);
+        $("#message_modal").modal('show');
+        setTimeout(function(){
+            if(item.status_=='01'){
+                sendAjax("${cxt!}/jf/thairice/t3user/read_message",$("#read_message").serialize(),function(){_table.draw();});
+            }
+        },500);
+    });
+    //拼装查询条件
+    function getQueryCondition(data) {
+        var param = {};
+        //组装排序参数
+        if (data.order && data.order.length && data.order[0]) {
+            switch (data.order[0].column) {
+                case 1:
+                    param.orderColumn = "id";//数据库列名称
+                    break;
+            }
+            param.orderDir = data.order[0].dir;
+        }
+        //组装分页参数
+        param.search = $("#search").val();//查询条件
+        param.state = $("#state").val();
+        param.start = data.start;
+        param.pageSize = data.length;
+        param.draw = data.draw;
+        param.name = data.name;
+        return param;
+    }
+    //选择消息类型
+    $("#state").change(function () {
+        _table.draw();
+    });
+
+    /*换肤*/
+    function skin1() {
+        var ob = document.getElementById('skin');
+        ob.href = 'CSS/skin/color_one.css';
+    }
+    function skin2() {
+        var ob = document.getElementById('skin');
+        ob.href = 'CSS/skin/color_two.css';
+    }
+    function skin3() {
+        var ob = document.getElementById('skin');
+        ob.href = 'CSS/skin/color_three.css';
+    }
+</script>
+</body>
+</html>

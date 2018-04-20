@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<!-- saved from url=(0042)https://v3.bootcss.com/examples/dashboard/ -->
+<html lang="zh-CN">
+<head>
+    <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <!--<link rel="icon" href="https://v3.bootcss.com/favicon.ico">-->
+
+    <title>用户管理</title>
+    <link href="${cxt!}/ui/thairice/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="${cxt!}/ui/thairice/datetime-picker/bootstrap-datetimepicker.min.css" rel="stylesheet">
+    <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+    <link href="${cxt!}/ui/thairice/data_files/ie10-viewport-bug-workaround.css" rel="stylesheet">
+    <link href="${cxt!}/ui/thairice/CSS/dataTables.bootstrap4.css" rel="stylesheet">
+    <!-- Custom styles for this template -->
+    <link href="${cxt!}/ui/thairice/data_files/dashboard.css" rel="stylesheet">
+    <link rel="stylesheet" href="${cxt!}/ui/thairice/CSS/nav_css.css">
+    <link rel="stylesheet" href="${cxt!}/ui/thairice/CSS/operator_management.css">
+    <link rel="stylesheet" href="${cxt!}/ui/thairice/CSS/user_management.css">
+    <script src="${cxt!}/ui/thairice/data_files/ie-emulation-modes-warning.js"></script>
+    <style>
+        .mm{margin-left: 215px;position: absolute;z-index: 1;}
+        .error {color: red;font-weight: bold;}
+        .success {color: #5bb85d;font-weight:bold;}
+        .head{width: 40px;height: 40px;border-radius: 50%;}
+        .bc{width: 70px;height:35px;}
+        table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td{vertical-align: middle;text-align: center;}
+    </style>
+</head>
+<body>
+<!--公共的头部start-->
+<%includeFileTemplate("/thairice/common/top.html"){}%>
+<!--公共的头部end-->
+<div class="container-fluid">
+    <div class="row">
+        <div class="col-sm-3 col-md-2 sidebar">
+            <ul class="nav nav-sidebar">
+                <li style="margin-bottom:20px;"><p class="function_text">Function menu</p></li>
+                 <% if(session.admin.type_=='03'){ %>
+                <li><a href="${cxt!}/jf/thairice/admin/user/main">Operator management</a></li>
+                <% }%>
+                <li class="active"><a>User management</a></li>
+                <li><a href="index.html">Product data query</a></li>
+                <li><a href="data_management.html">Data management</a></li>
+                <li><a href="#">System state</a></li>
+                <li><a href="system_configuration.html">System configuration</a></li>
+                <li><a href="production_configuration.html">Production configuration</a></li>
+                <li><a href="log_management.html">Log management</a></li>
+                <li><a href="${cxt!}/jf/thairice/admin/user/data_selfinfo">Personal center</a></li>
+                <li><a href="${cxt!}/jf/thairice/t8message">My message</a></li>
+            </ul>
+        </div>
+        <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+            <div class="user_query">
+                <form id="form" class="form-inline" style="margin:15px 0 15px 0;">
+                    <div class="form-group">
+                        <input type="text" id="username" placeholder="The keyword" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label class="control-label">Time:</label>
+                        <div class="input-group" style="width: 160px;" id="start">
+                            <input type="text" id="min" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                        </div>
+                        <label class="control-label">to</label>
+                        <div class="input-group" style="width: 160px;" id="start2">
+                            <input type="text" id="max" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                        </div>
+                    </div>
+                    <div class="form-group" style="margin-right:20px;">
+                        <label>Region</label>
+                        <select class="form-control" id="region">
+                            <option value="ALL">ALL</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Audit</label>
+                        <select class="form-control" id="audit">
+                            <option value="">ALL</option>
+                            <option value="02">examination passed</option>
+                            <option value="01">Unaudited</option>
+                            <option value="03">Audit failed</option>
+                            <option value="04">User expired</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <button type="button" id="btn_search" class="btn btn-primary">search</button>
+                        <button type="button" class="btn btn-warning" style="margin-left:15px;" onclick="open_message(0,2)">
+                            group-sent message
+                        </button>
+                        <button type="button"  class="btn btn-primary"  style="margin-left: 12px;" onclick="exp()">Export to Excel</button>
+                    </div>
+                </form>
+            </div>
+            <div class="table-responsive">
+                <div class="mm">
+                <button type="button" class="btn btn-danger btn-sm" id="btn-del"><i class="glyphicon glyphicon-trash"></i>Delete</button>&nbsp&nbsp
+                </div>
+                <table class="table table-bordered data-table" id="dataTable01" width="100%" cellspacing="0">
+                    <thead>
+                    <tr>
+                        <th><input type="checkbox" name="cb-check-all">Select all</th>
+                        <th>ID</th>
+                        <th>Username</th>
+                        <th>Phonenumber</th>
+                        <th>E-mail</th>
+                        <th>Service time</th>
+                        <th>Audit</th>
+                        <th>Send a message</th>
+                    </tr>
+                    </thead>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- approved Modal-->
+<div class="modal fade" id="approved_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title" id="modal-title">user service information</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form id="info" role="form" class="form-horizontal user_form" id="approved_form">
+                    <div class="form-group">
+                        <label class="col-sm-3">service area</label>
+                        <div class="col-sm-9">
+                              <div class="input-group">
+		                    	 <select id="seachprov" name="province" onChange="changeComplexProvince(this.value, sub_array, 'seachcity', 'seachdistrict');" style="padding: 8px;"></select>
+			                     <select id="seachcity" name="city" onChange="changeCity(this.value,'seachdistrict','seachdistrict');" style="padding: 8px;"></select>
+			                     <select id="seachdistrict" name="area" style="padding: 8px;"></select>
+		                      </div>
+                            
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3">service time</label>
+                        <div class="input-group" style="padding-left:15px; width:120px;">
+                            <input type="text" name="Prdt_EfDt" id="Prdt_EfDt" class="form-control" style="width:100px; margin-right:0;"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                        </div>
+                        <label style="margin:0 10px; float:left;">to</label>
+                        <div class="input-group" style="width:120px;">
+                            <input type="text" name="PD_ExDat" id="PD_ExDat" class="form-control" style="width:100px; margin-right:0;"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label class="col-sm-3">service selection</label>
+                        <div class="col-sm-9">
+                            <label><input type="checkbox" value="01" name="PD_TpCd"> Rice planting area monitoring</label><br>
+                            <label><input type="checkbox" value="02" name="PD_TpCd"> Rice drought monitoring</label><br>
+                            <label><input type="checkbox" value="03" name="PD_TpCd"> Rice condition monitoring</label><br>
+                            <label><input type="checkbox" value="04" name="PD_TpCd"> Rice production estimates</label>
+                        </div>
+                    </div>
+                    <input type="hidden" id="userid" name="t3user.id">
+                    <input type="hidden" id="status_" name="t3user.status_">
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" id="app_btn" type="button" data-dismiss="modal" onclick="edit_info()">Through the review
+                </button>
+                <button class="btn btn-default" type="button" data-dismiss="modal">cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- message Modal-->
+<div class="modal fade" id="message_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Modify the user service</h5>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">×</span>
+                </button>
+            </div>
+            <div class="modal-body">
+                <form role="form" id="send_message">
+                    <div class="form-group">
+                        <label>The title</label>
+                        <select class="form-control" name="t8message.type_">
+                            <option>Notice</option>
+                            <option>Announcement</option>
+                            <option>Remind</option>
+                        </select>
+                    </div>
+                    <input type="hidden" id="receive_userid" name="receive_userid">
+                    <input type="hidden" id="flag" name="t8message.flag" value="1">
+                    <div class="form-group">
+                        <label>Details</label>
+                        <textarea class="form-control" id="content" name="t8message.content" rows="7" placeholder="0/400" style="resize:none;"></textarea>
+                    </div>
+                </form>
+            </div>
+            <div class="modal-footer">
+                <button class="btn btn-primary" type="button" data-dismiss="modal" onclick="send_message(1)">send</button>
+                <button class="btn btn-default" type="button" data-dismiss="modal">cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- Bootstrap core JavaScript
+================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="${cxt!}/ui/thairice/data_files/jquery.min.js"></script>
+<script src="${cxt!}/ui/thairice/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+<script src="${cxt!}/ui/thairice/datetime-picker/moment.js"></script>
+<script src="${cxt!}/ui/thairice/datetime-picker/bootstrap-datetimepicker.min.js"></script>
+<script src="${cxt!}/ui/thairice/JS/jquery.dataTables.js"></script>
+<script src="${cxt!}/ui/thairice/JS/dataTables.bootstrap4.js"></script>
+<script src="${cxt!}/ui/thairice/JS/sb-admin-datatables.min.js"></script>
+<script src="${cxt!}/ui/thairice/data_files/holder.min.js"></script>
+<script src="${cxt!}/ui/thairice/data_files/ie10-viewport-bug-workaround.js"></script>
+<script type="text/javascript" src="${cxt!}/ui/thairice/JS/layer/layer.js"></script>
+<script src="${cxt!}/ui/thairice/area-select/Area.js"></script>
+<script src="${cxt!}/ui/thairice/area-select/AreaData_min.js"></script>
+<script type="text/javascript" src="${cxt!}/ui/thairice/common.js"></script>
+<script>
+    var $wrapper = $('#div-table-container');
+    var $table = $('#dataTable01');
+    var columns = [
+        CONSTANT.DATA_TABLES.COLUMN.CHECKBOX,
+        {"data": "id"},
+        {"data": "name_", orderable: false},
+        {"data": "phone"},
+        {"data": "email", orderable: false},
+        {"data": null,render: function (data, type, row, meta) {
+            return ''+data.prdt_efdt.substring(0,11)+'to '+data.pd_exdat.substring(0,11);
+        }},
+        {"data": null, render: function (data, type, row, meta) {
+                if (data.status_ == '01') {
+                    return '<button type="button" class="btn btn-success btn-sm audit bc"> approved</button>&nbsp'
+                         + '<button type="button" class="btn btn-danger btn-sm bc" onclick="open_message(' + data.id + ',' + 3 + ')">rejected</button>';
+                } else if (data.status_ == '02') {
+                    return '<span class="success">Passed approval</span> <i class="glyphicon glyphicon-edit edit"></i>';
+                } else {
+                    return '<span class="error">Audit failed</span>';
+                }
+            }
+        },
+        {"data": null, orderable: false,render: function (data, type, row, meta) {
+                return '<span class="glyphicon glyphicon-comment" onclick="open_message(' + data.id + ',' + 1 + ')"></span>';
+            }
+        }
+    ];
+    //初始化表格
+    var _table = table.initTable($wrapper, $table, '${cxt!}/jf/thairice/admin/user/user_list', columns);
+    table.checkboxClick($table);
+    //删除选中的行
+    $("#btn-del").click(function () {
+        deleteRows('${cxt!}/jf/thairice/admin/user/delete', $table, _table);
+    });
+    //查询
+    $("#btn_search").click(function () {
+        _table.draw();
+    });
+    //打开消息框,1发送消息给指定用户,2发送消息给全部用户,3发送审核未通过的消息
+    function open_message(id, type) {
+        if (type == 1) {
+            $("#flag").val(1);
+            $("#receive_userid").val(id);
+            $('.modal-title').html("Send a message to the specified user");
+        } else if (type == 2) {
+            $("#flag").val(2);
+            $('.modal-title').html("Send a message to all users");
+        } else {
+            $("#flag").val(3);
+            $("#receive_userid").val(id);
+            $('.modal-title').html("Please specify reason of audit not through");
+        }
+        $("#content").val('');
+        $("#message_modal").modal('show');
+    }
+    var allSelect=false;
+    //审核通过/修改信息
+    $table.on("click",".audit",function() {
+        var item = _table.row($(this).closest('tr')).data();
+        setData(item);
+        $('#app_btn').html("Through the review");
+        $('#modal-title').html("Review the user information");
+        $("#approved_modal").modal('show');
+     }).on("click",".edit",function() {
+        var item = _table.row($(this).closest('tr')).data();
+        setData(item);
+        $('#app_btn').html("submit");
+        $('#modal-title').html("Modify the user service information");
+        $("#approved_modal").modal('show');
+     }).on("change", ":checkbox", function () {
+        if ($(this).is("[name='cb-check-all']")) {
+        	allSelect=true;
+        } else {
+        	allSelect=false;
+        }
+    });
+    //表单赋值
+    function setData(obj){
+        $("#userid").val(obj.id);
+        if(obj.area!=null){
+            var area=obj.area.split(" ");
+            //地区选择插件
+    		initComplexArea('seachprov', 'seachcity', 'seachdistrict', area_array, sub_array, area[0],area[1],area[2]);  
+        }else{
+        	initComplexArea('seachprov', 'seachcity', 'seachdistrict', area_array, sub_array, 0,0,0);  
+        }
+        $("#Prdt_EfDt").val(obj.prdt_efdt);
+        $("#PD_ExDat").val(obj.pd_exdat);
+        $("#status_").val('02');
+        obj.pd_tpcd.split(",").forEach(function(item){
+            $("input[type=checkbox]").each(function(){
+                if(item==$(this).val()){
+                    $(this).attr("checked","true");
+                }
+            });
+        });
+    }
+    //消息发送
+    function send_message() {
+        sendAjax("${cxt!}/jf/thairice/admin/user/send_message", $("#send_message").serialize(), function (res) {
+            showMessage(res.desc);
+            if (res.code == 2) {
+                _table.draw();
+            }
+        })
+    }
+    //修改信息
+    function edit_info() {
+        sendAjax("${cxt!}/jf/thairice/admin/user/audit", $("#info").serialize(), function (res) {
+            showMessage(res.desc);
+            if (res.code == 1) {
+                _table.draw();
+            }
+        })
+    }
+    //导出excel
+    function exp(){
+      	var ids=getIds($table, _table);
+    	if(allSelect&&ids.length>0){
+    		window.location.href="${cxt!}/jf/thairice/admin/user/export?select=all";
+    	}else{
+    		if(ids.length==0){
+    			layer.msg("Please choose to export the data", {icon: 2});
+    			return;
+    		 }
+    		window.location.href="${cxt!}/jf/thairice/admin/user/export?select=zd&ids="+ids;
+    	}
+    }
+    //拼装查询条件
+    function getQueryCondition(data) {
+        var param = {};
+        //组装排序参数
+        if (data.order && data.order.length && data.order[0]) {
+            switch (data.order[0].column) {
+                case 1:
+                    param.orderColumn = "id";
+                    break;
+                case 4:
+                    param.orderColumn = "phone";
+                    break;
+                case 8:
+                    param.orderColumn = "status_";
+                    break;
+            }
+            param.orderDir = data.order[0].dir;
+        }
+        param.id = $("#id").val();
+        param.username = $("#username").val();
+        param.min = $("#min").val();
+        param.max = $("#max").val();
+        param.region = $("#region").val();
+        param.audit = $("#audit").val();
+        param.start = data.start;
+        param.pageSize = data.length;
+        param.draw = data.draw;
+        param.name = data.name;
+        return param;
+    }
+    //选择审核状态
+    $("#audit").change(function () {
+        _table.draw();
+    });
+    //日期选择插件
+    $('#start').datetimepicker({
+        format: 'YYYY-MM-DD',
+        locale: moment.locale('zh-cn')
+    });
+    $('#start2').datetimepicker({
+        format: 'YYYY-MM-DD',
+        locale: moment.locale('zh-cn')
+    });
+    $('#Prdt_EfDt').datetimepicker({
+        format: 'YYYY-MM-DD',
+        locale: moment.locale('zh-cn')
+    });
+    $('#PD_ExDat').datetimepicker({
+        format: 'YYYY-MM-DD',
+        locale: moment.locale('zh-cn')
+    });
+</script>
+
+</body>
+</html>

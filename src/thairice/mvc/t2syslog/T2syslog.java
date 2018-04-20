@@ -23,6 +23,7 @@ public class T2syslog extends BaseModel<T2syslog> {
 	
 	public static final T2syslog dao = new T2syslog();
 	
+	public static final String tableName = "t2syslog";
 	/**
 	 * 字段描述： 
 	 * 字段类型：  长度：null
