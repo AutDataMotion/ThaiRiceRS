@@ -220,10 +220,16 @@ public class T10pdt_reportController extends BaseController {
 		
 		Map<Object,Object> dataMap = new HashMap<Object,Object>();
 		
+		if(ProductKind.equals("Area"))
+		{
+			List<ReportUtil.Area_Yield> Arealist = new ArrayList<ReportUtil.Area_Yield>();
+			Arealist = ReportUtil.getArea_Yield(staData);
+			dataMap.put("Arealist", Arealist);
+		}
 		if(ProductKind.equals("Yield"))
 		{
-			List<ReportUtil.Yield> Yieldlist = new ArrayList<ReportUtil.Yield>();
-			Yieldlist = ReportUtil.getYield(staData);
+			List<ReportUtil.Area_Yield> Yieldlist = new ArrayList<ReportUtil.Area_Yield>();
+			Yieldlist = ReportUtil.getArea_Yield(staData);
 			dataMap.put("Yieldlist", Yieldlist);
 		}
 		if(ProductKind.equals("Drought"))
