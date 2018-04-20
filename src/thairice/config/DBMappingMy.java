@@ -114,6 +114,6 @@ public class DBMappingMy extends BaseMapping{
 //		// 定时扫描检测远程ftp文件
 //		plugins.add(new Cron4jPlugin(PropKit.use("autoRemoteFtpScan.properties")));
 //		// 定时自动扫描待下载文件并启动ftp下载
-//		plugins.add(new Cron4jPlugin(PropKit.use("autoFtpDownload.properties")));
+		plugins.add(new Cron4jPlugin(PropKit.use("autoFtpDownload.properties")));
 	}
 }

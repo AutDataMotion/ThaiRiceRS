@@ -65,6 +65,20 @@ public class FileUtils {
 	public FileUtils() {
 	}
 
+	public static boolean folderCheckAndMake(String aDir){
+		java.io.File targetFolder = new java.io.File(aDir);
+		if (!targetFolder.exists()) {
+			try {
+				return targetFolder.mkdirs();
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+				return false;
+			}
+		}
+		return true;
+	}
+	
 	/**
 	 * 生成当日待下载ftp路径
 	 * 
