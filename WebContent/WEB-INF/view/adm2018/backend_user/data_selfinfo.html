@@ -1,63 +1,15 @@
-<!DOCTYPE html>
-<!-- saved from url=(0042)https://v3.bootcss.com/examples/dashboard/ -->
-<html lang="zh-CN">
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<meta http-equiv="X-UA-Compatible" content="IE=edge">
-<meta name="viewport" content="width=device-width, initial-scale=1">
-<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
-<meta name="description" content="">
-<meta name="author" content="">
-<!--<link rel="icon" href="https://v3.bootcss.com/favicon.ico">-->
-
-<title>管理员-个人中心</title>
-
-<!-- Bootstrap core CSS -->
-<link href="${cxt!}/ui/thairice/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
-<link href="${cxt!}/ui/thairice/datetime-picker/bootstrap-datetimepicker.min.css" rel="stylesheet">
-<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
-<link href="${cxt!}/ui/thairice/data/ie10-viewport-bug-workaround.css" rel="stylesheet">
-<link href="${cxt!}/ui/thairice/CSS/dataTables.bootstrap4.css" rel="stylesheet">
-<!-- Custom styles for this template -->
-<link href="${cxt!}/ui/thairice/data/dashboard.css" rel="stylesheet">
-<link rel="stylesheet" href="${cxt!}/ui/thairice/CSS/nav_css.css">
-<link rel="stylesheet" href="${cxt!}/ui/thairice/CSS/operator_management.css">
+<% var cssSec={ %>
+<style>
+.btn-file{background-color: #0c7897!important;}
+.btn-primary:hover{background-color: #337ab7!important;}
+.r{height: 500px;text-align: center;overflow: hidden;}
+.r img{max-width: 300px!important;max-height: 300px!important;}
+</style>
 <link rel="stylesheet" href="${cxt!}/ui/thairice/CSS/bootstrap-imginput.css">
 <link rel="stylesheet" href="${cxt!}/ui/thairice/CSS/data_selfinfo.css">
-<script src="${cxt!}/ui/thairice/data/ie-emulation-modes-warning.js"></script>
-<script src="${cxt!}/ui/thairice/JS/ie-open.js"></script>
-<style type="text/css">
-   .btn-file{background-color: #0c7897;}
-        .btn-primary:hover{background-color: #337ab7;}
-        .r{height: 500px;text-align: center;overflow: hidden;}
-        .r img{max-width: 300px!important;max-height: 300px!important;}
-</style>
-</head>
-<body>
-<!--公共的头部start-->
-<%includeFileTemplate("/thairice/common/top.html"){}%>
-<!--公共的头部end-->
-<div class="container-fluid">
-  <div class="row">
-        <div class="col-sm-3 col-md-2 sidebar">
-            <ul class="nav nav-sidebar">
-                <li style="margin-bottom:20px;"><p class="function_text">Function menu</p></li>
-                <% if(session.admin.type_=='03'){ %>
-                <li><a href="${cxt!}/jf/thairice/admin/user/main">Operator management</a></li>
-                <% }%>
-                <li><a href="${cxt!}/jf/thairice/admin/user/user_management">User management</a></li>
-                <li><a href="index.html">Product data query</a></li>
-                <li><a href="data_management.html">Data management</a></li>
-                <li><a href="#">System state</a></li>
-                <li><a href="system_configuration.html">System configuration</a></li>
-                <li><a href="production_configuration.html">Production configuration</a></li>
-                <li><a href="log_management.html">Log management</a></li>
-                <li class="active"><a>Personal center</a></li>
-                <li><a href="${cxt!}/jf/thairice/t8message">My message</a></li>
-            </ul>
-        </div>
-    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" style="position:relative;">
-    	<div>
+<% }; %>
+<% var contSec={ %>
+ 	<div>
         	<div class="self_left" style="position:fixed; left:16.5%;">
             	<div class="self_info">
                   <p class="self_title text-center">Personal center</p>
@@ -112,7 +64,7 @@
                         <div class="form-group">
                             <label class="col-md-3 control-label" style="width:120px;">E-mail</label>
                             <div class="col-md-9" style="width:470px;">
-                                <input type="email" class="form-control" name="t3user.email" value="${admin.email}"
+                                <input type="email" class="form-control" id="u_email" name="t3user.email" value="${admin.email}"
                                        placeholder="jone@example.com">
                             </div>
                         </div>
@@ -158,9 +110,6 @@
                     </form>
             </div>
         </div>
-    </div>
-  </div>
-</div>
 <!--system message modal-->
 <div class="modal fade" id="systemModal" tabindex="-1" role="dialog" aria-labelledby="systemModalLabel"
      aria-hidden="true">
@@ -230,7 +179,7 @@
                         <label class="col-sm-3 control-label">E-mail</label>
                         <div class="col-sm-9">
                         <div class="input-group">
-                              <input type="email" class="form-control" placeholder="your E-mai like someone@exmaple.com"  name="email"  id="email"  value="${admin.email}" readonly>
+                              <input type="email" class="form-control" placeholder="your E-mai like someone@exmaple.com"  name="email" id="eemail" value="${admin.email}" readonly>
                               <span class="input-group-addon" id="send_email" style="background-color:#5cb85c;color: #fff;background-color: #5cb85c;cursor: pointer;">Send authorization code</span>
                          </div>
                         </div>
@@ -250,29 +199,20 @@
         </div>
     </div>
 </div>
-<!-- Bootstrap core JavaScript
-    ================================================== --> 
-<!-- Placed at the end of the document so the pages load faster --> 
-<script src="${cxt!}/ui/thairice/JS/jquery-2.0.0.min.js"></script>
-<script src="${cxt!}/ui/thairice/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+<% }; %> <% var jsSec={ %>
 <script src="${cxt!}/ui/thairice/JS/bootstrap-imginput.js"></script>
 <script src="${cxt!}/ui/thairice/bootstrap-fileinput-master/js/fileinput.min.js"></script>
-<script src="${cxt!}/ui/thairice/datetime-picker/moment.js"></script>
-<script src="${cxt!}/ui/thairice/datetime-picker/bootstrap-datetimepicker.min.js"></script>
-<script type="text/javascript" src="${cxt!}/ui/thairice/JS/layer/layer.js"></script>
 <script src="${cxt!}/ui/thairice/JS/bootstrapValidator.js"></script>
-<script type="text/javascript" src="${cxt!}/ui/thairice/common.js"></script>
-<!-- Just to make our placeholder images work. Don't actually copy the next line! --> 
-<script src="${cxt!}/ui/thairice/data/holder.min.js"></script> 
-<!-- IE10 viewport hack for Surface/desktop Windows 8 bug --> 
-<script src="${cxt!}/ui/thairice/data/ie10-viewport-bug-workaround.js"></script> 
+<script type="text/javascript" src="${cxt!}/ui/thairice/JS/layer/layer.js"></script>
+<script src="${cxt!}/ui/thairice/common.js"></script> 
 <script>
 //修改个人信息
 $('#modify_btn').click(function () {
 	 $("#info").bootstrapValidator('validate');
 	 if (!$("#info").data('bootstrapValidator').isValid()) {return;}
     sendAjax('${cxt!}/jf/thairice/admin/user/edit_info', $("#info").serialize(), function (res) {
-        showMessage(res.desc);
+    	 $('#eemail').val($('#u_email').val());
+    	showMessage(res.desc);
     });
 })
 //发送邮箱授权码
@@ -319,7 +259,7 @@ $("#file-Portrait1").fileinput({
 $("#file-Portrait1").on("fileuploaded", function (event, data, previewId, index) {
     console.log(JSON.stringify(data));
     if(data.response.code==1){
-        layer.msg('上传成功');
+        layer.msg('Uploaded successfully');
         $('#picImg').attr("src","${cxt!}"+data.response.desc);
     }
 });
@@ -396,5 +336,6 @@ $("#info").bootstrapValidator({
  }
 });
 </script>
-</body>
-</html>
+ <% }; %> <%
+    include("../layout.html",{cssSec:cssSec,contSec:contSec,jsSec:jsSec}){}
+    %>

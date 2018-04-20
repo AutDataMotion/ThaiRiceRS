@@ -30,7 +30,7 @@ public class T8messageController extends BaseController {
 	private static Logger log = Logger.getLogger(T8messageController.class);
 
 	public static final String pthc = "/jf/thairice/t8message/";
-	public static final String pthv = "/thairice/t8message/";
+	public static final String pthv = "/adm2018/t8message/";
 	private static final T8messageService service = Duang.duang(T8messageService.class);
 
 	/**
