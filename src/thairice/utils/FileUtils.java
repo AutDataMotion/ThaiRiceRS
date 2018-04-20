@@ -158,7 +158,7 @@ public class FileUtils {
 			if(5 <= filePathAttr.length) {
 				storage_path += (("//") + filePathAttr[2]);
 				Timestamp fileDate = DatesUtils.getDateOfJL(filePathAttr[3], filePathAttr[4]);
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMM");
 				String strFileDate = sdf.format(fileDate);//时间存储为字符串
 				storage_path += (("//") + strFileDate);
 				orgDataObj.setStorage_path(storage_path);
