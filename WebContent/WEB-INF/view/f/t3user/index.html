@@ -1,0 +1,428 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale-1">
+<title>首页</title>
+<link rel="stylesheet" href="https://js.arcgis.com/3.23/esri/css/esri.css"/>
+
+<link type="text/css" rel="stylesheet" href="${cxt!}/CSS/base.css">
+<link type="text/css" rel="stylesheet" href="${cxt!}/ui/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+<link type="text/css" rel="stylesheet" href="${cxt!}/ui/bootstrap-datetimepicker/css/bootstrap-datetimepicker.min.css">
+<link type="text/css" rel="stylesheet" href="${cxt!}/CSS/index.css">
+<link type="text/css" rel="stylesheet" href="${cxt!}/ui/DataTables/datatables.min.css">
+<link type="text/css" rel="stylesheet" href="${cxt!}/CSS/nav_css.css">
+<link type="text/css" id="skin" rel="stylesheet" href="${cxt!}/CSS/skin/color_one.css">
+<style>
+.flex-center {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+	position:absolute;
+	top:200px;
+	display:none;
+	width:600px;
+	background:#fff;
+	left:50%;
+	margin-left:-300px;
+	border-radius: 2px;
+	overflow:hidden;
+	border: 1px solid #337ab7;
+}
+.flex-center .container {
+	display: inline-block;
+	width: 600px;
+	height: 20px;
+	padding-right: 10px;
+}
+.h-100P {
+	height: 100%;
+}
+.bar {
+	display: inline-block;
+	background: #337ab7;
+	color: white;
+	font-weight: bold;
+	padding: 0 5px;
+	text-align: right;
+}
+</style>
+
+
+<script src="${cxt!}/JS/jquery-2.0.0.min.js"></script>
+<script src="${cxt!}/ui/DataTables/datatables.min.js"></script>
+<script src="${cxt!}/ui/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+<script src="${cxt!}/jsFile/area-select/Area.js"></script>
+<script src="${cxt!}/jsFile/area-select/AreaData_min.js"></script>
+<!--script src="${cxt!}/ui/datetime-picker/moment.js"></script-->
+<script src="${cxt!}/ui/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+<script src="${cxt!}/JS/index.js"></script>
+
+<script src="${cxt!}/jsFile/t10pdt_report/html2canvas.min.js"></script>
+<script src="${cxt!}/jsFile/echarts/echarts.min.js"></script>
+<script src="https://js.arcgis.com/3.23/"></script>
+
+<script src="${cxt!}/jsFile/t10pdt_report/t10.js"></script>
+
+<script>
+	//进度条及文件预览
+	$(function () { 
+		
+		/*
+		$('.report_btn02').click(function(e) {
+                $('.BbReportcons').hide();
+				$('.flex-center').show();
+				var percentage = 0;
+				var interval = setInterval(function () {
+				if (percentage < 300) {
+					percentage++;
+					var widthTemp = (percentage / 3).toFixed(1) + '%';
+					$('#progressBar').css('width', widthTemp);
+					$('#progressBar').text(widthTemp);
+				} else {
+					clearInterval(interval);
+					setTimeout(function () {
+						$('.flex-center').hide();
+						$('#documentModal').modal();
+					}, 500);
+					}
+					
+					}, 10);
+            });
+			$('#documentModal .close').click(function(e) {
+                $('#documentModal').modal('hide');
+				$('.BbReportWrap').show();
+				$('.BbReportcons').show();
+				$('.BbReportLeft').show();
+				$('.BbReportRight').show();
+            });
+			$('#documentModal .cancel_btn').click(function(e) {
+                $('#documentModal').modal('hide');
+				$('.BbReportWrap').show();
+				$('.BbReportcons').show();
+				$('.BbReportLeft').show();
+				$('.BbReportRight').show();
+            });
+			*/
+			$('.navbar-nav>li>.dropdown-menu li').click(function(e) {
+                $(this).addClass('checked').siblings().removeClass('checked');
+            });
+		//日期选择插件
+		
+		$('#date_choose').datetimepicker({
+			language:  'zh-CN',
+	        weekStart: 1,
+	        todayBtn:  1,
+			autoclose: 1,
+			todayHighlight: 1,
+			startView: 2,
+			minView: 2,
+			forceParse: 0
+	    }).on('changeDate', function (ev) {//在控件显示时就触发事件
+            app.productDate = $('#dateChoosed').val();//选择的产品日期
+            if(app.areaCode&&app.productKind_code)
+            {
+            	AssembleProductLayerInfo(app.areaCode,app.productDate,app.productKind_code);
+            }
+            
+        });
+		//地区选择插件
+		initComplexArea('seachprov', 'seachcity', 'seachdistrict', area_array, sub_array, '44', '0', '0');  
+	});
+	//得到地区码
+	function getAreaID(){
+		var area = 0;          
+		if($("#seachdistrict").val() != "0"){
+			area = $("#seachdistrict").val();                
+		}else if ($("#seachcity").val() != "0"){
+			area = $("#seachcity").val();
+		}else{
+			area = $("#seachprov").val();
+		}
+		//app.areaCode = area;
+		//console.log(app.areaCode);
+		return area;
+	}
+	//根据地区码查询地区名
+	function getAreaNamebyID(areaID){
+		var areaName = "";
+		if(areaID.length == 2){
+			areaName = area_array[areaID];
+		}else if(areaID.length == 4){
+			var index1 = areaID.substring(0, 2);
+			areaName = area_array[index1] + " " + sub_array[index1][areaID];
+		}else if(areaID.length == 6){
+			var index1 = areaID.substring(0, 2);
+			var index2 = areaID.substring(0, 4);
+			areaName = area_array[index1] + " " + sub_array[index1][index2] + " " + sub_arr[index2][areaID];
+		}
+		return areaName;
+	}
+	/*换肤*/
+	function skin1() {
+        var ob = document.getElementById('skin');
+        ob.href='${cxt!}/CSS/skin/color_one.css';
+    }
+    function skin2() {
+        var ob = document.getElementById('skin');
+        ob.href='${cxt!}/CSS/skin/color_two.css';
+    }
+	function skin3() {
+        var ob = document.getElementById('skin');
+        ob.href='${cxt!}/CSS/skin/color_three.css';
+    }
+</script>
+</head>
+
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+  <div class="container-fluid" style="padding-right:0;">
+    <div class="navbar-header" style="padding-left:15px;">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"> <span class="sr-only">toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+      <p class="nav-title navbar-brand">Thai agricultural remote sensing monitoring platform </p>
+    </div>
+    <div class="collapse navbar-collapse" id="navbar">
+      <ul class="nav navbar-nav navbar-right">
+        <li class="active"><a class="one" href="#" title="首页"></a></li>
+        <li> <a class="two dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" href="#" title="用户"></a>
+          <ul class="dropdown-menu">
+            <li><a href="${cxt!}/jf/thairice/t3user/self_center">Self center</a></li>
+            <li><a href="${cxt!}/jf/thairice/t3user/my_message">My message</a></li>
+            <li><a  data-toggle="modal" data-target="#exampleModal">Log out</a></li>
+          </ul>
+        </li>
+        <li>
+        	<a class="three dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" href="#" title="换肤"></a>
+           <ul class="dropdown-menu skin" style="min-width:80px;">
+            <li class="checked"><a href="#" onclick="skin1()"><span style="background:#009cd4;"></span></a></li>
+            <li><a href="#" onclick="skin2()"><span style="background:#07cfcd;"></span></a></li>
+            <li><a href="#" onclick="skin3()"><span style="background:#09dba2;"></span></a></li>
+          </ul>
+        </li>
+        <li><a class="four" href="#" title="帮助"></a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div id="mapDiv"></div>
+<div class="BbAreaSelect" style="z-index: 9;position: fixed;">
+  <form class="form-inline">
+    <div class="form-group">
+      <select id="seachprov" name="seachprov" onChange="changeComplexProvince(this.value, sub_array, 'seachcity', 'seachdistrict');">
+      </select>
+    </div>
+    <div class="form-group">
+      <select id="seachcity" name="homecity" onChange="changeCity(this.value,'seachdistrict','seachdistrict');">
+      </select>
+    </div>
+    <div class="form-group"> <span id="seachdistrict_div">
+      <select id="seachdistrict" name="seachdistrict" onChange="changeDistrict(this.value);">
+      </select>
+      </span> </div>
+    <div class="form-group">
+      <label for="dateChoosed" style="line-height:50px; padding:0 5px; font-weight:normal;">时间：</label>
+	      	<!--div class="input-group date" id='date_choose' data-date="" data-date-format="yyyy-mm-dd" data-link-format="yyyy-mm-dd">
+	      	<input type="text" id='dateChoosed'  class="form-control" style="width:150px; float:left;">
+	        <span class="input-group-addon"> <i class="glyphicon glyphicon-calendar"></i> </span> 
+	        </div-->
+	        <div class="input-group date form_date" id='date_choose' data-date="" data-date-format="yyyy-mm-dd" data-link-field="dateChoosed" data-link-format="yyyy-mm-dd">
+                    <input class="form-control" size="16" type="text" value="" readonly>
+                    
+					<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
+            </div>
+            <input type="hidden" id="dateChoosed" value="" /><br/>
+	</div>      
+   
+  </form>
+</div>
+<div class="BbProductMenuWrap">
+  <div class="BbProductabs"><span></span></div>
+  <div class="BbProductMenu">
+    <div class="list-group">
+      <div class="list-group-item">
+        <h4 class="list-group-item-heading">product</h4>
+        <p class="list-group-item-text one areaMonitoring" value="01">Rice planting area monitoring</p>
+        <p class="list-group-item-text two droughtMonitoring" value="04">Rice drought monitoring</p>
+        <p class="list-group-item-text three conditionMonitoring" value="02">Rice condition monitoring</p>
+        <p class="list-group-item-text four productionEstimates" value="03">Rice production estimates</p>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="StaButton">
+	<button type="button" class="btn btn-primary btn-lg staChartButton">Statistical analysis</button>
+</div>
+<div id="legendinfo">
+	<div id="legendDiv"></div>
+</div>
+<!-- div class="BbReportWrap">
+  <div class="BbReport">
+    <div class="BbReportcons">
+      <div class="BbReportLeft"> <span><img src="${cxt!}/Images/index/report_abs01.png" width="355" height="440"></span>
+        <button type="button" class="btn btn-primary btn-lg report_btn01">Statistical analysis</button>
+      </div>
+      <div class="BbReportRight">
+        <div class="container" style="width:500px;">
+          <div class="row">
+            <div class="col-sm-12 report_graph"> 
+              
+              <div id="main" style="height:295px; width:500px;"></div>
+              
+            </div>
+          </div>
+          <div class="row">
+            <div class="col-sm-12 report_description">
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque
+                Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque</p>
+            </div>
+          </div>
+          <button type="button" class="btn btn-primary btn-lg report_btn02" >Generate reports</button>
+        </div>
+      </div>
+    </div>
+    
+    <div class="flex-center"> <span class="container" style="padding-left:0; padding-right:0; display:block; margin:0 auto;"> <span id="progressBar" class="h-100P bar"></span> </span> </div>
+  </div>
+</div-->
+<!-- 统计图模态框 -->
+<div class="modal fade" id="staChartModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+  <div class="modal-dialog" role="document" style="width:900px; margin-top:100px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="exampleModalLabel">Statistical analysis</h4>
+      </div>
+      <div class="modal-body">
+        <div class="container" style="width:840px; padding:0;margin-bottom: 10px;">
+          <!--dl class="dl-horizontal" style="height:200px; width:760px;">
+            <dt style="width:260px; margin-right:18px;"><span><img id="mapPic" src="${cxt!}/Images/index/reportMapPic.jpg" width="260" height="200"></span></dt>
+            <dd>
+            	<table id="sta_excel" class="display" width="100%"></table>
+            </dd>
+          </dl-->
+          <!--div class="row">
+            <div class="col-sm-3"> 
+              <span><img id="mapPic" src="${cxt!}/Images/index/reportMapPic.jpg" width="260" height="200"></span>
+            </div>
+            <div class="col-sm-9"> 
+              <table id="sta_excel" class="display" width="100%"></table>
+            </div>
+          </div-->
+          	<div style="height:200px; width:260px;float: left;margin-right: 18px;"> 
+              <span><img id="mapPic" src="${cxt!}/Images/index/reportMapPic.jpg" width="260" height="200"></span>
+            </div>
+            <div style="height:200px;width: 562px;float: left;overflow: auto;color: #fff;background: #000;"> 
+              <table id="sta_excel" class="display" width="100%"></table>
+              <script>
+              	
+              </script>
+            </div>
+        </div>
+        <div class="container" style="width:840px;">
+          <div class="row">
+            <div class="col-sm-12 report_graph"> 
+              <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
+              <div id="stainfo">
+			 	<div id="staDiv" style="height:295px; width:840px;"></div>
+			 </div>
+		              
+              
+            </div>
+          </div>
+          <!--<div class="row">
+                <div class="col-sm-12 report_description">
+                  <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque</p>
+                </div>
+              </div>
+              <button type="button" class="btn btn-primary btn-lg report_btn02">Generate reports</button>--> 
+        </div>
+      </div>
+      <div class="modal-footer">
+      	
+        <button type="button" class="btn btn-primary GenerateReportbtnDOC"  style="margin:0 15px; padding:6px 40px;">Generate reports(.doc)</button>
+        <button type="button" class="btn btn-primary GenerateReportbtnPDF" style="margin:0 15px; padding:6px 40px;">Generate reports(.pdf)</button>
+        <button type="button" class="btn btn-secondary cancel_btn" style="margin:0 15px; padding:6px 40px;">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- log out模态框（Modal） -->
+<div class="modal fade" id="reportModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="exampleModalLabel">System message</h4>
+      </div>
+      <div class="modal-body">
+        <p class="modal_text">Generate the report can be in <span>the center of the individual - my report page</span> views</p>
+      </div>
+      <div class="modal-footer">
+        <input type="checkbox">
+        Don't tip
+        <a href="#" type="button" id="downLoadReportBtn" role="button" class="btn btn-primary" data-dismiss="modal" style="margin:0 15px; padding:6px 40px;">Ok, I know !</a>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- document review模态框（Modal） -->
+<!-- div class="modal fade" id="documentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+  <div class="modal-dialog" role="document" style="width:840px; margin-top:100px;">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        <h4 class="modal-title" id="exampleModalLabel">Document preview</h4>
+      </div>
+      <div class="modal-body">
+        <div class="container" style="width:840px; padding:0;">
+          <dl class="dl-horizontal" style="height:180px; width:760px; margin:15px auto;">
+            <dt style="width:260px; margin-right:18px;"><span><img src="${cxt!}/Images/index/report.jpg" width="260" height="180"></span></dt>
+            <dd>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque
+              Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aenean euismod bibendum laoreet. Proin gravida dolor sit amet lacus accumsan et viverra justo commodo. Proin sodales pulvinar tempor. Cum sociis natoque</dd>
+          </dl>
+        </div>
+        <div class="container" style="width:760px;">
+          <div class="row">
+            <div class="col-sm-12 report_graph"> 
+              
+              <div id="main01" style="height:295px; width:760px;"></div>
+              
+            </div>
+          </div>
+         
+        </div>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary report_downbtn" data-dismiss="modal" style="margin:0 15px; padding:6px 40px;">download</button>
+        <button type="button" class="btn btn-secondary cancel_btn" style="margin:0 15px; padding:6px 40px;">Cancel</button>
+      </div>
+    </div>
+  </div>
+</div-->
+	<!-- Logout Modal-->
+	<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+		aria-labelledby="exampleModalLabel" aria-hidden="true">
+		<div class="modal-dialog" role="document">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+					<button class="close" type="button" data-dismiss="modal"
+						aria-label="Close">
+						<span aria-hidden="true">×</span>
+					</button>
+				</div>
+				<div class="modal-body">Select "Logout" below if you are ready
+					to end your current session.</div>
+				<div class="modal-footer">
+					<button class="btn btn-secondary" type="button"
+						data-dismiss="modal">Cancel</button>
+					<a class="btn btn-primary" href="${cxt!}/jf/thairice/t3user/exit">Logout</a>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
+</html>

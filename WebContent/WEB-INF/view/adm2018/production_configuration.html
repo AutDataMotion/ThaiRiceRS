@@ -24,6 +24,7 @@
           <!--Tab panes-->
           <div class="tab-content" style="position:relative;">
             <div role="tabpanel" class="tab-pane active" id="production01">
+            	<div id="mapDiv_productionConf"></div>   
                 <div class="form-group">
 		            <ul class="operation_tools">
 		                  <li class="one"><a href="#" data-toggle="modal" data-target="#fileModal" title="click to start"></a></li>
@@ -34,107 +35,7 @@
 		                  <li class="six"><a href="#" title="save"></a></li>
 		            </ul>
                 </div>
-                    <!--进度条-->
-                    <div class="barline" id="probar">
-                        <div id="line" w="100" style="width:0px;"></div>	
-                    </div>
-                    <!--显示模式和分类样本-->
-                    <div class="modes_samples">
-                    	<div class="block"><span></span></div>
-                        <div class="modes">
-                        	<div class="BbProductMenu">
-                                <div class="list-group">
-                                  <div class="list-group-item">
-                                    <h4 class="list-group-item-heading">Display mode</h4>
-                                    <ul class="modes_ul">
-                                    	<li>
-                                        	<input type="radio"> 
-                                            <span>R</span>
-                                            <span class="color red"></span>
-                                            <select class="form-control" style="float:left; width:150px; height:30px; margin-right:0; margin-left:15px;">
-                                            	<option>band001</option>
-                                                <option>band002</option>
-                                                <option>band003</option>
-                                                <option>band004</option>
-                                            </select>
-                                        </li>
-                                        <li>
-                                        	<input type="radio"> 
-                                            <span>G</span>
-                                            <span class="color green"></span>
-                                            <select class="form-control" style="float:left; width:150px; height:30px; margin-right:0; margin-left:15px;">
-                                            	<option>band001</option>
-                                                <option>band002</option>
-                                                <option>band003</option>
-                                                <option>band004</option>
-                                            </select>
-                                        </li>
-                                        <li>
-                                        	<input type="radio"> 
-                                            <span>B</span>
-                                            <span class="color blue"></span>
-                                            <select class="form-control" style="float:left; width:150px; height:30px; margin-right:0; margin-left:15px;">
-                                            	<option>band001</option>
-                                                <option>band002</option>
-                                                <option>band003</option>
-                                                <option>band004</option>
-                                            </select>
-                                        </li>
-                                    </ul>
-                                  </div>
-                            </div>
-
-                        </div>
-                    	</div>
-                        <div class="samples">
-                        	<div class="BbProductMenu">
-                                <div class="list-group">
-                                  <div class="list-group-item" style="padding-bottom:0;">
-                                    <h4 class="list-group-item-heading">Sample classification</h4>
-                                    <span><i class="glyphicon glyphicon-plus plus"></i></span>
-                                    <div class="table-wrap">
-                                    	<table class="table table-bordered" align="center">
-                                        	<tr class="title">
-                                            	<td>sample name</td>
-                                                <td>color</td>
-                                                <td>number</td>
-                                                <td>delete</td>
-                                            <tr>
-                                            <tr>
-                                            	<td>rice</td>
-                                                <td>
-                                                	<input id="mycp" type="text" class="form-control" value="pink">
-                                                </td>
-                                                <td>1</td>
-                                                <td><span><i class="glyphicon glyphicon-remove-sign"></i></span></td>
-                                            <tr>
-                                            <tr>
-                                            	<td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            <tr>
-                                            <tr>
-                                            	<td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            <tr>
-                                            <tr>
-                                            	<td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            <tr>
-                                        </table>
-                                    </div>
-                                  </div>
-                            </div>
-
-                        </div>
-                        </div>
-                        <button class="btn btn-primary okay_btn" type="button" data-toggle="modal" data-target="#RunModal">OK</button>
-                </div>
+                 
             </div>		
   			<div role="tabpanel" class="tab-pane" id="production02">
               <div class="tab-box">
@@ -441,6 +342,8 @@
 			},timer)
 		};
 		$(function(){
+			//alert("ooooooo");
+			init_productionConf_Monitoring();
 			//日期选择插件
 			$('#starttime6').datetimepicker({  
 				format: 'YYYY-MM-DD',  
