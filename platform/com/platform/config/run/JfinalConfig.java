@@ -170,8 +170,8 @@ public class JfinalConfig extends JFinalConfig {
 
 		System.out.println("afterJFinalStart");
 		// 加载子系统
-		ConfMain.init();
-		ConfMain.start();
+//		ConfMain.init();
+//		ConfMain.start();
 
 		// Zeroc Ice Util 初始化
 		// IceClientUtil.init(60);

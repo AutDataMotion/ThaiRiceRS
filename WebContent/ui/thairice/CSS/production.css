@@ -1,5 +1,12 @@
 @charset "utf-8";
 /* CSS Document */
+#mapDiv_productionConf{
+        padding: 0;
+        margin: 0;
+        height: 100%;
+            position: fixed;
+                width: 100%;
+}
 .modal-dialog{
 	margin:200px auto;
 }
@@ -28,7 +35,7 @@
 .operation_tools{
 	position:absolute;
 	top:0px;
-	left:0px;
+	left:10px;
 }
 .operation_tools li{
 	float:left;
