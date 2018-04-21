@@ -96,7 +96,16 @@
     var $table = $('#dataTable01');
     var columns = [
         CONSTANT.DATA_TABLES.COLUMN.CHECKBOX,
-        {"data": "type_", orderable: false},
+       /*  {"data": "type_", orderable: false}, */
+     	 { "data": null,render: function (data, type, row, meta) {
+    	  if(data.type_=='01'){
+    		  return 'Notice';
+    	  }else if (data.type_=='02'){
+    		  return 'Announcement';
+    	  }else if (data.type_=='03'){
+    		  return 'Remind';
+    	  }
+     	}},
         {"data": "content", orderable: false},
         { "data": null,render: function (data, type, row, meta) {
         	  if(data.status_=='01'){
