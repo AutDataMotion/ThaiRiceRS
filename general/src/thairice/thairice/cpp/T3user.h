@@ -29,11 +29,11 @@ private:
 	biginteger id;
 	/**
 	 * 字段描述：用户类型代码 
-	 * 字段类型：enum  长度：7
+	 * 字段类型：enum  长度：2
 	 */
 	string type_;
 	/**
-	 * 字段描述：用户名 
+	 * 字段描述：username 
 	 * 字段类型：varchar  长度：180
 	 */
 	string account;
@@ -89,7 +89,7 @@ private:
 	string create_time;
 	/**
 	 * 字段描述：用户审核状态代码 
-	 * 字段类型：enum  长度：7
+	 * 字段类型：enum  长度：2
 	 */
 	string status_;
 	/**
@@ -117,6 +117,11 @@ private:
 	 * 字段类型：int  长度：null
 	 */
 	int activation;
+	/**
+	 * 字段描述： 
+	 * 字段类型：varchar  长度：200
+	 */
+	string area;
 	/**
 	 * 字段描述：产品类型代码 
 	 * 字段类型：varchar  长度：50
@@ -329,6 +334,17 @@ public:
 	}
 	int getActivation() {
 		return activation;
+	}
+	
+	
+	T3user& setArea(string aarea){
+		area = aarea;
+		
+		mapSQLTokens["area"] = "'"+area+"'";
+		return *this;
+	}
+	string getArea() {
+		return area;
 	}
 	
 	

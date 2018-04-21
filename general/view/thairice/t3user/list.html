@@ -100,7 +100,7 @@
 								</th>
 								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
 										'mainPanel', 'splitPage', 'account')">
-									用户名	${orderBy("account")}
+									username	${orderBy("account")}
 								</th>
 								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
 										'mainPanel', 'splitPage', 'pwd')">
@@ -165,6 +165,10 @@
 								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
 										'mainPanel', 'splitPage', 'activation')">
 									账号是否激活	${orderBy("activation")}
+								</th>
+								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
+										'mainPanel', 'splitPage', 'area')">
+										${orderBy("area")}
 								</th>
 								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
 										'mainPanel', 'splitPage', 'PD_TpCd')">
@@ -308,6 +312,13 @@
 							${item["activation"]!}
 
 								</td>
+								
+								<td>
+
+								${escapeXml(item["area"]!)}
+
+								</td>
+							
 								
 								<td>
 

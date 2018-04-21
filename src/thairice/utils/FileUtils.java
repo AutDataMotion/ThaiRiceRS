@@ -65,6 +65,20 @@ public class FileUtils {
 	public FileUtils() {
 	}
 
+	public static boolean folderCheckAndMake(String aDir){
+		java.io.File targetFolder = new java.io.File(aDir);
+		if (!targetFolder.exists()) {
+			try {
+				return targetFolder.mkdirs();
+			} catch (Exception e) {
+				// TODO: handle exception
+				e.printStackTrace();
+				return false;
+			}
+		}
+		return true;
+	}
+	
 	/**
 	 * 生成当日待下载ftp路径
 	 * 
@@ -144,7 +158,7 @@ public class FileUtils {
 			if(5 <= filePathAttr.length) {
 				storage_path += (("//") + filePathAttr[2]);
 				Timestamp fileDate = DatesUtils.getDateOfJL(filePathAttr[3], filePathAttr[4]);
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMM");
 				String strFileDate = sdf.format(fileDate);//时间存储为字符串
 				storage_path += (("//") + strFileDate);
 				orgDataObj.setStorage_path(storage_path);

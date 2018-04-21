@@ -19,16 +19,21 @@ import com.platform.mvc.base.BaseController;
 
 import csuduc.platform.util.ReportUtil;
 
+
 /**
- * XXX 管理 描述：
+ * XXX 管理	
+ * 描述：
  * 
- * /jf/thairice/t10pdt_report /jf/thairice/t10pdt_report/save
- * /jf/thairice/t10pdt_report/edit /jf/thairice/t10pdt_report/update
- * /jf/thairice/t10pdt_report/view /jf/thairice/t10pdt_report/delete
+ * /jf/thairice/t10pdt_report
+ * /jf/thairice/t10pdt_report/save
+ * /jf/thairice/t10pdt_report/edit
+ * /jf/thairice/t10pdt_report/update
+ * /jf/thairice/t10pdt_report/view
+ * /jf/thairice/t10pdt_report/delete
  * /thairice/t10pdt_report/add.html
  * 
  */
-// @Controller(controllerKey = "/jf/thairice/t10pdt_report")
+//@Controller(controllerKey = "/jf/thairice/t10pdt_report")
 public class T10pdt_reportController extends BaseController {
 
 	@SuppressWarnings("unused")
@@ -37,108 +42,101 @@ public class T10pdt_reportController extends BaseController {
 	public static final String pthc = "/jf/thairice/t10pdt_report/";
 	public static final String pthv = "/thairice/t10pdt_report/";
 
-	public String m_reportType = null;// 01-doc 02-pdf
-
-	public enum m_ProductKind {
-		Area("Area", "01"), Growth("Growth", "02"), Yield("Yield", "03"), Drought("Drought", "04");
-		// 成员变量
-		private String name;
-		private String index;
-
-		// 构造方法
-		private m_ProductKind(String name, String index) {
-			this.name = name;
-			this.index = index;
-		}
-
-		// 普通方法
-		public static String getName(String index) {
-			for (m_ProductKind c : m_ProductKind.values()) {
-				if (c.getIndex().equals(index)) {
-					return c.name;
-				}
-			}
-			return null;
-		}
-
-		public static String getIndex(String name) {
-			for (m_ProductKind c : m_ProductKind.values()) {
-				if (c.getName().equals(name)) {
-					return c.index;
-				}
-			}
-			return null;
-		}
-
-		// get set 方法
-		public String getName() {
-			return name;
-		}
-
-		public void setName(String name) {
-			this.name = name;
-		}
-
-		public String getIndex() {
-			return index;
-		}
-
-		public void setIndex(String index) {
-			this.index = index;
-		}
-	}
-
+	public String m_reportType = null;//01-doc 02-pdf
+	
+	public enum m_ProductKind {  
+		Area("Area", "01"), Growth("Growth", "02"), Yield("Yield", "03"), Drought("Drought", "04");  
+	    // 成员变量  
+	    private String name;  
+	    private String index;  
+	    // 构造方法  
+	    private m_ProductKind(String name, String index) {  
+	        this.name = name;  
+	        this.index = index;  
+	    }  
+	    // 普通方法  
+	    public static String getName(String index) {  
+	        for (m_ProductKind c : m_ProductKind.values()) {  
+	            if (c.getIndex().equals(index)) {  
+	                return c.name;  
+	            }  
+	        }  
+	        return null;  
+	    }
+	    public static String getIndex(String name) {  
+	        for (m_ProductKind c : m_ProductKind.values()) {  
+	            if (c.getName().equals(name)) {  
+	                return c.index;  
+	            }  
+	        }  
+	        return null;  
+	    }  
+	    // get set 方法  
+	    public String getName() {  
+	        return name;  
+	    }  
+	    public void setName(String name) {  
+	        this.name = name;  
+	    }  
+	    public String getIndex() {  
+	        return index;  
+	    }  
+	    public void setIndex(String index) {  
+	        this.index = index;  
+	    }  
+	} 
+	
 	/**
 	 * 列表
 	 */
 	@Clear
 	public void index() {
-		// paging(ConstantInitMy.db_dataSource_main, splitPage,
-		// BaseModel.sqlId_splitPage_select,
-		// T10pdt_report.sqlId_splitPage_from);
-		// renderWithPath(pthv+"list.html");
-		// renderWithPath(pthv+"FeatureLayer.html");
-		Page page = T10pdt_report.dao.paginate(getParaToInt(0, 1), 10, "select *",
-				"from T10pdt_report order by id asc");
-		setAttr("blogPage", page);
+		//paging(ConstantInitMy.db_dataSource_main, splitPage, BaseModel.sqlId_splitPage_select, T10pdt_report.sqlId_splitPage_from);
+		//renderWithPath(pthv+"list.html");
+		//renderWithPath(pthv+"FeatureLayer.html");
+		Page page  = T10pdt_report.dao.paginate(getParaToInt(0, 1), 10, "select *", "from T10pdt_report order by id asc");
+		setAttr("blogPage",page );
 		renderWithPath("/f/self_center.html");
 	}
-
+	
 	/**
 	 * 保存
 	 */
 	/*
-	 * @Before(T10pdt_reportValidator.class) public void save() { T10pdt_report
-	 * t10pdt_report = getModel(T10pdt_report.class); //other set //
-	 * t10pdt_report.setUserid(new BigInteger("000000")); // //
-	 * t10pdt_report.setAdd_time(Timestamp.valueOf("2018-03-18 00:00:00")); //
-	 * t10pdt_report.setCollect_time(Timestamp.valueOf("2018-03-19 00:00:00"));
-	 * // t10pdt_report.setZone_code(72); // t10pdt_report.setCrop_type("01");
-	 * // t10pdt_report.setPdt_type("03"); //t10pdt_report.save(); //guiid
-	 * t10pdt_report.saveGenIntId(); //serial int id
-	 * renderWithPath(pthv+"add.html"); }
-	 */
+	@Before(T10pdt_reportValidator.class)
+	public void save() {
+		T10pdt_report t10pdt_report = getModel(T10pdt_report.class);
+		//other set 
+//		t10pdt_report.setUserid(new BigInteger("000000"));
+//		
+//		t10pdt_report.setAdd_time(Timestamp.valueOf("2018-03-18 00:00:00"));
+//		t10pdt_report.setCollect_time(Timestamp.valueOf("2018-03-19 00:00:00"));
+//		t10pdt_report.setZone_code(72);
+//		t10pdt_report.setCrop_type("01");
+//		t10pdt_report.setPdt_type("03");
+		//t10pdt_report.save();		//guiid
+		t10pdt_report.saveGenIntId();	//serial int id
+		renderWithPath(pthv+"add.html");
+	}
+	*/
 	@Clear
-	public boolean saveReport2Database(T10pdt_report model) {
+	public boolean saveReport2Database(T10pdt_report model)
+	{
 		T10pdt_report t10pdt_report = getModel(T10pdt_report.class);
 		t10pdt_report.setAttrs(model);
-		return t10pdt_report.saveGenIntId(); // serial int id
+		return t10pdt_report.saveGenIntId();	//serial int id
 	}
-
 	/**
 	 * 准备更新
 	 */
 	public void edit() {
-		// T10pdt_report t10pdt_report = T10pdt_report.dao.findById(getPara());
-		// //guuid
-		T10pdt_report t10pdt_report = T10pdt_reportService.service.SelectById(getParaToInt()); // serial
-																								// int
-																								// id
+		//T10pdt_report t10pdt_report = T10pdt_report.dao.findById(getPara());	//guuid
+		T10pdt_report t10pdt_report = T10pdt_reportService.service.SelectById(getParaToInt());		//serial int id
 		setAttr("t10pdt_report", t10pdt_report);
-		renderWithPath(pthv + "update.html");
+		renderWithPath(pthv+"update.html");
 
 	}
-
+	
 	/**
 	 * 更新
 	 */
@@ -152,175 +150,188 @@ public class T10pdt_reportController extends BaseController {
 	 * 查看
 	 */
 	public void view() {
-		// T10pdt_report t10pdt_report = T10pdt_report.dao.findById(getPara());
-		// //guuid
-		T10pdt_report t10pdt_report = T10pdt_reportService.service.SelectById(getParaToInt()); // serial
-																								// int
-																								// id
+		//T10pdt_report t10pdt_report = T10pdt_report.dao.findById(getPara());	//guuid
+		T10pdt_report t10pdt_report = T10pdt_reportService.service.SelectById(getParaToInt());		//serial int id
 		setAttr("t10pdt_report", t10pdt_report);
-		renderWithPath(pthv + "view.html");
+		renderWithPath(pthv+"view.html");
 	}
-
+	
 	/**
 	 * 删除
 	 */
 	@Clear
 	public void delete() {
-		// T10pdt_reportService.service.delete("t10pdt_report", getPara() ==
-		// null ? ids : getPara()); //guuid
-		// T10pdt_reportService.service.deleteById("t10pdt_report", getPara() ==
-		// null ? ids : getPara()); //serial int id
-		// redirect(pthc);
+		//T10pdt_reportService.service.delete("t10pdt_report", getPara() == null ? ids : getPara());	//guuid
+//		T10pdt_reportService.service.deleteById("t10pdt_report", getPara() == null ? ids : getPara());	//serial int id
+//		redirect(pthc);
 		String id = getPara("id");
-		if (ReportUtil.deleteReportFileByFileUrl(getCxt(), getPara("filepath")))// 删除文件
+		if(ReportUtil.deleteReportFileByFileUrl(getCxt(),getPara("filepath")))//删除文件
 		{
-			if (T10pdt_report.dao.deleteById(getPara("id") == null ? ids : id))// 删除数据库记录
+			if(T10pdt_report.dao.deleteById(getPara("id") == null ? ids : id))//删除数据库记录
 			{
 				redirect(pthc);
 			}
 		}
-		// if(T10pdt_report.dao.deleteById(getPara() == null ? ids : getPara()))
-		// {
-		// String filepath = getPara("filepath");
-		// }
-
+//		if(T10pdt_report.dao.deleteById(getPara() == null ? ids : getPara()))
+//		{
+//			String filepath = getPara("filepath");
+//		}
+		
 	}
-
-	public void setViewPath() {
+	
+	public void setViewPath(){
 		setAttr(ConstantRender.PATH_CTL_NAME, pthc);
 		setAttr(ConstantRender.PATH_VIEW_NAME, pthv);
 	}
-
+	
 	@Clear
 	public void generateRoprt() {
 		String userID = getPara("userID");
 		String ProductKind = getPara("ProductKind");
 		String productDate = getPara("productDate");
 		String areaCode = getPara("areaCode");
-
+		
 		String reprotType = getPara("reprotType");
 		String mapPicUrl = getPara("mapPicUrl");
 		String legendPic_str = getPara("legendPic_str");
 		String staPic_str = getPara("staPic_str");
-
+		
 		String staData = getPara("staData");
-
-		Map<Object, Object> dataMap = new HashMap<Object, Object>();
-
-		if (ProductKind.equals("Yield")) {
-			List<ReportUtil.Yield> Yieldlist = new ArrayList<ReportUtil.Yield>();
-			Yieldlist = ReportUtil.getYield(staData);
+		
+		Map<Object,Object> dataMap = new HashMap<Object,Object>();
+		
+		if(ProductKind.equals("Area"))
+		{
+			List<ReportUtil.Area_Yield> Arealist = new ArrayList<ReportUtil.Area_Yield>();
+			Arealist = ReportUtil.getArea_Yield(staData);
+			dataMap.put("Arealist", Arealist);
+		}
+		if(ProductKind.equals("Yield"))
+		{
+			List<ReportUtil.Area_Yield> Yieldlist = new ArrayList<ReportUtil.Area_Yield>();
+			Yieldlist = ReportUtil.getArea_Yield(staData);
 			dataMap.put("Yieldlist", Yieldlist);
 		}
-		if (ProductKind.equals("Drought")) {
+		if(ProductKind.equals("Drought"))
+		{
 			List<ReportUtil.Drought> Droughtlist = new ArrayList<ReportUtil.Drought>();
 			Droughtlist = ReportUtil.getDrought(staData);
 			dataMap.put("Droughtlist", Droughtlist);
-
+			
 		}
-		// System.out.println(staData);
-		// System.out.println(Arealist.get(0).getName());
-		// System.out.println(Arealist.get(0).getValue());
-		// InputStream inputStream = ReportUtil.getInputStreamByGet(mapPicUrl);
-		// String mapPic_str = ReportUtil.getImageStrByGet(mapPicUrl);
+		//System.out.println(staData);
+		//System.out.println(Arealist.get(0).getName());
+		//System.out.println(Arealist.get(0).getValue());
+		//InputStream inputStream = ReportUtil.getInputStreamByGet(mapPicUrl);
+		//String mapPic_str = ReportUtil.getImageStrByGet(mapPicUrl);
 		//
-
-		dataMap.put("titleKind", ProductKind);
-		// dataMap.put("description", "test");
-		dataMap.put("District", areaCode);
-
-		Date day = new Date();
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-		String nowTime = df.format(day);
-
-		dataMap.put("Time", productDate);
-		// dataMap.put("bywho", "lyf");
-		// dataMap.put("mapPic", mapPic_str);
-		// dataMap.put("legendPic", legendPic_str);
-		// dataMap.put("staPic", staPic_str);
-
+		
+	    dataMap.put("titleKind", ProductKind);
+	    //dataMap.put("description", "test");
+	    dataMap.put("District", areaCode);
+	    
+	    
+	    Date day = new Date();
+	    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+	    String nowTime = df.format(day);
+	      
+	    dataMap.put("Time", productDate); 
+	    //dataMap.put("bywho", "lyf"); 
+	    //dataMap.put("mapPic", mapPic_str);  
+//	    dataMap.put("legendPic", legendPic_str); 
+//	    dataMap.put("staPic", staPic_str); 
+	    
 		String mapPic_str = null;
-
+		
 		String reportUrl = null;
 		String exportResult = null;
-		if (reprotType.equals("doc")) {
+		if(reprotType.equals("doc"))
+		{
 			m_reportType = "01";
-
-			String temImg = ReportUtil.generateTempMapImage(mapPicUrl, "maptemp.png", userID, ProductKind);
+			
+			String temImg = ReportUtil.generateTempMapImage(mapPicUrl,"maptemp.png",userID,ProductKind);
 			mapPic_str = ReportUtil.getImageStr(temImg);
 			dataMap.put("mapPic", mapPic_str);
-
-			dataMap.put("legendPic", legendPic_str);
-			dataMap.put("staPic", staPic_str);
-
-			exportResult = ReportUtil.exportSimpleWord(dataMap, userID, nowTime, ProductKind, areaCode, productDate);
-
+			
+			dataMap.put("legendPic", legendPic_str); 
+		    dataMap.put("staPic", staPic_str); 
+		    
+		    exportResult = ReportUtil.exportSimpleWord(dataMap,userID,nowTime,ProductKind,areaCode,productDate);
+			
 		}
-		if (reprotType.equals("pdf")) {
+		if(reprotType.equals("pdf"))
+		{
 			m_reportType = "02";
-
+			
 			mapPic_str = mapPicUrl;
 			dataMap.put("mapPic", mapPic_str);
-
-			// String tempImgPath =
-			// ReportUtil.getWebContentPath()+"files/productReport/pdf/";
-
-			if (ReportUtil.generateImage(legendPic_str, "legendPic.png", userID, ProductKind)) {
-				dataMap.put("legendPic", "legendPic.png");
-
+			
+			//String tempImgPath = ReportUtil.getWebContentPath()+"files/productReport/pdf/";
+			
+			if(ReportUtil.generateImage(legendPic_str,"legendPic.png",userID,ProductKind))
+			{
+				dataMap.put("legendPic", "legendPic.png"); 
+			   
 			}
-			if (ReportUtil.generateImage(staPic_str, "staPic.png", userID, ProductKind)) {
-				dataMap.put("staPic", "staPic.png");
+			if(ReportUtil.generateImage(staPic_str,"staPic.png",userID,ProductKind))
+			{
+				dataMap.put("staPic", "staPic.png"); 
 			}
-
-			exportResult = ReportUtil.export2Pdf(dataMap, userID, nowTime, ProductKind, areaCode, productDate);
-
+			
+			
+			
+			exportResult = ReportUtil.export2Pdf(dataMap,userID,nowTime,ProductKind,areaCode,productDate);
+			
 		}
-
-		if (exportResult != null) {
+		
+		if(exportResult!=null)
+		{
 			T10pdt_report t10pdt_report = getModel(T10pdt_report.class);
-
+			
 			t10pdt_report.setUserid(new BigInteger(userID));
 			t10pdt_report.setAdd_time(Timestamp.valueOf(nowTime));
-			t10pdt_report.setCollect_time(Timestamp.valueOf(productDate + " 00:00:00"));
+			t10pdt_report.setCollect_time(Timestamp.valueOf(productDate+" 00:00:00"));
 			t10pdt_report.setZone_code(Integer.valueOf(areaCode));
 			t10pdt_report.setCrop_type("01");
 			t10pdt_report.setPdt_type(m_ProductKind.getIndex(ProductKind));
 			t10pdt_report.setSuffix(m_reportType);
-			reportUrl = getCxt() + exportResult;
+			reportUrl = getCxt()+exportResult;
 			t10pdt_report.setDownload_path(reportUrl);
-
-			if (saveReport2Database(t10pdt_report))// 保存到数据库
+			
+			if(saveReport2Database(t10pdt_report))//保存到数据库
 			{
 				setAttr("reportUrl", reportUrl);
 				renderJson();
 			}
-
-			// redirect(pthc+"save");
-		} else {
-			redirect(getCxt() + "/view/common/404.html");
+			
+			
+			//redirect(pthc+"save");
 		}
-
-		// String reportUrl =
-		// getCxt()+ReportUtil.exportSimpleWord(dataMap,"","");
-		// String reportUrl = getCxt()+ReportUtil.export2Pdf(dataMap,"","");
-
-		// File file = new File("E:/mapPic.png");
-		// ReportUtil.saveData(inputStream, file);
-		// String legendPic_str =
-		// legendPicUrl.substring(legendPicUrl.indexOf(",")+1);
-		// ReportUtil.generateImage(legendPic_str,"E:/legendPic.png");
-
-		// String staPic_str = staPicUrl.substring(staPicUrl.indexOf(",")+1);
-		// ReportUtil.generateImage(staPic_str,"E:/staPic.png");
-
-		// System.out.println(mapPicUrl);
-		// System.out.println(legendPic_str);
-		// System.out.println(staPic_str);
-		// exportSimpleWord(staPicUrl);
-		// String cxt = getCxt();
-		// setAttr("cxt", cxt);
-
+		else
+		{
+			redirect(getCxt()+"/view/common/404.html");
+		}
+		
+		
+	    //String reportUrl = getCxt()+ReportUtil.exportSimpleWord(dataMap,"","");
+//	    String reportUrl = getCxt()+ReportUtil.export2Pdf(dataMap,"","");
+	    
+	    //File file = new File("E:/mapPic.png");
+	    //ReportUtil.saveData(inputStream, file);
+		//String legendPic_str = legendPicUrl.substring(legendPicUrl.indexOf(",")+1);
+	    //ReportUtil.generateImage(legendPic_str,"E:/legendPic.png");
+		
+		//String staPic_str = staPicUrl.substring(staPicUrl.indexOf(",")+1);
+	    //ReportUtil.generateImage(staPic_str,"E:/staPic.png");
+		
+//		System.out.println(mapPicUrl);
+//		System.out.println(legendPic_str);
+//		System.out.println(staPic_str);
+		//exportSimpleWord(staPicUrl);
+//		String cxt = getCxt();
+//		setAttr("cxt", cxt);
+		
 	}
-
+	
+	
 }

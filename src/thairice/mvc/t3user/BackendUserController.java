@@ -27,7 +27,7 @@ import thairice.mvc.t8message.T8message;
 @Before(AdminLoginInterceptor.class)
 public class BackendUserController extends BaseController {
 	public static final String pthc = "/jf/thairice/admin/user/";
-	public static final String pthv = "/thairice/backend_user/";
+	public static final String pthv = "/adm2018/backend_user/";
 	private static final T3userService service = Duang.duang(T3userService.class);
 	private static final AuthCodeService codeService = Duang.duang(AuthCodeService.class);
 	protected SplitPage splitPage; // 分页封装
@@ -60,9 +60,9 @@ public class BackendUserController extends BaseController {
 		}
 		if (pass.equals(user.getPwd())) {
 			setSessionAttr("admin", user);
-			renderJson(new Result(1, "login successful"));
+			renderJson(new Result(1, "Login successful"));
 		} else {
-			renderJson(new Result(0, "wrong password"));
+			renderJson(new Result(0, "Wrong password"));
 		}
 	}
 
@@ -270,7 +270,7 @@ public class BackendUserController extends BaseController {
 		if (rlt) {
 			renderJson(new Result(1, "Successfully modified"));
 		} else {
-			renderJson(new Result(0, "fail to edit"));
+			renderJson(new Result(0, "Fail to edit"));
 		}
 	}
 

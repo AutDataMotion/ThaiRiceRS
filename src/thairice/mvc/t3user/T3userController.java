@@ -77,7 +77,7 @@ public class T3userController extends BaseController {
 			String password = getPara("password");
 			res = T3userService.service.login(this, account, password);
 		} else {
-			res = new Result(0, "Incorrect verification code");
+			res = new Result(0, "Verification code is error, please re-enter");
 		}
 		renderJson(res);
 	}
@@ -94,8 +94,8 @@ public class T3userController extends BaseController {
 	@Before(T3userValidator.class)
 	public void doReg() {
 		T3user t3user = getModel(T3user.class);
-		// 如果邮编为空默认000
-		t3user.setZip_encode(getPara("t3user.zip_encode", "000"));
+		// 如果邮编为空默认00000
+		t3user.setZip_encode(getPara("t3user.zip_encode", "00000"));
 		t3user.setCreate_time(new Timestamp(new Date().getTime()));
 		t3user.set("Prdt_EfDt", Timestamp.valueOf(getPara("Prdt_EfDt") + " 00:00:00"));
 		t3user.set("PD_ExDat", Timestamp.valueOf(getPara("PD_ExDat") + " 00:00:00"));
@@ -122,7 +122,7 @@ public class T3userController extends BaseController {
 				}
 			}
 		} else {
-			renderJson(new Result(0, "registration failed"));
+			renderJson(new Result(0, "Registration failed"));
 		}
 	}
 

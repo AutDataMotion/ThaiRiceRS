@@ -31,12 +31,12 @@ public class T3user extends BaseModel<T3user> {
 	
 	/**
 	 * 字段描述：用户类型代码 
-	 * 字段类型：enum  长度：7
+	 * 字段类型：enum  长度：2
 	 */
 	public static final String column_type_ = "type_";
 	
 	/**
-	 * 字段描述：用户名 
+	 * 字段描述：username 
 	 * 字段类型：varchar  长度：180
 	 */
 	public static final String column_account = "account";
@@ -103,7 +103,7 @@ public class T3user extends BaseModel<T3user> {
 	
 	/**
 	 * 字段描述：用户审核状态代码 
-	 * 字段类型：enum  长度：7
+	 * 字段类型：enum  长度：2
 	 */
 	public static final String column_status_ = "status_";
 	
@@ -138,6 +138,12 @@ public class T3user extends BaseModel<T3user> {
 	public static final String column_activation = "activation";
 	
 	/**
+	 * 字段描述： 
+	 * 字段类型：varchar  长度：200
+	 */
+	public static final String column_area = "area";
+	
+	/**
 	 * 字段描述：产品类型代码 
 	 * 字段类型：varchar  长度：50
 	 */
@@ -169,6 +175,7 @@ public class T3user extends BaseModel<T3user> {
 	private Timestamp Prdt_EfDt;
 	private Timestamp PD_ExDat;
 	private Integer activation;
+	private String area;
 	private String PD_TpCd;
 
 	public void setId(BigInteger id){
@@ -284,6 +291,12 @@ public class T3user extends BaseModel<T3user> {
 	}
 	public <T> T getActivation() {
 		return get(column_activation);
+	}
+	public void setArea(String area){
+		set(column_area, area);
+	}
+	public <T> T getArea() {
+		return get(column_area);
 	}
 	public void setPD_TpCd(String PD_TpCd){
 		set(column_PD_TpCd, PD_TpCd);
