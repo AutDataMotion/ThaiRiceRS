@@ -15,17 +15,20 @@ import org.hyperic.sigar.Mem;
 import org.hyperic.sigar.Sigar;
 import org.hyperic.sigar.SigarException;
 
+import com.jfinal.aop.Before;
 import com.jfinal.aop.Clear;
 import com.jfinal.log.Logger;
 import com.platform.constant.ConstantRender;
 import com.platform.mvc.base.BaseController;
 
 import csuduc.platform.util.ComUtil;
+import thairice.interceptor.AdminLoginInterceptor;
 
 /**
  * @author zw
  *
  */
+@Before(AdminLoginInterceptor.class)
 public class SysmonitorController extends BaseController {
 	@SuppressWarnings("unused")
 	private static Logger log = Logger.getLogger(SysmonitorController.class);
@@ -64,7 +67,7 @@ public class SysmonitorController extends BaseController {
 		}
 	}
 
-	@Clear
+	//@Clear
 	public void index() {
 		// 获取cpu、内存 定时刷新
 
@@ -78,7 +81,7 @@ public class SysmonitorController extends BaseController {
 		renderWithPath(pthv + pthvm);
 	}
 
-	@Clear
+	//@Clear
 	public void ajaxGetCpuAndMem() {
 		freshCpuData();
 		freshMemData();
@@ -120,7 +123,7 @@ public class SysmonitorController extends BaseController {
 		}
 	}
 
-	@Clear
+	//@Clear
 	public void freshDiskData() {
 		renderJson(getDiskInfo());
 	}

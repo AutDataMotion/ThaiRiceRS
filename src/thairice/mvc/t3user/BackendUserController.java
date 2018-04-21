@@ -60,9 +60,9 @@ public class BackendUserController extends BaseController {
 		}
 		if (pass.equals(user.getPwd())) {
 			setSessionAttr("admin", user);
-			renderJson(new Result(1, "login successful"));
+			renderJson(new Result(1, "Login successful"));
 		} else {
-			renderJson(new Result(0, "wrong password"));
+			renderJson(new Result(0, "Wrong password"));
 		}
 	}
 
@@ -270,7 +270,7 @@ public class BackendUserController extends BaseController {
 		if (rlt) {
 			renderJson(new Result(1, "Successfully modified"));
 		} else {
-			renderJson(new Result(0, "fail to edit"));
+			renderJson(new Result(0, "Fail to edit"));
 		}
 	}
 

@@ -39,13 +39,13 @@ public class T3userValidator extends Validator {
         //用户登录
         if (actionKey.equals(T3userController.pthc + "doLogin")) {
         	if(StrKit.isBlank(c.getPara("account"))){
-        		addError("errorMsg", "please enter your account!");
+        		addError("errorMsg", "Please enter your account!");
         	}
          	if(StrKit.isBlank(c.getPara("password"))){
         		addError("errorMsg", "Please enter your password!");
         	}
         	if(StrKit.isBlank(c.getPara("authCode"))){
-        		addError("errorMsg", "please enter verification code!");
+        		addError("errorMsg", "Please enter verification code!");
         	}
         }
         //用户登录
