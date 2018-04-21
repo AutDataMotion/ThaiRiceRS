@@ -1,29 +1,6 @@
 package thairice.mvc.t10pdt_report;
 
-import com.platform.constant.ConstantRender;
-import com.platform.mvc.base.BaseController;
-import com.platform.mvc.base.BaseModel;
-
-import csuduc.platform.util.ReportUtil;
-import freemarker.template.Configuration;
-import freemarker.template.Template;
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
-
-import java.io.BufferedInputStream;
-import java.io.BufferedOutputStream;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileOutputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.io.OutputStream;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
 import java.math.BigInteger;
-import java.net.HttpURLConnection;
-import java.net.URL;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -33,11 +10,14 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+
 import com.jfinal.aop.Before;
 import com.jfinal.aop.Clear;
 import com.jfinal.plugin.activerecord.Page;
+import com.platform.constant.ConstantRender;
+import com.platform.mvc.base.BaseController;
 
-import thairice.constant.ConstantInitMy;
+import csuduc.platform.util.ReportUtil;
 
 
 /**
