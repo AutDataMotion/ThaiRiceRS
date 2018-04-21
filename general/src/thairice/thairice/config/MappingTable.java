@@ -9,8 +9,6 @@ package thairice.config;
 
 import org.apache.log4j.Logger;
 import thairice.mvc.t3user.T3user;
-import thairice.mvc.t5parameter_type.T5parameter_type;
-import thairice.mvc.t10pdt_report.T10pdt_report;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 /**
  * 创建时间：2016年3月12日 上午10:11:42
@@ -37,8 +35,6 @@ public class MappingTable {
 	public static void mapping(ActiveRecordPlugin arp){
 		log.info("thairice MappingTable 表手工注册-----begin");
 		arp.addMapping("t3user", "id", T3user.class);
-		arp.addMapping("t5parameter_type", "id", T5parameter_type.class);
-		arp.addMapping("t10pdt_report", "id", T10pdt_report.class);
 		log.info("thairice MappingTable 表手工注册-----end");
 		
 	}

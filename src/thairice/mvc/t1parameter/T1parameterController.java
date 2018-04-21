@@ -1,9 +1,5 @@
 package thairice.mvc.t1parameter;
 
-import com.platform.constant.ConstantRender;
-import com.platform.mvc.base.BaseController;
-import com.platform.mvc.base.BaseModel;
-
 import java.math.BigInteger;
 import java.util.List;
 
@@ -13,9 +9,11 @@ import org.json.JSONObject;
 
 import com.jfinal.aop.Before;
 import com.jfinal.plugin.activerecord.Page;
+import com.platform.constant.ConstantRender;
+import com.platform.mvc.base.BaseController;
 
-import thairice.constant.ConstantInitMy;
 import thairice.entity.ResultEntity;
+import thairice.interceptor.AdminLoginInterceptor;
 import thairice.utils.ParamUtils;
 
 
@@ -33,6 +31,7 @@ import thairice.utils.ParamUtils;
  * 
  */
 //@Controller(controllerKey = "/jf/thairice/t1parameter")
+@Before(AdminLoginInterceptor.class)
 public class T1parameterController extends BaseController {
 
 	@SuppressWarnings("unused")
@@ -49,7 +48,7 @@ public class T1parameterController extends BaseController {
 		// BaseModel.sqlId_splitPage_select, T1parameter.sqlId_splitPage_from);
 		// renderWithPath(pthv+"list.html");
 		//
-		Page page = T1parameter.dao.paginate(getParaToInt(0, 1), 10, "select *", "from T1parameter order by id asc");
+		Page page = T1parameter.dao.paginate(getParaToInt(0, 1), 10, "select *", "from t1parameter order by id asc");
 		setAttr("blogPage", page);
 		renderWithPath("/adm2018/production_configuration.html");
 	}
@@ -58,7 +57,7 @@ public class T1parameterController extends BaseController {
 	 * 列表
 	 */
 	public void queryAllParm() {
-		Page page = T1parameter.dao.paginate(getParaToInt(0, 1), 1000, "select *", "from T1parameter order by id asc");
+		Page page = T1parameter.dao.paginate(getParaToInt(0, 1), 1000, "select *", "from t1parameter order by id asc");
 		setAttr("blogPage", page);
 		renderWithPath("/adm2018/production_configuration.html");
 	}

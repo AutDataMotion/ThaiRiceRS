@@ -7,8 +7,6 @@
  */
 package thairice.config;
 import thairice.mvc.t3user.T3userController;
-import thairice.mvc.t5parameter_type.T5parameter_typeController;
-import thairice.mvc.t10pdt_report.T10pdt_reportController;
 import com.jfinal.config.Routes;
 /**
  * 创建时间：2016年1月28日 下午2:15:23
@@ -33,7 +31,5 @@ public class RoutePlugins extends Routes {
 	@Override
 	public void config() {
 		add("/jf/thairice/t3user", T3userController.class);
-		add("/jf/thairice/t5parameter_type", T5parameter_typeController.class);
-		add("/jf/thairice/t10pdt_report", T10pdt_reportController.class);
 	}
 }
