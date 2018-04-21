@@ -13,6 +13,7 @@ import com.jfinal.aop.Before;
 import com.jfinal.aop.Clear;
 
 import thairice.constant.ConstantInitMy;
+import thairice.interceptor.AdminLoginInterceptor;
 
 /**
  * XXX 管理 描述：
@@ -23,6 +24,7 @@ import thairice.constant.ConstantInitMy;
  * 
  */
 // @Controller(controllerKey = "/jf/thairice/t2syslog")
+@Before(AdminLoginInterceptor.class)
 public class T2syslogController extends BaseController {
 
 	@SuppressWarnings("unused")
@@ -35,7 +37,6 @@ public class T2syslogController extends BaseController {
 	/**
 	 * 列表 首次显示
 	 */
-	@Clear
 	public void index() {
 		// 提取前100条
 		List<T2syslog> list = T2syslogService.service.SelectPage(0, 10);
@@ -44,7 +45,6 @@ public class T2syslogController extends BaseController {
 	}
 
 	// 查询
-	@Clear
 	public void search() {
 		// 获取检索条件
 		String strvalue = getPara("v");

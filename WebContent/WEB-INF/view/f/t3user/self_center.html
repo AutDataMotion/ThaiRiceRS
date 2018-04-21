@@ -31,11 +31,11 @@
         <div class="col-sm-3 col-md-2 sidebar left_menu">
             <div class="self_info">
              <% if(user.status_=='02'){ %>
-             <div class="ribbon-wrapper"><div class="ribbon" style="background-color:#4CAF50">examination passed</div></div>
+             <div class="ribbon-wrapper"><div class="ribbon" style="background-color:#4CAF50">Passed</div></div>
              <% }else if(user.status_=='01'){ %>
-              <div class="ribbon-wrapper"><div class="ribbon">Unaudited</div></div>
+              <div class="ribbon-wrapper"><div class="ribbon">Unauthorized</div></div>
              <% }else if(user.status_=='03'){ %>
-             <div class="ribbon-wrapper"><div class="ribbon">Audit failed</div></div>
+             <div class="ribbon-wrapper"><div class="ribbon">Authorization failed</div></div>
              <% }%>
                 <p class="self_title text-center">Personal center</p>
                 <dl class="dl-horizontal">

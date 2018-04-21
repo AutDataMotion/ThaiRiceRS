@@ -35,7 +35,7 @@ public class overdueRemind extends Controller implements ITask {
 				if (message_list.size()<4) {
 					T8message t8message = new T8message();
 					t8message.set("flag", 3);
-					t8message.setContent("你的产品服务准备到期了,到期时间:" + t3user.getTimestamp("PD_ExDat").toString() + ",为了不影响你的使用,请尽快续费。");
+					t8message.setContent("Your product service is ready to expire, due time:" + t3user.getTimestamp("PD_ExDat").toString() + ", In order to not affect your use, please continue to pay as soon as possible.");
 					t8message.setAdd_time(new Timestamp(new Date().getTime()));
 					t8message.setSend_userid(t3user.getBigInteger("id"));
 					t8message.setType_("01");
