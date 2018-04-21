@@ -11,7 +11,7 @@
 </div>
 
 <div class="form-group">
-	<label class="col-sm-2 control-label">用户名</label>
+	<label class="col-sm-2 control-label">username</label>
 	<div class="col-sm-7">
 		<input type="text" name="t3user.account" value="${escapeXml(t3user.account!)}" 
 		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
@@ -178,6 +178,16 @@
 	<label class="col-sm-2 control-label">账号是否激活</label>
 	<div class="col-sm-7">
 		<input type="text" name="t3user.activation" value="${t3user.activation!}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label"></label>
+	<div class="col-sm-7">
+		<input type="text" name="t3user.area" value="${escapeXml(t3user.area!)}" 
 		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
 		<span class="help-inline col-sm-2"></span>
 	</div>

@@ -73,7 +73,7 @@ public class ParamUtils {
 			if(StringUtils.isBlank(parmTypeId) || StringUtils.isBlank(parmId)){
 				LOG.error("参数目录ID或者参数ID为空，查询参数值失败！");
 			} else {
-				String sql = "select * from T1parameter t where t.parm_type_id = '" + parmTypeId 
+				String sql = "select * from t1parameter t where t.parm_type_id = '" + parmTypeId 
 						+ "' and t.parm__id = '" + parmId + "'";
 				LOG.debug("根据参数类型ID和参数明细ID查询参数值：" + sql);
 				List<T1parameter> rltList = T1parameter.dao.find(sql);
@@ -104,7 +104,7 @@ public class ParamUtils {
 			if(StringUtils.isBlank(parmTypeId) || StringUtils.isBlank(parmId)){
 				LOG.error("参数目录ID或者参数ID为空，更新参数值失败！");
 			} else {
-				String sql = "select * from T1parameter t where t.parm_type_id = '" + parmTypeId 
+				String sql = "select * from t1parameter t where t.parm_type_id = '" + parmTypeId 
 						+ "' and t.parm__id = '" + parmId + "'";
 				LOG.debug("根据参数类型ID和参数明细ID查询参数值：" + sql);
 				List<T1parameter> rltList = T1parameter.dao.find(sql);
@@ -138,7 +138,7 @@ public class ParamUtils {
 			if(StringUtils.isBlank(parmTypeId) || StringUtils.isBlank(parmId)){
 				LOG.error("参数目录ID或者参数ID为空，查询参数值失败！");
 			} else {
-				String sql = "select * from T1parameter t where t.parm_type_id = '" + parmTypeId 
+				String sql = "select * from t1parameter t where t.parm_type_id = '" + parmTypeId 
 						+ "' and t.parm__id = '" + parmId + "'";
 				LOG.debug("根据参数类型ID和参数明细ID查询参数值：" + sql);
 				List<T1parameter> rltList = T1parameter.dao.find(sql);
