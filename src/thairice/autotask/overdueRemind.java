@@ -54,6 +54,6 @@ public class overdueRemind extends Controller implements ITask {
 
 	@Override
 	public void stop() {
-		System.out.println("zx任务结束了");
+		System.out.println("zx task is over");
 	}
 }
