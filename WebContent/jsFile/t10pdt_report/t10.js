@@ -21,13 +21,14 @@ function AssembleProductLayerInfo(areaCode,productDate,productKind_code)
 	productKind_des = productKind_code_2_des[productKind_code];
 	if(areaCode&&productDate&&productKind_des)
 	{
+		
+		$("#mapDiv").busyLoad("show", { text: "LOADING ...",
+			textPosition: "top"
+		});
+		
 		addProductLayer(areaCode,productDate,productKind_des);
 	}
-	
-//	console.log(productKind_des);
-//	console.log(productDate);
-	
-	
+
 }
 function addProductLayer(areaCode,productDate,productKind_des)
 {
@@ -78,6 +79,11 @@ function addProductLayer(areaCode,productDate,productKind_des)
 	    });
 //	    console.log(app.featureLayer);
 //	    console.log(app.featureLayer.fullExtent);
+	    app.featureLayer.on("load",function(res){
+//	    	console.log(app.featureLayer.fullExtent);
+       	 	preview(app.featureLayer);//缩放到指定范围
+//       	 createLegend(app.map, featureLayer,legendTitle);
+        });
 	    //动态图层 供渲染使用
 	    app.renderLayer = new ArcGISDynamicMapServiceLayer("http://localhost:6080/arcgis/rest/services/tai_wgs84/MapServer", {
 	        //"id": "yield"
@@ -99,6 +105,7 @@ function addProductLayer(areaCode,productDate,productKind_des)
 	    //createRender(app.featureLayer,app.renderLayer,"value",5);
         if(productKind_des=="Yield")
     	{
+        	
         	createClassBreakRenderLayer(app.featureLayer,app.renderLayer,Render_field,5,"Yield(/ton)");
     	}
     	if(productKind_des=="Drought")
@@ -141,6 +148,7 @@ function createClassBreakRenderLayer(featureLayer,renderLayer,field,numbreaks,le
 //	    var symbol = new SimpleFillSymbol(SimpleFillSymbol.STYLE_NULL,
 //	    		outline,new Color([0,0,0,0.0])
 //	    	  );
+		var count = 5;//如果发生错误，尝试执行5次
 		var drawingOptions = new LayerDrawingOptions();
 		
 	    var renderer = new ClassBreaksRenderer(null, field);
@@ -151,13 +159,16 @@ function createClassBreakRenderLayer(featureLayer,renderLayer,field,numbreaks,le
 	    //queryParams.outStatistics = [ minStatDef, maxStatDef];
 	    queryParams.where = "1=1";
 	    
-	    featureLayer.queryFeatures(queryParams, getStats, null);
-	    
+	    featureLayer.queryFeatures(queryParams, getStats, geterror);
+//	    featureLayer.queryFeatures(queryParams);
+//	    console.log(featureLayer.url);
+//	    featureLayer.on("query-features-complete",getStats);
+//	    console.log("13");
 	 // Executes on each query
 	    function getStats(results){
-		 
+//	    	 console.log("12");
 	    	 var features = results.features;
-	    	          
+//	    	 console.log(features);        
 	    	 var min = max = parseFloat(features[0].attributes[field]);
 	    	           
 	    	 //找到Florida 城市中的最少人数和最多人数
@@ -200,23 +211,35 @@ function createClassBreakRenderLayer(featureLayer,renderLayer,field,numbreaks,le
              featureLayer.setRenderer(renderer);          
              featureLayer.refresh();
 	       	//地图添加动态图层
-	         app.map.addLayer(renderLayer);
 	         
-//	         var layerExt = app.featureLayer.fullExtent;
-	         //console.log(app.featureLayer);
-	         //console.log(layerExt);
-	         preview(app.featureLayer);//缩放到指定范围
-	      	// create the legend if it doesn't exist
-	         //if (!app.hasOwnProperty("legend") ) {
+	         featureLayer.on("load",function(res){
+	        	 preview(featureLayer);//缩放到指定范围
+	        	 createLegend(app.map, featureLayer,legendTitle);
+	         });
+//             console.log("11");
+	         app.map.addLayer(renderLayer);
+
+//	         preview(app.featureLayer);//缩放到指定范围
+
 	         createLegend(app.map, featureLayer,legendTitle);
-	         //}
-//	         else{
-//	        	 app.legend.destroy();
-//	        	 createLegend(app.map, featureLayer,"Yield(/ton)");
-//	         }
-	         //}
+
 	      
 	    }
+	    function geterror(error)
+	    {
+//	    	console.log(error);
+	    	count--;
+	    	if(count>0)
+	    	{
+//	    		console.log(count);
+	    		featureLayer.queryFeatures(queryParams, getStats, geterror);
+	    	}
+	    	else{
+	    		console.log(error);
+	    	}
+	    	
+	    }
+	    
 	    
 	});
 	
@@ -243,14 +266,62 @@ function createUniqueValueRenderLayer(featureLayer,renderLayer,field,uniqueKinds
 	    var renderer = new UniqueValueRenderer(null, field);
 	    var renderColor = [[0, 255, 127, 1],[152, 251, 152, 1],[255, 255, 0, 1],[255, 128, 0, 1],[255, 0, 0, 1]];
 	    
-	    var queryParams = new Query();
+	      renderer.addValue({
+	        value: "1",
+	        symbol: new SimpleFillSymbol("solid", null, new Color(renderColor[0])),
+	        label: "Moist",
+	        description: "Moist"
+	      });
+	      renderer.addValue({
+	        value: "2",
+	        symbol: new SimpleFillSymbol("solid", null, new Color(renderColor[1])),
+	        label: "Normal",
+	        description: "Normal"  
+	      });
+	      renderer.addValue({
+	        value: "3",
+	        symbol: new SimpleFillSymbol("solid", null, new Color(renderColor[2])),
+	        label: "Light Drought",
+	        description: "Light Drought"  
+	      });
+	      renderer.addValue({
+	        value: "4",
+	        symbol: new SimpleFillSymbol("solid", null, new Color(renderColor[3])),
+	        label: "Middling",
+	        description: "Middling"  
+	      });
+	      renderer.addValue({
+	        value: "5",
+	        symbol: new SimpleFillSymbol("solid", null, new Color(renderColor[4])),
+	        label: "Heavy",
+	        description: "Heavy"  
+	      });
+	      
+	      drawingOptions.renderer = renderer;
+          
+          var options = [];
+          options[0] = drawingOptions;
+
+          renderLayer.setLayerDrawingOptions(options);
+         
+          featureLayer.setRenderer(renderer);          
+          featureLayer.refresh();
+       	//地图添加动态图层
+//          console.log("21");
+          app.map.addLayer(renderLayer);
+          createLegend(app.map, featureLayer,legendTitle);
+	    /*var queryParams = new Query();
 	    queryParams.outFields = [field];
 	    //queryParams.outStatistics = [ minStatDef, maxStatDef];
 	    queryParams.where = "1=1";
 	    
-	    featureLayer.queryFeatures(queryParams, renderFeatures, null);
+//	    featureLayer.queryFeatures(queryParams, renderFeatures, null);
+	    featureLayer.queryFeatures(queryParams);
+	    console.log("20");
+	    featureLayer.on("query-features-complete",renderFeatures);
 	    function renderFeatures(results)
 	    {
+	    	  console.log("20");
 	    	  renderer.addValue({
 		        value: "1",
 		        symbol: new SimpleFillSymbol("solid", null, new Color(renderColor[0])),
@@ -292,23 +363,24 @@ function createUniqueValueRenderLayer(featureLayer,renderLayer,field,uniqueKinds
 	          featureLayer.setRenderer(renderer);          
 	          featureLayer.refresh();
 	       	//地图添加动态图层
+	          console.log("21");
 	          app.map.addLayer(renderLayer);
 	         
 //	         var layerExt = app.featureLayer.fullExtent;
 	         
 	         //console.log(layerExt);
-	         preview(app.featureLayer);//缩放到指定范围
+//	         preview(app.featureLayer);//缩放到指定范围
 	      	// create the legend if it doesn't exist
 	         //if (!app.hasOwnProperty("legend") ) {
 	         //createLegend(app.map, featureLayer,"Drought");
 	         //if (!app.hasOwnProperty("legend") ) {
-	         createLegend(app.map, featureLayer,legendTitle);
+//	         createLegend(app.map, featureLayer,legendTitle);
 	         //}
 //	         else{
 //	        	 app.legend.destroy();
 //	        	 createLegend(app.map, featureLayer,"Drought");
 //	         }
-	    }
+	    }*/
 	    
 	    
 	});
@@ -342,14 +414,15 @@ function createRenderLayer(featureLayer,renderLayer,field,legendTitle){
 	      featureLayer.setRenderer(renderer);          
 	      featureLayer.refresh();
 	   	//地图添加动态图层
+//	      console.log("3");
 	      app.map.addLayer(renderLayer);
-	     
+	      createLegend(app.map, featureLayer,legendTitle);
 //	     var layerExt = app.featureLayer.fullExtent;
 //	     console.log(app.featureLayer);
 //	     console.log(app.featureLayer.fields);
-	     preview(app.featureLayer);//缩放到指定范围
-	  	
-	     createLegend(app.map, featureLayer,legendTitle);
+//	     preview(app.featureLayer);//缩放到指定范围
+//	  	
+//	     createLegend(app.map, featureLayer,legendTitle);
 	     //}
 
 	    
@@ -378,8 +451,8 @@ function createLegend(map, fl,legendTitle) {
 			    }, dom.byId("legendDiv"));
 			app.legend.startup();
 		}
-		
-		    //app.legend.refresh();
+		// 隐藏loading
+		$("#mapDiv").busyLoad("hide");
 	});
     
 }
@@ -407,6 +480,9 @@ var sta = {};
 	//得到Province-Country 根据省---》市
 	function getCountry(Province,featureLayer,field)
 	{
+		$("#staChartModal").busyLoad("show", { text: "LOADING ...",
+			textPosition: "top"
+		});
 		//console.log(app.featureLayer);
 		var queryTask = new esri.tasks.QueryTask("http://127.0.0.1:6080/arcgis/rest/services/taicode/MapServer/0");
         var query = new esri.tasks.Query();
@@ -463,13 +539,13 @@ var sta = {};
               //queryParams.outStatistics = [ minStatDef, maxStatDef];
               if(app.productKind_code=="01"){//Area
             	  //queryParams.where = "1=1";
-            	  queryParams.where = "code = '"+feature.attributes["CODE"]+"'";
+            	  queryParams.where = "code = '"+feature.attributes["CODE"]+"'";//行政代码相同
               }
               //queryParams.where = "1=1";
               else{
             	  queryParams.geometry = feature.geometry;
               }
-              
+              var countTry = 5;//queryFeatures如果出错，尝试执行5次
               featureLayer.queryFeatures(queryParams, getStats, errback);
               
               function getStats(results){
@@ -487,7 +563,7 @@ var sta = {};
              	 staData.push(data);
              	 */
              	 
-             	 if(len == staData.length)
+             	 if(len == staData.length)//循环结束
              	 {
              		ChartStaData(staData);//生成统计图
              		//console.log(staData);
@@ -497,10 +573,18 @@ var sta = {};
              }
              
              function errback(err){
-            	 value = 0;
-            	 data.value = value;
-            	 staData.push(data);
-            	 console.log("Couldn't retrieve summary statistics. ", err);
+            	 countTry--;
+            	 if(countTry>0)
+            	 {
+            		 featureLayer.queryFeatures(queryParams, getStats, errback);
+            	 }
+            	 else{
+//                	 value = 0;
+//                	 data.value = value;
+//                	 staData.push(data);
+                	 console.log("Couldn't retrieve summary statistics. ", err);
+            	 }
+
              }
       	}
       }
@@ -921,7 +1005,8 @@ var sta = {};
             app.staChart.clear();
             app.staChart.setOption(option);
         }
-		 
+     // 隐藏loading
+		$("#staChartModal").busyLoad("hide");
      
 	}
 	//得到Country-Town
@@ -933,9 +1018,9 @@ var sta = {};
 /* ************************************************************************************************************/
 function preview(featureLayer)
 {
-//	var layerExt = featureLayer.fullExtent;
-// 	app.map.setExtent(layerExt.expand(1));
-	//alert(layerExt);
+	var layerExt = featureLayer.fullExtent;
+ 	app.map.setExtent(layerExt.expand(1));
+//	alert(layerExt);
 	
 }
  /****************************************************************************************************************/
@@ -1015,7 +1100,7 @@ function printMap()
 			//getReport();
 		}
 		function errback(err){
-       	 console.log("Couldn't retrieve summary statistics. ", err);
+       	 console.log("Couldn't print mapPic. ", err);
         }
 	});
 }

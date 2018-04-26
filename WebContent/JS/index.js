@@ -1,6 +1,7 @@
 // JavaScript Document
 var app = {};
 app.areaCode  ='72';//test
+app.staField  ='value';//test
 app.legendDiv = "#legendinfo";
 app.staChartDiv = "#stainfo";
 app.userID = '0';
@@ -54,7 +55,8 @@ $(function(){
 		$('.StaButton').toggle('normal');
 		$('#staChartModal').modal();
         //$('.BbReportcons .BbReportRight').fadeIn();
-		getCountry("72",app.featureLayer,"value");//统计
+//		getCountry("72",app.featureLayer,"value");//统计
+		getCountry(app.areaCode,app.featureLayer,app.staField);//统计
 		printMap();//获取mapPicUrl 生成map缩略图
 		
     });

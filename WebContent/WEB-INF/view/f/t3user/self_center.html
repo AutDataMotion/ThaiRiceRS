@@ -372,6 +372,7 @@
 <script src="${cxt!}/ui/thairice/area-select/AreaData_min.js"></script>
 <script type="text/javascript" src="${cxt!}/ui/thairice/common.js"></script>
 <script>
+$("#navbar_user").addClass("active");
     initComplexArea('seachprov', 'seachcity', 'seachdistrict', area_array, sub_array, '${province}','${city}','${area}');  
     //初始化复选框
     '${user.PD_TpCd}'.split(",").forEach(function (item) {

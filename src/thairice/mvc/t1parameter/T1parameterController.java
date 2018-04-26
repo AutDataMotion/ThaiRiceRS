@@ -2,6 +2,7 @@ package thairice.mvc.t1parameter;
 
 import java.math.BigInteger;
 import java.util.List;
+import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
@@ -12,6 +13,7 @@ import com.jfinal.plugin.activerecord.Page;
 import com.platform.constant.ConstantRender;
 import com.platform.mvc.base.BaseController;
 
+import csuduc.platform.util.lyf.lyfGis;
 import thairice.entity.ResultEntity;
 import thairice.interceptor.AdminLoginInterceptor;
 import thairice.utils.ParamUtils;
@@ -288,6 +290,13 @@ public class T1parameterController extends BaseController {
 	public void setViewPath(){
 		setAttr(ConstantRender.PATH_CTL_NAME, pthc);
 		setAttr(ConstantRender.PATH_VIEW_NAME, pthv);
+	}
+	public void generateShpfileByGeoJson()
+	{
+		String geoJsonStr = getPara("geoJsonStr");
+		String sampleName = getPara("sampleName");
+		Map<String,String> map = lyfGis.geojson2Shape(geoJsonStr, sampleName+".shp");
+		renderJson(map);
 	}
 	
 }
