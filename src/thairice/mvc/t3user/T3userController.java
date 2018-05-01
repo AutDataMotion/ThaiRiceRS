@@ -23,6 +23,7 @@ import com.platform.mvc.base.BaseController;
 import thairice.constant.ConstantInitMy;
 import thairice.interceptor.UserLoginInterceptor;
 import thairice.mvc.r4message_send.R4message_send;
+import thairice.mvc.t10pdt_report.T10pdt_report;
 import thairice.mvc.t8message.T8message;
 import thairice.mvc.t8message.T8messageService;
 
@@ -46,7 +47,8 @@ public class T3userController extends BaseController {
 	 * 列表
 	 */
 	public void index() {
-		renderWithPath(pthv + "main.html");
+//		renderWithPath(pthv + "main.html");
+		renderWithPath(pthv + "index.html");
 	}
 
 	public void setViewPath() {
@@ -189,6 +191,8 @@ public class T3userController extends BaseController {
 	public void self_center() {
 		T3user user = getSessionAttr("user");
 		String[]ad=user.getStr("area").split(" ");
+		Page page  = T10pdt_report.dao.paginate(getParaToInt(0, 1), 10, "select *", "from T10pdt_report order by id asc");
+		setAttr("blogPage",page );
 		setAttr("province", ad[0]);
 		setAttr("city", ad[1]);
 		setAttr("area", ad[2]);

@@ -1,5 +1,12 @@
 @charset "utf-8";
 /* CSS Document */
+#mapDiv_productionConf{
+        padding: 0;
+        margin: 0;
+        height: 100%;
+            position: fixed;
+                width: 100%;
+}
 .modal-dialog{
 	margin:200px auto;
 }
@@ -28,17 +35,27 @@
 .operation_tools{
 	position:absolute;
 	top:0px;
-	left:0px;
+	left:10px;
 }
 .operation_tools li{
 	float:left;
 	width:60px;
 	height:60px;
+}
+.operation_tools li.one{
+	
 	background:url(../Images/production/map.png) no-repeat 0 0;
 }
-.operation_tools li:hover{
+.operation_tools li.one:hover{
 	background:url(../Images/production/map_pressed.png) no-repeat 0 0;
 }
+.dijitButton{
+	    margin-top: 15px;
+	    color: #08a4cf;
+	    font-weight: bold;
+	     
+}
+/*
 .operation_tools li.two{
 	background-position:-60px 0;
 }
@@ -54,6 +71,7 @@
 .operation_tools li.six{
 	background-position:-300px 0;
 }
+*/
 .operation_tools li a{
 	display:block;
 	width:100%;
@@ -87,11 +105,14 @@ a:focus{
 }
 .samples{
 	width:330px;
-	height:190px;
+	height:auto;
 	position:absolute;
-	right:10px;
-	top:200px;
-	display:none;
+	
+	display:block;
+	    right: 0px;
+    top: 5px;
+    /* display: none; */
+    margin-right: -20px;
 }
 .okay_btn{
 	position:absolute;
@@ -168,7 +189,7 @@ a:focus{
 	background:blue;
 }
 .table-wrap{
-	height:160px;
+	height: auto;
 	overflow-y:auto;
 	width:320px;
 	margin:0 auto;

@@ -1,5 +1,9 @@
 <% var cssSec={ %>
 <style>
+ .undoIcon { background-image:url(${cxt}/ui/thairice/Images/production/undo1.png); width:30px; height:30px; }
+ .redoIcon { background-image:url(${cxt}/ui/thairice/Images/production/redo1.png); width:30px; height:30px;}
+ .undoGrayIcon { background-image:url(${cxt}/ui/thairice/Images/production/undo_gray1.png); width:30px; height:30px; }
+ .redoGrayIcon { background-image:url(${cxt}/ui/thairice/Images/production/redo_gray1.png); width:30px; height:30px; }
 </style>
 <% }; %> <% var contSec={ %>
 
@@ -24,117 +28,54 @@
           <!--Tab panes-->
           <div class="tab-content" style="position:relative;">
             <div role="tabpanel" class="tab-pane active" id="production01">
+            	<div id="mapDiv_productionConf"></div>   
                 <div class="form-group">
 		            <ul class="operation_tools">
 		                  <li class="one"><a href="#" data-toggle="modal" data-target="#fileModal" title="click to start"></a></li>
-		                  <li class="two"><a href="#" title="zoom in"></a></li>
-		                  <li class="three"><a href="#" title="zoom out"></a></li>
-		                  <li class="four"><a href="#" title="remove"></a></li>
+		                  <li id="undo" data-dojo-type="dijit/form/Button"
+				                  data-dojo-props="disabled: true, iconClass: 'undoGrayIcon'">
+		                  	Undo
+				          </li>
+		                  <li id="redo" data-dojo-type="dijit/form/Button"
+					                  data-dojo-props="disabled: true, iconClass: 'redoGrayIcon'">
+		                  	Redo
+		                  </li>
+		                  <!--li class="four"><a href="#" title="remove"></a></li>
 		                  <li class="five"><a href="#" title="crop"></a></li>
-		                  <li class="six"><a href="#" title="save"></a></li>
+		                  <li class="six"><a href="#" title="save"></a></li-->
 		            </ul>
                 </div>
-                    <!--进度条-->
-                    <div class="barline" id="probar">
-                        <div id="line" w="100" style="width:0px;"></div>	
-                    </div>
-                    <!--显示模式和分类样本-->
-                    <div class="modes_samples">
-                    	<div class="block"><span></span></div>
-                        <div class="modes">
-                        	<div class="BbProductMenu">
-                                <div class="list-group">
-                                  <div class="list-group-item">
-                                    <h4 class="list-group-item-heading">Display mode</h4>
-                                    <ul class="modes_ul">
-                                    	<li>
-                                        	<input type="radio"> 
-                                            <span>R</span>
-                                            <span class="color red"></span>
-                                            <select class="form-control" style="float:left; width:150px; height:30px; margin-right:0; margin-left:15px;">
-                                            	<option>band001</option>
-                                                <option>band002</option>
-                                                <option>band003</option>
-                                                <option>band004</option>
-                                            </select>
-                                        </li>
-                                        <li>
-                                        	<input type="radio"> 
-                                            <span>G</span>
-                                            <span class="color green"></span>
-                                            <select class="form-control" style="float:left; width:150px; height:30px; margin-right:0; margin-left:15px;">
-                                            	<option>band001</option>
-                                                <option>band002</option>
-                                                <option>band003</option>
-                                                <option>band004</option>
-                                            </select>
-                                        </li>
-                                        <li>
-                                        	<input type="radio"> 
-                                            <span>B</span>
-                                            <span class="color blue"></span>
-                                            <select class="form-control" style="float:left; width:150px; height:30px; margin-right:0; margin-left:15px;">
-                                            	<option>band001</option>
-                                                <option>band002</option>
-                                                <option>band003</option>
-                                                <option>band004</option>
-                                            </select>
-                                        </li>
-                                    </ul>
-                                  </div>
-                            </div>
-
-                        </div>
-                    	</div>
-                        <div class="samples">
-                        	<div class="BbProductMenu">
-                                <div class="list-group">
-                                  <div class="list-group-item" style="padding-bottom:0;">
-                                    <h4 class="list-group-item-heading">Sample classification</h4>
-                                    <span><i class="glyphicon glyphicon-plus plus"></i></span>
-                                    <div class="table-wrap">
-                                    	<table class="table table-bordered" align="center">
-                                        	<tr class="title">
-                                            	<td>sample name</td>
-                                                <td>color</td>
-                                                <td>number</td>
-                                                <td>delete</td>
-                                            <tr>
-                                            <tr>
-                                            	<td>rice</td>
-                                                <td>
-                                                	<input id="mycp" type="text" class="form-control" value="pink">
-                                                </td>
-                                                <td>1</td>
-                                                <td><span><i class="glyphicon glyphicon-remove-sign"></i></span></td>
-                                            <tr>
-                                            <tr>
-                                            	<td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            <tr>
-                                            <tr>
-                                            	<td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            <tr>
-                                            <tr>
-                                            	<td></td>
-                                                <td></td>
-                                                <td></td>
-                                                <td></td>
-                                            <tr>
-                                        </table>
-                                    </div>
-                                  </div>
-                            </div>
-
-                        </div>
-                        </div>
-                        <button class="btn btn-primary okay_btn" type="button" data-toggle="modal" data-target="#RunModal">OK</button>
-                </div>
+                  <!--显示模式和分类样本-->
+              <div class="modes_samples">
+            
+	            <div class="samples">
+	                  <div class="BbProductMenu">
+	                <div class="list-group">
+	                      <div class="list-group-item" style="padding-bottom:0;">
+	                    <h4 class="list-group-item-heading">Sample classification</h4>
+	                    <span id ="addRow"><i class="glyphicon glyphicon-plus plus"></i></span>
+	                    <div class="table-wrap">
+	                          <table id="sample_excel" class="table display table-bordered" align="center">
+	                        	<thead>
+						            <tr class="title">
+						                <th>sample name</th>
+						                <th>operation</th>
+						            </tr>
+						        </thead>
+	                        	
+	                            <!--tr>
+	                              <td></td>
+	                              <td></td>
+	                              <td></td>
+	                            </tr-->
+	                          </table>
+	                      </div>
+	                  </div>
+	                    </div>
+	              </div>
+	                </div>
+	            <!--button class="btn btn-primary okay_btn" type="button" data-toggle="modal" data-target="#RunModal">OK</button-->
+	          </div>
             </div>		
   			<div role="tabpanel" class="tab-pane" id="production02">
               <div class="tab-box">
@@ -296,6 +237,24 @@
         </div>
       </div>
     </div>
+    <!-- Hint Modal-->
+    <div class="modal fade" id="hintModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="exampleModalLabel">Tip!</h5>
+            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">×</span>
+            </button>
+          </div>
+          <div class="modal-body" id="hintContent"></div>
+          <div class="modal-footer">
+            <button class="btn btn-secondary" type="button" data-dismiss="modal" id="hintModal_okbtn">OK</button>
+            
+          </div>
+        </div>
+      </div>
+    </div>
 	<!-- Logout Modal-->
     <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
       <div class="modal-dialog" role="document">
@@ -309,7 +268,7 @@
           <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
           <div class="modal-footer">
             <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-primary" href="login.html">Logout</a>
+            <a class="btn btn-primary" href="${cxt!}/jf/thairice/t3user/exit">Logout</a>
           </div>
         </div>
       </div>
@@ -423,6 +382,7 @@
  <% }; %> <% var jsSec={ %>
 
   	<script>
+  	
     	function processerbar(time){
 			document.getElementById('probar').style.display="block";
 			$("#line").each(function(i,item){
@@ -441,6 +401,8 @@
 			},timer)
 		};
 		$(function(){
+			//alert("ooooooo");
+			init_productionConf_Monitoring();
 			//日期选择插件
 			$('#starttime6').datetimepicker({  
 				format: 'YYYY-MM-DD',  
@@ -456,7 +418,7 @@
                 //processerbar(2000);
 				$('#probar').show().delay(3000).hide();
             });
-			$('#mycp').colorpicker({
+			/*$('#mycp').colorpicker({
                   align: 'left',
                   customClass: 'colorpicker-2x',
                   sliders: {
@@ -471,7 +433,7 @@
                           maxTop: 200
                       }
                   }
-			})
+			})*/
 		})
     </script>
        

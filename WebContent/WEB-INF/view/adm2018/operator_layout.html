@@ -16,7 +16,10 @@
 	</script>
     <!-- CSS -->
    <!-- Bootstrap core CSS -->
+ <link rel="stylesheet" href="https://js.arcgis.com/3.24/dijit/themes/claro/claro.css">
+<link rel="stylesheet" href="https://js.arcgis.com/3.24/esri/css/esri.css"/>
 <link href="${cxt!}/ui/thairice/bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+<link rel="stylesheet" href="${cxt!}/ui/DataTables/datatables.min.css">
 <link href="${cxt!}/ui/thairice/datetime-picker/bootstrap-datetimepicker.min.css" rel="stylesheet">
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
 <link href="${cxt!}/ui/thairice/data_files/ie10-viewport-bug-workaround.css" rel="stylesheet">
@@ -37,6 +40,7 @@
     <style>
      
     </style>
+    
 </head>
 <body id="skin-6">
 <nav class="navbar navbar-inverse navbar-fixed-top">
@@ -55,7 +59,7 @@
   </div>
 </nav>
 <div class="container-fluid">
-  <div class="row" style="margin-top: 50px;">
+  <div class="row">
     <div class="col-sm-3 col-md-2 sidebar">
     <!-- Sidebar -->
      <% if(session.admin.type_=='03'){ %>
@@ -93,12 +97,16 @@
 <script src="${cxt!}/ui/thairice/data_files/jquery.min.js"></script> 
 <!-- Bootstrap -->
 <script src="${cxt!}/ui/thairice/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+<script src="${cxt!}/ui/DataTables/datatables.min.js"></script>
 <script src="${cxt!}/ui/thairice/datetime-picker/moment.js"></script> 
 <script src="${cxt!}/ui/thairice/datetime-picker/bootstrap-datetimepicker.min.js"></script> 
 <!-- Just to make our placeholder images work. Don't actually copy the next line! --> 
 <script src="${cxt!}/ui/thairice/data_files/holder.min.js"></script> 
 <!-- IE10 viewport hack for Surface/desktop Windows 8 bug --> 
 <script src="${cxt!}/ui/thairice/data_files/ie10-viewport-bug-workaround.js"></script> 
+<script src="https://js.arcgis.com/3.24/"></script>
+<script src="${cxt!}/ui/thairice/JS/productionConf_lyf.js"></script> 
+<script src="${cxt!}/ui/thairice/JS/lyfModules/customoperation.js"></script> 
 <!-- Charts -->
 
 <!--  Form Related -->

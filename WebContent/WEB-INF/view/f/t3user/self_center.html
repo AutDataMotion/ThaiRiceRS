@@ -67,15 +67,18 @@
                 <button type="button" class="btn btn-primary btn-lg btn-block reset_btn" data-toggle="modal"
                         data-target="#passwordModal">Reset password
                 </button>
-                <a href="${cxt!}/jf/thairice/t3user/exit" type="button" class="btn btn-primary btn-lg btn-block logout_btn"
-                   role="button">Log out</a>
+                <a  type="button" class="btn btn-primary btn-lg btn-block logout_btn"
+                   role="button" data-toggle="modal" data-target="#exampleModal">Log out</a>
+                
             </div>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             <div class="self_tablist">
                 <ul class="nav nav-pills" id="myTabs">
                     <li class="active"><a href="#tab_one" data-toggle="tab">Personal information</a></li>
-                    <li><a href="#tab_two" data-toggle="tab">My report</a></li>
+                    <li><a href="#tab_two"
+							data-toggle="tab">My
+								report</a></li>
                 </ul>
             </div>
             <div class="tab-content">
@@ -212,41 +215,54 @@
                         <button type="button" class="btn btn-info">Merging download</button>
                     </div>
                     <div class="tab_table_wrap">
-                        <table class="table table-bordered table-condensed" align="center" cellpadding="0"
-                               cellspacing="0">
-                            <thead>
-                            <tr>
-                                <th style="border-bottom:none;">
-                                    <input type="checkbox">Select all
-                                </th>
-                                <th style="border-bottom:none;">ID</th>
-                                <th style="border-bottom:none;">Type</th>
-                                <th style="border-bottom:none;">Format</th>
-                                <th style="border-bottom:none;">Size</th>
-                                <th style="border-bottom:none;">Creation time</th>
-                            </tr>
-                            </thead>
-                            <tbody>
-                            <tr>
-                                <td><input type="checkbox"></td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                                <td>&nbsp;</td>
-                            </tr>
-                            </tbody>
-                        </table>
-                        <nav aria-label="...">
-                            <ul class="pager">
-                                <li><a href="#">Previous</a></li>
-                                <li><a href="#">1</a>
-                                <li><a href="#">2</a>
-                                <li><a href="#">3</a>
-                                <li><a href="#">Next</a></li>
-                            </ul>
-                        </nav>
-                    </div>
+							<table class="table table-bordered table-condensed"
+								align="center" cellpadding="0" cellspacing="0">
+								<thead>
+									<tr>
+										<th style="border-bottom: none;"><input type="checkbox"
+											align="center">Select</th>
+										<th style="border-bottom: none;">Start date</th>
+										<th style="border-bottom: none;">End date</th>
+										<th style="border-bottom: none;">Zone code</th>
+										<th style="border-bottom: none;">Pdt type</th>
+										<th style="border-bottom: none;">Suffix</th>
+										<th style="border-bottom: none;">Option</th>
+									</tr>
+								</thead>
+								<tbody>
+									<%for(x in blogPage.list){ %>
+									<tr>
+										<td style="text-align: center;"><input type="checkbox" class="reportDownloadCheckbox"
+											name="${x.id}" value="${x.download_path}"></td>
+										<td style="text-align: center;">${x.start_time}</td>
+										<td style="text-align: center;">${x.end_time}</td>
+										<td style="text-align: center;">${x.zone_code}</td>
+										<td style="text-align: center;">${x.pdt_type}</td>
+										<td style="text-align: center;">${x.suffix}</td>
+										<td style="text-align: center;">
+											<a href="/jf/thairice/t10pdt_report/delete/?id=${x.id}&filepath=${x.download_path}">删除</a>
+											<a href="${x.download_path}" target="_blank">下载</a>
+										</td>
+									</tr>
+									<%}%>
+								</tbody>
+							</table>
+							<%includeFileTemplate("/common/_paginate.html",
+							{"currentPage":blogPage.pageNumber,"totalPage":blogPage.totalPage,"actionUrl":"/jf/thairice/t10pdt_report/"})
+							{} %>
+
+						<!-- <nav aria-label="...">
+                          <ul class="pager">
+                            <li><a href="#">Previous</a></li>
+                            <li><a href="#">1</a>
+                            <li><a href="#">2</a>
+                            <li><a href="#">3</a>
+                            <li><a href="#">4</a>
+                            <li><a href="#">5</a>
+                            <li><a href="#">Next</a></li>
+                          </ul>
+                        </nav> -->
+						</div>
                 </div>
             </div>
         </div>
@@ -356,6 +372,7 @@
 <script src="${cxt!}/ui/thairice/area-select/AreaData_min.js"></script>
 <script type="text/javascript" src="${cxt!}/ui/thairice/common.js"></script>
 <script>
+$("#navbar_user").addClass("active");
     initComplexArea('seachprov', 'seachcity', 'seachdistrict', area_array, sub_array, '${province}','${city}','${area}');  
     //初始化复选框
     '${user.PD_TpCd}'.split(",").forEach(function (item) {
