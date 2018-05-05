@@ -4,10 +4,10 @@
 /**********************************************************************************************************
  * 添加产品数据
  */
-var featureLayerUrl = "http://10.2.29.75:6080/arcgis/rest/services/tai_wgs84/MapServer/dynamicLayer";
-var renderLayerUrl = "http://10.2.29.75:6080/arcgis/rest/services/tai_wgs84/MapServer";
-var featureQueryUrl = "http://10.2.29.75:6080/arcgis/rest/services/taicode/MapServer/0";
-var printMapUrl = "http://10.2.29.75:6080/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task";
+var featureLayerUrl = "http://localhost:6080/arcgis/rest/services/tai_wgs84/MapServer/dynamicLayer";
+var renderLayerUrl = "http://localhost:6080/arcgis/rest/services/tai_wgs84/MapServer";
+var featureQueryUrl = "http://localhost:6080/arcgis/rest/services/taicode/MapServer/0";
+var printMapUrl = "http://localhost:6080/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task";
 productKind_code_2_des = {
 		'01':'Area',
 		'02':'Growth',
@@ -122,6 +122,10 @@ function addProductLayer(areaCode,productDate,productKind_des)
     	}
         //createClassBreakRender(app.featureLayer,app.renderLayer,Render_field,5);
 	});
+	
+}
+function getProductDataAndCopy2Workspace(areaCode,productDate,productKind_des)
+{
 	
 }
 function getLayerSource(workspaceId,dataSourceName)
