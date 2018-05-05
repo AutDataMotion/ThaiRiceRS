@@ -4,6 +4,10 @@
 /**********************************************************************************************************
  * 添加产品数据
  */
+var featureLayerUrl = "http://10.2.29.75:6080/arcgis/rest/services/tai_wgs84/MapServer/dynamicLayer";
+var renderLayerUrl = "http://10.2.29.75:6080/arcgis/rest/services/tai_wgs84/MapServer";
+var featureQueryUrl = "http://10.2.29.75:6080/arcgis/rest/services/taicode/MapServer/0";
+var printMapUrl = "http://10.2.29.75:6080/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task";
 productKind_code_2_des = {
 		'01':'Area',
 		'02':'Growth',
@@ -71,7 +75,7 @@ function addProductLayer(areaCode,productDate,productKind_des)
 		var layerSource = getLayerSource(workspaceId,dataSourceName);
 		//定义一个要素图层:注意链接为动态图层的地址dynamicLayer  可以在点击连接看到 
 		//供查询分级使用
-	    app.featureLayer = new FeatureLayer("http://localhost:6080/arcgis/rest/services/tai_wgs84/MapServer/dynamicLayer", {
+	    app.featureLayer = new FeatureLayer(featureLayerUrl, {
 	        mode: FeatureLayer.MODE_ONDEMAND,
 	        //outFields: ["value"],
 	        outFields: featureLayer_outFields,
@@ -85,7 +89,7 @@ function addProductLayer(areaCode,productDate,productKind_des)
 //       	 createLegend(app.map, featureLayer,legendTitle);
         });
 	    //动态图层 供渲染使用
-	    app.renderLayer = new ArcGISDynamicMapServiceLayer("http://localhost:6080/arcgis/rest/services/tai_wgs84/MapServer", {
+	    app.renderLayer = new ArcGISDynamicMapServiceLayer(renderLayerUrl, {
 	        //"id": "yield"
 	    	"id": renderLayer_id
 	     });
@@ -484,7 +488,7 @@ var sta = {};
 			textPosition: "top"
 		});
 		//console.log(app.featureLayer);
-		var queryTask = new esri.tasks.QueryTask("http://127.0.0.1:6080/arcgis/rest/services/taicode/MapServer/0");
+		var queryTask = new esri.tasks.QueryTask(featureQueryUrl);
         var query = new esri.tasks.Query();
         query.outFields = ["CODE","NAME"];//
         query.returnGeometry = true;
@@ -1052,7 +1056,7 @@ function printMap()
 	    function(PrintTask,PrintParameters,PrintTemplate,dom){
 		
 		
-		var url = "http://localhost:6080/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task";
+		var url = printMapUrl;
 		//var url = "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task";
 		var printTask = new PrintTask(url);
 		
