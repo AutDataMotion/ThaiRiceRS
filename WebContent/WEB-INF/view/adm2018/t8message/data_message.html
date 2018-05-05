@@ -20,8 +20,8 @@
             <tr>
               <th width="10%" style="border-bottom:none;"> <input type="checkbox" name="cb-check-all">
                 Select all </th>
-              <th style="border-bottom:none;">Type</th>
-              <th style="border-bottom:none;">Content</th>
+              <th style="border-bottom:none;">Mail type</th>
+              <th style="border-bottom:none;">Mail content</th>
               <th style="border-bottom:none;">Time</th>
             </tr>
           </thead>
@@ -51,7 +51,7 @@
     	  }
       }},
       { "data": "content",orderable: false},
-      { "data": "add_time"}
+      { "data": "add_time",width:150}
     ]
     //初始化表格
     var _table = table.initTable($wrapper, $table, '${cxt!}/jf/thairice/t8message/jsonList', columns);

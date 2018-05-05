@@ -26,7 +26,7 @@ public class RegValidator extends Validator {
 //			 validateString("t3user.company", 1, 240, "companyMsg", "Please enter a company name from 1 to 240 lengths!");
 //			 validateString("t3user.industry", 1, 80, "industryMsg", "Please enter industry name from 1 to 80 digits in length!");
 		} else if (actionKey.equals(T3userController.pthc+"update")){
-			 validateString("t3user.account", 6, 12, "accountMsg", "Please enter the 6 to 12 digit login account!");
+			 validateString("t3user.account", 6, 12, "accountMsg", "The account must be between  6 and 12 characters!");
 			 validateEmail("t3user.email", "emailMsg", "please enter your vaild email");
 			 pass = pass.trim();
 			 confirmPass = confirmPass.trim();

@@ -47,8 +47,7 @@ public class T3userController extends BaseController {
 	 * 列表
 	 */
 	public void index() {
-//		renderWithPath(pthv + "main.html");
-		renderWithPath(pthv + "index.html");
+	    renderWithPath(pthv + "index.html");
 	}
 
 	public void setViewPath() {

@@ -51,8 +51,8 @@
                                      style="width: 100px;height: 100px; border:none; padding:0;"></div>
                                 <div style="cursor:pointer;">
                             <span class="btn-file" style="cursor: pointer;background-color: rgba(240, 248, 255, 0);">
-                            <span class="fileinput-new">change picture</span>
-                            <span class="fileinput-exists">change picture</span>
+                            <span class="fileinput-new">Change picture</span>
+                            <span class="fileinput-exists">Change picture</span>
                             </span>
                                 </div>
                             </div>
@@ -84,9 +84,9 @@
             <div class="tab-content">
                 <div class="tab-pane fade in active" id="tab_one">
                     <form id="info" class="form-horizontal tab-form">
-                        <p class="text-center form_title"> < user information > </p>
+                        <p class="text-center form_title"> < User information > </p>
                         <div class="form-group">
-                            <label class="col-md-3 control-label" style="width:120px;">Username</label>
+                            <label class="col-md-3 control-label" style="width:120px;">Your account</label>
                             <div class="col-md-9" style="width:470px;">
                                 <input type="text" class="form-control" readonly value="${user.account}"
                                        placeholder="Jone">
@@ -100,14 +100,14 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3 control-label" style="width:120px;">E-mail</label>
+                            <label class="col-md-3 control-label" style="width:120px;">Email</label>
                             <div class="col-md-9" style="width:470px;">
                                 <input type="email" class="form-control" id="u_email" name="t3user.email" value="${user.email}"
                                        placeholder="jone@example.com">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3 control-label" style="width:120px;">Yourname</label>
+                            <label class="col-md-3 control-label" style="width:120px;">Nickname</label>
                             <div class="col-md-9" style="width:470px;">
                                 <input type="text" class="form-control" name="t3user.name_" value="${user.name_}"
                                        placeholder="Yingluck Chinnawat">
@@ -128,7 +128,7 @@
                             </div>
                         </div>
                           <div class="form-group">
-                            <label class="col-md-3 control-label" style="width:120px;">address</label>
+                            <label class="col-md-3 control-label" style="width:120px;">Address</label>
                             <div class="col-md-9" style="width:470px;">
                                 <input type="text" class="form-control" name="t3user.address" value="${user.address}"
                                        placeholder="Company">
@@ -145,7 +145,7 @@
                         <div style="position: relative;background-color: white;padding: 12px 0px 15px 0px;">
                         <div class="ribbon-wrapper"><div class="ribbon" style="background-color:#838883">Unchange</div></div>
                         <div class="form-group">
-                            <label class="col-md-3 control-label" style="width:120px;">Select area</label>
+                            <label class="col-md-3 control-label" style="width:120px;">Service Area</label>
                             <div class="col-md-9" style="width:470px;">
                      			 <div class="input-group">
 		                    	 <select id="seachprov"  onChange="changeComplexProvince(this.value, sub_array, 'seachcity', 'seachdistrict');"  style="padding: 8px;"></select>
@@ -155,8 +155,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3 control-label" style="width:120px; padding-left:0;">Select
-                                services</label>
+                            <label class="col-md-3 control-label" style="width:120px; padding-left:0;">Service type</label>
                             <div class="col-md-9" style="width:470px;">
                                 <div class="checkbox">
                                     <label><input type="checkbox" name="PD_TpCd" value="01" disabled>Rice planting area
@@ -294,7 +293,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">upload head</h5>
+                <h5 class="modal-title">Upload head</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
             </div>
             <div class="modal-body">
@@ -311,7 +310,7 @@
 <!--password modify modal-->
 <div class="modal fade" id="passwordModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog" role="document"  style="width: 650px;">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Reset password</h5>
@@ -321,20 +320,20 @@
             <div class="modal-body">
                 <form class="form-horizontal" id="edit_pass">
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">Password</label>
+                        <label class="col-sm-3 control-label">New password</label>
                         <div class="col-sm-9">
-                            <input type="password"  name="pwd" class="form-control"  placeholder="The Passward is made up of 6 to 12 letters and Numbers">
+                            <input type="password"  name="pwd" class="form-control"  placeholder="The new passward is made up of 6 to 12 letters and numbers">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">NewPassword</label>
+                        <label class="col-sm-3 control-label">Re-enter password</label>
                         <div class="col-sm-9">
-                            <input type="password" class="form-control" name="again" placeholder="verify password">
+                            <input type="password" class="form-control" name="again" placeholder="Re-enter new password">
                         </div>
                     </div>
                     
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">E-mail</label>
+                        <label class="col-sm-3 control-label">Email</label>
                         <div class="col-sm-9">
                         <div class="input-group">
                               <input type="email" class="form-control" placeholder="your E-mai like someone@exmaple.com"  name="email"  id="email"  value="${user.email}" readonly>
@@ -343,9 +342,9 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">Verification code</label>
+                        <label class="col-sm-3 control-label">Authentication code</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" placeholder="Enter your email address received the authentication code"  name="code" >
+                            <input type="text" class="form-control" placeholder="Please enter the authentication code in the e-mail"  name="code" >
                         </div>
                     </div>
                 </form>
@@ -367,11 +366,11 @@
 <script src="${cxt!}/ui/thairice/datetime-picker/bootstrap-datetimepicker.min.js"></script>
 <script type="text/javascript" src="${cxt!}/ui/thairice/JS/layer/layer.js"></script>
 <script src="${cxt!}/ui/thairice/JS/bootstrapValidator.js"></script>
-<script src="${cxt!}/ui/thairice/area/jquery.cxselect.min.js"></script>
 <script src="${cxt!}/ui/thairice/area-select/Area.js"></script>
 <script src="${cxt!}/ui/thairice/area-select/AreaData_min.js"></script>
 <script type="text/javascript" src="${cxt!}/ui/thairice/common.js"></script>
 <script>
+
 $("#navbar_user").addClass("active");
     initComplexArea('seachprov', 'seachcity', 'seachdistrict', area_array, sub_array, '${province}','${city}','${area}');  
     //初始化复选框
@@ -414,7 +413,7 @@ $("#navbar_user").addClass("active");
     })
     //上传头像
     $("#file-Portrait1").fileinput({
-        language: 'zh', //设置语言
+        language: 'en', //设置语言
         uploadExtraData: {id: '${user.id}'},
         uploadUrl: '${cxt!}/jf/thairice/t3user/upload_head', //上传的地址
         allowedFileExtensions: ['jpg', 'png'],//接收的文件后缀

@@ -53,7 +53,7 @@
             </div>
             <div class="table-responsive">
                 <div class="mm">
-                <button type="button" class="btn btn-danger btn-sm" id="btn-del"><i class="glyphicon glyphicon-trash"></i>Delete</button>&nbsp&nbsp
+<!--                 <button type="button" class="btn btn-danger btn-sm" id="btn-del"><i class="glyphicon glyphicon-trash"></i>Delete</button> -->
                 </div>
                 <table class="table table-bordered data-table" id="dataTable01" width="100%" cellspacing="0">
                     <thead>
@@ -62,7 +62,7 @@
                         <th>ID</th>
                         <th>Account</th>
                         <th>Phonenumber</th>
-                        <th>E-mail</th>
+                        <th>Email</th>
                         <th>Service time</th>
                         <th>Audit</th>
                         <th>Send a message</th>
@@ -84,18 +84,17 @@
             <div class="modal-body">
                 <form id="info" role="form" class="form-horizontal user_form" id="approved_form">
                     <div class="form-group">
-                        <label class="col-sm-3">service area</label>
+                        <label class="col-sm-3">Service area</label>
                         <div class="col-sm-9">
-                              <div class="input-group">
-		                    	 <select id="seachprov" name="province" onChange="changeComplexProvince(this.value, sub_array, 'seachcity', 'seachdistrict');" style="padding: 8px;"></select>
-			                     <select id="seachcity" name="city" onChange="changeCity(this.value,'seachdistrict','seachdistrict');" style="padding: 8px;"></select>
-			                     <select id="seachdistrict" name="area" style="padding: 8px;"></select>
-		                      </div>
-                            
+                              <div data-toggle="distpicker">
+                                <select id="eprovinceName" name="province" style="padding: 7px;"></select>
+                                <select id="ecityName" name="city" style="padding: 7px;"></select>
+                                <select id="edistrictName" name="area" style="padding: 7px;"></select>
+                               </div>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3">service time</label>
+                        <label class="col-sm-3">Service time</label>
                         <div class="input-group" style="padding-left:15px; width:120px;">
                             <input type="text" name="Prdt_EfDt" id="Prdt_EfDt" class="form-control" style="width:100px; margin-right:0;"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                         </div>
@@ -105,7 +104,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3">service selection</label>
+                        <label class="col-sm-3">Service selection</label>
                         <div class="col-sm-9">
                             <label><input type="checkbox" value="01" name="PD_TpCd"> Rice planting area monitoring</label><br>
                             <label><input type="checkbox" value="02" name="PD_TpCd"> Rice drought monitoring</label><br>
@@ -139,7 +138,7 @@
             <div class="modal-body">
                 <form role="form" id="send_message">
                     <div class="form-group">
-                        <label>The title</label>
+                        <label>Type</label>
                         <select class="form-control" name="t8message.type_">
                             <option value="01">Notice</option>
                             <option value="02">Announcement</option>
@@ -166,11 +165,19 @@
 <script src="${cxt!}/ui/thairice/JS/jquery.dataTables.js"></script>
 <script src="${cxt!}/ui/thairice/JS/dataTables.bootstrap4.js"></script>
 <script src="${cxt!}/ui/thairice/JS/sb-admin-datatables.min.js"></script>
-<script src="${cxt!}/ui/thairice/area-select/Area.js"></script>
-<script src="${cxt!}/ui/thairice/area-select/AreaData_min.js"></script>
+<script src="${cxt!}/ui/thairice/area-select/distpicker.min.js"></script>
+<script src="${cxt!}/ui/thairice/area-select/distpicker.data.js"></script>
 <script type="text/javascript" src="${cxt!}/ui/thairice/JS/layer/layer.js"></script>
 <script src="${cxt!}/ui/thairice/common.js"></script>
 <script>
+        $("#distpicker").distpicker('destroy');
+        $("#distpicker").distpicker({
+        province: '省份名',
+        city: '城市名',
+        district: '区名',
+        autoSelect: true,
+        placeholder: false
+        });
     var $wrapper = $('#div-table-container');
     var $table = $('#dataTable01');
     var columns = [
@@ -184,8 +191,8 @@
         }},
         {"data": null, render: function (data, type, row, meta) {
                 if (data.status_ == '01') {
-                    return '<button type="button" class="btn btn-success btn-sm audit bc"> approved</button>&nbsp'
-                         + '<button type="button" class="btn btn-danger btn-sm bc" onclick="open_message(' + data.id + ',' + 3 + ')">rejected</button>';
+                    return '<button type="button" class="btn btn-success btn-sm audit bc"> Approved</button>&nbsp'
+                         + '<button type="button" class="btn btn-danger btn-sm bc" onclick="open_message(' + data.id + ',' + 3 + ')">Rejected</button>';
                 } else if (data.status_ == '02') {
                     return '<span class="success">Passed approval</span> <i class="glyphicon glyphicon-edit edit"></i>';
                 } else {
@@ -253,9 +260,11 @@
         if(obj.area!=null){
             var area=obj.area.split(" ");
             //地区选择插件
-    		initComplexArea('seachprov', 'seachcity', 'seachdistrict', area_array, sub_array, area[0],area[1],area[2]);  
-        }else{
-        	initComplexArea('seachprov', 'seachcity', 'seachdistrict', area_array, sub_array, 0,0,0);  
+            $("#eprovinceName").val(area[0]);
+            $("#eprovinceName").trigger("change");
+            $("#ecityName").val(area[1]);
+            $("#ecityName").trigger("change");
+            $("#edistrictName").val(area[2]);
         }
         $("#Prdt_EfDt").val(obj.prdt_efdt);
         $("#PD_ExDat").val(obj.pd_exdat);
