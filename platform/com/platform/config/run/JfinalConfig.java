@@ -34,6 +34,7 @@ import com.platform.tools.ToolString;
 import thairice.config.ConfMain;
 import thairice.config.DBMappingMy;
 import thairice.constant.PropertiesInitMy;
+import zeroc.util.IceClientUtil;
 
 /**
  * Jfinal API 引导式配置
@@ -170,11 +171,11 @@ public class JfinalConfig extends JFinalConfig {
 
 		System.out.println("afterJFinalStart");
 		// 加载子系统
-//		ConfMain.init();
-//		ConfMain.start();
+		ConfMain.init();
+		ConfMain.start();
 
 		// Zeroc Ice Util 初始化
-		// IceClientUtil.init(60);
+		 IceClientUtil.init(60);
 		// 初始化ftp地址
 		// com.platform.config.run.ConfMain.getInstance().initFtp();
 		// targrecog.config.ConfMain.getInstance().initFtp();
