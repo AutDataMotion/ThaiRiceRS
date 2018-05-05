@@ -13,11 +13,14 @@ import org.apache.log4j.Logger;
 
 import com.jfinal.aop.Before;
 import com.jfinal.aop.Clear;
+import com.jfinal.aop.Duang;
 import com.jfinal.plugin.activerecord.Page;
 import com.platform.constant.ConstantRender;
 import com.platform.mvc.base.BaseController;
 
 import csuduc.platform.util.ReportUtil;
+import thairice.mvc.t3user.T3user;
+import thairice.mvc.t3user.T3userService;
 
 
 /**
@@ -43,7 +46,7 @@ public class T10pdt_reportController extends BaseController {
 	public static final String pthv = "/thairice/t10pdt_report/";
 
 	public String m_reportType = null;//01-doc 02-pdf
-	
+	private static final thairice.mvc.t3user.T3userService srv = Duang.duang(T3userService.class);
 	public enum m_ProductKind {  
 		Area("Area", "01"), Growth("Growth", "02"), Yield("Yield", "03"), Drought("Drought", "04");  
 	    // 成员变量  
@@ -94,9 +97,18 @@ public class T10pdt_reportController extends BaseController {
 		//paging(ConstantInitMy.db_dataSource_main, splitPage, BaseModel.sqlId_splitPage_select, T10pdt_report.sqlId_splitPage_from);
 		//renderWithPath(pthv+"list.html");
 		//renderWithPath(pthv+"FeatureLayer.html");
+		T3user user = getSessionAttr("user");
+		String[]ad=user.getStr("area").split(" ");
 		Page page  = T10pdt_report.dao.paginate(getParaToInt(0, 1), 10, "select *", "from T10pdt_report order by id asc");
 		setAttr("blogPage",page );
-		renderWithPath("/f/self_center.html");
+		setAttr("province", ad[0]);
+		setAttr("city", ad[1]);
+		setAttr("area", ad[2]);
+		setAttr("user", srv.SelectById(user.getBigInteger("id")));
+		setAttr("count", srv.getCount(user.getBigInteger("id")));
+		setAttr("PersonInfoOrMyreport", 1);
+		
+		renderWithPath("/f/t3user/self_center.html");
 	}
 	
 	/**

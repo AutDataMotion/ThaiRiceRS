@@ -206,7 +206,7 @@
                 	},4000);
                 	
                 	// 磁盘信息 只有页面加载时初始化一次
-                	var labelTop = {
+                	/* var labelTop = {
                 		    normal : {
                 		        label : {
                 		            show : true,
@@ -278,16 +278,16 @@
             		            ]
             		        }
                 		};
-                <%
-                for(var i = 0; i < groupDisk; i++){ 
-                	var disk1 = diskInfoList[i*4 + 0];
-                	var disk2 = diskInfoList[i*4 + 1];
-                	var disk3 = diskInfoList[i*4 + 2];
-                	var disk4 = diskInfoList[i*4 + 3];
-                %>
+               			 <%
+                		for(var i = 0; i < groupDisk; i++){ 
+                				var disk1 = diskInfoList[i*4 + 0];
+                				var disk2 = diskInfoList[i*4 + 1];
+                				var disk3 = diskInfoList[i*4 + 2];
+                				var disk4 = diskInfoList[i*4 + 3];
+               			 %>
                
-                   	var myDisk${i} = ec.init(document.getElementById('mainDisk${i}'));
-                   	var optionDisk${i} = {
+                   		var myDisk${i} = ec.init(document.getElementById('mainDisk${i}'));
+                   		var optionDisk${i} = {
                        	    title : titleDisk,
                        	    toolbox: { show : true},
                        	    series : [
@@ -296,9 +296,10 @@
                        	    	seriesItemDisk( 62, '${disk3.path}', ${disk3.rate}),
                        	    	seriesItemDisk(85,  '${disk4.path}', ${disk4.rate})
                        	    ]
-                   	};
+                   		};
                    	myDisk${i}.setOption(optionDisk${i},true);
-               <% }%>
+                   	
+               		<% }%> */
                
             }
         );
