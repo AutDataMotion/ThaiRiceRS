@@ -75,8 +75,8 @@
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             <div class="self_tablist">
                 <ul class="nav nav-pills" id="myTabs">
-                    <li class="active"><a href="#tab_one" data-toggle="tab">Personal information</a></li>
-                    <li><a href="#tab_two"
+                    <li id="personInfotab" class="active"><a href="#tab_one" data-toggle="tab">Personal information</a></li>
+                    <li id="myreporttab" ><a href="#tab_two"
 							data-toggle="tab">My
 								report</a></li>
                 </ul>
@@ -210,10 +210,10 @@
                     </form>
                 </div>
                 <div class="tab-pane fade" id="tab_two">
-                    <div class="tab_btns">
+                    <!-- div class="tab_btns">
                         <button type="button" class="btn btn-success">Download the selected</button>
                         <button type="button" class="btn btn-info">Merging download</button>
-                    </div>
+                    </div-->
                     <div class="tab_table_wrap">
 							<table class="table table-bordered table-condensed"
 								align="center" cellpadding="0" cellspacing="0">
@@ -240,8 +240,8 @@
 										<td style="text-align: center;">${x.pdt_type}</td>
 										<td style="text-align: center;">${x.suffix}</td>
 										<td style="text-align: center;">
-											<a href="/jf/thairice/t10pdt_report/delete/?id=${x.id}&filepath=${x.download_path}">删除</a>
-											<a href="${x.download_path}" target="_blank">下载</a>
+											<a href="/jf/thairice/t10pdt_report/delete/?id=${x.id}&filepath=${x.download_path}">delete</a>
+											<a href="${x.download_path}" target="_blank">download</a>
 										</td>
 									</tr>
 									<%}%>
@@ -373,6 +373,15 @@
 <script type="text/javascript" src="${cxt!}/ui/thairice/common.js"></script>
 <script>
 $("#navbar_user").addClass("active");
+	if('${PersonInfoOrMyreport!}'==1)
+	{
+		$("#personInfotab").removeClass("active");
+		$("#tab_one").removeClass("in");
+		$("#tab_one").removeClass("active");
+		$("#myreporttab").addClass("active");
+		$("#tab_two").addClass("in");
+		$("#tab_two").addClass("active");
+	}
     initComplexArea('seachprov', 'seachcity', 'seachdistrict', area_array, sub_array, '${province}','${city}','${area}');  
     //初始化复选框
     '${user.PD_TpCd}'.split(",").forEach(function (item) {

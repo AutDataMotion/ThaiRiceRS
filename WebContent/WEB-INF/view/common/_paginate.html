@@ -22,9 +22,9 @@
 			}
 			if(currentPage==1){			
 			%>
-			<span class="disabled prev_page">上页</span>
+			<span class="disabled prev_page">prev</span>
 			<%}else{%>
-			<a href="${actionUrl}" class="prev_page">上页</a>
+			<a href="${actionUrl}" class="prev_page">prev</a>
 			<%}%>
 			
 			<%if(currentPage>8){%>
@@ -54,9 +54,9 @@
 			<%}%>
 			
 			<%if(currentPage == totalPage){%>
-				<span class="disabled next_page">下页</span>
+				<span class="disabled next_page">next</span>
 			<%}else{%>
-				<a href="${actionUrl}${currentPage + 1}${urlParas!}" class="next_page" rel="next">下页</a>
+				<a href="${actionUrl}${currentPage + 1}${urlParas!}" class="next_page" rel="next">next</a>
 			<%}%>
 			
 	</div>
