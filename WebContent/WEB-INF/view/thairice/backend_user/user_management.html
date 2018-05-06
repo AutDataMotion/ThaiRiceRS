@@ -134,11 +134,11 @@
                     <div class="form-group">
                         <label class="col-sm-3">service area</label>
                         <div class="col-sm-9">
-                              <div class="input-group">
-		                    	 <select id="seachprov" name="province" onChange="changeComplexProvince(this.value, sub_array, 'seachcity', 'seachdistrict');" style="padding: 8px;"></select>
-			                     <select id="seachcity" name="city" onChange="changeCity(this.value,'seachdistrict','seachdistrict');" style="padding: 8px;"></select>
-			                     <select id="seachdistrict" name="area" style="padding: 8px;"></select>
-		                      </div>
+                               <div data-toggle="distpicker">
+                                <select id="eprovinceName" name="province" style="padding: 7px;"></select>
+                                <select id="ecityName" name="city" style="padding: 7px;"></select>
+                                <select id="edistrictName" name="area" style="padding: 7px;"></select>
+                                </div>
                             
                         </div>
                     </div>
@@ -222,10 +222,18 @@
 <script src="${cxt!}/ui/thairice/data_files/holder.min.js"></script>
 <script src="${cxt!}/ui/thairice/data_files/ie10-viewport-bug-workaround.js"></script>
 <script type="text/javascript" src="${cxt!}/ui/thairice/JS/layer/layer.js"></script>
-<script src="${cxt!}/ui/thairice/area-select/Area.js"></script>
-<script src="${cxt!}/ui/thairice/area-select/AreaData_min.js"></script>
+<script src="${cxt!}/ui/thairice/area-select/distpicker.min.js"></script>
+<script src="${cxt!}/ui/thairice/area-select/distpicker.data.js"></script>
 <script type="text/javascript" src="${cxt!}/ui/thairice/common.js"></script>
 <script>
+    $("#distpicker").distpicker('destroy');
+    $("#distpicker").distpicker({
+    province: '省份名',
+    city: '城市名',
+    district: '区名',
+    autoSelect: true,
+    placeholder: false
+  });
     var $wrapper = $('#div-table-container');
     var $table = $('#dataTable01');
     var columns = [
@@ -307,10 +315,11 @@
         $("#userid").val(obj.id);
         if(obj.area!=null){
             var area=obj.area.split(" ");
-            //地区选择插件
-    		initComplexArea('seachprov', 'seachcity', 'seachdistrict', area_array, sub_array, area[0],area[1],area[2]);  
-        }else{
-        	initComplexArea('seachprov', 'seachcity', 'seachdistrict', area_array, sub_array, 0,0,0);  
+            $("#eprovinceName").val(area[0]);
+            $("#eprovinceName").trigger("change");
+            $("#ecityName").val(area[1]);
+            $("#ecityName").trigger("change");
+            $("#edistrictName").val(area[2]);
         }
         $("#Prdt_EfDt").val(obj.prdt_efdt);
         $("#PD_ExDat").val(obj.pd_exdat);

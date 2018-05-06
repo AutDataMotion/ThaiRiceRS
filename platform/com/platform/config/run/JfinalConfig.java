@@ -34,6 +34,7 @@ import com.platform.tools.ToolString;
 import thairice.config.ConfMain;
 import thairice.config.DBMappingMy;
 import thairice.constant.PropertiesInitMy;
+import thairice.interceptor.AdminLoginInterceptor;
 
 /**
  * Jfinal API 引导式配置
@@ -153,6 +154,9 @@ public class JfinalConfig extends JFinalConfig {
 		interceptors.add(new TxByRegex(".*delete.*"));
 		log.info("configInterceptor i18n拦截器");
 		interceptors.add(new I18nInterceptor());
+		
+		//全局后台登陆拦截器
+		interceptors.add(new AdminLoginInterceptor());
 	}
 
 	/**

@@ -10,6 +10,12 @@ import com.jfinal.kit.StrKit;
  */
 public class AdminLoginInterceptor implements Interceptor {
     public void intercept(Invocation inv) {
+	
+	if (inv.getActionKey().contains("/jf/thairice/t3user")) {
+	      inv.invoke();
+	      return;
+	}   
+	System.out.println("zx:"+inv.getActionKey());
         if (inv.getController().getSessionAttr("admin") != null) {
             inv.invoke();
         } else {

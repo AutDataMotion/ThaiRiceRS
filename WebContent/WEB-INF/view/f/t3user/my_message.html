@@ -24,9 +24,9 @@
     <div class="row" style="padding-top:60px;">
         <div class="tab_btns" style="margin-top:10px; margin-left:15px;">
             <select class="form-control" style="width:180px; float:left; margin-right:15px;" id="state">
-                <option value="">all</option>
-                <option value="01">unread</option>
-                <option value="02">read</option>
+                <option value="">All</option>
+                <option value="01">Unread</option>
+                <option value="02">Read</option>
             </select>
             <button type="button" class="btn btn-success btn-xs" id="all_read"><i class="glyphicon glyphicon-book"></i>All marked as read</button>
             <button type="button" class="btn btn-danger btn-xs" id="btn-del"><i class="glyphicon glyphicon-remove"></i>Delete the selected</button>
@@ -35,16 +35,16 @@
         <div class="table-responsive">
              <!--搜索-->
                 <div class="input-group">
-                    <input type="text" id="search" class="form-control" placeholder="content">
+                    <input type="text" id="search" class="form-control" placeholder="Content">
                     <span class="input-group-btn"><button id="btn_search" class="btn btn-primary" type="button">Search</button></span>
                 </div>
             <table class="table table-bordered data-table" id="dataTable01" align="center" cellpadding="0" cellspacing="0">
                 <thead>
                 <tr>
-                    <th width="10%" style="border-bottom:none;"><input type="checkbox" name="cb-check-all">Select all</th>
-                    <th style="border-bottom:none;">Type</th>
-                    <th style="border-bottom:none;">Content</th>
-                    <th style="border-bottom:none;">STATUS</th>
+                    <th style="border-bottom:none;width:100px;"><input type="checkbox" name="cb-check-all">Select all</th>
+                    <th style="border-bottom:none;">Mail type</th>
+                    <th style="border-bottom:none;">Mail content</th>
+                    <th style="border-bottom:none;">Status</th>
                     <th style="border-bottom:none;">Time</th>
                     <th style="border-bottom:none;">View</th>
                 </tr>
@@ -67,7 +67,7 @@
             <div class="modal-body">
                 <form role="form" id="read_message">
                     <div class="form-group">
-                        <label>The title</label>
+                        <label>Type</label>
                         <input type="text" id="type_"  readonly class="form-control">
                     </div>
                     <input type="hidden" id="id" name="r4message_send.id">
@@ -110,13 +110,13 @@ $("#navbar_user").addClass("active");
         {"data": "content", orderable: false},
         { "data": null,render: function (data, type, row, meta) {
         	  if(data.status_=='01'){
-        		  return '<span style="color:red;">unread</span>'
+        		  return '<span style="color:red;">Unread</span>'
         	  }else{
-        		  return '<span style="color:blue;">read</span>'
+        		  return '<span style="color:blue;">Read</span>'
         	  }
         }},
         {"data": "add_time", orderable: false},
-        {"data": null, width: 180,
+        {"data": null, width: 50,
             render: function (data, type, row, meta) {
                 return '<button type="button" class="btn btn-success view">view</button>'
             }
@@ -162,7 +162,13 @@ $("#navbar_user").addClass("active");
         var item = _table.row($(this).closest('tr')).data();
         $("#id").val(item.id);
         $("#status_").val(item.status_);
-        $("#type_").val(item.type_);
+        if(item.type_=='01'){
+  		     $("#type_").val('Notice');
+  	    }else if (item.type_=='02'){
+  	    	$("#type_").val('Announcement');
+  	    }else if (item.type_=='03'){
+  	    	$("#type_").val('Remind');
+  	    }
         $("#content").val(item.content);
         $("#message_modal").modal('show');
         setTimeout(function(){
@@ -194,7 +200,6 @@ $("#navbar_user").addClass("active");
     }
     //选择消息类型
     $("#state").change(function () {
-        _table.draw();
     });
 
     /*换肤*/
