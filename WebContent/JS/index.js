@@ -39,25 +39,23 @@ $(function(){
 		}*/
 		//console.log($(this).text());
 //        $('.BbProductMenu').hide();
-//		$('.BbProductabs').show();
-//		$('.BbReportcons').show();
-//		$('.BbReportcons .BbReportLeft').show();
-//		$('.BbReportcons .BbReportRight').hide();
-//		$('.BbReportWrap').show();
-//		$('.BbReportGenerate').hide();
-//		$('.progress').hide();
+
 		$(this).addClass('active').siblings().removeClass('active');
 		//$('.StaButton').toggle('normal');
 		$('.StaButton').show();
     });
 	
 	$('.staChartButton').click(function(e) {//生成统计图
-		$('.StaButton').toggle('normal');
-		$('#staChartModal').modal();
-        //$('.BbReportcons .BbReportRight').fadeIn();
-//		getCountry("72",app.featureLayer,"value");//统计
-		getCountry(app.areaCode,app.featureLayer,app.staField);//统计
-		printMap();//获取mapPicUrl 生成map缩略图
+		if(app.featureLayer)
+		{
+			$('.StaButton').toggle('normal');
+			$('#staChartModal').modal();
+	        //$('.BbReportcons .BbReportRight').fadeIn();
+//			getCountry("72",app.featureLayer,"value");//统计
+			getCountry(app.areaCode,app.featureLayer,app.staField);//统计
+			printMap();//获取mapPicUrl 生成map缩略图
+		}
+		
 		
     });
 	$('#staChartModal .close').click(function(e) {
