@@ -110,8 +110,7 @@ public class T10pdt_reportController extends BaseController {
 		setAttr("area", ad[2]);
 		setAttr("user", srv.SelectById(user.getBigInteger("id")));
 		setAttr("count", srv.getCount(user.getBigInteger("id")));
-		setAttr("PersonInfoOrMyreport", 1);
-		
+		setAttr("PersonInfoOrMyreport", 1);		
 		renderWithPath("/f/t3user/self_center.html");
 	}
 	
