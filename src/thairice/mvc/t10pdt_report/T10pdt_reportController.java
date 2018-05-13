@@ -44,6 +44,10 @@ public class T10pdt_reportController extends BaseController {
 
 	public static final String pthc = "/jf/thairice/t10pdt_report/";
 	public static final String pthv = "/thairice/t10pdt_report/";
+	//数据产品的存储
+//	public static final String productDataPath = "E:/thairiceproduct/";
+	//arcgisServer的工作路径
+//	public static final String arcgisserver_shp_workspacePath = "E:/arcgisserver_shp_workspace/";
 
 	public String m_reportType = null;//01-doc 02-pdf
 	private static final thairice.mvc.t3user.T3userService srv = Duang.duang(T3userService.class);
@@ -344,6 +348,15 @@ public class T10pdt_reportController extends BaseController {
 //		setAttr("cxt", cxt);
 		
 	}
-	
+	@Clear
+	public void CopyProductData2Workspace()
+	{
+		String productKind = getPara("productKind");
+		String productDate = getPara("productDate");
+		String areaCode = getPara("areaCode");
+		boolean result = ReportUtil.getProductDataAndCopy2Workspace(productKind,productDate,areaCode);
+		setAttr("result",result);
+		renderJson();
+	}
 	
 }

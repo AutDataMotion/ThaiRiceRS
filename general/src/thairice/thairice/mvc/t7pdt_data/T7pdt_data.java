@@ -73,7 +73,7 @@ public class T7pdt_data extends BaseModel<T7pdt_data> {
 	
 	/**
 	 * 字段描述：文件下载失败原因代码 
-	 * 字段类型：enum  长度：6
+	 * 字段类型：enum  长度：2
 	 */
 	public static final String column_fail_code = "fail_code";
 	

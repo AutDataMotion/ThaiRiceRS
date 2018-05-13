@@ -115,10 +115,10 @@ public class T2syslogService extends BaseService {
 				 while (threadRun) {
 						try {
 							// 取队列数据
-							System.out.println("--syslogService run...");
+							//System.out.println("--syslogService run...");
 							Record sysLog = queue.poll();
 							if(null == sysLog){
-								Thread.sleep(1000);
+								Thread.sleep(2000);
 							} else {
 								Db.save(T2syslog.tableName, sysLog);// 日志入库
 								addLogToFile(sysLog);// 日志入文件

@@ -91,28 +91,24 @@
 										onchange="common_common.checkFunc('dataTable', this.checked);"> 
 								</th>
 								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
-										'mainPanel', 'splitPage', 'id')">
-										${orderBy("id")}
-								</th>
-								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
 										'mainPanel', 'splitPage', 'userid')">
 									用户ID	${orderBy("userid")}
 								</th>
 								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
 										'mainPanel', 'splitPage', 'remark')">
-									参数明细备注	${orderBy("remark")}
+									#参数明细备注	${orderBy("remark")}
 								</th>
 								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
 										'mainPanel', 'splitPage', 'status_')">
-									删除标志	${orderBy("status_")}
+									#删除标志	${orderBy("status_")}
 								</th>
 								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
 										'mainPanel', 'splitPage', 'version')">
-									版本号	${orderBy("version")}
+									#版本号	${orderBy("version")}
 								</th>
 								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
 										'mainPanel', 'splitPage', 'datetime_')">
-									时间戳	${orderBy("datetime_")}
+									#时间戳	${orderBy("datetime_")}
 								</th>
 								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
 										'mainPanel', 'splitPage', 'parm_type_id')">
@@ -130,6 +126,10 @@
 										'mainPanel', 'splitPage', 'parm__id')">
 									参数明细编号	${orderBy("parm__id")}
 								</th>
+								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
+										'mainPanel', 'splitPage', 'id')">
+										${orderBy("id")}
+								</th>
 								<th class="hidden-xs">
 									${i18nMap["admin.common.operation"]}
 								</th>
@@ -142,12 +142,6 @@
 								<td class="center hidden-xs">
 									<input type="checkbox" name="checkIds" 
 										value="${item.id!}" class="flat-grey foocheck">
-								</td>
-								
-								<td>
-
-							${item["id"]!}
-
 								</td>
 								
 								<td>
@@ -208,6 +202,12 @@
 
 								</td>
 							
+								
+								<td>
+
+							${item["id"]!}
+
+								</td>
 								
 								
 

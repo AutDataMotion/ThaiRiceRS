@@ -21,6 +21,16 @@
 </div>
 
 <div class="form-group">
+	<label class="col-sm-2 control-label">用户名</label>
+	<div class="col-sm-7">
+		<input type="text" name="t2syslog.username" value="${escapeXml(t2syslog.username!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
 	<label class="col-sm-2 control-label">操作</label>
 	<div class="col-sm-7">
 		<input type="text" name="t2syslog.action_" value="${escapeXml(t2syslog.action_!)}" 

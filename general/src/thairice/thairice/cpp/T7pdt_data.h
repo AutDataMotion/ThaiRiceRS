@@ -64,7 +64,7 @@ private:
 	string zone_code;
 	/**
 	 * 字段描述：文件下载失败原因代码 
-	 * 字段类型：enum  长度：6
+	 * 字段类型：enum  长度：2
 	 */
 	string fail_code;
 public:

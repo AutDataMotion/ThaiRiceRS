@@ -11,7 +11,7 @@
 </div>
 
 <div class="form-group">
-	<label class="col-sm-2 control-label">参数明细备注</label>
+	<label class="col-sm-2 control-label">#参数明细备注</label>
 	<div class="col-sm-7">
 		<input type="text" name="t1parameter.remark" value="${escapeXml(t1parameter.remark!)}" 
 		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
@@ -21,7 +21,7 @@
 </div>
 
 <div class="form-group">
-	<label class="col-sm-2 control-label">删除标志</label>
+	<label class="col-sm-2 control-label">#删除标志</label>
 	<div class="col-sm-7">
 		<input type="text" name="t1parameter.status_" value="${t1parameter.status_!}" 
 		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
@@ -31,7 +31,7 @@
 </div>
 
 <div class="form-group">
-	<label class="col-sm-2 control-label">版本号</label>
+	<label class="col-sm-2 control-label">#版本号</label>
 	<div class="col-sm-7">
 		<input type="text" name="t1parameter.version" value="${t1parameter.version!}" 
 		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
@@ -41,7 +41,7 @@
 </div>
 
 <div class="form-group">
-	<label class="col-sm-2 control-label">时间戳</label>
+	<label class="col-sm-2 control-label">#时间戳</label>
 	<div class="col-sm-7">
 		<div class="input-group">
 		<input type="text" name="t1parameter.datetime_" date-data-format="yyyy-mm-dd" data-data-viewmode="years" class="form-control data-picker" value="${t1parameter.datetime_!, dateFormat="yyyy-MM-dd HH:mm:ss"}">
