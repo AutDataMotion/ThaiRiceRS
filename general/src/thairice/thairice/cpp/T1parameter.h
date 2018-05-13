@@ -23,32 +23,27 @@ public:
 private:
 	static const string TableName;
 	/**
-	 * 字段描述： 
-	 * 字段类型：bigint  长度：null
-	 */
-	biginteger id;
-	/**
 	 * 字段描述：用户ID 
 	 * 字段类型：bigint  长度：null
 	 */
 	long userid;
 	/**
-	 * 字段描述：参数明细备注 
+	 * 字段描述：#参数明细备注 
 	 * 字段类型：varchar  长度：256
 	 */
 	string remark;
 	/**
-	 * 字段描述：删除标志 
+	 * 字段描述：#删除标志 
 	 * 字段类型：tinyint  长度：null
 	 */
 	bool status_;
 	/**
-	 * 字段描述：版本号 
+	 * 字段描述：#版本号 
 	 * 字段类型：int  长度：null
 	 */
 	int version;
 	/**
-	 * 字段描述：时间戳 
+	 * 字段描述：#时间戳 
 	 * 字段类型：datetime  长度：null
 	 */
 	string datetime_;
@@ -64,7 +59,7 @@ private:
 	string name_;
 	/**
 	 * 字段描述：参数值 
-	 * 字段类型：varchar  长度：256
+	 * 字段类型：varchar  长度：2048
 	 */
 	string value_;
 	/**
@@ -72,17 +67,12 @@ private:
 	 * 字段类型：varchar  长度：3
 	 */
 	string parm__id;
+	/**
+	 * 字段描述： 
+	 * 字段类型：bigint  长度：null
+	 */
+	biginteger id;
 public:
-	
-	
-	T1parameter& setId(biginteger aid){
-		id = aid;
-		mapSQLTokens["id"] = to_string(id);
-		return *this;
-	}
-	biginteger getId() {
-		return id;
-	}
 	
 	
 	T1parameter& setUserid(long auserid){
@@ -178,6 +168,16 @@ public:
 	}
 	string getParm__id() {
 		return parm__id;
+	}
+	
+	
+	T1parameter& setId(biginteger aid){
+		id = aid;
+		mapSQLTokens["id"] = to_string(id);
+		return *this;
+	}
+	biginteger getId() {
+		return id;
 	}
 	
 };

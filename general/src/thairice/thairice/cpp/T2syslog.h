@@ -38,6 +38,11 @@ private:
 	 */
 	biginteger userid;
 	/**
+	 * 字段描述：用户名 
+	 * 字段类型：varchar  长度：60
+	 */
+	string username;
+	/**
 	 * 字段描述：操作 
 	 * 字段类型：varchar  长度：256
 	 */
@@ -83,6 +88,17 @@ public:
 	}
 	biginteger getUserid() {
 		return userid;
+	}
+	
+	
+	T2syslog& setUsername(string ausername){
+		username = ausername;
+		
+		mapSQLTokens["username"] = "'"+username+"'";
+		return *this;
+	}
+	string getUsername() {
+		return username;
 	}
 	
 	

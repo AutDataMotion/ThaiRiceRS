@@ -24,37 +24,31 @@ public class T1parameter extends BaseModel<T1parameter> {
 	public static final T1parameter dao = new T1parameter();
 	
 	/**
-	 * 字段描述： 
-	 * 字段类型：bigint  长度：null
-	 */
-	public static final String column_id = "id";
-	
-	/**
 	 * 字段描述：用户ID 
 	 * 字段类型：bigint  长度：null
 	 */
 	public static final String column_userid = "userid";
 	
 	/**
-	 * 字段描述：参数明细备注 
+	 * 字段描述：#参数明细备注 
 	 * 字段类型：varchar  长度：256
 	 */
 	public static final String column_remark = "remark";
 	
 	/**
-	 * 字段描述：删除标志 
+	 * 字段描述：#删除标志 
 	 * 字段类型：tinyint  长度：null
 	 */
 	public static final String column_status_ = "status_";
 	
 	/**
-	 * 字段描述：版本号 
+	 * 字段描述：#版本号 
 	 * 字段类型：int  长度：null
 	 */
 	public static final String column_version = "version";
 	
 	/**
-	 * 字段描述：时间戳 
+	 * 字段描述：#时间戳 
 	 * 字段类型：datetime  长度：null
 	 */
 	public static final String column_datetime_ = "datetime_";
@@ -73,7 +67,7 @@ public class T1parameter extends BaseModel<T1parameter> {
 	
 	/**
 	 * 字段描述：参数值 
-	 * 字段类型：varchar  长度：256
+	 * 字段类型：varchar  长度：2048
 	 */
 	public static final String column_value_ = "value_";
 	
@@ -83,6 +77,12 @@ public class T1parameter extends BaseModel<T1parameter> {
 	 */
 	public static final String column_parm__id = "parm__id";
 	
+	/**
+	 * 字段描述： 
+	 * 字段类型：bigint  长度：null
+	 */
+	public static final String column_id = "id";
+	
 	
 	/**
 	 * sqlId : thairice.t1parameter.splitPageFrom
@@ -90,7 +90,6 @@ public class T1parameter extends BaseModel<T1parameter> {
 	 */
 	public static final String sqlId_splitPage_from = "thairice.t1parameter.splitPageFrom";
 
-	private BigInteger id;
 	private Long userid;
 	private String remark;
 	private Boolean status_;
@@ -100,13 +99,8 @@ public class T1parameter extends BaseModel<T1parameter> {
 	private String name_;
 	private String value_;
 	private String parm__id;
+	private BigInteger id;
 
-	public void setId(BigInteger id){
-		set(column_id, id);
-	}
-	public <T> T getId() {
-		return get(column_id);
-	}
 	public void setUserid(Long userid){
 		set(column_userid, userid);
 	}
@@ -160,6 +154,12 @@ public class T1parameter extends BaseModel<T1parameter> {
 	}
 	public <T> T getParm__id() {
 		return get(column_parm__id);
+	}
+	public void setId(BigInteger id){
+		set(column_id, id);
+	}
+	public <T> T getId() {
+		return get(column_id);
 	}
 	
 }

@@ -28,6 +28,11 @@ private:
 	 */
 	biginteger id;
 	/**
+	 * 字段描述： 
+	 * 字段类型：bigint  长度：null
+	 */
+	long message_id;
+	/**
 	 * 字段描述：接收人ID 
 	 * 字段类型：bigint  长度：null
 	 */
@@ -47,6 +52,16 @@ public:
 	}
 	biginteger getId() {
 		return id;
+	}
+	
+	
+	R4message_send& setMessage_id(long amessage_id){
+		message_id = amessage_id;
+		mapSQLTokens["message_id"] = to_string(message_id);
+		return *this;
+	}
+	long getMessage_id() {
+		return message_id;
 	}
 	
 	
