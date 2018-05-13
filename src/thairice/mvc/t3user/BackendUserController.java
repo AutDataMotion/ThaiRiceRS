@@ -17,14 +17,12 @@ import com.platform.dto.SplitPage;
 import com.platform.mvc.base.BaseController;
 
 import thairice.constant.ConstantInitMy;
-import thairice.interceptor.AdminLoginInterceptor;
 import thairice.mvc.r4message_send.R4message_send;
 import thairice.mvc.t8message.T8message;
 
 /**
  * 后台用户管理
  */
-@Before(AdminLoginInterceptor.class)
 public class BackendUserController extends BaseController {
 	public static final String pthc = "/jf/thairice/admin/user/";
 	public static final String pthv = "/adm2018/backend_user/";
@@ -183,7 +181,7 @@ public class BackendUserController extends BaseController {
 			renderJson(new Result(1, "Successful operation"));
 		} catch (Exception e) {
 			e.printStackTrace();
-			renderJson(new Result(0, "operation failed"));
+			renderJson(new Result(0, "Operation failed"));
 		}
 
 	}

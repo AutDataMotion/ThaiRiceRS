@@ -5,7 +5,6 @@ import java.util.Map;
 
 import org.apache.log4j.Logger;
 
-import com.jfinal.aop.Before;
 import com.jfinal.aop.Duang;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Page;
@@ -13,7 +12,6 @@ import com.platform.constant.ConstantRender;
 import com.platform.mvc.base.BaseController;
 
 import thairice.constant.ConstantInitMy;
-import thairice.interceptor.AdminLoginInterceptor;
 import thairice.mvc.t3user.Result;
 
 /**
@@ -24,7 +22,6 @@ import thairice.mvc.t3user.Result;
  * /jf/thairice/t8message/view /jf/thairice/t8message/delete
  * /thairice/t8message/add.html
  */
-@Before(AdminLoginInterceptor.class)
 public class T8messageController extends BaseController {
 
 	private static Logger log = Logger.getLogger(T8messageController.class);

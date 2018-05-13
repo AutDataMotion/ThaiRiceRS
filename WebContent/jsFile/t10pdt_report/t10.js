@@ -4,6 +4,10 @@
 /**********************************************************************************************************
  * 添加产品数据
  */
+var featureLayerUrl = "http://localhost:6080/arcgis/rest/services/tai_wgs84/MapServer/dynamicLayer";
+var renderLayerUrl = "http://localhost:6080/arcgis/rest/services/tai_wgs84/MapServer";
+var featureQueryUrl = "http://localhost:6080/arcgis/rest/services/taicode/MapServer/0";
+var printMapUrl = "http://localhost:6080/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task";
 productKind_code_2_des = {
 		'01':'Area',
 		'02':'Growth',
@@ -21,23 +25,86 @@ function AssembleProductLayerInfo(areaCode,productDate,productKind_code)
 	productKind_des = productKind_code_2_des[productKind_code];
 	if(areaCode&&productDate&&productKind_des)
 	{
-		
 		$("#mapDiv").busyLoad("show", { text: "LOADING ...",
-			textPosition: "top"
+		textPosition: "top"
 		});
-		
-		addProductLayer(areaCode,productDate,productKind_des);
+		if (app.hasOwnProperty("renderLayer") ) {//删除之前的图层
+			 
+			 app.map.removeLayer(app.renderLayer);
+			 app.featureLayer = null;
+			 //app.map.removeAllLayers();
+		}
+		getProductDataAndCopy2Workspace(areaCode,productDate,productKind_des);
+
+//		
+//		addProductLayer(areaCode,productDate,productKind_des);
 	}
 
 }
+function getProductDataAndCopy2Workspace(areaCode,productDate,productKind_des)
+{
+	$.ajax({
+	    url:'/jf/thairice/t10pdt_report/CopyProductData2Workspace',
+	    type:'POST', //GET
+	    async:true,    //或false,是否异步
+	    data:{
+	    	
+	    	productKind:productKind_des,//产品种类 yield等
+			productDate:productDate,//选择的产品日期
+			areaCode:areaCode,//选择的产品行政区域
+	    	
+	    },
+	    timeout:5000,    //超时时间
+	    dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+	    beforeSend:function(xhr){
+	        
+	        console.log('发送前')
+	    },
+	    success:function(data,textStatus,jqXHR){
+	    	
+//	    	alert("success");
+	    	if(data.result)
+	    	{
+	    		addProductLayer(areaCode,productDate,productKind_des);
+	    	}
+	    	else{
+	    		// 隐藏loading
+	    		$("#mapDiv").busyLoad("hide");
+	    		
+	    		$('#systemTipsModal').modal();
+		    	
+		    	$('#systemTipsModalBtn').click(function(e) {
+		    		
+		    		//window.open(data.reportUrl,"_blank");
+		    		$('#systemTipsModal').modal('hide');
+		    		
+		        });
+	    	}
+	    },
+	    error:function(xhr,textStatus){
+	    	// 隐藏loading
+			$("#mapDiv").busyLoad("hide");
+			
+			$('#systemTipsModal').modal();
+	    	
+	    	$('#systemTipsModalBtn').click(function(e) {
+	    		
+	    		//window.open(data.reportUrl,"_blank");
+	    		$('#systemTipsModal').modal('hide');
+	    		
+	        });
+	    	
+	        console.log('错误')
+	        console.log(xhr)
+	        console.log(textStatus)
+	    },
+	    complete:function(){
+	        console.log('结束')
+	    }
+	})
+}
 function addProductLayer(areaCode,productDate,productKind_des)
 {
-	 if (app.hasOwnProperty("renderLayer") ) {//删除之前的图层
-		 
-		 app.map.removeLayer(app.renderLayer);
-		 //app.map.removeAllLayers();
-	 }
- 	
 	var featureLayer_outFields = ["value"];
 	var renderLayer_id = productKind_des;
 	var Render_field = 'value';
@@ -47,15 +114,16 @@ function addProductLayer(areaCode,productDate,productKind_des)
 	var dataSourceName = '';
 	if(productKind_des=="Yield")//估产
 	{
-		dataSourceName = '72_Yield_2017_193.shp';
+//		dataSourceName = '72_Yield_2017_193.shp';
+		dataSourceName = productDate+'_'+areaCode+'.shp';
 	}
 	if(productKind_des=="Drought")//干旱
 	{
-		dataSourceName = '72.shp';
+		dataSourceName = productDate+'_'+areaCode+'.shp';
 	}
 	if(productKind_des=="Area")//面积
 	{
-		dataSourceName = '72.shp';
+		dataSourceName = productDate+'_'+areaCode+'.shp';
 	}
 	
 	
@@ -71,7 +139,7 @@ function addProductLayer(areaCode,productDate,productKind_des)
 		var layerSource = getLayerSource(workspaceId,dataSourceName);
 		//定义一个要素图层:注意链接为动态图层的地址dynamicLayer  可以在点击连接看到 
 		//供查询分级使用
-	    app.featureLayer = new FeatureLayer("http://localhost:6080/arcgis/rest/services/tai_wgs84/MapServer/dynamicLayer", {
+	    app.featureLayer = new FeatureLayer(featureLayerUrl, {
 	        mode: FeatureLayer.MODE_ONDEMAND,
 	        //outFields: ["value"],
 	        outFields: featureLayer_outFields,
@@ -85,7 +153,7 @@ function addProductLayer(areaCode,productDate,productKind_des)
 //       	 createLegend(app.map, featureLayer,legendTitle);
         });
 	    //动态图层 供渲染使用
-	    app.renderLayer = new ArcGISDynamicMapServiceLayer("http://localhost:6080/arcgis/rest/services/tai_wgs84/MapServer", {
+	    app.renderLayer = new ArcGISDynamicMapServiceLayer(renderLayerUrl, {
 	        //"id": "yield"
 	    	"id": renderLayer_id
 	     });
@@ -120,6 +188,7 @@ function addProductLayer(areaCode,productDate,productKind_des)
 	});
 	
 }
+
 function getLayerSource(workspaceId,dataSourceName)
 {
 	var dataSource = new esri.layers.TableDataSource();
@@ -480,11 +549,12 @@ var sta = {};
 	//得到Province-Country 根据省---》市
 	function getCountry(Province,featureLayer,field)
 	{
+		
 		$("#staChartModal").busyLoad("show", { text: "LOADING ...",
 			textPosition: "top"
 		});
 		//console.log(app.featureLayer);
-		var queryTask = new esri.tasks.QueryTask("http://127.0.0.1:6080/arcgis/rest/services/taicode/MapServer/0");
+		var queryTask = new esri.tasks.QueryTask(featureQueryUrl);
         var query = new esri.tasks.Query();
         query.outFields = ["CODE","NAME"];//
         query.returnGeometry = true;
@@ -1052,7 +1122,7 @@ function printMap()
 	    function(PrintTask,PrintParameters,PrintTemplate,dom){
 		
 		
-		var url = "http://localhost:6080/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task";
+		var url = printMapUrl;
 		//var url = "https://sampleserver6.arcgisonline.com/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task";
 		var printTask = new PrintTask(url);
 		

@@ -14,9 +14,11 @@ import thairice.mvc.t3user.T3userService;
  */
 public class UserLoginInterceptor implements Interceptor {
     public void intercept(Invocation inv) {
-        if (inv.getController().getSessionAttr("user") != null) {
-            T3user user = inv.getController().getSessionAttr("user");
-            inv.getController().setAttr("count", Duang.duang(T3userService.class).getCount(user.getBigInteger("id")));
+        if (inv.getController().getSessionAttr("user") != null||inv.getController().getSessionAttr("admin")!=null) {
+            if(inv.getController().getSessionAttr("user") != null) {
+        	 T3user user = inv.getController().getSessionAttr("user");
+                 inv.getController().setAttr("count", Duang.duang(T3userService.class).getCount(user.getBigInteger("id")));
+            }
             inv.invoke();
         } else {
             String queryString = inv.getController().getRequest().getQueryString();
