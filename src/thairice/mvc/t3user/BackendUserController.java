@@ -178,7 +178,7 @@ public class BackendUserController extends BaseController {
 			} else {
 				user.update();
 			}
-			renderJson(new Result(1, "Successful operation"));
+			renderJson(new Result(1, "Operation succeeded"));
 		} catch (Exception e) {
 			e.printStackTrace();
 			renderJson(new Result(0, "Operation failed"));
@@ -244,7 +244,7 @@ public class BackendUserController extends BaseController {
 		user.set("PD_TpCd", l);
 		user.set("area", getPara("province")+" "+getPara("city")+" "+getPara("area"));
 		user.use(ConstantInitMy.db_dataSource_main).update();
-		renderJson(new Result(1, "Successful operation"));
+		renderJson(new Result(1, "Operation succeeded"));
 	}
 
 	/**

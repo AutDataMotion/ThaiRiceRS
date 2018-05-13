@@ -14,14 +14,14 @@
             <div class="user_query" style="margin-top: -53px;">
                 <form id="form" class="form-inline" style="margin:15px 0 15px 0;">
                     <div class="form-group">
-                        <input type="text" id="username" placeholder="The keyword" class="form-control">
+                        <input type="text" id="username" placeholder="Account" class="form-control">
                     </div>
                     <div class="form-group">
                         <label class="control-label">Time:</label>
                         <div class="input-group" style="width: 160px;" id="start">
                             <input type="text" id="min" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                         </div>
-                        <label class="control-label">to</label>
+                        <label class="control-label">To</label>
                         <div class="input-group" style="width: 160px;" id="start2">
                             <input type="text" id="max" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                         </div>
@@ -33,19 +33,19 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Audit</label>
+                        <label>Authorize</label>
                         <select class="form-control" id="audit">
                             <option value="">ALL</option>
-                            <option value="02">Passed</option>
+                            <option value="02">Approved</option>
                             <option value="01">Unauthorized</option>
-                            <option value="03">Authorization failed</option>
+                            <option value="03">Refused</option>
                             <option value="04">Expired</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <button type="button" id="btn_search" class="btn btn-primary">search</button>
+                        <button type="button" id="btn_search" class="btn btn-primary">Search</button>
                         <button type="button" class="btn btn-warning" style="margin-left:15px;" onclick="open_message(0,2)">
-                            group-sent message
+                            Group messages
                         </button>
                         <button type="button"  class="btn btn-primary"  style="margin-left: 12px;" onclick="exp()">Export to Excel</button>
                     </div>
@@ -61,10 +61,10 @@
                         <th><input type="checkbox" name="cb-check-all">Select all</th>
                         <th>ID</th>
                         <th>Account</th>
-                        <th>Phonenumber</th>
+                        <th>Mobile Phone</th>
                         <th>Email</th>
                         <th>Service time</th>
-                        <th>Audit</th>
+                        <th>Authorize</th>
                         <th>Send a message</th>
                     </tr>
                     </thead>
@@ -194,9 +194,9 @@
                     return '<button type="button" class="btn btn-success btn-sm audit bc"> Approved</button>&nbsp'
                          + '<button type="button" class="btn btn-danger btn-sm bc" onclick="open_message(' + data.id + ',' + 3 + ')">Rejected</button>';
                 } else if (data.status_ == '02') {
-                    return '<span class="success">Passed approval</span> <i class="glyphicon glyphicon-edit edit"></i>';
+                    return '<span class="success">Approved</span> <i class="glyphicon glyphicon-edit edit"></i>';
                 } else {
-                    return '<span class="error">Audit failed</span>';
+                    return '<span class="error">Refused</span>';
                 }
             }
         },
@@ -302,7 +302,7 @@
     		window.location.href="${cxt!}/jf/thairice/admin/user/export?select=all";
     	}else{
     		if(ids.length==0){
-    			layer.msg("Please choose to export the data", {icon: 2});
+    			layer.msg("Please choose a record first", {icon: 2});
     			return;
     		 }
     		window.location.href="${cxt!}/jf/thairice/admin/user/export?select=zd&ids="+ids;

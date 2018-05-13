@@ -230,9 +230,9 @@ public class T3userController extends BaseController {
 		int row = Db.use(ConstantInitMy.db_dataSource_main)
 				.update("UPDATE r4message_send SET status_='02' WHERE receive_userid=?", user.getBigInteger("id"));
 		if (row > 0) {
-			renderJson(new Result(1, "Successful operation"));
+			renderJson(new Result(1, "Operation succeeded"));
 		} else {
-			renderJson(new Result(0, "operation failed"));
+			renderJson(new Result(0, "Operation failed"));
 		}
 	}
 

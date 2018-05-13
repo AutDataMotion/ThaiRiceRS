@@ -20,13 +20,13 @@
                     <span class="input-group-btn"><button id="btn_search" class="btn btn-primary" type="button">Search</button></span>
                 </div>
                 <table class="table table-bordered data-table" id="dataTable01" width="100%" cellspacing="0"
-                       align="center">
+                       align="left">
                     <thead>
                     <tr>
                         <th><input type="checkbox" name="cb-check-all">Select all</th>
                         <th>ID</th>
                         <th>Account</th>
-                        <th>Phonenumber</th>
+                        <th>Mobile Phone</th>
                         <th>Email</th>
                         <th>Creation time</th>
                     </tr>
@@ -38,7 +38,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="ModalLabel">Add data</h5>
+                <h5 class="modal-title" id="ModalLabel">Add operator</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">×</span> </button>
             </div>
             <div class="modal-body">
@@ -47,25 +47,25 @@
              All operator initial passwords are:123456！
                     </div>
                     <div class="form-group">
-                        <label class="col-md-3 control-label" style="width:120px;">Username</label>
+                        <label class="col-md-3 control-label" style="width:120px;">Account</label>
                         <div class="col-md-9" style="width:470px;">
                             <input type="text" class="form-control" placeholder="Jone"  id="account" name="t3user.account" >
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-3 control-label" style="width:120px;">Phonenumber</label>
+                        <label class="col-md-3 control-label" style="width:120px;">Mobile Phone</label>
                         <div class="col-md-9" style="width:470px;">
                             <input type="text" class="form-control" placeholder="+66 08088999999999" id="phone" name="t3user.phone">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-3 control-label" style="width:120px;">E-mail</label>
+                        <label class="col-md-3 control-label" style="width:120px;">Email</label>
                         <div class="col-md-9" style="width:470px;">
                             <input type="email" class="form-control" placeholder="jone@example.com" id="email" name="t3user.email">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-3 control-label" style="width:120px;">Yourname</label>
+                        <label class="col-md-3 control-label" style="width:120px;">Nickname</label>
                         <div class="col-md-9" style="width:470px;">
                             <input type="text" class="form-control" placeholder="Yingluck Chinnawat" id="name_" name="t3user.name_">
                         </div>
@@ -86,7 +86,7 @@
                         <label class="col-md-3 control-label" style="width:120px;">Industry</label>
                         <div class="col-md-9" style="width:470px;">
                             <select class="form-control" name="t3user.industry" id="industry">
-                                <option value="agricultural">agricultural</option>
+                                <option value="agricultural">Agricultural</option>
                             </select>
                         </div>
                     </div>
@@ -160,7 +160,7 @@
         		window.location.href="${cxt!}/jf/thairice/admin/user/export_operator?select=all";
         	}else{
         		if(ids.length==0){
-        			layer.msg("Please choose to export the data", {icon: 2});
+        			layer.msg("Please choose a record first", {icon: 2});
         			return;
         		 }
         		window.location.href="${cxt!}/jf/thairice/admin/user/export_operator?select=zd&ids="+ids;
@@ -264,7 +264,7 @@
                 },
                 remote: {//ajax验证。server result:{"valid",true or false}
                     url: '${cxt!}/jf/thairice/t3user/valiMailBox',
-                    message: 'email has already exist!',
+                    message: 'Mailbox already exists please reenter ',
                     delay: 2000,
                     type: 'POST',
                     //自定义参数
