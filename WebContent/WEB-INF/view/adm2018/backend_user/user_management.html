@@ -27,7 +27,7 @@
                         </div>
                     </div>
                     <div class="form-group" style="margin-right:20px;">
-                        <label>Region</label>
+                        <label>Area</label>
                         <select class="form-control" id="region">
                             <option value="ALL">ALL</option>
                         </select>
@@ -61,9 +61,9 @@
                         <th><input type="checkbox" name="cb-check-all">Select all</th>
                         <th>ID</th>
                         <th>Account</th>
-                        <th>Mobile Phone</th>
-                        <th>Email</th>
-                        <th>Service time</th>
+                        <th>Mob</th>
+                        <th>Email address</th>
+                        <th>Service term</th>
                         <th>Authorize</th>
                         <th>Send a message</th>
                     </tr>
@@ -94,7 +94,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3">Service time</label>
+                        <label class="col-sm-3">Service term</label>
                         <div class="input-group" style="padding-left:15px; width:120px;">
                             <input type="text" name="Prdt_EfDt" id="Prdt_EfDt" class="form-control" style="width:100px; margin-right:0;"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                         </div>
@@ -228,7 +228,7 @@
         } else {
             $("#flag").val(3);
             $("#receive_userid").val(id);
-            $('.modal-title').html("Please specify reason of audit not through");
+            $('.modal-title').html("Please indicate that the authorze failed to approve the reason");
         }
         $("#content").val('');
         $("#message_modal").modal('show');
