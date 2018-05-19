@@ -135,15 +135,18 @@ public class SysmonitorController extends BaseController {
 		FileSystem fslist[];
 		try {
 			fslist = sigar.getFileSystemList();
-			MdlUsedInfo usedInfo = new MdlUsedInfo();
+			MdlUsedInfo usedInfo = null;
 			for (int i = 0; i < fslist.length; i++) {
+				usedInfo = new MdlUsedInfo();
 				FileSystem fs = fslist[i];
-				usedInfo.setPath(fs.getDirName());
+				String pathTemp = fs.getDirName();
+				usedInfo.setPath(pathTemp.substring(0, pathTemp.length()-1));
 				FileSystemUsage usage = sigar.getFileSystemUsage(fs.getDirName());
 				usedInfo.setTotal(usage.getTotal() / 1024);
 				usedInfo.setUsed(usage.getUsed() / 1024);
 				usedInfo.setIdle(usage.getAvail() / 1024);
 				usedInfo.setRate(Integer.valueOf(ComUtil.formatDoubleToIntString(usage.getUsePercent() * 100D)));
+				usedInfos.add(usedInfo);
 			}
 		} catch (SigarException e) {
 			// TODO Auto-generated catch block

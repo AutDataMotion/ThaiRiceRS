@@ -282,8 +282,7 @@
                 		for(var i = 0; i < groupDisk; i++){ 
                 				var disk1 = diskInfoList[i*4 + 0];
                 				var disk2 = diskInfoList[i*4 + 1];
-                				var disk3 = diskInfoList[i*4 + 2];
-                				var disk4 = diskInfoList[i*4 + 3];
+                				
                			 %>
                
                    		var myDisk${i} = ec.init(document.getElementById('mainDisk${i}'));
@@ -292,9 +291,8 @@
                        	    toolbox: { show : true},
                        	    series : [
                        	    	seriesItemDisk(15,  '${disk1.path}', ${disk1.rate}),
-                       	    	seriesItemDisk(38,   '${disk2.path}', ${disk2.rate}),
-                       	    	seriesItemDisk( 62, '${disk3.path}', ${disk3.rate}),
-                       	    	seriesItemDisk(85,  '${disk4.path}', ${disk4.rate})
+                       	    	seriesItemDisk(38,   '${disk2.path}', ${disk2.rate})
+                       	    
                        	    ]
                    		};
                    	myDisk${i}.setOption(optionDisk${i},true);
