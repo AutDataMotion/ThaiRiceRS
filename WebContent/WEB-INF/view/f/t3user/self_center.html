@@ -96,7 +96,7 @@
                             <label class="col-md-3 control-label" style="width:120px;">Mob</label>
                             <div class="col-md-9" style="width:470px;">
                                 <input type="text" class="form-control" name="t3user.phone" value="${user.phone}"
-                                       placeholder="+0808899999">
+                                       placeholder="+66 0808899999">
                             </div>
                         </div>
                         <div class="form-group">
@@ -439,7 +439,7 @@ $("#navbar_user").addClass("active");
     $("#file-Portrait1").on("fileuploaded", function (event, data, previewId, index) {
         console.log(JSON.stringify(data));
         if(data.response.code==1){
-            layer.msg('Uploaded successfully');
+            layer.msg('Uploaded successful');
             $('#picImg').attr("src","${cxt!}"+data.response.desc);
         }
     });

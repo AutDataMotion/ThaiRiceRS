@@ -421,7 +421,7 @@ $('#city_china_val').cxSelect({
     $("#file-Portrait1").on("fileuploaded", function (event, data, previewId, index) {
         console.log(JSON.stringify(data));
         if(data.response.code==1){
-            layer.msg('Uploaded successfully');
+            layer.msg('Uploaded successful');
             $('#picImg').attr("src","${cxt!}"+data.response.desc);
         }
     });

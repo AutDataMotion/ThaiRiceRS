@@ -135,7 +135,7 @@ $("#navbar_user").addClass("active");
     });
   //设置全部已读
     $("#all_read").click(function () {
-        layer.confirm('Make sure to mark all messages as read', {icon: 3,title:'prompt',btn: ['confirm','cancel']}, function (index) {
+        layer.confirm('Make sure to mark all messages as read', {icon: 3,title:'Prompt',btn: ['Confirm','Cancel']}, function (index) {
             sendAjax("${cxt!}/jf/thairice/t3user/all_read",null,function(res){
                 showMessage(res.desc);
                 if(res.code==1){
