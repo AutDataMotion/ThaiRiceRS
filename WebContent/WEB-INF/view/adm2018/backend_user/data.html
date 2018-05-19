@@ -1,12 +1,14 @@
 <% var cssSec={ %>
 <style>
 .input-group{width: 250px;float: right;}
+table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td{vertical-align: middle;text-align: left;}
+.even{background-color: rgb(219, 239, 246)!important;}
 </style>
 <% }; %>
  <link type="text/css" rel="stylesheet" href="${cxt!}/ui/thairice/CSS/bootstrapValidator.css">
  <% var contSec={ %>
      <!--操作按钮-->
-            <div class="data-btns">
+            <div class="data-btns" style="margin-top: -50px;">
                 <button type="button" class="btn btn-success btn-sm" onclick="op('add')"><i class="glyphicon glyphicon-plus"></i>Add</button>
                 <button type="button" class="btn btn-warning btn-sm" onclick="op('edit')"><i class="glyphicon glyphicon-edit"></i>Edit</button>
                 <button type="button" class="btn btn-info btn-sm"   onclick="op('export')" style="width: auto;float: right;"><i class="glyphicon glyphicon-log-in"></i>Export to Excel</button>
@@ -20,14 +22,13 @@
                     <span class="input-group-btn"><button id="btn_search" class="btn btn-primary" type="button">Search</button></span>
                 </div>
                 <table class="table table-bordered data-table" id="dataTable01" width="100%" cellspacing="0"
-                       align="center">
+                       align="left">
                     <thead>
                     <tr>
                         <th><input type="checkbox" name="cb-check-all">Select all</th>
-                        <th>ID</th>
                         <th>Account</th>
-                        <th>Phonenumber</th>
-                        <th>Email</th>
+                        <th>Mob</th>
+                        <th>Email address</th>
                         <th>Creation time</th>
                     </tr>
                     </thead>
@@ -38,7 +39,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="ModalLabel">Add data</h5>
+                <h5 class="modal-title" id="ModalLabel">Add operator</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">×</span> </button>
             </div>
             <div class="modal-body">
@@ -47,33 +48,33 @@
              All operator initial passwords are:123456！
                     </div>
                     <div class="form-group">
-                        <label class="col-md-3 control-label" style="width:120px;">Username</label>
+                        <label class="col-md-3 control-label" style="width:120px;">* Account</label>
                         <div class="col-md-9" style="width:470px;">
                             <input type="text" class="form-control" placeholder="Jone"  id="account" name="t3user.account" >
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-3 control-label" style="width:120px;">Phonenumber</label>
+                        <label class="col-md-3 control-label" style="width:120px;">* Mob</label>
                         <div class="col-md-9" style="width:470px;">
-                            <input type="text" class="form-control" placeholder="+66 08088999999999" id="phone" name="t3user.phone">
+                            <input type="text" class="form-control" placeholder="+0808899999" id="phone" name="t3user.phone">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-3 control-label" style="width:120px;">E-mail</label>
+                        <label class="col-md-3 control-label" style="width:120px;">* Email</label>
                         <div class="col-md-9" style="width:470px;">
                             <input type="email" class="form-control" placeholder="jone@example.com" id="email" name="t3user.email">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-3 control-label" style="width:120px;">Yourname</label>
+                        <label class="col-md-3 control-label" style="width:120px;">* Nickname</label>
                         <div class="col-md-9" style="width:470px;">
                             <input type="text" class="form-control" placeholder="Yingluck Chinnawat" id="name_" name="t3user.name_">
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-3 control-label" style="width:120px;">Company</label>
+                        <label class="col-md-3 control-label" style="width:120px;">Organization</label>
                         <div class="col-md-9" style="width:470px;">
-                            <input type="text" class="form-control" placeholder="Company" id="company" name="t3user.company">
+                            <input type="text" class="form-control" placeholder="Your current job" id="company" name="t3user.company">
                         </div>
                     </div>
                     <div class="form-group">
@@ -86,7 +87,7 @@
                         <label class="col-md-3 control-label" style="width:120px;">Industry</label>
                         <div class="col-md-9" style="width:470px;">
                             <select class="form-control" name="t3user.industry" id="industry">
-                                <option value="agricultural">agricultural</option>
+                                <option value="agricultural">Agricultural</option>
                             </select>
                         </div>
                     </div>
@@ -115,7 +116,6 @@
     var $table = $('#dataTable01');
     var columns = [
         CONSTANT.DATA_TABLES.COLUMN.CHECKBOX,
-        {"data": "id"},
         {"data": "name_", orderable: false},
         {"data": "phone"},
         {"data": "email", orderable: false},
@@ -135,11 +135,13 @@
     //添加或编辑
     function op(op){
         if(op=='add'){
+            /*  $("#addForm").bootstrapValidator('resetForm'); */
         	//清空表单
         	$(':input','#addForm').val('');
         	$('#account').attr("disabled",false); 
             $("#ModalLabel").html("Add data");
             $("#addModal").modal('show');
+            
         }else if(op=='edit'){
             $("#ModalLabel").html("Edit data");
             var data=getRowItem($table,_table);
@@ -160,7 +162,7 @@
         		window.location.href="${cxt!}/jf/thairice/admin/user/export_operator?select=all";
         	}else{
         		if(ids.length==0){
-        			layer.msg("Please choose to export the data", {icon: 2});
+        			layer.msg("Please choose at least one record", {icon: 2});
         			return;
         		 }
         		window.location.href="${cxt!}/jf/thairice/admin/user/export_operator?select=zd&ids="+ids;
@@ -249,7 +251,7 @@
                     message: 'Phone is  required and can\'t be empty'
                 },
                 regexp: {
-                    regexp: /^1\d{10}$/,
+                    regexp: /^1\d{9}$/,
                     message: 'The phone format Is not correct'
                 }
             }
@@ -261,18 +263,6 @@
                 },
                 emailAddress: {
                     message: 'The input is not a valid email address'
-                },
-                remote: {//ajax验证。server result:{"valid",true or false}
-                    url: '${cxt!}/jf/thairice/t3user/valiMailBox',
-                    message: 'email has already exist!',
-                    delay: 2000,
-                    type: 'POST',
-                    //自定义参数
-                    data: {
-                        mailBox: function () {
-                            return $('input[name="t3user.email"]').val();
-                        }
-                    }
                 }
             }
         },

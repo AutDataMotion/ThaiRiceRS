@@ -103,7 +103,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3 control-label" style="width:120px;">Phonenumber</label>
+                            <label class="col-md-3 control-label" style="width:120px;">Mob</label>
                             <div class="col-md-9" style="width:470px;">
                                 <input type="text" class="form-control" name="t3user.phone" value="${admin.phone}"
                                        placeholder="+66 08088999999999">
@@ -385,11 +385,11 @@ $("#info").bootstrapValidator({
                    /*长度提示*/
                    min: 6,
                    max: 12,
-                   message: 'Phone  length is 11'
+                   message: 'Phone  length is 10'
                },
                regexp: {
-                   regexp: /^1\d{10}$/,
-                   message: 'The Phone format is not correct'
+                   regexp: /^1\d{9}$/,
+                   message: 'Mob number is not correct'
                }
            }
        }

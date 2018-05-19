@@ -237,14 +237,14 @@
 	    function doLogin() {
 	        var accountVal = $("#account").val();
 	        var passwordVal = $("#password").val();
-	         if (accountVal == null || accountVal.trim() == '') {
+	          if (accountVal == null || accountVal.trim() == '') {
 	            showMessage("Account is  required and can\'t be empty");
 	            return;
 	        }
 	        if (passwordVal == null || passwordVal.trim() == '') {
 	            showMessage("Password is  required and can\'t be empty");
 	            return;
-	        } 
+	        }
 	        var data={account: accountVal,password: hex_md5(passwordVal), authCode:$("#authCode").val()}
 	        showLoading();
 	        sendAjax("${cxt!}/jf/thairice/t3user/doLogin",data,function(res){

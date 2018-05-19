@@ -24,7 +24,7 @@ public class Tkvalue extends BaseModel<Tkvalue> {
 	public static final Tkvalue dao = new Tkvalue();
 	
 	/**
-	 * 字段描述：id 
+	 * 字段描述： 
 	 * 字段类型：bigint  长度：null
 	 */
 	public static final String column_id = "id";

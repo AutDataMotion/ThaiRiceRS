@@ -95,6 +95,10 @@
 									系统消息编号	${orderBy("id")}
 								</th>
 								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
+										'mainPanel', 'splitPage', 'message_id')">
+										${orderBy("message_id")}
+								</th>
+								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
 										'mainPanel', 'splitPage', 'receive_userid')">
 									接收人ID	${orderBy("receive_userid")}
 								</th>
@@ -119,6 +123,12 @@
 								<td>
 
 							${item["id"]!}
+
+								</td>
+								
+								<td>
+
+							${item["message_id"]!}
 
 								</td>
 								

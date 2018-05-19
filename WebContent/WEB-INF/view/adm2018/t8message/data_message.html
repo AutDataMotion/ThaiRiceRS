@@ -1,5 +1,7 @@
 <% var cssSec={ %>
 <style>
+table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td{vertical-align: middle;text-align: left;}
+.even{background-color: rgb(219, 239, 246)!important;}
 </style>
 <% }; %>
 <% var contSec={ %>
@@ -15,12 +17,12 @@
         <button type="button" class="btn btn-info" id="empty"><i class="glyphicon glyphicon-warning-sign"></i>Empty the list</button>
       </div>
       <div class="table-responsive">
-        <table class="table table-bordered data-table" id="dataTable01" width="100%" cellspacing="0" align="center">
+        <table class="table table-bordered data-table" id="dataTable01" width="100%" cellspacing="0" align="left" text-align="left">
           <thead>
             <tr>
-              <th width="10%" style="border-bottom:none;"> <input type="checkbox" name="cb-check-all">
+              <th width="8%" style="border-bottom:none;"> <input type="checkbox" name="cb-check-all">
                 Select all </th>
-              <th style="border-bottom:none;">Mail type</th>
+              <th width="9%"style="border-bottom:none;">Mail type</th>
               <th style="border-bottom:none;">Mail content</th>
               <th style="border-bottom:none;">Time</th>
             </tr>

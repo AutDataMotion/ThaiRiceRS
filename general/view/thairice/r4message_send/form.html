@@ -1,6 +1,16 @@
 
 
 <div class="form-group">
+	<label class="col-sm-2 control-label"></label>
+	<div class="col-sm-7">
+		<input type="text" name="r4message_send.message_id" value="${r4message_send.message_id!}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
 	<label class="col-sm-2 control-label">接收人ID</label>
 	<div class="col-sm-7">
 		<input type="text" name="r4message_send.receive_userid" value="${r4message_send.receive_userid!}" 

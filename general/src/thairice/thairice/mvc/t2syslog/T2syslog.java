@@ -42,6 +42,12 @@ public class T2syslog extends BaseModel<T2syslog> {
 	public static final String column_userid = "userid";
 	
 	/**
+	 * 字段描述：用户名 
+	 * 字段类型：varchar  长度：60
+	 */
+	public static final String column_username = "username";
+	
+	/**
 	 * 字段描述：操作 
 	 * 字段类型：varchar  长度：256
 	 */
@@ -69,6 +75,7 @@ public class T2syslog extends BaseModel<T2syslog> {
 	private BigInteger id;
 	private String type_;
 	private BigInteger userid;
+	private String username;
 	private String action_;
 	private String content;
 	private Timestamp add_time;
@@ -90,6 +97,12 @@ public class T2syslog extends BaseModel<T2syslog> {
 	}
 	public <T> T getUserid() {
 		return get(column_userid);
+	}
+	public void setUsername(String username){
+		set(column_username, username);
+	}
+	public <T> T getUsername() {
+		return get(column_username);
 	}
 	public void setAction_(String action_){
 		set(column_action_, action_);

@@ -78,13 +78,13 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Audit</label>
+                        <label>Authorize</label>
                         <select class="form-control" id="audit">
                             <option value="">ALL</option>
-                            <option value="02">examination passed</option>
-                            <option value="01">Unaudited</option>
-                            <option value="03">Audit failed</option>
-                            <option value="04">User expired</option>
+                            <option value="02">Approved</option>
+                            <option value="01">Unauthorize</option>
+                            <option value="03">Refused</option>
+                            <option value="04">Expired</option>
                         </select>
                     </div>
                     <div class="form-group">
@@ -106,10 +106,10 @@
                         <th><input type="checkbox" name="cb-check-all">Select all</th>
                         <th>ID</th>
                         <th>Username</th>
-                        <th>Phonenumber</th>
+                        <th>Mob</th>
                         <th>E-mail</th>
                         <th>Service time</th>
-                        <th>Audit</th>
+                        <th>Authorize</th>
                         <th>Send a message</th>
                     </tr>
                     </thead>
@@ -250,9 +250,9 @@
                     return '<button type="button" class="btn btn-success btn-sm audit bc"> approved</button>&nbsp'
                          + '<button type="button" class="btn btn-danger btn-sm bc" onclick="open_message(' + data.id + ',' + 3 + ')">rejected</button>';
                 } else if (data.status_ == '02') {
-                    return '<span class="success">Passed approval</span> <i class="glyphicon glyphicon-edit edit"></i>';
+                    return '<span class="success">Approved</span> <i class="glyphicon glyphicon-edit edit"></i>';
                 } else {
-                    return '<span class="error">Audit failed</span>';
+                    return '<span class="error">Refused</span>';
                 }
             }
         },

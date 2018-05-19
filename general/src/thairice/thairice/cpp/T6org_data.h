@@ -54,7 +54,7 @@ private:
 	string storage_path;
 	/**
 	 * 字段描述：文件类型代码 
-	 * 字段类型：enum  长度：9
+	 * 字段类型：enum  长度：2
 	 */
 	string type_;
 	/**
@@ -69,7 +69,7 @@ private:
 	string band_number;
 	/**
 	 * 字段描述：文件状态代码 
-	 * 字段类型：enum  长度：6
+	 * 字段类型：enum  长度：2
 	 */
 	string status_;
 	/**

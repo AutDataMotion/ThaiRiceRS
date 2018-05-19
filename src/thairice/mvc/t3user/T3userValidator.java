@@ -36,19 +36,33 @@ public class T3userValidator extends Validator {
             }
 
         }
-        //用户登录
+        //前台用户登录
         if (actionKey.equals(T3userController.pthc + "doLogin")) {
         	if(StrKit.isBlank(c.getPara("account"))){
-        		addError("errorMsg", "Please enter your account!");
+        		addError("desc", "Please enter your account!");
         	}
          	if(StrKit.isBlank(c.getPara("password"))){
-        		addError("errorMsg", "Please enter your password!");
+        		addError("desc", "Please enter your password!");
         	}
         	if(StrKit.isBlank(c.getPara("authCode"))){
-        		addError("errorMsg", "Please enter verification code!");
+        		addError("desc", "Please enter verification code!");
         	}
         }
-        //用户登录
+        //后台用户登录
+        if (actionKey.equals(BackendUserController.pthc + "doLogin")) {
+    	if(StrKit.isBlank(c.getPara("account"))){
+    		addError("desc", "Please enter your account!");
+    	}
+     	if(StrKit.isBlank(c.getPara("pass"))){
+    		addError("desc", "Please enter your password!");
+    	}
+    	if(StrKit.isBlank(c.getPara("authCode"))){
+    		addError("desc", "Please enter verification code!");
+    	}
+    }
+        
+        
+        //用户注册
         if (actionKey.equals(T3userController.pthc + "doReg")) {
         	if(TimeUtil.dateDiff(c.getPara("Prdt_EfDt",TimeUtil.getNow()), c.getPara("PD_ExDat"), "yyyy-MM-dd", "d")<=0){
         		addError("errorMsg", "The service expiration time cannot be less than the start time!");
@@ -56,18 +70,18 @@ public class T3userValidator extends Validator {
         }
         //找回密码或修改密码
         if (actionKey.equals(T3userController.pthc + "edit_pass")||actionKey.equals(T3userController.pthc + "rest_pass")) {
-            validateEmail("email", "errorMsg", "E-mail format is incorrect!");
-            validateRequired("code", "errorMsg", "Please enter the authorization code!");
+            validateEmail("email", "desc", "E-mail format is incorrect!");
+            validateRequired("code", "desc", "Please enter the authorization code!");
         }
         //找回密码或修改密码
         if (actionKey.equals(T3userController.pthc + "send_code")) {
-            validateEmail("email", "errorMsg", "E-mail format is incorrect!");
+            validateEmail("email", "desc", "E-mail format is incorrect!");
         }
     }
 
     protected void handleError(Controller c) {
         c.setAttr("code", 0);
-        c.renderJson(new String[]{"code", "errorMsg"});
+        c.renderJson(new String[]{"code", "desc"});
     }
 
 }

@@ -37,6 +37,7 @@ public class T8messageService extends BaseService {
         if (StrKit.notBlank(type_)) {
             sb.append(" AND m.type_='" + type_ + "'");
         }
+        sb.append(" AND m.show_flag=0");
         sb.append(" ORDER BY m." + orderColumn + " " + orderDir);
         return T8message.dao.paginate(page, row, "SELECT m.*,u.name_", sb.toString());
     }
@@ -77,13 +78,7 @@ public class T8messageService extends BaseService {
      * @return
      */
     public int deletes(String ids) {
-        int rows = Db.update(" DELETE FROM thairice.t8message WHERE id in (" + ids + ")");
-        if (rows > 0) {
-            //同时删除管理的用户消息
-            for (String id : ids.split(",")) {
-                Db.update(" DELETE FROM thairice.r4message_send where message_id=?", id);
-            }
-        }
+        int rows = Db.update(" UPDATE thairice.t8message SET show_flag=1  WHERE id in (" + ids + ")");
         return rows;
     }
 }

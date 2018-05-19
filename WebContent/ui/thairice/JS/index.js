@@ -29,15 +29,15 @@ $(function () {
             't3user.account': {
                 validators: {
                     notEmpty: {
-                        message: 'The user name is  required and can\'t be empty '
+                        message: 'The account is  required and can\'t be empty '
                     },
                     regexp: {
                     	 regexp: /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,12}$/,
-                        message: 'The user name is made up of 6 to 12 letters and Numbers'
+                        message: 'The account is made up of 6 to 12 letters and Numbers'
                     },
                     remote: {//ajax验证。server result:{"valid",true or false}
                         url: '/jf/thairice/t3user/valiUserName',
-                        message: 'user name has already exist!',
+                        message: 'The account has already exist!',
                         delay: 2000,
                         type: 'POST',
                         //自定义参数
@@ -61,10 +61,10 @@ $(function () {
                 }
             },
             'confirmPass': {
-                message: 'Password is invalid',
+                message: 'The password is invalid',
                 validators: {
                     notEmpty: {
-                        message: 'Password is  required and can\'t be empty'
+                        message: 'The password is  required and can\'t be empty'
                     },
                     identical: {//相同
                         field: 't3user.pwd',
@@ -75,11 +75,11 @@ $(function () {
             't3user.phone': {
                 validators: {
                     notEmpty: {
-                        message: 'Phone is  required and can\'t be empty'
+                        message: 'Mob is  required and can\'t be empty'
                     },                    
                     regexp: {
-                        regexp: /^1\d{10}$/,
-                        message: 'The Phone format is not correct'
+                        regexp: /^1\d{9}$/,
+                        message: 'Mob number is not correct '
                     }
                 }
             },
@@ -93,7 +93,7 @@ $(function () {
                     },
                     remote: {//ajax验证。server result:{"valid",true or false}
                         url: '/jf/thairice/t3user/valiMailBox',
-                        message: 'email has already exist!',
+                        message: 'The email address has already exist!',
                         delay: 2000,
                         type: 'POST',
                         //自定义参数
@@ -108,36 +108,36 @@ $(function () {
             'PD_TpCd': {
                 validators: {
                     notEmpty: {
-                        message: 'must choose a'
+                        message: 'Please choose one item at least'
                     }
                 }
             },
             'PD_TpCd': {
                 validators: {
                     notEmpty: {
-                        message: 'must choose a'
+                        message: 'Please choose one item at least'
                     }
                 }
             },
             'Prdt_EfDt': {
                 validators: {
                     notEmpty: {
-                        message: 'can\'t be empty'
+                        message: 'The date can\'t be empty'
                     },
                     date : {
                         format : 'YYYY-MM-DD',
-                        message : '日期格式不正确'
+                        message : 'Enters dates in an incorrect format '
                     }
                 }
             },
             'PD_ExDat': {
                 validators: {
                     notEmpty: {
-                        message: 'can\'t be empty'
+                        message: 'The date can\'t be empty'
                     },
                     date : {
                         format : 'YYYY-MM-DD',
-                        message : '日期格式不正确'
+                        message : 'Enters dates in an incorrect format '
                     }
                 }
             }
