@@ -141,7 +141,7 @@
               		        }
               		    },
               		    legend: {
-              		        data:['已使用(MB)','未使用(MB)']
+              		        data:['Used(MB)','Free(MB)']
               		    },
               		    calculable : true,
               		    xAxis : [
@@ -152,12 +152,12 @@
               		    yAxis : [
               		        {
               		            type : 'category',
-              		            data : ['内存容量(MB)']
+              		            data : ['Memory(MB)']
               		        }
               		    ],
               		    series : [
               		        {
-              		            name:'已使用',
+              		            name:'Used',
               		            type:'bar',
               		            stack: '总量',
               		            itemStyle : { normal: {label : {show: true, position: 'insideRight'}}},
