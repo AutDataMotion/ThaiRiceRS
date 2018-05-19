@@ -55,9 +55,9 @@ public class T8messageController extends BaseController {
     public void delete() {
 	int rows = service.deletes(getPara("ids"));
 	if (rows > 0) {
-	    renderJson(new Result(1, "successfully deleted"));
+	    renderJson(new Result(1, "Operation succeeded"));
 	} else {
-	    renderJson(new Result(0, "failed to delete"));
+	    renderJson(new Result(0, "Operation failed"));
 	}
     }
 
@@ -67,7 +67,7 @@ public class T8messageController extends BaseController {
     public void empty_message() {
 	int row = Db.use(ConstantInitMy.db_dataSource_main).update(" UPDATE thairice.t8message SET show_flag=1");
 	if (row > 0) {
-	    renderJson(new Result(1, "Cleared successfully"));
+	    renderJson(new Result(1, "Operation succeeded"));
 	} else {
 	    renderJson(new Result(1, "operation failed"));
 	}

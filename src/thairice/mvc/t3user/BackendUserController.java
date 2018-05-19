@@ -210,7 +210,7 @@ public class BackendUserController extends BaseController {
 					user.set("id", getPara("receive_userid"));
 					user.setStatus_("03");
 					user.use(ConstantInitMy.db_dataSource_main).update();
-					renderJson(new Result(2, "Sent successfully"));
+					renderJson(new Result(2, "Sent successful"));
 					return;
 				}
 			} else {
@@ -223,7 +223,7 @@ public class BackendUserController extends BaseController {
 					send_all.use(ConstantInitMy.db_dataSource_main).saveGenIntId();
 				}
 			}
-			renderJson(new Result(1, "Sent successfully"));
+			renderJson(new Result(1, "Sent successful"));
 		} else {
 			renderJson(new Result(0, "Failed to send"));
 		}
@@ -253,9 +253,9 @@ public class BackendUserController extends BaseController {
 	public void delete() {
 		int rows = service.deletes(getPara("ids"));
 		if (rows > 0) {
-			renderJson(new Result(1, "Deleted successfully"));
+			renderJson(new Result(1, "Operation succeeded"));
 		} else {
-			renderJson(new Result(0, "Failed to delete"));
+			renderJson(new Result(0, "Operation failed"));
 		}
 	}
 

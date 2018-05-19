@@ -303,9 +303,9 @@ public class T3userController extends BaseController {
 		T3user t3user = getModel(T3user.class);
 		boolean rlt = t3user.use(ConstantInitMy.db_dataSource_main).update();
 		if (rlt) {
-			renderJson(new Result(1, "Modified successfully"));
+			renderJson(new Result(1, "Operation succeeded"));
 		} else {
-			renderJson(new Result(0, "Fail to edit"));
+			renderJson(new Result(0, "Operation failed"));
 		}
 	}
 
@@ -341,8 +341,8 @@ public class T3userController extends BaseController {
 		}
 		// 创建授权码
 		String authCode = codeService.createAuthCode(t3user.getBigInteger("id"), 0, 3600);
-		boolean success = Mail.sendEmail(getParaToInt("type", 0) == 0 ? "Recover password" : "change Password",
-				"Your email authorization code is:\n\n" + authCode, getPara("email"), Mail.MODE_TEXT);
+		boolean success = Mail.sendEmail(getParaToInt("type", 0) == 0 ? "Thailand agricultural remote sensing monitoring platform password assistance" : "change Password",
+				"To verify your identity, please use the following code:\n\n" + authCode+"\n\nWe hope to see you again soon.", getPara("email"), Mail.MODE_TEXT);
 		if (success) {
 			renderJson(new Result(1, "For your security, we need to verify your identity. We've sent a code to the email.Please enter it below."));
 		} else {
