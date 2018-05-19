@@ -19,13 +19,13 @@ function showDialog(title) {
     layer.open({
         type: 1,
         title: [
-            'prompt'
+            'Prompt'
         ],
         closeBtn: 1,
         area: ['210px', '150px'],
         anim: 'up',
         shadeClose: false,
-        btn: ['close'],
+        btn: ['Close'],
         skin: 'layui-layer-lan',
         content: '<div style="margin-top:20px;text-align: center">' + title + '</div>',
     });
@@ -38,10 +38,10 @@ function showDialog(title) {
  */
 function showMessage(content) {
     layer.alert(content, {
-    	title:'information',
+    	title:'Prompt',
         skin: 'layui-layer-molv',// 样式类名
         closeBtn: 0,
-        btn:['confirm']
+        btn:['Confirm']
     });
 }
 /**
@@ -72,7 +72,7 @@ function sendAjax(url, param, callback) {
 function deleteRows(url, $table, _table) {
     var ids = $("tbody :checkbox:checked", $table).size();
     if (ids > 0) {
-        layer.confirm('Sure you want to delete selected' + ids + 'data?', {icon: 3,title:'prompt',btn: ['confirm','cancel']}, function (index) {
+        layer.confirm('Please confirm whether the record is deleted', {icon: 3,title:'Prompt',btn: ['Confirm','Cancel']}, function (index) {
             var list = [];
             $("tbody :checkbox:checked", $table).each(function (i) {
                 var item = _table.row($(this).closest('tr')).data();
@@ -87,7 +87,7 @@ function deleteRows(url, $table, _table) {
             layer.close(index);
         });
     } else {
-        showMessage("Please delete selected lines")
+        showMessage("Please choose at least one record")
     }
 }
 
@@ -114,7 +114,7 @@ var clickItem=function($table, _table){
 var getRowItem = function ($table, _table) {
     var selected = $("tbody :checkbox:checked", $table).size();
     if (selected < 1 || selected > 1) {
-        showMessage("Please select a line to edit")
+        showMessage("Please choose at least one record")
         return;
     }
     var item = null;

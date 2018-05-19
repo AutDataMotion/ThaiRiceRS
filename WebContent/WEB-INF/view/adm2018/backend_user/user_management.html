@@ -5,7 +5,8 @@
  .success {color: #5bb85d;font-weight:bold;}
  .head{width: 40px;height: 40px;border-radius: 50%;}
  .bc{width: 70px;height:35px;}
- table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td{vertical-align: middle;text-align: center;}
+ table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td{vertical-align: middle;text-align: left;}
+.even{background-color: rgb(219, 239, 246)!important;}
 </style>
 <% }; %>
 
@@ -14,38 +15,48 @@
             <div class="user_query" style="margin-top: -53px;">
                 <form id="form" class="form-inline" style="margin:15px 0 15px 0;">
                     <div class="form-group">
-                        <input type="text" id="username" placeholder="The keyword" class="form-control">
+                        <input type="text" id="username" placeholder="Account" class="form-control">
                     </div>
                     <div class="form-group">
                         <label class="control-label">Time:</label>
                         <div class="input-group" style="width: 160px;" id="start">
                             <input type="text" id="min" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                         </div>
-                        <label class="control-label">to</label>
+                        <label class="control-label">To</label>
                         <div class="input-group" style="width: 160px;" id="start2">
                             <input type="text" id="max" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                         </div>
                     </div>
                     <div class="form-group" style="margin-right:20px;">
-                        <label>Region</label>
+                        <label>Area</label>
                         <select class="form-control" id="region">
                             <option value="ALL">ALL</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Audit</label>
+                        <label>Authorize</label>
                         <select class="form-control" id="audit">
                             <option value="">ALL</option>
-                            <option value="02">Passed</option>
+                            <option value="02">Approved</option>
                             <option value="01">Unauthorized</option>
-                            <option value="03">Authorization failed</option>
+                            <option value="03">Refused</option>
                             <option value="04">Expired</option>
                         </select>
                     </div>
                     <div class="form-group">
-                        <button type="button" id="btn_search" class="btn btn-primary">search</button>
+                        <label>Service type</label>
+                        <select class="form-control" id="type">
+                            <option value="">ALL</option>
+                            <option value="01">Rice acreage</option>
+                            <option value="02">Rice growth</option>
+                            <option value="03">Rice drought</option>
+                            <option value="04">Rice yield</option>
+                        </select>
+                    </div> 
+                    <div class="form-group">
+                        <button type="button" id="btn_search" class="btn btn-primary">Search</button>
                         <button type="button" class="btn btn-warning" style="margin-left:15px;" onclick="open_message(0,2)">
-                            group-sent message
+                            Broadcast messages
                         </button>
                         <button type="button"  class="btn btn-primary"  style="margin-left: 12px;" onclick="exp()">Export to Excel</button>
                     </div>
@@ -59,12 +70,12 @@
                     <thead>
                     <tr>
                         <th><input type="checkbox" name="cb-check-all">Select all</th>
-                        <th>ID</th>
                         <th>Account</th>
-                        <th>Phonenumber</th>
-                        <th>Email</th>
-                        <th>Service time</th>
-                        <th>Audit</th>
+                        <th>Mob</th>
+                        <th>Email address</th>
+                        <th>Service term</th>
+                        <th>Service type</th>
+                        <th>Authorize</th>
                         <th>Send a message</th>
                     </tr>
                     </thead>
@@ -94,7 +105,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3">Service time</label>
+                        <label class="col-sm-3">Service term</label>
                         <div class="input-group" style="padding-left:15px; width:120px;">
                             <input type="text" name="Prdt_EfDt" id="Prdt_EfDt" class="form-control" style="width:100px; margin-right:0;"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                         </div>
@@ -106,10 +117,10 @@
                     <div class="form-group">
                         <label class="col-sm-3">Service selection</label>
                         <div class="col-sm-9">
-                            <label><input type="checkbox" value="01" name="PD_TpCd"> Rice planting area monitoring</label><br>
-                            <label><input type="checkbox" value="02" name="PD_TpCd"> Rice drought monitoring</label><br>
-                            <label><input type="checkbox" value="03" name="PD_TpCd"> Rice condition monitoring</label><br>
-                            <label><input type="checkbox" value="04" name="PD_TpCd"> Rice production estimates</label>
+                            <label><input type="checkbox" value="01" name="PD_TpCd"> Rice acreage</label><br>
+                            <label><input type="checkbox" value="02" name="PD_TpCd"> Rice growth</label><br>
+                            <label><input type="checkbox" value="03" name="PD_TpCd"> Rice yield</label><br>
+                            <label><input type="checkbox" value="04" name="PD_TpCd"> Rice drought</label>
                         </div>
                     </div>
                     <input type="hidden" id="userid" name="t3user.id">
@@ -182,21 +193,23 @@
     var $table = $('#dataTable01');
     var columns = [
         CONSTANT.DATA_TABLES.COLUMN.CHECKBOX,
-        {"data": "id"},
         {"data": "name_", orderable: false},
         {"data": "phone"},
         {"data": "email", orderable: false},
         {"data": null,render: function (data, type, row, meta) {
             return ''+data.prdt_efdt.substring(0,11)+'to '+data.pd_exdat.substring(0,11);
         }},
+        {"data": null,render: function (data, type, row, meta) {
+            return ''+change(data.pd_tpcd);
+        }},
         {"data": null, render: function (data, type, row, meta) {
                 if (data.status_ == '01') {
                     return '<button type="button" class="btn btn-success btn-sm audit bc"> Approved</button>&nbsp'
                          + '<button type="button" class="btn btn-danger btn-sm bc" onclick="open_message(' + data.id + ',' + 3 + ')">Rejected</button>';
                 } else if (data.status_ == '02') {
-                    return '<span class="success">Passed approval</span> <i class="glyphicon glyphicon-edit edit"></i>';
+                    return '<span class="success">Approved</span> <i class="glyphicon glyphicon-edit edit"></i>';
                 } else {
-                    return '<span class="error">Audit failed</span>';
+                    return '<span class="error">Refused</span>';
                 }
             }
         },
@@ -228,7 +241,7 @@
         } else {
             $("#flag").val(3);
             $("#receive_userid").val(id);
-            $('.modal-title').html("Please specify reason of audit not through");
+            $('.modal-title').html("Please indicate that the authorze failed to approve the reason");
         }
         $("#content").val('');
         $("#message_modal").modal('show');
@@ -286,6 +299,26 @@
             }
         })
     }
+    //服务标识转化服务名称
+    var change=function(str){
+    	console.log(str);
+    	var result="";
+    	str.split(",").forEach(function(item,index){
+    		if(item=='01'){
+    			result+='Rice acreage<br>';
+    		}
+    		if(item=='02'){
+    			result+='Rice growth<br>';
+    		}
+    		if(item=='03'){
+    			result+='Rice drought<br>';
+    		}
+    		if(item=='04'){
+    			result+='Rice yield';
+    		}
+    })
+      return result;
+    }
     //修改信息
     function edit_info() {
         sendAjax("${cxt!}/jf/thairice/admin/user/audit", $("#info").serialize(), function (res) {
@@ -302,7 +335,7 @@
     		window.location.href="${cxt!}/jf/thairice/admin/user/export?select=all";
     	}else{
     		if(ids.length==0){
-    			layer.msg("Please choose to export the data", {icon: 2});
+    			layer.msg("Please choose at least one record", {icon: 2});
     			return;
     		 }
     		window.location.href="${cxt!}/jf/thairice/admin/user/export?select=zd&ids="+ids;
@@ -332,6 +365,7 @@
         param.max = $("#max").val();
         param.region = $("#region").val();
         param.audit = $("#audit").val();
+        param.type = $("#type").val();
         param.start = data.start;
         param.pageSize = data.length;
         param.draw = data.draw;

@@ -16,3 +16,6 @@ E:/arcgisserver_shp_workspace/productKind
 其中productKind代表产品类型：{Area（面积），Yield（估产）,Growth（长势），Drought（干旱）}
 demo：E:/arcgisserver_shp_workspace/Area
 
+3.面积样本创建相关说明
+栅格图像存放工作空间：E:/areatif
+

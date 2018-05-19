@@ -10,25 +10,25 @@
 </head>
 <body>
 <ul id="fullpageMenu">
-  <li data-menuanchor="page1" class="active"><a href="#page1">平台介绍</a></li>
-  <li data-menuanchor="page2"><a href="#page2">公告信息</a></li>
-  <li data-menuanchor="page3"><a href="#page3">产品样例</a></li>
-  <li data-menuanchor="page4"><a href="#page4">用户登录</a></li>
-  <li data-menuanchor="page5"><a href="#page5">联系我们</a></li>
+  <li data-menuanchor="page1" class="active"><a href="#page1">Introduction</a></li>
+  <li data-menuanchor="page2"><a href="#page2">News</a></li>
+  <li data-menuanchor="page3"><a href="#page3">Samples</a></li>
+  <li data-menuanchor="page4"><a href="#page4">Login</a></li>
+  <li data-menuanchor="page5"><a href="#page5">Contact Us</a></li>
 </ul>
 <div id="fullpage">
   <div class="section section1">
     <div class="container description">
     	<div class="jumbotron">
           <h1>Welcome to use</h1>
-          <p>the agricultural remote sensing data system</p>
+          <p>Thailand Agricultural Remote Sensing Monitoring System</p>
           <p><a class="btn btn-primary btn-lg" href="index.html" role="button">Enter the system</a></p>
         </div>
     </div>
   </div>
   <div class="section section2">
     <div class="container" style="width:1000px; margin:0 auto;">
-    	<h2 class="announce_title">System of <span>announcement</span></h2>
+    	<h2 class="announce_title">System of <span>News</span></h2>
         <ul class="list-group">
           <li class="list-group-item">泰国全境水稻最新长势监测产品现已发布（2018年7月13日）</li>
           <li class="list-group-item">Suphan Buri府水稻种植分布与面积测算产品已更新（2018年夏季）</li>
@@ -237,14 +237,14 @@
 	    function doLogin() {
 	        var accountVal = $("#account").val();
 	        var passwordVal = $("#password").val();
-	         if (accountVal == null || accountVal.trim() == '') {
+	          if (accountVal == null || accountVal.trim() == '') {
 	            showMessage("Account is  required and can\'t be empty");
 	            return;
 	        }
 	        if (passwordVal == null || passwordVal.trim() == '') {
 	            showMessage("Password is  required and can\'t be empty");
 	            return;
-	        } 
+	        }
 	        var data={account: accountVal,password: hex_md5(passwordVal), authCode:$("#authCode").val()}
 	        showLoading();
 	        sendAjax("${cxt!}/jf/thairice/t3user/doLogin",data,function(res){
