@@ -68,7 +68,7 @@ table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td
     });
     //清空全部消息
     $("#empty").click(function () {
-        layer.confirm('Make sure to clear all messages', {icon: 2,title:'Prompt',btn: ['Confirm','Cancel']}, function (index) {
+        layer.confirm('Make sure to clear all messages', {icon: 2,title:'Tips',btn: ['Ok','Cancel']}, function (index) {
             sendAjax("${cxt!}/jf/thairice/t8message/empty_message",null,function(res){
                 showMessage(res.desc);
                 if(res.code==1){

@@ -78,7 +78,7 @@ $(function () {
                         message: 'Mob is  required and can\'t be empty'
                     },                    
                     regexp: {
-                        regexp: /^1\d{9}$/,
+                        regexp: /^0\d{9}$/,
                         message: 'Mob number is not correct '
                     }
                 }
