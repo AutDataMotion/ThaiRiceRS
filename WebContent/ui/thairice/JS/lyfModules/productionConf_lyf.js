@@ -351,7 +351,7 @@ function initFilesTable()
 		    		}
 		    		$('#fileModal_addbtn').click( function () {
 //		    			console.log(app.files_excel.row('.selected').data());
-		    			var productfileName = "2018-05-05_72_1.shp";
+		    			var productfileName = "2018-05-05_72.shp";
 		    			var workspaceId = "Area";
 		    			addProductFeatureLayer(workspaceId,productfileName);
 //		    			
