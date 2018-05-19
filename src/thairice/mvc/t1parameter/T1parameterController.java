@@ -1,18 +1,23 @@
 package thairice.mvc.t1parameter;
 
+import java.io.File;
+import java.io.FilenameFilter;
 import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
-import org.json.JSONObject;
 
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
 import com.jfinal.aop.Before;
+import com.jfinal.aop.Clear;
 import com.jfinal.plugin.activerecord.Page;
 import com.platform.constant.ConstantRender;
 import com.platform.mvc.base.BaseController;
 
+import csuduc.platform.util.ReportUtil;
 import csuduc.platform.util.lyf.lyfGis;
 import thairice.entity.ResultEntity;
 import thairice.interceptor.AdminLoginInterceptor;
@@ -41,6 +46,16 @@ public class T1parameterController extends BaseController {
 
 	public static final String pthc = "/jf/thairice/t1parameter/";
 	public static final String pthv = "/thairice/t1parameter/";
+	
+	public static final String areaTifPath = "E:/areatif/";
+	
+	public static final String merge_gpserver_workspace = "C:/arcgisserver/directories/arcgisjobs/merge_gpserver/";
+	public static final String erase_gpserver_workspace = "C:/arcgisserver/directories/arcgisjobs/erase_gpserver/";
+	public static final String models_workspace = "E:/arcgisData/models/";
+	//将gp服务执行的生成结果result.*（shp、dbf等）copyTo models_workspace里边
+	//并将文件以waitingformodify.*（shp、dbf等）命名，做下次使用
+	public static final String gpresultFilePreName = "result";
+	public static final String models_workspace_tempFilePreName = "waitingformodify";
 	/**
 	 * 列表
 	 */
@@ -291,11 +306,142 @@ public class T1parameterController extends BaseController {
 		setAttr(ConstantRender.PATH_CTL_NAME, pthc);
 		setAttr(ConstantRender.PATH_VIEW_NAME, pthv);
 	}
+	@Clear
+	public void getFilesfromServerWorkspace()
+	{
+		try {
+			JSONObject msg = new JSONObject();
+			boolean flag = false;
+			JSONArray files = new JSONArray();
+			
+			File tifFileWorkspace = new File(areaTifPath);
+			if(tifFileWorkspace.isDirectory())
+			{
+				File[] tifFiles = tifFileWorkspace.listFiles(new FilenameFilter() {
+
+					@Override
+					public boolean accept(File dir, String name) {
+						// TODO Auto-generated method stub
+						if(name.lastIndexOf('.')>0)
+						{
+							int lastIndex = name.lastIndexOf('.');
+							String file_surffix = name.substring(lastIndex+1);
+							if(file_surffix.equals("tif"))
+							{
+								return true;
+							}
+						}
+						return false;
+					}
+					
+				});
+				if(tifFiles.length>0)
+				{
+					flag  = true;
+					
+					for(File tifFile:tifFiles)
+					{
+						JSONObject file = new JSONObject();
+						file.put("name", tifFile.getName());
+						file.put("date", tifFile.getName().split("_")[0]);
+						String temp = tifFile.getName().split("_")[1];
+						file.put("district", temp.substring(0, temp.lastIndexOf('.')));
+						files.add(file);
+					}
+				}
+				
+			}
+			msg.put("flag", flag);
+			msg.put("files", files);
+			renderJson(msg);
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		
+	}
+	public void copyResult2Modelspace()
+	{
+		String gpEdit = getPara("gpEdit");
+		String gpJobID = getPara("gpJobID");
+		String gpResultShpfilePath = null;
+		boolean flag = false;
+		
+		JSONObject msg = new JSONObject();
+		try {
+			if(gpEdit.equals("add"))
+			{
+				gpResultShpfilePath = merge_gpserver_workspace+gpJobID+"/"+"scratch/";
+			}
+			else {
+				gpResultShpfilePath = erase_gpserver_workspace+gpJobID+"/"+"scratch/";
+			}
+			File gpResultShpfileDir = new File(gpResultShpfilePath);
+			if(gpResultShpfileDir.isDirectory())
+			{
+				File[] resultFiles = gpResultShpfileDir.listFiles(new FilenameFilter() {
+
+					@Override
+					public boolean accept(File dir, String name) {
+						// TODO Auto-generated method stub
+						if(name.lastIndexOf('.')>0)
+						{
+							int lastIndex = name.lastIndexOf('.');
+							String file_preffix = name.substring(0,lastIndex);
+							if(file_preffix.equals(gpresultFilePreName))//result.dbf、shp、prj、shx 等 返回所有前缀为result的文件
+							{
+								return true;
+							}
+						}
+						return false;
+					}
+					
+				});
+				if(resultFiles.length>0)
+				{
+//					flag  = true;
+					
+					for(File resultFile:resultFiles)
+					{
+						String resultFileName = resultFile.getName();
+						///example result.shp-->.shp
+						String resultFileSuffix = resultFileName.substring(resultFileName.lastIndexOf('.'));
+						///waitingformodify+.shp--->waitingformodify.shp
+						String copyTo = models_workspace+models_workspace_tempFilePreName+resultFileSuffix;
+						
+						File newfile = new File(copyTo);
+						flag = ReportUtil.fileCopy(resultFile,newfile);
+					}
+				}
+				
+			}
+			else {
+				flag = false;
+			}
+			msg.put("flag", flag);
+			renderJson(msg);
+		}catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+		
+	}
+	@Clear
+	public void getAreaGeoJsonFromShpFile()
+	{
+		String fileName = getPara("shpFileName");
+		Map<String,String> map = lyfGis.shape2Geojson(fileName);
+		LOG.debug(map.get("message"));
+		renderJson(map);
+	}
+	
 	public void generateShpfileByGeoJson()
 	{
+		
 		String geoJsonStr = getPara("geoJsonStr");
-		String sampleName = getPara("sampleName");
-		Map<String,String> map = lyfGis.geojson2Shape(geoJsonStr, sampleName+".shp");
+		String fileName = getPara("fileName");
+		String filePath = getPara("filePath");
+		Map<String,String> map = lyfGis.geojson2Shape(geoJsonStr, fileName,filePath);
 		renderJson(map);
 	}
 	

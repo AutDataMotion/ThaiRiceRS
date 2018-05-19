@@ -31,7 +31,7 @@
             	<div id="mapDiv_productionConf"></div>   
                 <div class="form-group">
 		            <ul class="operation_tools">
-		                  <li class="one"><a href="#" data-toggle="modal" data-target="#fileModal" title="click to start"></a></li>
+		                  <li class="one" onclick="initFilesTable()"><a href="#" data-toggle="modal" data-target="#fileModal" title="click to start"></a></li>
 		                  <li id="undo" data-dojo-type="dijit/form/Button"
 				                  data-dojo-props="disabled: true, iconClass: 'undoGrayIcon'">
 		                  	Undo
@@ -45,6 +45,68 @@
 		                  <li class="six"><a href="#" title="save"></a></li-->
 		            </ul>
                 </div>
+                    <!--显示模式和分类样本-->
+              <div class="modes_editing">
+            
+	            <div class="editing">
+	                  <div class="BbProductMenu">
+	                <div class="list-group">
+	                      <div class="list-group-item" style="padding-bottom:0;">
+	                    <h4 class="list-group-item-heading">Editing</h4>
+	                    
+	                    <div class="table-wrap">
+	                          <table id="editing_excel" class="table display table-bordered" align="center">
+	                        	<thead>
+						            <tr class="title">
+						                <th>Start Editing</th>
+						                <th>Option</th>
+						            </tr>
+						        </thead>
+	                        	
+	                            <tr>
+	                              <td>
+	                              	<button id="editing_addFeatures" onclick="EditFeatures('add')" type="button" class="btn btn-default btn-sm">
+							          <span class="glyphicon glyphicon-plus-sign"></span>Add Features
+							        </button>
+							      </td>
+	                              <td>
+	                              	<!-- button id="editing_preview" onclick="Edit_Preview()" type="button" class="btn btn-default btn-sm">
+							          <span class="glyphicon glyphicon-eye-open"></span>Preview
+							        </button-->
+							        <button id="editing_save" onclick="Edit_Save()" type="button" class="btn btn-default btn-sm">
+							          <span class="glyphicon glyphicon-ok-circle"></span>Save
+							        </button>
+							        <button id="editing_cancel" onclick="Edit_Cancel()" type="button" class="btn btn-default btn-sm">
+							          <span class="glyphicon glyphicon-remove-sign"></span>Cancel
+							        </button>
+							      </td>
+	                            </tr>
+	                             <tr>
+	                              <td>
+	                              	<button id="editing_deleteFeatures" onclick="EditFeatures('delete')" type="button" class="btn btn-default btn-sm">
+							          <span class="glyphicon glyphicon-minus-sign"></span>Delete Features
+							        </button>
+							      </td>
+	                              <td>
+	                                <!-- button id="editing_preview" onclick="Edit_Preview()" type="button" class="btn btn-default btn-sm">
+							          <span class="glyphicon glyphicon-eye-open"></span>Preview
+							        </button-->
+							        <button id="editing_save" onclick="Edit_Save()" type="button" class="btn btn-default btn-sm">
+							          <span class="glyphicon glyphicon-ok-circle"></span>Save
+							        </button>
+							        <button id="editing_cancel" onclick="Edit_Cancel()" type="button" class="btn btn-default btn-sm">
+							          <span class="glyphicon glyphicon-remove-sign"></span>Cancel
+							        </button>
+							       </td>
+	                            </tr>
+	                          </table>
+	                      </div>
+	                  </div>
+	                    </div>
+	              </div>
+	                </div>
+	            <!--button class="btn btn-primary okay_btn" type="button" data-toggle="modal" data-target="#RunModal">OK</button-->
+	          </div>
                   <!--显示模式和分类样本-->
               <div class="modes_samples">
             
@@ -58,8 +120,8 @@
 	                          <table id="sample_excel" class="table display table-bordered" align="center">
 	                        	<thead>
 						            <tr class="title">
-						                <th>sample name</th>
-						                <th>operation</th>
+						                <th style="width:110px !important">Sample Name</th>
+						                <th style="width:auto !important">Option</th>
 						            </tr>
 						        </thead>
 	                        	
@@ -247,9 +309,11 @@
               <span aria-hidden="true">×</span>
             </button>
           </div>
-          <div class="modal-body" id="hintContent"></div>
+          <div class="modal-body" id="hintContent">
+          	
+          </div>
           <div class="modal-footer">
-            <button class="btn btn-secondary" type="button" data-dismiss="modal" id="hintModal_okbtn">OK</button>
+          	<button class="btn btn-secondary" type="button" data-dismiss="modal" id="hintModal_okbtn">OK</button>
             
           </div>
         </div>
@@ -284,10 +348,18 @@
             </button>
           </div>
           <div class="modal-body">
-          	<input type="file" name="txt_file" id="txt_file01" multiple class="file" />
+          	<!-- input type="file" name="txt_file" id="txt_file01" multiple class="file" /-->
+          		<p class="self_title text-center">Files</p>
+				<div class="row">
+                     <div class="col-sm-10 col-md-10" style="width:100%;">
+                     	<table id="files_excel" class="hover" style="width:100%"></table>
+			              
+                     </div>
+			
+                 </div>
           </div>
           <div class="modal-footer" style="text-align:center;">
-            <button class="btn btn-primary upload_btn" type="button" data-dismiss="modal" onClick="processerbar(3000)">Upload</button>
+            <button id="fileModal_addbtn" class="btn btn-primary upload_btn" type="button" data-dismiss="modal">Add</button>
           </div>
         </div>
       </div>
@@ -383,6 +455,12 @@
 
   	<script>
   	
+    var dojoConfig = {
+      has: {
+        "esri-featurelayer-webgl": 1
+      }
+    };
+  
     	function processerbar(time){
 			document.getElementById('probar').style.display="block";
 			$("#line").each(function(i,item){
