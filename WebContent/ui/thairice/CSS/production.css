@@ -104,7 +104,18 @@ a:focus{
 	display:none;
 }
 .samples{
-	width:330px;
+	width:350px;
+	height:auto;
+	position:absolute;
+	
+	display:block;
+	    right: 0px;
+    top: 150px;
+    /* display: none; */
+    margin-right: -20px;
+}
+.editing{
+	width:350px;
 	height:auto;
 	position:absolute;
 	
@@ -191,7 +202,7 @@ a:focus{
 .table-wrap{
 	height: auto;
 	overflow-y:auto;
-	width:320px;
+	/*width:320px;*/
 	margin:0 auto;
 }
 .table-wrap tr.title{
