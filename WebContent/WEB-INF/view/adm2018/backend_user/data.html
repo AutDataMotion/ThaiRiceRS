@@ -27,7 +27,7 @@ table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td
                     <tr>
                         <th width="8%"><input type="checkbox" name="cb-check-all">Select all</th>
                         <th>Account</th>
-                        <th>Mob</th>
+                        <th>Mobile</th>
                         <th>Email address</th>
                         <th>Nickname</th>
                         <th>Creation time</th>
@@ -46,7 +46,7 @@ table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td
             <div class="modal-body">
                 <form class="form-horizontal" id="addForm">
                     <div class="alert alert-success">
-             All operator initial passwords are:123456！
+             All operator initial passwords are:123456
                     </div>
                     <div class="form-group">
                         <label class="col-md-3 control-label" style="width:120px;">* Account</label>
@@ -55,7 +55,7 @@ table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-3 control-label" style="width:120px;">* Mob</label>
+                        <label class="col-md-3 control-label" style="width:120px;">* Mobile</label>
                         <div class="col-md-9" style="width:470px;">
                             <input type="text" class="form-control" placeholder="+66 0808899999" id="phone" name="t3user.phone">
                         </div>
@@ -96,7 +96,7 @@ table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td
                 </form>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-primary" type="button"  onclick="save()">Sure</button>
+                <button class="btn btn-primary" type="button"  onclick="save()">Ok</button>
                 <button class="btn btn-default" type="button" data-dismiss="modal">Cancel</button>
             </div>
         </div>
@@ -141,7 +141,7 @@ table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td
         	//清空表单
         	$(':input','#addForm').val('');
         	$('#account').attr("disabled",false); 
-            $("#ModalLabel").html("Add data");
+            $("#ModalLabel").html("Add operator");
             $("#addModal").modal('show');
             
         }else if(op=='edit'){
@@ -227,15 +227,15 @@ table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td
             't3user.account': {
                 validators: {
                     notEmpty: {
-                        message: 'The user name is  required and can\'t be empty '
+                        message: 'The account is  required and can\'t be empty '
                     },
                     regexp: {
                    	 regexp: /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,12}$/,
-                       message: 'The user name is made up of 6 to 12 letters and Numbers'
+                       message: 'The account is made up of 6 to 12 letters and Numbers'
                    },
                     remote: {//ajax验证。server result:{"valid",true or false}
                         url: '${cxt!}/jf/thairice/t3user/valiUserName',
-                        message: 'User has already exist!',
+                        message: 'The user has already exist!',
                         delay: 2000,
                         type: 'POST',
                         //自定义参数
@@ -250,11 +250,11 @@ table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td
            't3user.phone': {
             validators: {
                 notEmpty: {
-                    message: 'Phone is  required and can\'t be empty'
+                    message: 'The mobile is required and can\'t be empty'
                 },
                 regexp: {
                     regexp: /^0\d{9}$/,
-                    message: 'The phone format Is not correct'
+                    message: 'The mobile format is not correct'
                 }
             }
         },
@@ -271,7 +271,7 @@ table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td
         't3user.name_': {
             validators: {
                 notEmpty: {
-                    message: 'name is  required and can\'t be empty'
+                    message: 'The nickname is  required and can\'t be empty'
                 }
             }
         }

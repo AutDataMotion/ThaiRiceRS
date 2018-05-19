@@ -18,7 +18,7 @@
                         <input type="text" id="username" placeholder="Account" class="form-control">
                     </div>
                     <div class="form-group">
-                        <label class="control-label">Time:</label>
+                        <label class="control-label">From</label>
                         <div class="input-group" style="width: 160px;" id="start">
                             <input type="text" id="min" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                         </div>
@@ -34,7 +34,7 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Authorize</label>
+                        <label>Authorization</label>
                         <select class="form-control" id="audit">
                             <option value="">ALL</option>
                             <option value="02">Approved</option>
@@ -71,11 +71,11 @@
                     <tr>
                         <th width="8%"><input type="checkbox" name="cb-check-all">Select all</th>
                         <th>Account</th>
-                        <th>Mob</th>
+                        <th>Mobile</th>
                         <th>Email address</th>
                         <th>Service term</th>
                         <th>Service type</th>
-                        <th>Authorize</th>
+                        <th>Authorization</th>
                         <th>Send a message</th>
                     </tr>
                     </thead>
@@ -106,10 +106,11 @@
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3">Service term</label>
-                        <div class="input-group" style="padding-left:15px; width:120px;">
+                        <label style="margin:0 8px; float:left;">From</label>
+                        <div class="input-group" style="padding-left:1px; width:120px;">
                             <input type="text" name="Prdt_EfDt" id="Prdt_EfDt" class="form-control" style="width:100px; margin-right:0;"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                         </div>
-                        <label style="margin:0 10px; float:left;">to</label>
+                        <label style="margin:0 7px; float:left;">To</label>
                         <div class="input-group" style="width:120px;">
                             <input type="text" name="PD_ExDat" id="PD_ExDat" class="form-control" style="width:100px; margin-right:0;"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                         </div>
@@ -128,9 +129,9 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-primary" id="app_btn" type="button" data-dismiss="modal" onclick="edit_info()">Through the review
+                <button class="btn btn-primary" id="app_btn" type="button" data-dismiss="modal" onclick="edit_info()">Ok
                 </button>
-                <button class="btn btn-default" type="button" data-dismiss="modal">cancel</button>
+                <button class="btn btn-default" type="button" data-dismiss="modal">Cancel</button>
             </div>
         </div>
     </div>
@@ -204,8 +205,8 @@
         }},
         {"data": null, render: function (data, type, row, meta) {
                 if (data.status_ == '01') {
-                    return '<button type="button" class="btn btn-success btn-sm audit bc"> Approved</button>&nbsp'
-                         + '<button type="button" class="btn btn-danger btn-sm bc" onclick="open_message(' + data.id + ',' + 3 + ')">Rejected</button>';
+                    return '<button type="button" class="btn btn-success btn-sm audit bc">Approve</button>&nbsp'
+                         + '<button type="button" class="btn btn-danger btn-sm bc" onclick="open_message(' + data.id + ',' + 3 + ')">Refuse</button>';
                 } else if (data.status_ == '02') {
                     return '<span class="success">Approved</span> <i class="glyphicon glyphicon-edit edit"></i>';
                 } else {
@@ -257,7 +258,7 @@
      }).on("click",".edit",function() {
         var item = _table.row($(this).closest('tr')).data();
         setData(item);
-        $('#app_btn').html("submit");
+        $('#app_btn').html("Ok");
         $('#modal-title').html("Modify the user service information");
         $("#approved_modal").modal('show');
      }).on("change", ":checkbox", function () {

@@ -19,7 +19,7 @@ function showDialog(title) {
     layer.open({
         type: 1,
         title: [
-            'Prompt'
+            'Tips'
         ],
         closeBtn: 1,
         area: ['210px', '150px'],
@@ -38,10 +38,10 @@ function showDialog(title) {
  */
 function showMessage(content) {
     layer.alert(content, {
-    	title:'Prompt',
+    	title:'Tips',
         skin: 'layui-layer-molv',// 样式类名
         closeBtn: 0,
-        btn:['Confirm']
+        btn:['Ok']
     });
 }
 /**
@@ -72,7 +72,7 @@ function sendAjax(url, param, callback) {
 function deleteRows(url, $table, _table) {
     var ids = $("tbody :checkbox:checked", $table).size();
     if (ids > 0) {
-        layer.confirm('Please confirm whether the record is deleted', {icon: 3,title:'Prompt',btn: ['Confirm','Cancel']}, function (index) {
+        layer.confirm('Please confirm whether the record is deleted', {icon: 3,title:'Tips',btn: ['Ok','Cancel']}, function (index) {
             var list = [];
             $("tbody :checkbox:checked", $table).each(function (i) {
                 var item = _table.row($(this).closest('tr')).data();
