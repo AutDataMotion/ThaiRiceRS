@@ -25,10 +25,11 @@ table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td
                        align="left">
                     <thead>
                     <tr>
-                        <th><input type="checkbox" name="cb-check-all">Select all</th>
+                        <th width="8%"><input type="checkbox" name="cb-check-all">Select all</th>
                         <th>Account</th>
                         <th>Mob</th>
                         <th>Email address</th>
+                        <th>Nickname</th>
                         <th>Creation time</th>
                     </tr>
                     </thead>
@@ -116,9 +117,10 @@ table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td
     var $table = $('#dataTable01');
     var columns = [
         CONSTANT.DATA_TABLES.COLUMN.CHECKBOX,
-        {"data": "name_", orderable: false},
+        {"data": "account", orderable: false},
         {"data": "phone"},
         {"data": "email", orderable: false},
+        {"data": "name_", orderable: false},
         {"data": "create_time", orderable: false},
         ]
     //初始化表格
@@ -251,7 +253,7 @@ table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td
                     message: 'Phone is  required and can\'t be empty'
                 },
                 regexp: {
-                    regexp: /^1\d{9}$/,
+                    regexp: /^0\d{9}$/,
                     message: 'The phone format Is not correct'
                 }
             }
