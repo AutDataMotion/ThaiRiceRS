@@ -50,7 +50,7 @@ public class T3userService extends BaseService {
 	 */
 	public Result login(Controller c, String userName, String passWord) {
 		// 1.取用户
-		T3user user = T3user.dao.findFirst("select * from t3user where account=?", userName);
+		T3user user = T3user.dao.findFirst("select * from t3user where account=? and type_='01'" , userName);
 		if (user == null) {
 			return new Result(0, "Account name does not exist, please re-enter!");
 		}
@@ -61,10 +61,10 @@ public class T3userService extends BaseService {
 		// 3.账户状态
 		String status = user.getStr(T3user.column_status_);
 		if (status.equals("1")) {
-			return new Result(0, "Your information is still under review!");
+			return new Result(0, "Your account is still under review!");
 		}
 		if (status.equals("3")) {
-			return new Result(0, "Your information review failed!");
+			return new Result(0, "Your account is authorized to fail!");
 		}
 		if (status.equals("4")) {
 			return new Result(0, "Your account has expired!");
@@ -152,7 +152,7 @@ public class T3userService extends BaseService {
 			sb.append(" AND CONCAT(IFNULL(name_,''),IFNULL(phone,''),IFNULL(email,''))  LIKE '%"
 					+ name.trim().toLowerCase() + "%'");
 		}
-		sb.append(" AND (type_='02' OR type_='03')");
+		sb.append(" AND type_='02'");
 		sb.append(" ORDER BY " + orderColumn + " " + orderDir);
 		return T3user.dao.paginate(page, row, "select *", sb.toString());
 	}
@@ -179,7 +179,7 @@ public class T3userService extends BaseService {
 	 * @return
 	 */
 	public Page<T3user> selectUsersByPage(int page, int row, int userId, String name, String min, String max,
-			String region, String audit, String orderColumn, String orderDir) {
+			String region, String audit,String type, String orderColumn, String orderDir) {
 		StringBuilder sb = new StringBuilder();
 		sb.append(" FROM t3user  WHERE 1=1");
 		if (userId > 0) {
@@ -195,6 +195,9 @@ public class T3userService extends BaseService {
 		}
 		if (StrKit.notBlank(audit)) {
 			sb.append(" AND status_='" + audit + "'");
+		}
+		if (StrKit.notBlank(type)) {
+			sb.append(" AND PD_TpCd LIKE '%"+type+"%'");
 		}
 		sb.append(" AND type_='01'");
 		sb.append(" ORDER BY " + orderColumn + " " + orderDir);

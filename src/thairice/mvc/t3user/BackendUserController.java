@@ -113,7 +113,7 @@ public class BackendUserController extends BaseController {
 	public void user_list() {
 		int pages = getParaToInt("start", 0) == 0 ? 1 : getParaToInt("start") / getParaToInt("pageSize", 3) + 1;
 		Page<T3user> page = service.selectUsersByPage(pages, getParaToInt("pageSize", 10), getParaToInt("id", 0),
-				getPara("username"), getPara("min"), getPara("max"), "", getPara("audit"), getPara("orderColumn", "id"),
+				getPara("username"), getPara("min"), getPara("max"), "", getPara("audit"),getPara("type"),getPara("orderColumn", "id"),
 				getPara("orderDir", "desc"));
 		Map record = new HashMap();
 		record.put("sEcho", false);
@@ -253,9 +253,9 @@ public class BackendUserController extends BaseController {
 	public void delete() {
 		int rows = service.deletes(getPara("ids"));
 		if (rows > 0) {
-			renderJson(new Result(1, "successfully deleted"));
+			renderJson(new Result(1, "Deleted successfully"));
 		} else {
-			renderJson(new Result(0, "failed to delete"));
+			renderJson(new Result(0, "Failed to delete"));
 		}
 	}
 
@@ -266,7 +266,7 @@ public class BackendUserController extends BaseController {
 		T3user t3user = getModel(T3user.class);
 		boolean rlt = t3user.use(ConstantInitMy.db_dataSource_main).update();
 		if (rlt) {
-			renderJson(new Result(1, "Successfully modified"));
+			renderJson(new Result(1, "Modified Successfully"));
 		} else {
 			renderJson(new Result(0, "Fail to edit"));
 		}

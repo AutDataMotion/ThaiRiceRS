@@ -20,7 +20,7 @@ public class RegValidator extends Validator {
 			 if(!pass.equals(confirmPass)) {
 				 addError("passMsg", "The password entered twice is inconsistent");
 			 }
-			 validateString("t3user.phone", 1, 11, "phoneMsg", "Please enter the correct phone number!");
+			 validateString("t3user.phone", 1, 10, "phoneMsg", "Please enter the correct Mob number!");
 			 validateEmail("t3user.email","emailMsg", "Please input the correct email!");
 			 validateString("t3user.name_", 1, 180, "name_", "Please enter the user name from 1 to 180 digits in length!");
 //			 validateString("t3user.company", 1, 240, "companyMsg", "Please enter a company name from 1 to 240 lengths!");
@@ -33,7 +33,7 @@ public class RegValidator extends Validator {
 			 if(!pass.equals(confirmPass)) {
 				 addError("passMsg", "The password entered twice is inconsistent");
 			 }
-			 validateString("t3user.phone", 1, 11, "phoneMsg", "Please enter the correct phone number!");
+			 validateString("t3user.phone", 1, 10, "phoneMsg", "Please enter the correct Mob number!");
 			 validateEmail("t3user.email","emailMsg", "Please input the correct email!");
 			 validateString("t3user.name_", 1, 180, "name_", "Please enter the user name from 1 to 180 digits in length!");
 			 validateString("t3user.company", 1, 240, "companyMsg", "Please enter a company name from 1 to 240 lengths!");

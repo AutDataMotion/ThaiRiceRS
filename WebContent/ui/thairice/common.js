@@ -38,7 +38,7 @@ function showDialog(title) {
  */
 function showMessage(content) {
     layer.alert(content, {
-    	title:'Information',
+    	title:'Prompt',
         skin: 'layui-layer-molv',// 样式类名
         closeBtn: 0,
         btn:['Confirm']
@@ -72,7 +72,7 @@ function sendAjax(url, param, callback) {
 function deleteRows(url, $table, _table) {
     var ids = $("tbody :checkbox:checked", $table).size();
     if (ids > 0) {
-        layer.confirm('Please confirm that the record is to be deleted', {icon: 3,title:'Prompt',btn: ['Confirm','Cancel']}, function (index) {
+        layer.confirm('Please confirm whether the record is deleted', {icon: 3,title:'Prompt',btn: ['Confirm','Cancel']}, function (index) {
             var list = [];
             $("tbody :checkbox:checked", $table).each(function (i) {
                 var item = _table.row($(this).closest('tr')).data();
@@ -87,7 +87,7 @@ function deleteRows(url, $table, _table) {
             layer.close(index);
         });
     } else {
-        showMessage("Please choose a record first")
+        showMessage("Please choose at least one record")
     }
 }
 
@@ -114,7 +114,7 @@ var clickItem=function($table, _table){
 var getRowItem = function ($table, _table) {
     var selected = $("tbody :checkbox:checked", $table).size();
     if (selected < 1 || selected > 1) {
-        showMessage("Please choose a record first")
+        showMessage("Please choose at least one record")
         return;
     }
     var item = null;

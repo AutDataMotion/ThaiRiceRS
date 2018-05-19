@@ -15,7 +15,6 @@ public class AdminLoginInterceptor implements Interceptor {
 	      inv.invoke();
 	      return;
 	}   
-	System.out.println("zx:"+inv.getActionKey());
         if (inv.getController().getSessionAttr("admin") != null) {
             inv.invoke();
         } else {

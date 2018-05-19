@@ -14,6 +14,7 @@
     <style>
         .tab_btns .btn{width: auto;padding: 0 10px 0 10px;}
         .input-group{width: 250px;float: right;margin-right: 20px;}
+        .even{background-color: rgb(219, 239, 246)!important;}
     </style>
 </head>
 <body>
@@ -30,7 +31,7 @@
             </select>
             <button type="button" class="btn btn-success btn-xs" id="all_read"><i class="glyphicon glyphicon-book"></i>Mark all as Read</button>
             <button type="button" class="btn btn-danger btn-xs" id="btn-del"><i class="glyphicon glyphicon-remove"></i>Delete the selected</button>
-            <button type="button" class="btn btn-info btn-xs" id="empty"><i class="glyphicon glyphicon-warning-sign"></i>Empty the list</button>
+            <!-- <button type="button" class="btn btn-info btn-xs" id="empty"><i class="glyphicon glyphicon-warning-sign"></i>Empty the list</button> -->
         </div>
         <div class="table-responsive">
              <!--搜索-->
@@ -42,11 +43,11 @@
                 <thead>
                 <tr>
                     <th style="border-bottom:none;width:100px;text-align:left;"><input type="checkbox" name="cb-check-all">Select all</th>
-                    <th style="border-bottom:none;text-align:left;">Mail type</th>
-                    <th style="border-bottom:none;text-align:left;">Mail content</th>
-                    <th style="border-bottom:none;text-align:left;">Status</th>
-                    <th style="border-bottom:none;text-align:left;">Time</th>
-                    <th style="border-bottom:none;text-align:left;">View</th>
+                    <th style="border-bottom:none;text-align:center;">Mail type</th>
+                    <th style="border-bottom:none;text-align:center;">Mail content</th>
+                    <th style="border-bottom:none;text-align:center;">Status</th>
+                    <th style="border-bottom:none;text-align:center;">Time</th>
+                    <th style="border-bottom:none;text-align:center;">View</th>
                 </tr>
                 </thead>
             </table>
@@ -97,7 +98,6 @@ $("#navbar_user").addClass("active");
     var $table = $('#dataTable01');
     var columns = [
         CONSTANT.DATA_TABLES.COLUMN.CHECKBOX,
-       /*  {"data": "type_", orderable: false}, */
      	 { "data": null,render: function (data, type, row, meta) {
     	  if(data.type_=='01'){
     		  return 'Notice';
@@ -135,7 +135,7 @@ $("#navbar_user").addClass("active");
     });
   //设置全部已读
     $("#all_read").click(function () {
-        layer.confirm('Make sure to mark all messages as read?', {icon: 3,title:'prompt',btn: ['confirm','cancel']}, function (index) {
+        layer.confirm('Make sure to mark all messages as read', {icon: 3,title:'prompt',btn: ['confirm','cancel']}, function (index) {
             sendAjax("${cxt!}/jf/thairice/t3user/all_read",null,function(res){
                 showMessage(res.desc);
                 if(res.code==1){
@@ -173,7 +173,12 @@ $("#navbar_user").addClass("active");
         $("#message_modal").modal('show');
         setTimeout(function(){
             if(item.status_=='01'){
-                sendAjax("${cxt!}/jf/thairice/t3user/read_message",$("#read_message").serialize(),function(){_table.draw();});
+                sendAjax("${cxt!}/jf/thairice/t3user/read_message",$("#read_message").serialize(),function(){
+                	_table.draw();
+                	sendAjax("${cxt!}/jf/thairice/t3user/refresh",null,function(res){
+                		 $('#count').html(res.count);
+                	 });
+                });
             }
         },500);
     });
@@ -200,6 +205,7 @@ $("#navbar_user").addClass("active");
     }
     //选择消息类型
     $("#state").change(function () {
+    	 _table.draw();
     });
 
     /*换肤*/
@@ -215,6 +221,7 @@ $("#navbar_user").addClass("active");
         var ob = document.getElementById('skin');
         ob.href = 'CSS/skin/color_three.css';
     }
+    $('.data-table tbody tr:odd td').css('background-color','#dbeff6');
 </script>
 </body>
 </html>

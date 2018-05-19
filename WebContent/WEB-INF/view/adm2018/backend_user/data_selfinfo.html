@@ -233,10 +233,10 @@
 						</div>
 					</div>
 					<div class="form-group">
-						<label class="col-sm-3 control-label">Authentication code</label>
+						<label class="col-sm-3 control-label">Verification code</label>
 						<div class="col-sm-9">
 							<input type="text" class="form-control"
-								placeholder="Please enter the authentication code in the e-mail"
+								placeholder="Please enter the verification code from your e-mail"
 								name="code">
 						</div>
 					</div>
@@ -373,7 +373,7 @@
 								message : 'Password is invalid',
 								validators : {
 									notEmpty : {
-										message : 'authentication code is  required and can\'t be empty'
+										message : 'Verification code is  required and can\'t be empty'
 									}
 								}
 							}
@@ -392,17 +392,17 @@
 			't3user.phone' : {
 				validators : {
 					notEmpty : {
-						message : 'Phone is  required and can\'t be empty'
+						message : 'Mob is required and can\'t be empty'
 					},
 					stringLength : {
 						/*长度提示*/
 						min : 6,
-						max : 12,
-						message : 'Phone  length is 11'
+						max : 11,
+						message : 'Mob length is 10'
 					},
 					regexp : {
-						regexp : /^1\d{10}$/,
-						message : 'The Phone format is not correct'
+						regexp : /^1\d{9}$/,
+						message : 'Mob number is not correct '
 					}
 				}
 			}
