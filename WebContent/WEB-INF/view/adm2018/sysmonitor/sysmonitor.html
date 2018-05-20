@@ -30,7 +30,7 @@
             function (ec) {
             	
             	var cpuTitle = {
-        		        text: 'CPU monitor',
+        		        text: 'CPU Monitor',
         		        textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
     	                    fontWeight: 'bolder',
     	                    fontSize: 18,
@@ -134,14 +134,26 @@
             	// ------内存
             	var myMem = ec.init(document.getElementById('mainMem'));
                  var optionMem = {
-              		    tooltip : {
+              		    title:{
+            		        text: 'Memory Monitor',
+            		        textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
+        	                    fontWeight: 'bolder',
+        	                    fontSize: 18,
+        	                    fontStyle: 'italic',
+        	                    color: '#fff',
+        	                    shadowColor : '#fff', //默认透明
+        	                    shadowBlur: 10
+        	                },
+            		        x: 'center'
+            		    },
+                		 tooltip : {
               		        trigger: 'axis',
               		        axisPointer : {            // 坐标轴指示器，坐标轴触发有效
               		            type : 'shadow'        // 默认为直线，可选为：'line' | 'shadow'
               		        }
               		    },
               		    legend: {
-              		        data:['已使用(MB)','未使用(MB)']
+              		        data:['Used(MB)','Free(MB)']
               		    },
               		    calculable : true,
               		    xAxis : [
@@ -152,21 +164,21 @@
               		    yAxis : [
               		        {
               		            type : 'category',
-              		            data : ['内存容量(MB)']
+              		            data : ['Memory(MB)']
               		        }
               		    ],
               		    series : [
               		        {
-              		            name:'已使用',
+              		            name:'Used',
               		            type:'bar',
-              		            stack: '总量',
+              		            stack: 'Total',
               		            itemStyle : { normal: {label : {show: true, position: 'insideRight'}}},
               		            data:[1024]
               		        },
               		        {
-              		            name:'未使用',
+              		            name:'Free',
               		            type:'bar',
-              		            stack: '总量',
+              		            stack: 'Total',
               		            itemStyle : { normal: {label : {show: true, position: 'insideRight'}}},
               		            data:[1024]
               		        }
@@ -255,7 +267,7 @@
                 		var radius = [60, 86];
                 		
                 		var titleDisk = {
-                		        text: 'disk monitor',
+                		        text: 'Disk Monitor',
                 		        textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
             	                    fontWeight: 'bolder',
             	                    fontSize: 18,

@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<sql-statement namespace="thairice.t12PreProcessInf">
+	
+	<!-- 分页查询：from -->
+	<sql id="splitPageFrom">
+		<![CDATA[ 
+        	from 
+        		t12_pre_process_inf
+			
+			where 1=1 
+				
+    	]]>
+	</sql>
+	
+</sql-statement>

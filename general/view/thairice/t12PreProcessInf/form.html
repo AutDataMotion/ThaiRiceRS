@@ -1,0 +1,93 @@
+
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">预处理数据类型</label>
+	<div class="col-sm-7">
+		<input type="text" name="t12PreProcessInf.data_type" value="${t12PreProcessInf.data_type!}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">源文件列表</label>
+	<div class="col-sm-7">
+		<input type="text" name="t12PreProcessInf.source_file_list" value="${escapeXml(t12PreProcessInf.source_file_list!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">预处理文件路径</label>
+	<div class="col-sm-7">
+		<input type="text" name="t12PreProcessInf.file_path" value="${escapeXml(t12PreProcessInf.file_path!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">预处理文件名</label>
+	<div class="col-sm-7">
+		<input type="text" name="t12PreProcessInf.file_name" value="${escapeXml(t12PreProcessInf.file_name!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">数据采集时间</label>
+	<div class="col-sm-7">
+		<div class="input-group">
+		<input type="text" name="t12PreProcessInf.data_collect_time" date-data-format="yyyy-mm-dd" data-data-viewmode="years" class="form-control data-picker" value="${t12PreProcessInf.data_collect_time!, dateFormat="yyyy-MM-dd HH:mm:ss"}">
+		<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+		</div>
+		<span class="help-inline col-sm-2"></span>
+	</div>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">干旱监测处理状态</label>
+	<div class="col-sm-7">
+		<input type="text" name="t12PreProcessInf.drought_st" value="${t12PreProcessInf.drought_st!}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">长势监测处理状态</label>
+	<div class="col-sm-7">
+		<input type="text" name="t12PreProcessInf.condition_st" value="${t12PreProcessInf.condition_st!}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">估产处理状态</label>
+	<div class="col-sm-7">
+		<input type="text" name="t12PreProcessInf.estimate_st" value="${t12PreProcessInf.estimate_st!}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">预处理数据生成时间</label>
+	<div class="col-sm-7">
+		<div class="input-group">
+		<input type="text" name="t12PreProcessInf.generate_time" date-data-format="yyyy-mm-dd" data-data-viewmode="years" class="form-control data-picker" value="${t12PreProcessInf.generate_time!, dateFormat="yyyy-MM-dd HH:mm:ss"}">
+		<span class="input-group-addon"><i class="fa fa-calendar"></i></span>
+		</div>
+		<span class="help-inline col-sm-2"></span>
+	</div>
+</div>
