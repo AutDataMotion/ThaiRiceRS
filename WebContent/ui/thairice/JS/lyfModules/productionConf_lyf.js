@@ -653,7 +653,7 @@ function Edit_Cancel()
 	app.undoManager.clearUndo();
 	app.graphicsLayer.clear();
 }
-
+/*
 function initEditing(evt) {
 	alert("okkkkkk");
 	require(["esri/toolbars/edit","dojo/_base/event", "esri/tasks/query","dojo/domReady!"],
@@ -686,6 +686,7 @@ function initEditing(evt) {
 	});
     
   }
+*/
 /*
 function test(shpFileName)
 {
