@@ -110,7 +110,7 @@ a:focus{
 	
 	display:block;
 	    right: 0px;
-    top: 150px;
+    top: 185px;
     /* display: none; */
     margin-right: -20px;
 }
@@ -204,6 +204,7 @@ a:focus{
 	overflow-y:auto;
 	/*width:320px;*/
 	margin:0 auto;
+	max-height: 200px;
 }
 .table-wrap tr.title{
 	background:#00aace;

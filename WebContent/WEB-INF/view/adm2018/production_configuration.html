@@ -73,8 +73,8 @@
 	                              	<!-- button id="editing_preview" onclick="Edit_Preview()" type="button" class="btn btn-default btn-sm">
 							          <span class="glyphicon glyphicon-eye-open"></span>Preview
 							        </button-->
-							        <button id="editing_save" onclick="Edit_Save()" type="button" class="btn btn-default btn-sm">
-							          <span class="glyphicon glyphicon-ok-circle"></span>Save
+							        <button id="editing_preview" onclick="Edit_Preview()" type="button" class="btn btn-default btn-sm">
+							          <span class="glyphicon glyphicon-eye-open"></span>Preview
 							        </button>
 							        <button id="editing_cancel" onclick="Edit_Cancel()" type="button" class="btn btn-default btn-sm">
 							          <span class="glyphicon glyphicon-remove-sign"></span>Cancel
@@ -91,8 +91,8 @@
 	                                <!-- button id="editing_preview" onclick="Edit_Preview()" type="button" class="btn btn-default btn-sm">
 							          <span class="glyphicon glyphicon-eye-open"></span>Preview
 							        </button-->
-							        <button id="editing_save" onclick="Edit_Save()" type="button" class="btn btn-default btn-sm">
-							          <span class="glyphicon glyphicon-ok-circle"></span>Save
+							        <button id="editing_preview" onclick="Edit_Preview()" type="button" class="btn btn-default btn-sm">
+							          <span class="glyphicon glyphicon-eye-open"></span>Preview
 							        </button>
 							        <button id="editing_cancel" onclick="Edit_Cancel()" type="button" class="btn btn-default btn-sm">
 							          <span class="glyphicon glyphicon-remove-sign"></span>Cancel
@@ -101,6 +101,11 @@
 	                            </tr>
 	                          </table>
 	                      </div>
+	                      <div align="center">
+	                      	<button type="button" onclick="Edit_Save()" class="btn btn-primary">
+  								<span class="glyphicon glyphicon-saved"></span>Save
+							</button>
+						</div>
 	                  </div>
 	                    </div>
 	              </div>
@@ -132,6 +137,11 @@
 	                            </tr-->
 	                          </table>
 	                      </div>
+	                      <div align="center">
+	                      	<button type="button" onclick="generateTempProduct()" class="btn btn-primary">
+  								<span class="glyphicon glyphicon-file"></span>Generate
+							</button>
+						</div>
 	                  </div>
 	                    </div>
 	              </div>
