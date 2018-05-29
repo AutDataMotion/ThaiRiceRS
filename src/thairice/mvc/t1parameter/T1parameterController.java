@@ -68,6 +68,8 @@ public class T1parameterController extends BaseController {
 	//并将文件以waitingformodify.*（shp、dbf等）命名，做下次使用
 	public static final String gpresultFilePreName = "result";
 	public static final String models_workspace_tempFilePreName = "waitingformodify";
+	//2018-05-11_72.tif--->arearaster.tif 以备改变波段显示
+	public static final String models_workspace_tempAreaTifFilePreName = "arearaster";
 	/**
 	 * 列表
 	 */
@@ -399,6 +401,41 @@ public class T1parameterController extends BaseController {
 		}
 		
 		return false;
+	}
+	public void copyAreaTifFile2gpWorkspace()
+	{
+		try {
+			JSONObject msg = new JSONObject();
+			
+			String tifFileName = getPara("tifFileName");//2018-05-11_72.tif
+			String tifFileNamePrefix = tifFileName.substring(0,tifFileName.lastIndexOf("."));//2018-05-11_72
+			String AreatifFilePath = areaTifPath;
+			File[] AreatifFiles = ReportUtil.fileFilter(AreatifFilePath, tifFileNamePrefix, null);
+			for(File file:AreatifFiles)
+			{
+//				System.out.println(path.getName());
+				//copy area tif file to gp models for change bands
+				//E:\areatif\2018-05-11_72.tif
+				//-->
+				//E:\gpmodels\arearaster.tif
+				String resultFileName = file.getName();
+				///example 2018-05-11_72.tif-->.tif
+				String resultFileSuffix = resultFileName.substring(resultFileName.lastIndexOf('.'));
+				///arearaster+.tif--->arearaster.tif
+				String copyTo = models_workspace+models_workspace_tempAreaTifFilePreName+resultFileSuffix;
+				File newfile = new File(copyTo);
+				boolean result = ReportUtil.fileCopy(file,newfile);
+				if(result)
+				{
+					msg.put("flag", result);
+					renderJson(msg);
+				}
+			}
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		
 	}
 	public void copyResult2Modelspace()
 	{
