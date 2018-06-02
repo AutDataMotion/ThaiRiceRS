@@ -31,13 +31,13 @@
         <div class="col-sm-3 col-md-2 sidebar left_menu">
             <div class="self_info">
              <% if(user.status_=='02'){ %>
-             <div class="ribbon-wrapper"><div class="ribbon" style="background-color:#4CAF50">Passed</div></div>
+             <div class="ribbon-wrapper"><div class="ribbon" style="background-color:#4CAF50">Approved</div></div>
              <% }else if(user.status_=='01'){ %>
               <div class="ribbon-wrapper"><div class="ribbon">Unauthorized</div></div>
              <% }else if(user.status_=='03'){ %>
-             <div class="ribbon-wrapper"><div class="ribbon">Authorization failed</div></div>
+             <div class="ribbon-wrapper"><div class="ribbon">Refused</div></div>
              <% }%>
-                <p class="self_title text-center">Personal center</p>
+                <p class="self_title text-center">User Profile</p>
                 <dl class="dl-horizontal">
                     <dt class="self_photo">
                     <form id="uploadForm">
@@ -93,14 +93,14 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3 control-label" style="width:120px;">Phonenumber</label>
+                            <label class="col-md-3 control-label" style="width:120px;">Mobile</label>
                             <div class="col-md-9" style="width:470px;">
                                 <input type="text" class="form-control" name="t3user.phone" value="${user.phone}"
-                                       placeholder="+66 08088999999999">
+                                       placeholder="+66 0808899999">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3 control-label" style="width:120px;">Email</label>
+                            <label class="col-md-3 control-label" style="width:120px;">Email address</label>
                             <div class="col-md-9" style="width:470px;">
                                 <input type="email" class="form-control" id="u_email" name="t3user.email" value="${user.email}"
                                        placeholder="jone@example.com">
@@ -114,38 +114,38 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3 control-label" style="width:120px;">Company</label>
+                            <label class="col-md-3 control-label" style="width:120px;">Organization</label>
                             <div class="col-md-9" style="width:470px;">
                                 <input type="text" class="form-control" name="t3user.company" value="${user.company}"
-                                       placeholder="Company">
+                                       placeholder="Your current job">
                             </div>
                         </div>
                          <div class="form-group">
                             <label class="col-md-3 control-label" style="width:120px;">Zip code</label>
                             <div class="col-md-9" style="width:470px;">
                                 <input type="text" class="form-control" name="t3user.zip_encode" value="${user.zip_encode}"
-                                       placeholder="Company">
+                                       placeholder="Zip code">
                             </div>
                         </div>
                           <div class="form-group">
                             <label class="col-md-3 control-label" style="width:120px;">Address</label>
                             <div class="col-md-9" style="width:470px;">
                                 <input type="text" class="form-control" name="t3user.address" value="${user.address}"
-                                       placeholder="Company">
+                                       placeholder="Your address">
                             </div>
                         </div> 
                         <div class="form-group">
                             <label class="col-md-3 control-label" style="width:120px;">Industry</label>
                             <div class="col-md-9" style="width:470px;">
                                 <input type="text" class="form-control" name="t3user.industry" value="${user.industry}"
-                                       placeholder="Company">
+                                       placeholder="Your industry">
                             </div>
                         </div>
                         <p class="text-center form_title"> < Service information > </p>
                         <div style="position: relative;background-color: white;padding: 12px 0px 15px 0px;">
                         <div class="ribbon-wrapper"><div class="ribbon" style="background-color:#838883">Unchange</div></div>
                         <div class="form-group">
-                            <label class="col-md-3 control-label" style="width:120px;">Service Area</label>
+                            <label class="col-md-3 control-label" style="width:120px;">Area</label>
                             <div class="col-md-9" style="width:470px;">
                      			 <div class="input-group">
 		                    	 <select id="seachprov"  onChange="changeComplexProvince(this.value, sub_array, 'seachcity', 'seachdistrict');"  style="padding: 8px;"></select>
@@ -155,28 +155,24 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3 control-label" style="width:120px; padding-left:0;">Service type</label>
+                            <label class="col-md-3 control-label" style="width:120px; padding-left:0;">Products</label>
                             <div class="col-md-9" style="width:470px;">
                                 <div class="checkbox">
-                                    <label><input type="checkbox" name="PD_TpCd" value="01" disabled>Rice planting area
-                                        monitoring</label>
+                                    <label><input type="checkbox" name="PD_TpCd" value="01" disabled>Rice acreage</label>
                                 </div>
                                 <div class="checkbox">
-                                    <label><input type="checkbox" name="PD_TpCd" value="02" disabled>Rice drought
-                                        monitoring</label>
+                                    <label><input type="checkbox" name="PD_TpCd" value="02" disabled>Rice growth</label>
                                 </div>
                                 <div class="checkbox">
-                                    <label><input type="checkbox" name="PD_TpCd" value="03" disabled>Rice condition
-                                        monitoring</label>
+                                    <label><input type="checkbox" name="PD_TpCd" value="03" disabled>Rice yield</label>
                                 </div>
                                 <div class="checkbox">
-                                    <label><input type="checkbox" name="PD_TpCd" value="04" disabled>Rice production
-                                        estimates</label>
+                                    <label><input type="checkbox" name="PD_TpCd" value="04" disabled>Rice drought</label>
                                 </div>
                             </div>
                         </div>
                         <div class="form-group" style="margin-top:100px;">
-                            <label class="col-sm-2 control-label" style="width:120px;">Service cycle</label>
+                            <label class="col-sm-2 control-label" style="width:120px;">Service Term</label>
                             <div class="col-sm-10" style="width:540px;">
                                 <div class="col-sm-4">
                                     <div class="input-group date" style="width:151px;">
@@ -293,7 +289,7 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Upload head</h5>
+                <h5 class="modal-title">Upload a profile picture</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
             </div>
             <div class="modal-body">
@@ -313,7 +309,7 @@
     <div class="modal-dialog" role="document"  style="width: 650px;">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title" id="exampleModalLabel">Reset password</h5>
+                <h5 class="modal-title" id="exampleModalLabel">Reset Password</h5>
                 <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span
                         aria-hidden="true">×</span></button>
             </div>
@@ -333,7 +329,7 @@
                     </div>
                     
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">Email</label>
+                        <label class="col-sm-3 control-label">Email address</label>
                         <div class="col-sm-9">
                         <div class="input-group">
                               <input type="email" class="form-control" placeholder="your E-mai like someone@exmaple.com"  name="email"  id="email"  value="${user.email}" readonly>
@@ -342,15 +338,15 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3 control-label">Authentication code</label>
+                        <label class="col-sm-3 control-label">Verification code</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" placeholder="Please enter the authentication code in the e-mail"  name="code" >
+                            <input type="text" class="form-control" placeholder="Please enter the verification code from your e-mail"  name="code" >
                         </div>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-primary system_btn" id="pass_btn" type="button">Reset</button>
+                <button class="btn btn-primary system_btn" id="pass_btn" type="button">Submit</button>
                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
             </div>
         </div>
@@ -410,7 +406,7 @@ $("#navbar_user").addClass("active");
     	 $("#edit_pass").bootstrapValidator('validate');
     	 if (!$("#edit_pass").data('bootstrapValidator').isValid()) {return;}
         sendAjax('${cxt!}/jf/thairice/t3user/edit_pass', $("#edit_pass").serialize(), function (res) {
-            layer.msg(res.errorMsg);
+            layer.msg(res.desc);
             if (res.code == 1) {
             	$("#passwordModal").modal("hide");
             	$("#systemModal").modal("show");
@@ -443,7 +439,7 @@ $("#navbar_user").addClass("active");
     $("#file-Portrait1").on("fileuploaded", function (event, data, previewId, index) {
         console.log(JSON.stringify(data));
         if(data.response.code==1){
-            layer.msg('Uploaded successfully');
+            layer.msg('Uploaded successful');
             $('#picImg').attr("src","${cxt!}"+data.response.desc);
         }
     });
@@ -513,7 +509,7 @@ $("#navbar_user").addClass("active");
                 message: 'Password is invalid',
                 validators: {
                     notEmpty: {
-                        message: 'Authentication code is  required and can\'t be empty'
+                        message: 'Verification code is  required and can\'t be empty'
                     }
                 }
             }
@@ -538,11 +534,11 @@ $("#navbar_user").addClass("active");
                        /*长度提示*/
                        min: 6,
                        max: 12,
-                       message: 'Phone  length is 11'
+                       message: 'Mobile  length is 10'
                    },
                    regexp: {
-                       regexp: /^1\d{10}$/,
-                       message: 'The Phone format is not correct'
+                       regexp: /^0\d{9}$/,
+                       message: 'Mobile number is not correct '
                    }
                }
            }

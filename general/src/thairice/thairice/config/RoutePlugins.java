@@ -6,7 +6,7 @@
  * @version 1.0
  */
 package thairice.config;
-import thairice.mvc.t3user.T3userController;
+import thairice.mvc.t12_pre_process_inf.T12PreProcessInfController;
 import com.jfinal.config.Routes;
 /**
  * 创建时间：2016年1月28日 下午2:15:23
@@ -30,6 +30,6 @@ import com.jfinal.config.Routes;
 public class RoutePlugins extends Routes {
 	@Override
 	public void config() {
-		add("/jf/thairice/t3user", T3userController.class);
+		add("/jf/thairice/t12_pre_process_inf", T12PreProcessInfController.class);
 	}
 }

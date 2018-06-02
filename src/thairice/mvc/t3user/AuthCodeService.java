@@ -23,10 +23,10 @@ public class AuthCodeService {
 	public Result activate(String authCodeId) {
 		Record record = Db.findFirst(" select * from thairice.auth_code where id=?", authCodeId);
 		if (record == null) {
-			return new Result(0, "Authorization code does not exist");
+			return new Result(0, "The verification code does not exist");
 		}
 		if (record.getLong("expireAt") < System.currentTimeMillis()) {
-			return new Result(0, "Authorization code has expired");
+			return new Result(0, "The verification code has expired");
 		}
 		T3user t3user = new T3user();
 		t3user.set("id", record.get("userId"));
@@ -35,7 +35,7 @@ public class AuthCodeService {
 		if (row) {
 			// 激活后删除授权码
 			Db.update("delete from thairice.auth_code where id=?", authCodeId);
-			return new Result(1, "Activated successfully");
+			return new Result(1, "Activated successful");
 		} else {
 			return new Result(0, "Activation fails");
 		}

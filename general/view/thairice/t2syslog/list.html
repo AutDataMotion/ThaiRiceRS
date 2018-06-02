@@ -103,6 +103,10 @@
 									用户ID	${orderBy("userid")}
 								</th>
 								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
+										'mainPanel', 'splitPage', 'username')">
+									用户名	${orderBy("username")}
+								</th>
+								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
 										'mainPanel', 'splitPage', 'action_')">
 									操作	${orderBy("action_")}
 								</th>
@@ -142,6 +146,13 @@
 							${item["userid"]!}
 
 								</td>
+								
+								<td>
+
+								${escapeXml(item["username"]!)}
+
+								</td>
+							
 								
 								<td>
 

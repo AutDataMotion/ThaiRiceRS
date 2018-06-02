@@ -7,6 +7,26 @@
             position: fixed;
                 width: 100%;
 }
+.rgb_change_excel_td
+{
+	padding-left: 0px;
+    padding-right: 0px; 
+}
+.rgb_change_excel_td_red
+{
+	    background-color: #ff0000;
+    color: #fff;
+}
+.rgb_change_excel_td_green
+{
+	    background-color: #00ff00;
+    color: #fff;
+}
+.rgb_change_excel_td_blue
+{
+	    background-color: #0000ff;
+    color: #fff;
+}
 .modal-dialog{
 	margin:200px auto;
 }
@@ -39,18 +59,18 @@
 }
 .operation_tools li{
 	float:left;
-	width:60px;
-	height:60px;
+	/*width:60px;
+	height:60px;*/
 }
 .operation_tools li.one{
 	
-	background:url(../Images/production/map.png) no-repeat 0 0;
+	/*background:url(../Images/production/map.png) no-repeat 0 0;*/
 }
 .operation_tools li.one:hover{
-	background:url(../Images/production/map_pressed.png) no-repeat 0 0;
+	/*background:url(../Images/production/map_pressed.png) no-repeat 0 0;*/
 }
 .dijitButton{
-	    margin-top: 15px;
+	    /*margin-top: 15px;*/
 	    color: #08a4cf;
 	    font-weight: bold;
 	     
@@ -104,7 +124,18 @@ a:focus{
 	display:none;
 }
 .samples{
-	width:330px;
+	width:355px;
+	height:auto;
+	position:absolute;
+	
+	display:block;
+	    right: 0px;
+    top: 90px;
+    /* display: none; */
+    margin-right: -20px;
+}
+.editing{
+	width:355px;
 	height:auto;
 	position:absolute;
 	
@@ -154,6 +185,13 @@ a:focus{
 	color:#fff;
 	cursor:pointer;
 }
+.list-group .glyphicon-refresh{
+	position:absolute;
+	right:10px;
+	top:7px;
+	color:#fff;
+	cursor:pointer;
+}
 .modes_ul{
 	margin:10px;
 }
@@ -191,8 +229,9 @@ a:focus{
 .table-wrap{
 	height: auto;
 	overflow-y:auto;
-	width:320px;
+	/*width:320px;*/
 	margin:0 auto;
+	max-height: 200px;
 }
 .table-wrap tr.title{
 	background:#00aace;

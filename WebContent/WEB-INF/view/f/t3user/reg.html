@@ -24,9 +24,9 @@
 			<h2></h2>
 			<div class="container">
 				<form id="fm" class="form-horizontal"
-					style="width: 800px; margin: 0 auto;" method="post">
+					style="width: 829px; margin: 0 auto;" method="post">
 					<div class="form_selfinfo">
-						<p class="title">Create account- user information</p>
+						<p class="title">Create an Account</p>
 						<div class="form-group">
 							<label class="col-sm-2 control-label">* Account</label>
 							<div class="col-sm-8">
@@ -39,45 +39,45 @@
 							<label class="col-sm-2 control-label">* Password</label>
 							<div class="col-sm-8">
 								<input type="password" class="form-control"
-									placeholder="The Passward is made up of 6 to 12 letters and Numbers"
+									placeholder="The passward is made up of 6 to 12 letters and Numbers"
 									id="pwd" name="t3user.pwd">
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-sm-2 control-label">Verify password</label>
+							<label class="col-sm-2 control-label">* Verify password</label>
 							<div class="col-sm-8">
 								<input type="password" class="form-control"
 									placeholder="Re-enter password" name="confirmPass">
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-sm-2 control-label">* PhoneNumber</label>
+							<label class="col-sm-2 control-label">* Mobile</label>
 							<div class="col-sm-8">
 								<input type="text" class="form-control"
-									placeholder="You commonly used the phone number"
+									placeholder="Your mobile "
 									name="t3user.phone">
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-sm-2 control-label">* Email</label>
+							<label class="col-sm-2 control-label">* Email address</label>
 							<div class="col-sm-8">
 								<input id="email" type="email" class="form-control"
-									placeholder="Your Email like someone@exmaple.com"
+									placeholder="Your Email address like someone@exmaple.com"
 									name="t3user.email">
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-sm-2 control-label">Your name</label>
+							<label class="col-sm-2 control-label">* Nickname</label>
 							<div class="col-sm-8">
 								<input type="text" class="form-control"
-									placeholder="Your real name" name="t3user.name_">
+									placeholder="Your nickname" name="t3user.name_">
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-sm-2 control-label">Company</label>
+							<label class="col-sm-2 control-label">Organization</label>
 							<div class="col-sm-8">
 								<input type="text" class="form-control"
-									placeholder="Your work unit" name="t3user.company">
+									placeholder="Your current job" name="t3user.company">
 							</div>
 						</div>
 						<div class="form-group">
@@ -90,7 +90,7 @@
 						<div class="form-group">
 							<label class="col-sm-2 control-label">Address</label>
 							<div class="col-sm-8">
-								<input type="text" class="form-control" placeholder="Your Address"
+								<input type="text" class="form-control" placeholder="Your address"
 									name="t3user.address">
 							</div>
 						</div>
@@ -104,16 +104,15 @@
 						<div class="form-group" style="margin-top: 25px;">
 							<p>
 								<button type="button"
-									class="btn btn-primary btn-lg btn_selfinfo">service
-									information >></button>
+									class="btn btn-primary btn-lg btn_selfinfo">Next step >></button>
 							</p>
 						</div>
 					</div>
 					<div class="form-horizontal form_serviceinfo"
-						style="width: 800px; margin: 0 auto;display: block;">
+						style="width: 801px; margin: 0 auto;">
 						<p class="title">Create account- Service information</p>
 						<div class="form-group" style="margin-top: 20px;">
-							<label class="col-sm-2 control-label">*Select area</label>
+							<label class="col-sm-2 control-label">*Select Area</label>
 							<div class="col-sm-8">
 						        <div class="input-group">
 		                    	 <select id="seachprov" name="province" onChange="changeComplexProvince(this.value, sub_array, 'seachcity', 'seachdistrict');" style="padding: 8px;"></select>
@@ -123,20 +122,20 @@
 							</div>
 						</div>
 						<div class="form-group" style="margin-top: 20px;">
-							<label class="col-sm-2 control-label">*Select services</label>
+							<label class="col-sm-2 control-label">*Select Service</label>
 							<div class="col-sm-8 service">
-								<label><input type="checkbox" value="01" name="PD_TpCd">
-									Rice planting area monitoring</label> <label><input
-									type="checkbox" value="02" name="PD_TpCd"> Rice drought
-									monitoring</label> <label><input type="checkbox" value="03"
-									name="PD_TpCd"> Rice condition monitoring</label> <label><input
-									type="checkbox" value="04" name="PD_TpCd"> Rice
-									production estimates</label>
+								<label><input type="checkbox" value="01" name="PD_TpCd">Rice acreage</label> 
+								<label><input type="checkbox" value="02" name="PD_TpCd">Rice growth</label> 
+								<label><input type="checkbox" value="03" name="PD_TpCd">Rice yield</label> 
+								<label><input type="checkbox" value="04" name="PD_TpCd">Rice drought</label>
 							</div>
 						</div>
 						<div class="form-group" style="margin-top: 20px;">
-							<label class="col-sm-2 control-label">*Service cycle</label>
+							<label class="col-sm-2 control-label">*Service Term</label>
 							<div class="col-sm-9">
+							    <div class="col-sm-1" style="text-align: center;">
+									<label class="control-label">From</label>
+								</div>
 								<div class="col-sm-4">
 									<div class="input-group date" id="Prdt_EfDt">
 										<input type="text" class="form-control" name="Prdt_EfDt">
@@ -145,7 +144,7 @@
 									</div>
 								</div>
 								<div class="col-sm-1" style="text-align: center;">
-									<label class="control-label">to</label>
+									<label class="control-label">To</label>
 								</div>
 								<div class="col-sm-4">
 									<div class="input-group date" id='PD_ExDat'>
@@ -176,11 +175,9 @@
 		</div>
 	</div>
 	<script src="${cxt!}/ui/thairice/JS/jquery.min.js"></script>
-	<script
-		src="${cxt!}/ui/thairice/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+	<script src="${cxt!}/ui/thairice/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 	<script src="${cxt!}/ui/thairice/datetime-picker/moment.js"></script>
-	<script
-		src="${cxt!}/ui/thairice/datetime-picker/bootstrap-datetimepicker.min.js"></script>
+	<script src="${cxt!}/ui/thairice/datetime-picker/bootstrap-datetimepicker.min.js"></script>
 	<script src="${cxt!}/ui/thairice/JS/bootstrapValidator.js"></script>
 	<script type="text/javascript" src="${cxt!}/ui/thairice/JS/layer/layer.js"></script>
 	<script type="text/javascript" src="${cxt!}/ui/thairice/JS/md5.js"></script>

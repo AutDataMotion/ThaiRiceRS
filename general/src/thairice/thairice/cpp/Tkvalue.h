@@ -23,7 +23,7 @@ public:
 private:
 	static const string TableName;
 	/**
-	 * 字段描述：id 
+	 * 字段描述： 
 	 * 字段类型：bigint  长度：null
 	 */
 	biginteger id;

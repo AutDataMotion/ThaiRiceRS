@@ -19,6 +19,7 @@ import thairice.mvc.t8message.T8message;
 import thairice.mvc.t9sample_info.T9sample_info;
 import thairice.mvc.t10pdt_report.T10pdt_report;
 import thairice.mvc.t11zone.T11zone;
+import thairice.mvc.t12preprocessinf.T12PreProcessInf;
 import thairice.mvc.tkvalue.Tkvalue;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 /**
@@ -57,6 +58,7 @@ public class MappingTable {
 		arp.addMapping("t10pdt_report", "id", T10pdt_report.class);
 		arp.addMapping("t11zone", "id", T11zone.class);
 		arp.addMapping("tkvalue", "id", Tkvalue.class);
+		arp.addMapping("t12_pre_process_inf", "id", T12PreProcessInf.class);
 		log.info("thairice MappingTable 表手工注册-----end");
 		
 	}

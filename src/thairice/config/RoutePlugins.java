@@ -27,6 +27,7 @@ import thairice.mvc.r4message_send.R4message_sendController;
 import thairice.mvc.sysmonitor.SysmonitorController;
 import thairice.mvc.t10pdt_report.T10pdt_reportController;
 import thairice.mvc.t11zone.T11zoneController;
+import thairice.mvc.t12preprocessinf.T12PreProcessInfController;
 import thairice.mvc.t1parameter.T1parameterController;
 import thairice.mvc.t2syslog.T2syslogController;
 import thairice.mvc.t3user.BackendUserController;
@@ -64,7 +65,7 @@ public class RoutePlugins extends Routes {
 		add("/jf/thairice/t11zone", T11zoneController.class);
 		add("/jf/thairice/tkvalue", TkvalueController.class);
 		add("/jf/targrecog/index/shw", LoginController.class);
-
+		add("/jf/thairice/t12_pre_process_inf", T12PreProcessInfController.class);
 		add("/jf/thairice/sysmonitor", SysmonitorController.class);
 		// 系统操作员和用户管理
 		add("/jf/thairice/admin/user", BackendUserController.class);

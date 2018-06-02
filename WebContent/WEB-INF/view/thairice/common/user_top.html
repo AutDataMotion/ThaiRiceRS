@@ -5,14 +5,14 @@
 		<div class="container-fluid" style="padding-right:0;">
 			<div class="navbar-header" style="padding-left:15px;">
 				<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar"> <span class="sr-only">toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
-				<p class="nav-title navbar-brand">Thai agricultural remote sensing monitoring platform </p>
+				<p class="nav-title navbar-brand">Thailand agricultural remote sensing monitoring platform </p>
 			</div>
 			<div class="collapse navbar-collapse" id="navbar">
 				<ul class="nav navbar-nav navbar-right">
 					<li id="navbar_index"><a class="one" href="${cxt!}/jf/thairice/t3user" title="首页"></a></li>
 					<% if(session.admin! ==null){ %>
 					<li id="navbar_user">
-						<a class="two dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" href="#" title="用户"><span class="badge" style="position: absolute;top: 0;right: 0;margin: 5px;background-color: red;">${count!}</span></a>
+						<a class="two dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" href="#" title="用户"><span class="badge" id="count" style="position: absolute;top: 0;right: 0;margin: 5px;background-color: red;">${count!}</span></a>
 						<ul class="dropdown-menu">
 							<li><a href="${cxt!}/jf/thairice/t3user/self_center">Self center</a></li>
 							<li><a href="${cxt!}/jf/thairice/t3user/my_message">My message</a></li>

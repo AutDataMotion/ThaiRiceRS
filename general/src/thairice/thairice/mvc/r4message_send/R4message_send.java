@@ -29,6 +29,12 @@ public class R4message_send extends BaseModel<R4message_send> {
 	public static final String column_id = "id";
 	
 	/**
+	 * 字段描述： 
+	 * 字段类型：bigint  长度：null
+	 */
+	public static final String column_message_id = "message_id";
+	
+	/**
 	 * 字段描述：接收人ID 
 	 * 字段类型：bigint  长度：null
 	 */
@@ -48,6 +54,7 @@ public class R4message_send extends BaseModel<R4message_send> {
 	public static final String sqlId_splitPage_from = "thairice.r4message_send.splitPageFrom";
 
 	private BigInteger id;
+	private Long message_id;
 	private BigInteger receive_userid;
 	private String status_;
 
@@ -56,6 +63,12 @@ public class R4message_send extends BaseModel<R4message_send> {
 	}
 	public <T> T getId() {
 		return get(column_id);
+	}
+	public void setMessage_id(Long message_id){
+		set(column_message_id, message_id);
+	}
+	public <T> T getMessage_id() {
+		return get(column_message_id);
 	}
 	public void setReceive_userid(BigInteger receive_userid){
 		set(column_receive_userid, receive_userid);

@@ -61,7 +61,7 @@ public class T6org_data extends BaseModel<T6org_data> {
 	
 	/**
 	 * 字段描述：文件类型代码 
-	 * 字段类型：enum  长度：9
+	 * 字段类型：enum  长度：2
 	 */
 	public static final String column_type_ = "type_";
 	
@@ -79,7 +79,7 @@ public class T6org_data extends BaseModel<T6org_data> {
 	
 	/**
 	 * 字段描述：文件状态代码 
-	 * 字段类型：enum  长度：6
+	 * 字段类型：enum  长度：2
 	 */
 	public static final String column_status_ = "status_";
 	

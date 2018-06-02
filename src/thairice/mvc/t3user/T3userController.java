@@ -16,6 +16,7 @@ import com.jfinal.kit.PropKit;
 import com.jfinal.kit.StrKit;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Page;
+import com.jfinal.plugin.activerecord.Record;
 import com.platform.constant.ConstantRender;
 import com.platform.interceptor.ParamPkgInterceptor;
 import com.platform.mvc.base.BaseController;
@@ -24,6 +25,8 @@ import thairice.constant.ConstantInitMy;
 import thairice.interceptor.UserLoginInterceptor;
 import thairice.mvc.r4message_send.R4message_send;
 import thairice.mvc.t10pdt_report.T10pdt_report;
+import thairice.mvc.t2syslog.EnumT2sysLog;
+import thairice.mvc.t2syslog.T2syslogService;
 import thairice.mvc.t8message.T8message;
 import thairice.mvc.t8message.T8messageService;
 
@@ -62,7 +65,14 @@ public class T3userController extends BaseController {
 		keepPara("returnUrl");
 		renderWithPath(pthv + "login.html");
 	}
-
+        //消息个数实时更新
+	public void refresh() {
+	    T3user user = getSessionAttr("user");
+	    Record record=new Record();
+	    record.set("count", Duang.duang(T3userService.class).getCount(user.getBigInteger("id")));
+	    renderJson(record);
+	}
+	
 	/**
 	 * 登陆验证
 	 *
@@ -72,13 +82,20 @@ public class T3userController extends BaseController {
 	@Before(T3userValidator.class)
 	public void doLogin() {
 		boolean authCode = authCode();
+		String account = null;
 		Result res;
 		if (authCode) {
-			String account = getPara("account");
+			account = getPara("account");
 			String password = getPara("password");
 			res = T3userService.service.login(this, account, password);
 		} else {
 			res = new Result(0, "Verification code is error, please re-enter");
+		}
+		if(res.getCode()==1) {
+		    T3user user = getSessionAttr("user");
+		    T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), account, "Log in", res.toString());  
+		}else {
+		    T2syslogService.addLog(EnumT2sysLog.INFO, BigInteger.ONE , account, "Log in", res.toString());  
 		}
 		renderJson(res);
 	}
@@ -230,9 +247,9 @@ public class T3userController extends BaseController {
 		int row = Db.use(ConstantInitMy.db_dataSource_main)
 				.update("UPDATE r4message_send SET status_='02' WHERE receive_userid=?", user.getBigInteger("id"));
 		if (row > 0) {
-			renderJson(new Result(1, "Successful operation"));
+			renderJson(new Result(1, "Operation succeeded"));
 		} else {
-			renderJson(new Result(0, "operation failed"));
+			renderJson(new Result(0, "Operation failed"));
 		}
 	}
 
@@ -246,9 +263,9 @@ public class T3userController extends BaseController {
 		if (row > 0) {
 		    Db.use(ConstantInitMy.db_dataSource_main).update("DELETE FROM t8message WHERE send_userid=?",
 				user.getBigInteger("id"));
-			renderJson(new Result(1, "Cleared successfully"));
+			renderJson(new Result(1, "Operation succeeded"));
 		} else {
-			renderJson(new Result(1, "operation failed"));
+			renderJson(new Result(1, "Operation failed"));
 		}
 	}
 
@@ -261,9 +278,9 @@ public class T3userController extends BaseController {
 				"DELETE FROM r4message_send WHERE id IN(" + getPara("ids") + ") AND receive_userid=?",
 				user.getBigInteger("id"));
 		if (row > 0) {
-			renderJson(new Result(1, "successfully deleted"));
+			renderJson(new Result(1, "Operation succeeded"));
 		} else {
-			renderJson(new Result(0, "failed to delete"));
+			renderJson(new Result(0, "Operation failed"));
 		}
 	}
 
@@ -276,7 +293,7 @@ public class T3userController extends BaseController {
 			send.set("status_", "02");
 			send.update();
 		}
-		renderJson(new Result(1, "failed to delete"));
+		renderJson(new Result(1, "Failed to delete"));
 	}
 
 	/**
@@ -286,9 +303,9 @@ public class T3userController extends BaseController {
 		T3user t3user = getModel(T3user.class);
 		boolean rlt = t3user.use(ConstantInitMy.db_dataSource_main).update();
 		if (rlt) {
-			renderJson(new Result(1, "Successfully modified"));
+			renderJson(new Result(1, "Operation succeeded"));
 		} else {
-			renderJson(new Result(0, "fail to edit"));
+			renderJson(new Result(0, "Operation failed"));
 		}
 	}
 
@@ -319,17 +336,17 @@ public class T3userController extends BaseController {
 	public void send_code() {
 		T3user t3user = srv.getByEmail(getPara("email"));
 		if (t3user == null) {
-			renderJson(new Result(0, "Email does not exist"));
+			renderJson(new Result(0, "The Email does not exist"));
 			return;
 		}
 		// 创建授权码
 		String authCode = codeService.createAuthCode(t3user.getBigInteger("id"), 0, 3600);
-		boolean success = Mail.sendEmail(getParaToInt("type", 0) == 0 ? "Recover password" : "change Password",
-				"Your email authorization code is:\n\n" + authCode, getPara("email"), Mail.MODE_TEXT);
+		boolean success = Mail.sendEmail(getParaToInt("type", 0) == 0 ? "Thailand agricultural remote sensing monitoring platform password assistance" : "change Password",
+				"To verify your identity, please use the following code:\n\n" + authCode+"\n\nWe hope to see you again soon.", getPara("email"), Mail.MODE_TEXT);
 		if (success) {
-			renderJson(new Result(1, "Successfully sent, please go to email"));
+			renderJson(new Result(1, "For your security, we need to verify your identity. We've sent a code to the email.Please enter it below."));
 		} else {
-			renderJson(new Result(0, "Failed to send, please contact the administrator"));
+			renderJson(new Result(0, "The email may not be sent out successfully, please contact the administrator"));
 		}
 	}
 

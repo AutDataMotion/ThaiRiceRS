@@ -11,6 +11,8 @@ import java.util.LinkedList;
 import java.util.List;
 
 import org.hyperic.sigar.CpuPerc;
+import org.hyperic.sigar.FileSystem;
+import org.hyperic.sigar.FileSystemUsage;
 import org.hyperic.sigar.Mem;
 import org.hyperic.sigar.Sigar;
 import org.hyperic.sigar.SigarException;
@@ -54,7 +56,7 @@ public class SysmonitorController extends BaseController {
 			cpuInfo = new Double[cpuList.length];
 
 			memInfo = new Long[4];
-
+			
 			resSysmonitor = new ResSysmonitor();
 			resSysmonitor.setCpus(cpuInfo);
 			resSysmonitor.setMems(memInfo);
@@ -70,11 +72,9 @@ public class SysmonitorController extends BaseController {
 	//@Clear
 	public void index() {
 		// 获取cpu、内存 定时刷新
-
 		// 磁盘信息 主动触发
-
 		setAttr("groupCpu", groupCpu);
-		List<MdlUsedInfo> diskInfos = getDiskInfo();
+		List<MdlUsedInfo> diskInfos = getDiskInfoWindows();
 		int cntDiskGroup = Math.max(1, diskInfos.size() / 4);
 		setAttr("diskInfoList", diskInfos);
 		setAttr("groupDisk", cntDiskGroup);
@@ -125,10 +125,37 @@ public class SysmonitorController extends BaseController {
 
 	//@Clear
 	public void freshDiskData() {
-		renderJson(getDiskInfo());
+		//renderJson(getDiskInfoLinux());
+		renderJson(getDiskInfoWindows());
 	}
-
-	private static List<MdlUsedInfo> getDiskInfo() {
+	
+	private static List<MdlUsedInfo> getDiskInfoWindows(){
+		List<MdlUsedInfo> usedInfos = new LinkedList<>();
+		Sigar sigar = new Sigar();
+		FileSystem fslist[];
+		try {
+			fslist = sigar.getFileSystemList();
+			MdlUsedInfo usedInfo = null;
+			for (int i = 0; i < fslist.length; i++) {
+				usedInfo = new MdlUsedInfo();
+				FileSystem fs = fslist[i];
+				String pathTemp = fs.getDirName();
+				usedInfo.setPath(pathTemp.substring(0, pathTemp.length()-1));
+				FileSystemUsage usage = sigar.getFileSystemUsage(fs.getDirName());
+				usedInfo.setTotal(usage.getTotal() / 1024);
+				usedInfo.setUsed(usage.getUsed() / 1024);
+				usedInfo.setIdle(usage.getAvail() / 1024);
+				usedInfo.setRate(Integer.valueOf(ComUtil.formatDoubleToIntString(usage.getUsePercent() * 100D)));
+				usedInfos.add(usedInfo);
+			}
+		} catch (SigarException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return usedInfos;
+	}
+	private static List<MdlUsedInfo> getDiskInfoLinux() {
 		List<MdlUsedInfo> usedInfos = new LinkedList<>();
 		try {
 			Runtime rt = Runtime.getRuntime();
@@ -194,7 +221,7 @@ public class SysmonitorController extends BaseController {
 	}
 
 	public static void main(String[] args) {
-		List<MdlUsedInfo> usedInfos = getDiskInfo();
+		List<MdlUsedInfo> usedInfos = getDiskInfoWindows();
 		for (MdlUsedInfo item : usedInfos) {
 			System.out.println(item);
 		}

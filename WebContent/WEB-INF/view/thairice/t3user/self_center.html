@@ -31,11 +31,11 @@
         <div class="col-sm-3 col-md-2 sidebar left_menu">
             <div class="self_info">
              <% if(user.status_=='02'){ %>
-             <div class="ribbon-wrapper"><div class="ribbon" style="background-color:#4CAF50">examination passed</div></div>
+             <div class="ribbon-wrapper"><div class="ribbon" style="background-color:#4CAF50">Approved</div></div>
              <% }else if(user.status_=='01'){ %>
-              <div class="ribbon-wrapper"><div class="ribbon">Unaudited</div></div>
+              <div class="ribbon-wrapper"><div class="ribbon">Unauthorize</div></div>
              <% }else if(user.status_=='03'){ %>
-             <div class="ribbon-wrapper"><div class="ribbon">Audit failed</div></div>
+             <div class="ribbon-wrapper"><div class="ribbon">Refused</div></div>
              <% }%>
                 <p class="self_title text-center">Personal center</p>
                 <dl class="dl-horizontal">
@@ -89,7 +89,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3 control-label" style="width:120px;">Phonenumber</label>
+                            <label class="col-md-3 control-label" style="width:120px;">Mob</label>
                             <div class="col-md-9" style="width:470px;">
                                 <input type="text" class="form-control" name="t3user.phone" value="${user.phone}"
                                        placeholder="+66 08088999999999">
@@ -141,7 +141,7 @@
                         <div style="position: relative;background-color: white;padding: 12px 0px 15px 0px;">
                         <div class="ribbon-wrapper"><div class="ribbon" style="background-color:#838883">Unchange</div></div>
                         <div class="form-group">
-                            <label class="col-md-3 control-label" style="width:120px;">Select area</label>
+                            <label class="col-md-3 control-label" style="width:120px;">Area</label>
                             <div class="col-md-9" style="width:470px;">
                              <div id="city_china_val" style="float: left;">
 					         <p>
@@ -421,7 +421,7 @@ $('#city_china_val').cxSelect({
     $("#file-Portrait1").on("fileuploaded", function (event, data, previewId, index) {
         console.log(JSON.stringify(data));
         if(data.response.code==1){
-            layer.msg('Uploaded successfully');
+            layer.msg('Uploaded successful');
             $('#picImg').attr("src","${cxt!}"+data.response.desc);
         }
     });
@@ -516,11 +516,11 @@ $('#city_china_val').cxSelect({
                        /*长度提示*/
                        min: 6,
                        max: 12,
-                       message: 'Phone  length is 11'
+                       message: 'Phone  length is 10'
                    },
                    regexp: {
-                       regexp: /^1\d{10}$/,
-                       message: 'The Phone format is not correct'
+                       regexp: /^0\d{9}$/,
+                       message: 'Mob number is not correct'
                    }
                }
            }

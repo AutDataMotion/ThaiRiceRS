@@ -66,7 +66,7 @@
                         <th><input type="checkbox" name="cb-check-all">Select all</th>
                         <th>ID</th>
                         <th>Username</th>
-                        <th>Phonenumber</th>
+                        <th>Mob</th>
                         <th>E-mail</th>
                         <th>User permissions</th>
                     </tr>
@@ -96,7 +96,7 @@
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-md-3 control-label" style="width:120px;">Phonenumber</label>
+                        <label class="col-md-3 control-label" style="width:120px;">Mob</label>
                         <div class="col-md-9" style="width:470px;">
                             <input type="text" class="form-control" placeholder="+66 08088999999999" id="phone" name="t3user.phone">
                         </div>
@@ -309,7 +309,7 @@
                 },
                 remote: {//ajax验证。server result:{"valid",true or false}
                     url: '${cxt!}/jf/thairice/t3user/valiMailBox',
-                    message: 'email has already exist!',
+                    message: 'Mailbox already exists please reenter ',
                     delay: 2000,
                     type: 'POST',
                     //自定义参数
