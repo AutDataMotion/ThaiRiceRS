@@ -459,7 +459,7 @@ function initFilesTable()
 //		    			dataSet.push(file);
 		    			app.files_excel.row.add(file).draw();
 		    		}
-		    		$('#fileModal_addbtn').click( function () {
+		    		$('#fileModal_addbtn').unbind('click').click( function () {
 		    			$("#mapDiv_productionConf").busyLoad("show", { text: "LOADING ...",
 				    		textPosition: "top"
 				    	});
@@ -469,15 +469,15 @@ function initFilesTable()
 		    			//将选中的tif文件copy to gpmodels ，备改变波段显示
 		    			copyAreaTifFile2gpWorkspace(app.tifFileName);
 		    			
-		    			var tifFileNamePrefix = app.tifFileName.lastIndexOf('.');
-		    			var tempproductfileName = app.tifFileName.substring(0,tifFileNamePrefix)+"_temp.shp";
-//		    			var workspaceId = "Area";
+//		    			var tifFileNamePrefix = app.tifFileName.lastIndexOf('.');
+//		    			var tempproductfileName = app.tifFileName.substring(0,tifFileNamePrefix)+"_temp.shp";
+//		    			
 		    			
-		    			addRasterLayer(app.tifFileName);
-		    			console.log("fileModal_addbtn---"+tempproductfileName);
+//		    			addRasterLayer(app.tifFileName);
+//		    			console.log("fileModal_addbtn---"+tempproductfileName);
 		    			//在workspace空间中，加载对应日期的中间产品数据，
 		    			//如果空间中有对应的数据，即加载，若无，不会加载成功
-		    			addProductFeatureLayer(areaworkspaceId,tempproductfileName);
+//		    			addProductFeatureLayer(areaworkspaceId,tempproductfileName);
 //		    			
 		    			
 		    			
@@ -500,7 +500,7 @@ function initFilesTable()
 
 }
 function copyAreaTifFile2gpWorkspace(tifFileName){
-	console.log("copyAreaTifFile2gpWorkspace---begin");
+	console.log("copyAreaTifFile2gpWorkspace---begin--"+tifFileName);
 	$.ajax({
 	    url:'/jf/thairice/t1parameter/copyAreaTifFile2gpWorkspace',//获取面积相关的遥感影像 文件列表
 	    type:'POST', //GET
@@ -517,21 +517,28 @@ function copyAreaTifFile2gpWorkspace(tifFileName){
 	    success:function(data,textStatus,jqXHR){
 	    	if(data.flag) {  
 	    		console.log("copyAreaTifFile2gpWorkspace---success");
+	    		
+	    		var tifFileNamePrefix = app.tifFileName.lastIndexOf('.');
+    			var tempproductfileName = app.tifFileName.substring(0,tifFileNamePrefix)+"_temp.shp";
+    			
+    			addRasterLayer(app.tifFileName);
+    			addProductFeatureLayer(areaworkspaceId,tempproductfileName);
             }  
             
 	    },
 	    error:function(xhr,textStatus){
-	        console.log('错误')
+	    	console.log("copyAreaTifFile2gpWorkspace---错误");
 	        console.log(xhr)
 	        console.log(textStatus)
 	    },
 	    complete:function(){
-	        console.log('结束')
+	    	console.log("copyAreaTifFile2gpWorkspace---结束");
 	    }
 	})
 }
 function addRasterLayer(fileName)
 {
+	console.log("addRasterLayer---"+fileName);
 	/************************/
 	if (app.hasOwnProperty("renderLayer") ) {//删除之前的图层
 		 
@@ -572,6 +579,7 @@ function addRasterLayer(fileName)
 //         	app.map.setExtent(layerExt.expand(1));
 //        	getHeight()getWidth()
     		app.map.centerAt(layerExt.getCenter());
+//    		$("#mapDiv_productionConf").busyLoad("hide");
     	});
     	
     });
@@ -581,6 +589,7 @@ function addRasterLayer(fileName)
 function addProductFeatureLayer(workspaceId,fileName)
 {
 //	alert(fileName);
+	console.log("addProductFeatureLayer---"+fileName);
 	if (app.hasOwnProperty("featureLayer") ) {//删除之前的图层
 		 
 		 app.map.removeLayer(app.featureLayer);
