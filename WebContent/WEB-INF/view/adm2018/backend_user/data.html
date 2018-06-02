@@ -134,6 +134,10 @@ table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td
         	allSelect=false;
         }
     })
+    $(function () { $('#addModal').on('hide.bs.modal', function () {
+    	  $("#addForm").bootstrapValidator('resetForm');
+       })
+     });
     //添加或编辑
     function op(op){
         if(op=='add'){
@@ -145,7 +149,7 @@ table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td
             $("#addModal").modal('show');
             
         }else if(op=='edit'){
-            $("#ModalLabel").html("Edit data");
+            $("#ModalLabel").html("Edit operator");
             var data=getRowItem($table,_table);
             if(typeof(data)=='undefined'){return;}
             //设置账户不能修改

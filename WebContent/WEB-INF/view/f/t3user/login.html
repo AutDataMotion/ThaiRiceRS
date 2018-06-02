@@ -163,7 +163,7 @@
             </div>
           </div>
           <div class="form-group">
-            <a type="button"  onclick="doLogin()" class="btn btn-info btn-lg welcome_btn1" role="button">LOG IN</a>
+            <a type="button"  onclick="Login()" class="btn btn-info btn-lg welcome_btn1" role="button">LOG IN</a>
           </div>
           <div class="form-group">
             <p class="line">or</p>
@@ -172,7 +172,7 @@
             <a href="${cxt!}/jf/thairice/t3user/reg" type="button" class="btn btn-primary btn-lg welcome_btn1" role="button">SIGN UP</a>
           </div>
           <div class="form-group">
-            <a class="forget_password" href="${cxt!}/jf/thairice/t3user/forget_pass">Forget password?</a>
+            <a class="forget_password" href="${cxt!}/jf/thairice/t3user/forget_pass">Forget password</a>
           </div>
         </form>
     </div>
@@ -234,7 +234,7 @@
 	        var verify=document.getElementById('autoCode');
 	        verify.setAttribute('src','${cxt!}/jf/platform/authImg?rand='+Math.random());
 	    }
-	    function doLogin() {
+	    function Login() {
 	        var accountVal = $("#account").val();
 	        var passwordVal = $("#password").val();
 	          if (accountVal == null || accountVal.trim() == '') {
@@ -247,7 +247,7 @@
 	        }
 	        var data={account: accountVal,password: hex_md5(passwordVal), authCode:$("#authCode").val()}
 	        showLoading();
-	        sendAjax("${cxt!}/jf/thairice/t3user/doLogin",data,function(res){
+	        sendAjax("${cxt!}/jf/thairice/t3user/Login",data,function(res){
 	        	cancelLoading();
 	            layer.msg(res.desc, {icon: 6});
 	            if(res.code==1){
@@ -263,6 +263,12 @@
 	            }
 	        });
 	    }
+		//键盘事件
+		$('#authCode').bind('keyup', function(event) {
+			if (event.keyCode == "13") {
+				Login();
+			}
+		});
 </script>
 </body>
 </html>

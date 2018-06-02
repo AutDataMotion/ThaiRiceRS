@@ -80,7 +80,7 @@ public class T3userController extends BaseController {
 	 */
 	@Clear
 	@Before(T3userValidator.class)
-	public void doLogin() {
+	public void Login() {
 		boolean authCode = authCode();
 		String account = null;
 		Result res;
@@ -91,12 +91,12 @@ public class T3userController extends BaseController {
 		} else {
 			res = new Result(0, "Verification code is error, please re-enter");
 		}
-		if(res.getCode()==1) {
+	/*	if(res.getCode()==1) {
 		    T3user user = getSessionAttr("user");
 		    T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), account, "Log in", res.toString());  
 		}else {
 		    T2syslogService.addLog(EnumT2sysLog.INFO, BigInteger.ONE , account, "Log in", res.toString());  
-		}
+		}*/
 		renderJson(res);
 	}
 
@@ -104,7 +104,10 @@ public class T3userController extends BaseController {
 	public void reg() {
 		renderWithPath(pthv + "reg.html");
 	}
-
+	@Clear
+	public void privacy() {
+	    renderWithPath(pthv + "privacy.html");
+	}
 	/**
 	 * 注册操作
 	 */
@@ -210,9 +213,13 @@ public class T3userController extends BaseController {
 		Page page  = T10pdt_report.dao.paginate(getParaToInt(0, 1), 10, "select *", "from T10pdt_report order by id asc");
 		setAttr("blogPage",page );
 		setAttr("province", ad[0]);
+		T3user info=srv.SelectById(user.getBigInteger("id"));
+		if(TimeUtil.isLaterThanNow(info.getPD_ExDat().toString())) {
+		    info.setStatus_("04");    
+		}
 		setAttr("city", ad[1]);
 		setAttr("area", ad[2]);
-		setAttr("user", srv.SelectById(user.getBigInteger("id")));
+		setAttr("user", info);
 		renderWithPath(pthv + "self_center.html");
 	}
 
@@ -342,7 +349,10 @@ public class T3userController extends BaseController {
 		// 创建授权码
 		String authCode = codeService.createAuthCode(t3user.getBigInteger("id"), 0, 3600);
 		boolean success = Mail.sendEmail(getParaToInt("type", 0) == 0 ? "Thailand agricultural remote sensing monitoring platform password assistance" : "change Password",
-				"To verify your identity, please use the following code:\n\n" + authCode+"\n\nWe hope to see you again soon.", getPara("email"), Mail.MODE_TEXT);
+				"Hi,\n\nAre you trying to sign in?\nIf so, use this code to finish signing in.\n" + authCode+
+				 "\n\nDidn't sign in recently?\r\n" + 
+				 "\r\n" + 
+				 "If this wasn't you, someone entered your email address by mistake so you can disregard this email.\n\n\nThanks.", getPara("email"), Mail.MODE_TEXT);
 		if (success) {
 			renderJson(new Result(1, "For your security, we need to verify your identity. We've sent a code to the email.Please enter it below."));
 		} else {

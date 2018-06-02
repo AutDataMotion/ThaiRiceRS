@@ -81,6 +81,7 @@ public class T1parameterController extends BaseController {
 		//
 		Page page = T1parameter.dao.paginate(getParaToInt(0, 1), 10, "select *", "from t1parameter order by id asc");
 		setAttr("blogPage", page);
+		setAttr("queryAllParm", "active");
 		renderWithPath("/adm2018/production_configuration.html");
 	}
 	
@@ -90,6 +91,7 @@ public class T1parameterController extends BaseController {
 	public void queryAllParm() {
 		Page page = T1parameter.dao.paginate(getParaToInt(0, 1), 1000, "select *", "from t1parameter order by id asc");
 		setAttr("blogPage", page);
+		setAttr("queryAllParm", "active");
 		renderWithPath("/adm2018/production_configuration.html");
 	}
 
@@ -274,6 +276,7 @@ public class T1parameterController extends BaseController {
 		
 		//t1parameter.save();		//guiid
 		t1parameter.saveGenIntId();	//serial int id
+		setAttr("queryAllParm", "active");
 		renderWithPath(pthv+"add.html");
 	}
 	
@@ -284,6 +287,7 @@ public class T1parameterController extends BaseController {
 		//T1parameter t1parameter = T1parameter.dao.findById(getPara());	//guuid
 		T1parameter t1parameter = T1parameterService.service.SelectById(getParaToInt());		//serial int id
 		setAttr("t1parameter", t1parameter);
+		setAttr("queryAllParm", "active");
 		renderWithPath(pthv+"update.html");
 
 	}
@@ -304,6 +308,7 @@ public class T1parameterController extends BaseController {
 		//T1parameter t1parameter = T1parameter.dao.findById(getPara());	//guuid
 		T1parameter t1parameter = T1parameterService.service.SelectById(getParaToInt());		//serial int id
 		setAttr("t1parameter", t1parameter);
+		setAttr("queryAllParm", "active");
 		renderWithPath(pthv+"view.html");
 	}
 	

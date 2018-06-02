@@ -4,7 +4,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width,initial-scale-1">
-    <title>my message</title>
+    <title>我的消息</title>
     <link type="text/css" rel="stylesheet" href="${cxt!}/ui/thairice/CSS/base.css">
     <link type="text/css" rel="stylesheet" href="${cxt!}/ui/thairice/bootstrap-3.3.7-dist/css/bootstrap.min.css">
     <link href="${cxt!}/ui/thairice/CSS/dataTables.bootstrap4.css" rel="stylesheet">
@@ -42,12 +42,12 @@
             <table class="table table-bordered data-table" id="dataTable01" align="center" cellpadding="0" cellspacing="0">
                 <thead>
                 <tr>
-                    <th style="border-bottom:none;width:100px;text-align:left;"><input type="checkbox" name="cb-check-all">Select all</th>
-                    <th style="border-bottom:none;text-align:center;">Mail type</th>
+                    <th width="6%" style="border-bottom:none;text-align:left;"><input type="checkbox" name="cb-check-all">Select all</th>
+                    <th width="8%" style="border-bottom:none;text-align:center;">Mail type</th>
                     <th style="border-bottom:none;text-align:center;">Mail content</th>
-                    <th style="border-bottom:none;text-align:center;">Status</th>
-                    <th style="border-bottom:none;text-align:center;">Time</th>
-                    <th style="border-bottom:none;text-align:center;">View</th>
+                    <th width="6%" style="border-bottom:none;text-align:center;">Status</th>
+                    <th width="10%" style="border-bottom:none;text-align:center;">Time</th>
+                    <th width="6%" style="border-bottom:none;text-align:center;">View</th>
                 </tr>
                 </thead>
             </table>
@@ -80,7 +80,7 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-default" type="button" data-dismiss="modal">cancel</button>
+                <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -140,6 +140,9 @@ $("#navbar_user").addClass("active");
                 showMessage(res.desc);
                 if(res.code==1){
                     _table.draw();
+                    sendAjax("${cxt!}/jf/thairice/t3user/refresh",null,function(res){
+               		 $('#count').html(res.count);
+               	 });
                 }
             })
             layer.close(index);

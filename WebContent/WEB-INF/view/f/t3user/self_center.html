@@ -36,6 +36,8 @@
               <div class="ribbon-wrapper"><div class="ribbon">Unauthorized</div></div>
              <% }else if(user.status_=='03'){ %>
              <div class="ribbon-wrapper"><div class="ribbon">Refused</div></div>
+             <% }else if(user.status_=='04'){ %>
+             <div class="ribbon-wrapper"><div class="ribbon" style="background-color:#4CAF50">Expired</div></div>
              <% }%>
                 <p class="self_title text-center">User Profile</p>
                 <dl class="dl-horizontal">
@@ -76,9 +78,7 @@
             <div class="self_tablist">
                 <ul class="nav nav-pills" id="myTabs">
                     <li id="personInfotab" class="active"><a href="#tab_one" data-toggle="tab">Personal information</a></li>
-                    <li id="myreporttab" ><a href="#tab_two"
-							data-toggle="tab">My
-								report</a></li>
+                    <li id="myreporttab" ><a href="#tab_two" data-toggle="tab">My report</a></li>
                 </ul>
             </div>
             <div class="tab-content">
@@ -175,6 +175,9 @@
                             <label class="col-sm-2 control-label" style="width:120px;">Service Term</label>
                             <div class="col-sm-10" style="width:540px;">
                                 <div class="col-sm-4">
+                                	<!--  <div class="col-sm-1" style="text-align:center;">
+	                                    <label class="control-label">From</label>
+	                                </div>-->
                                     <div class="input-group date" style="width:151px;">
                                         <input type="text" id='starttime1' class="form-control" name="Prdt_EfDt"
                                                value="${user.Prdt_EfDt}" disabled>
@@ -183,7 +186,7 @@
                                     </div>
                                 </div>
                                 <div class="col-sm-1" style="text-align:center;">
-                                    <label class="control-label">to</label>
+                                    <label class="control-label">To</label>
                                 </div>
                                 <div class="col-sm-4">
                                     <div class="input-group date" style="width:151px;">
@@ -318,7 +321,7 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">New password</label>
                         <div class="col-sm-9">
-                            <input type="password"  name="pwd" class="form-control"  placeholder="The new passward is made up of 6 to 12 letters and numbers">
+                            <input type="password"  name="pwd" class="form-control"  placeholder="The passwords must contain at least 2 kinds of letters, numbers and symbols">
                         </div>
                     </div>
                     <div class="form-group">
@@ -397,9 +400,9 @@ $("#navbar_user").addClass("active");
     })
     //发送邮箱授权码
    $('#send_email').click(function () {
-	   sendAjax("${cxt!}/jf/thairice/t3user/send_code",{email:$("#email").val()},function(res){
+	    sendAjax("${cxt!}/jf/thairice/t3user/send_code",{email:$("#email").val()},function(res){
            showMessage(res.desc);
-	   });    
+	   });     
     })
     //修改密码
     $('#pass_btn').click(function () {
@@ -485,11 +488,11 @@ $("#navbar_user").addClass("active");
             'pwd': {
                 validators: {
                     notEmpty: {
-                        message: 'The pwd is  required and can\'t be empty '
+                        message: 'The password is required and can\'t be empty '
                     },
                     regexp: {
-                    	regexp: /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,12}$/,
-                        message: 'The password is made up of 6 to 12 letters and Numbers'
+                    	regexp: /^(?![\d]+$)(?![a-zA-Z]+$)(?![^\da-zA-Z]+$).{6,20}$/,
+                        message: 'The passwords must contain at least 2 kinds of letters, numbers and symbols and the length is 6-20 characters'
                     }
                 }
             },
@@ -497,7 +500,7 @@ $("#navbar_user").addClass("active");
                 message: 'Password is invalid',
                 validators: {
                     notEmpty: {
-                        message: 'Password is  required and can\'t be empty'
+                        message: 'The password is required and can\'t be empty'
                     },
                     identical: {//相同
                         field: 'pwd',
@@ -509,7 +512,7 @@ $("#navbar_user").addClass("active");
                 message: 'Password is invalid',
                 validators: {
                     notEmpty: {
-                        message: 'Verification code is  required and can\'t be empty'
+                        message: 'Verification code is required and can\'t be empty'
                     }
                 }
             }
@@ -528,7 +531,7 @@ $("#navbar_user").addClass("active");
            't3user.phone': {
                validators: {
                    notEmpty: {
-                       message: 'Phone is  required and can\'t be empty'
+                       message: 'Phone is required and can\'t be empty'
                    },
                    stringLength: {
                        /*长度提示*/

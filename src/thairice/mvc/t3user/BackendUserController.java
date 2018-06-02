@@ -43,7 +43,7 @@ public class BackendUserController extends BaseController {
 	 */
 	@Clear
 	@Before(T3userValidator.class)
-	public void doLogin() {
+	public void Login() {
 		boolean authCode = authCode();
 		if (!authCode) {
 			renderJson(new Result(0, "Verification code is not correct"));
@@ -60,7 +60,7 @@ public class BackendUserController extends BaseController {
 			setSessionAttr("admin", user);
 			renderJson(new Result(1, "Login successful"));
 		} else {
-			renderJson(new Result(0, "Wrong password"));
+			renderJson(new Result(0, "Invalid password. Please try again"));
 		}
 	}
 
@@ -74,19 +74,23 @@ public class BackendUserController extends BaseController {
 	public void main() {
 		T3user u = getSessionAttr("admin");
 		if (u.getType_().equals("03")) {
+		        setAttr("data", "active");
 			renderWithPath(pthv + "data.html");
 		} else {
+		        setAttr("user_management", "active");
 			renderWithPath(pthv + "user_management.html");
 		}
 	}
 
 	// 用户管理界面
 	public void user_management() {
+	        setAttr("user_management", "active");
 		renderWithPath(pthv + "user_management.html");
 	}
 
 	// 管理员信息界面
 	public void data_selfinfo() {
+	        setAttr("profile", "active");
 		T3user u = getSessionAttr("admin");
 		setAttr("admin", service.SelectById(u.getBigInteger("id")));
 		renderWithPath(pthv + "data_selfinfo.html");

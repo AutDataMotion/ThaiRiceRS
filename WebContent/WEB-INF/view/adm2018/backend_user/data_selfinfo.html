@@ -208,7 +208,7 @@
 						<label class="col-sm-3 control-label">New password</label>
 						<div class="col-sm-9">
 							<input type="password" name="pwd" class="form-control"
-								placeholder="The new passward is made up of 6 to 12 letters and numbers">
+								placeholder="The passwords must contain at least 2 kinds of letters, numbers and symbols">
 						</div>
 					</div>
 					<div class="form-group">
@@ -225,7 +225,7 @@
 							<div class="input-group">
 								<input type="email" class="form-control"
 									placeholder="your E-mai like someone@exmaple.com" name="email"
-									id="eemail" value="${admin.email}" readonly> <span
+									id="email" value="${admin.email}" readonly> <span
 									class="input-group-addon" id="send_email"
 									style="background-color: #5cb85c; color: #fff; background-color: #5cb85c; cursor: pointer;">Send
 									authorization code</span>
@@ -252,11 +252,9 @@
 </div>
 <% }; %> <% var jsSec={ %>
 <script src="${cxt!}/ui/thairice/JS/bootstrap-imginput.js"></script>
-<script
-	src="${cxt!}/ui/thairice/bootstrap-fileinput-master/js/fileinput.min.js"></script>
+<script src="${cxt!}/ui/thairice/bootstrap-fileinput-master/js/fileinput.min.js"></script>
 <script src="${cxt!}/ui/thairice/JS/bootstrapValidator.js"></script>
-<script type="text/javascript"
-	src="${cxt!}/ui/thairice/JS/layer/layer.js"></script>
+<script type="text/javascript" src="${cxt!}/ui/thairice/JS/layer/layer.js"></script>
 <script src="${cxt!}/ui/thairice/common.js"></script>
 <script>
 	//修改个人信息
@@ -274,11 +272,9 @@
 			})
 	//发送邮箱授权码
 	$('#send_email').click(function() {
-		sendAjax("${cxt!}/jf/thairice/t3user/send_code", {
-			email : $("#email").val()
-		}, function(res) {
+		    sendAjax("${cxt!}/jf/thairice/t3user/send_code", {email : $("#email").val()}, function(res) {
 			showMessage(res.desc);
-		});
+		}); 
 	})
 	//修改密码
 	$('#pass_btn')
@@ -349,11 +345,11 @@
 							'pwd' : {
 								validators : {
 									notEmpty : {
-										message : 'The pwd is  required and can\'t be empty '
+										message : 'The password is required and can\'t be empty '
 									},
 									regexp : {
-										regexp : /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,12}$/,
-										message : 'The pwd is made up of 6 to 12 letters and Numbers'
+										regexp : /^(?![\d]+$)(?![a-zA-Z]+$)(?![^\da-zA-Z]+$).{6,20}$/,
+										message : 'The passwords must contain at least 2 kinds of letters, numbers and symbols and the length is 6-20 characters'
 									}
 								}
 							},

@@ -9,11 +9,15 @@ $(function () {
         locale: moment.locale('zh-cn')
     });
     $('.btn_selfinfo').click(function () {
-        $("#fm").bootstrapValidator('validate');
-        if ($("#fm").data('bootstrapValidator').isValid()) {
+        //$("#fm").bootstrapValidator('validate');
+        //if ($("#fm").data('bootstrapValidator').isValid()) {
             $('.form_selfinfo').hide();
             $('.form_serviceinfo').show();
-        }
+       // }
+    });
+    $('#previous').click(function () {
+    	 $('.form_selfinfo').show();
+         $('.form_serviceinfo').hide();
     });
     //$('#multiple_select').multiselect();
     $("#fm").bootstrapValidator({
@@ -52,11 +56,11 @@ $(function () {
             't3user.pwd': {
                 validators: {
                     notEmpty: {
-                        message: 'The pwd is  required and can\'t be empty '
+                        message: 'The pwd is required and can\'t be empty '
                     },
                     regexp: {
-                    	regexp: /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,12}$/,
-                        message: 'The password is made up of 6 to 12 letters and Numbers'
+                    	regexp: /^(?![\d]+$)(?![a-zA-Z]+$)(?![^\da-zA-Z]+$).{6,20}$/,
+                        message: 'The passwords must contain at least 2 kinds of letters, numbers and symbols and the length is 6-20 characters'
                     }
                 }
             },
@@ -64,7 +68,7 @@ $(function () {
                 message: 'The password is invalid',
                 validators: {
                     notEmpty: {
-                        message: 'The password is  required and can\'t be empty'
+                        message: 'The password is required and can\'t be empty'
                     },
                     identical: {//相同
                         field: 't3user.pwd',
@@ -75,7 +79,7 @@ $(function () {
             't3user.phone': {
                 validators: {
                     notEmpty: {
-                        message: 'Mob is  required and can\'t be empty'
+                        message: 'Mob is required and can\'t be empty'
                     },                    
                     regexp: {
                         regexp: /^0\d{9}$/,
@@ -155,6 +159,10 @@ function submitForm() {
     $("#fm").bootstrapValidator('validate');
     if(!$("#fm").data('bootstrapValidator').isValid()){
         return;
+    }
+    if(!$("#agree").is(":checked")){
+    	showMessage('Please agree with the terms of service first');
+    	return;
     }
     var psd = hex_md5($('#pwd').val());
     $('#pwd').val(psd);
