@@ -44,6 +44,7 @@ public class T6org_dataController extends BaseController {
 	public void index() {
 		String flag  = "";// 1原始数据查询 2'面积'产品数据查询,3'长势'产品数据查询,4'估产'产品数据查询,5'分割'产品数据查询   9失败
 		try{
+		        setAttr("t6org_data", "active"); 
 			setAttr("path", "/ui/thairice/");
 			// 处理结果
 			ResultEntity res = null;

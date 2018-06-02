@@ -5,16 +5,14 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width,initial-scale-1">
 <title>注册</title>
-<link type="text/css" rel="stylesheet"
-	href="${cxt!}/ui/thairice/CSS/base.css">
-<link type="text/css" rel="stylesheet"
-	href="${cxt!}/ui/thairice/bootstrap-3.3.7-dist/css/bootstrap.min.css">
-<link type="text/css" rel="stylesheet"
-	href="${cxt!}/ui/thairice/datetime-picker/bootstrap-datetimepicker.min.css">
-<link type="text/css" rel="stylesheet"
-	href="${cxt!}/ui/thairice/CSS/register.css">
-<link type="text/css" rel="stylesheet"
-	href="${cxt!}/ui/thairice/CSS/bootstrapValidator.css">
+<link type="text/css" rel="stylesheet" href="${cxt!}/ui/thairice/CSS/base.css">
+<link type="text/css" rel="stylesheet" href="${cxt!}/ui/thairice/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+<link type="text/css" rel="stylesheet" href="${cxt!}/ui/thairice/datetime-picker/bootstrap-datetimepicker.min.css">
+<link type="text/css" rel="stylesheet" href="${cxt!}/ui/thairice/CSS/register.css">
+<link type="text/css" rel="stylesheet" href="${cxt!}/ui/thairice/CSS/bootstrapValidator.css">
+<style type="text/css">
+.fw{margin-top: 20px;}
+</style>
 </head>
 
 <body
@@ -27,8 +25,8 @@
 					style="width: 829px; margin: 0 auto;" method="post">
 					<div class="form_selfinfo">
 						<p class="title">Create an Account</p>
-						<div class="form-group">
-							<label class="col-sm-2 control-label">* Account</label>
+					<div class="form-group">
+						<label class="col-sm-2 control-label">* Account</label>
 							<div class="col-sm-8">
 								<input type="text" class="form-control"
 									placeholder="The account is made up of 6 to 12 letters and Numbers"
@@ -39,7 +37,7 @@
 							<label class="col-sm-2 control-label">* Password</label>
 							<div class="col-sm-8">
 								<input type="password" class="form-control"
-									placeholder="The passward is made up of 6 to 12 letters and Numbers"
+									placeholder="The passwords must contain at least 2 kinds of letters, numbers and symbols"
 									id="pwd" name="t3user.pwd">
 							</div>
 						</div>
@@ -104,7 +102,7 @@
 						<div class="form-group" style="margin-top: 25px;">
 							<p>
 								<button type="button"
-									class="btn btn-primary btn-lg btn_selfinfo">Next step >></button>
+								class="btn btn-primary btn-lg btn_selfinfo">Next step >></button> 
 							</p>
 						</div>
 					</div>
@@ -155,12 +153,15 @@
 								</div>
 							</div>
 						</div>
+						
 						<div class="form-group" style="margin: 35px 0 0;">
 							<p>
+							    <button type="button"  class="btn btn-primary btn-lg" id="previous" style="margin-right: 50px;" >Previous step</button>
 								<button type="button" class="btn btn-primary btn-lg"
 									onclick="submitForm()">Create Account</button>
 							</p>
 						</div>
+						<div class="fw"> <input type="checkbox" id="agree" checked="checked">&nbsp&nbsp<a onclick="privacy()">I have read and agree to the relevant terms of service and privacy policy.</a></div>
 						<div class="form-group">
 							<p class="account_in">
 								Already have an account? <a href="${cxt!}/jf/thairice/t3user/login?returnUrl=/jf/thairice/t3user/exit#page4">Sign
@@ -181,13 +182,25 @@
 	<script src="${cxt!}/ui/thairice/JS/bootstrapValidator.js"></script>
 	<script type="text/javascript" src="${cxt!}/ui/thairice/JS/layer/layer.js"></script>
 	<script type="text/javascript" src="${cxt!}/ui/thairice/JS/md5.js"></script>
-	<script src="${cxt!}/ui/thairice/area/jquery.cxselect.min.js"></script>
 	<script src="${cxt!}/ui/thairice/JS/index.js"></script>
 	<script src="${cxt!}/ui/thairice/area-select/Area.js"></script>
 	<script src="${cxt!}/ui/thairice/area-select/AreaData_min.js"></script>
 	<script src="${cxt!}/ui/thairice/common.js"></script>
 	<script type="text/javascript">
 	initComplexArea('seachprov', 'seachcity', 'seachdistrict', area_array, sub_array, '44','0','0');  
+	
+	function privacy(){
+		layer.open({
+			type : 2,
+			title : 'User agreements',
+			shadeClose : true,
+			maxmin : true, // 开启最大化最小化按钮
+			shade : 0.8,
+			area : [ '65%', '95%' ],
+			content : '${cxt!}/jf/thairice/t3user/privacy'
+		});
+	}
+	
 	</script>
 </body>
 </html>

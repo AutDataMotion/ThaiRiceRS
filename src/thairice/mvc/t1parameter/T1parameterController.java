@@ -76,6 +76,7 @@ public class T1parameterController extends BaseController {
 	public void queryAllParm() {
 		Page page = T1parameter.dao.paginate(getParaToInt(0, 1), 1000, "select *", "from t1parameter order by id asc");
 		setAttr("blogPage", page);
+		setAttr("queryAllParm", "active");
 		renderWithPath("/adm2018/production_configuration.html");
 	}
 

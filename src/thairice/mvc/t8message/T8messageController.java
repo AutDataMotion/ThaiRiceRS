@@ -34,6 +34,7 @@ public class T8messageController extends BaseController {
      * 列表
      */
     public void index() {
+	setAttr("message", "active");
 	renderWithPath(pthv + "data_message.html");
     }
 

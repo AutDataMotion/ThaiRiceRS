@@ -74,6 +74,7 @@ public class SysmonitorController extends BaseController {
 		// 获取cpu、内存 定时刷新
 		// 磁盘信息 主动触发
 		setAttr("groupCpu", groupCpu);
+		setAttr("sysmonitor", "active");
 		List<MdlUsedInfo> diskInfos = getDiskInfoWindows();
 		int cntDiskGroup = Math.max(1, diskInfos.size() / 4);
 		setAttr("diskInfoList", diskInfos);

@@ -37,7 +37,7 @@ public class T3userValidator extends Validator {
 
         }
         //前台用户登录
-        if (actionKey.equals(T3userController.pthc + "doLogin")) {
+        if (actionKey.equals(T3userController.pthc + "Login")) {
         	if(StrKit.isBlank(c.getPara("account"))){
         		addError("desc", "Please enter your account!");
         	}
@@ -49,7 +49,7 @@ public class T3userValidator extends Validator {
         	}
         }
         //后台用户登录
-        if (actionKey.equals(BackendUserController.pthc + "doLogin")) {
+        if (actionKey.equals(BackendUserController.pthc + "Login")) {
     	if(StrKit.isBlank(c.getPara("account"))){
     		addError("desc", "Please enter your account!");
     	}
@@ -65,7 +65,7 @@ public class T3userValidator extends Validator {
         //用户注册
         if (actionKey.equals(T3userController.pthc + "doReg")) {
         	if(TimeUtil.dateDiff(c.getPara("Prdt_EfDt",TimeUtil.getNow()), c.getPara("PD_ExDat"), "yyyy-MM-dd", "d")<=0){
-        		addError("errorMsg", "The service expiration time cannot be less than the start time!");
+        		addError("desc", "The service expiration time cannot be less than the start time!");
         	}
         }
         //找回密码或修改密码
