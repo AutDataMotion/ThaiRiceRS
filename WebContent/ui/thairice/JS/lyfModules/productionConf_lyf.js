@@ -1,12 +1,17 @@
 /**
  * 
  */
+var DEBUG = true;
+
 var app = {};
 var rasterLayerUrl = "http://localhost:6080/arcgis/rest/services/tai_wgs84/MapServer";
 var featureLayerUrl = "http://localhost:6080/arcgis/rest/services/tai_wgs84/MapServer";
 var rasterLayerWorkspace = "areatif";
+//var tempProductfileName = "tempProduct.shp";
+var areaworkspaceId = "Area";
 var eraseUrl = "http://localhost:6080/arcgis/rest/services/erase/GPServer/erase";
 var mergeUrl = "http://localhost:6080/arcgis/rest/services/merge/GPServer/merge";
+var arearasterbandsextractUrl = "http://localhost:6080/arcgis/rest/services/arearasterbandsextract/GPServer/arearasterbandsextract";
 //var merge_gpserver_workspace = "C:/arcgisserver/directories/arcgisjobs/merge_gpserver/";
 //var erase_gpserver_workspace = "C:/arcgisserver/directories/arcgisjobs/erase_gpserver/";
 function init_productionConf_Monitoring()
@@ -24,6 +29,7 @@ function init_productionConf_Monitoring()
             { title: "District" }
         ]
     });
+	//高亮显示选中的文件列表的行
 	 $('#files_excel tbody').on( 'click', 'tr', function () {
 	        if ( $(this).hasClass('selected') ) {
 	            $(this).removeClass('selected');
@@ -33,7 +39,7 @@ function init_productionConf_Monitoring()
 	            $(this).addClass('selected');
 	        }
 	    } );
-	/******************************************/
+	/************设置样本表格参数***************/
 	app.sample_excel = $('#sample_excel').DataTable( {
 		"searching": false,
 		"paging":   false,
@@ -53,7 +59,9 @@ function init_productionConf_Monitoring()
         ] ).draw( false );
  
     } );
-	
+	$('#rgbChange').on( 'click', function () {
+		areaRasterbandsExtract();
+    } );
 	require(["esri/map",
 		"esri/dijit/Scalebar",
 		"esri/undoManager",
@@ -177,6 +185,43 @@ function getLayerSource(workspaceId,dataSourceName)
 	
 	return layerSource;
 }
+/*
+function generateFeatureLayer(layerSource,fileName)
+{
+	require(["esri/layers/FeatureLayer","esri/layers/ArcGISDynamicMapServiceLayer",
+		"esri/layers/DynamicLayerInfo","esri/layers/LayerDataSource",
+	      "esri/layers/LayerDrawingOptions","esri/symbols/SimpleFillSymbol", 
+	      "esri/renderers/SimpleRenderer","esri/Color"], function(FeatureLayer,ArcGISDynamicMapServiceLayer,
+	    	DynamicLayerInfo,LayerDataSource,LayerDrawingOptions,SimpleFillSymbol,SimpleRenderer,Color) { 
+		
+		var featurelayer = new ArcGISDynamicMapServiceLayer(featureLayerUrl, {
+	        //"id": "yield"
+	    	"id": "areaproduct"
+	     });
+	    var dynamicLayerInfo = new DynamicLayerInfo();
+        dynamicLayerInfo.id = 0;
+        //dynamicLayerInfo.name = "72_Yield_2017_193.shp";
+        dynamicLayerInfo.name = fileName;
+        
+        dynamicLayerInfo.source = layerSource;
+        dynamicLayerInfos.push(dynamicLayerInfo);
+        
+        featurelayer.setDynamicLayerInfos(dynamicLayerInfos, true);
+        
+        var drawingOptions = new LayerDrawingOptions();
+		
+		var renderer = new SimpleRenderer(
+		          new SimpleFillSymbol("solid", null, new Color([255, 128, 0, 1]) // fuschia lakes!
+		));
+		drawingOptions.renderer = renderer;
+	          
+        var options = [];
+        options[0] = drawingOptions;
+
+        featurelayer.setLayerDrawingOptions(options);
+	});
+}
+*/
 function startDraw_sample(tr)
 {
 	app.DrawSample = true;//draw sample;
@@ -199,10 +244,63 @@ function saveDraw_sample(tr)
 	}
 	else{
 		var fileName = sampleName+".shp";
-		var filePath = "E:/arcgisserver_shp_workspace/AreaSample/2018-05-11_72/samle/"
+		saveDraw(fileName);
+//		var filePath = "E:/arcgisserver_shp_workspace/AreaSample/2018-05-11_72/samle/";
 //		var graphicArray = app.graphicsLayer.graphics;
-		saveDraw(fileName,filePath);
+//		saveDraw(fileName,filePath);
 		
+	}
+	
+}
+//生成中间的产品数据
+function generateTempProduct()
+{
+//	alert(app.tifFileName);
+	console.log("generateTempProduct---begin");
+	if(app.tifFileName)
+	{
+		$.ajax({
+		    url:'/jf/thairice/t1parameter/generateTempProduct',
+		    type:'POST', //GET
+		    async:true,    //或false,是否异步
+//		    data:{
+//		    	fileName:fileName,
+//		    	filePath:filePath,
+//		    	geoJsonStr:JSON.stringify(geoJson)//统计数据
+//		    },
+		    data:{
+		    	tifFileName:app.tifFileName,
+		    },
+		    timeout:5000,    //超时时间
+		    dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+		    beforeSend:function(xhr){
+		        //console.log(xhr)
+		        console.log('发送前')
+		    },
+		    success:function(data,textStatus,jqXHR){
+		    	console.log(data);
+		    	if(data["status"]=="success")
+		    	{
+//		    		alert("save success!")
+		    		console.log("generateTempProduct---success");
+		    		var productfileName = data["filename"];
+	    			var workspaceId = areaworkspaceId;
+	    			addProductFeatureLayer(workspaceId,productfileName);
+		    	}
+		    	else
+	    		{
+		    		console.log("generateTempProduct---faliure");
+	    		}
+		    },
+		    error:function(xhr,textStatus){
+		        console.log('错误')
+		        console.log(xhr)
+		        console.log(textStatus)
+		    },
+		    complete:function(){
+		        console.log('结束')
+		    }
+		})
 	}
 	
 }
@@ -216,8 +314,11 @@ function deleteDraw_sample(tr)
 	app.graphicsLayer.clear();
 	
 }
-function saveDraw(fileName,filePath)//save graphics to server
+function saveDraw(fileName)//save graphics to server
 {
+	$("#mapDiv_productionConf").busyLoad("show", { text: "LOADING ...",
+		textPosition: "top"
+	});
 	console.log("saveDraw---begin");
 	require(["esri/SpatialReference",
 		"esri/geometry/projection",
@@ -257,15 +358,19 @@ function saveDraw(fileName,filePath)//save graphics to server
 				}
 			  
 			});
-//		  console.log(geoJson);
-//		  alert(JSON.stringify(geoJson));
-		  $.ajax({
+		  	$.ajax({
 			    url:'/jf/thairice/t1parameter/generateShpfileByGeoJson',
 			    type:'POST', //GET
 			    async:true,    //或false,是否异步
+//			    data:{
+//			    	fileName:fileName,
+//			    	filePath:filePath,
+//			    	geoJsonStr:JSON.stringify(geoJson)//统计数据
+//			    },
 			    data:{
+			    	tifFileName:app.tifFileName,
+			    	drawSample:app.DrawSample,
 			    	fileName:fileName,
-			    	filePath:filePath,
 			    	geoJsonStr:JSON.stringify(geoJson)//统计数据
 			    },
 			    timeout:5000,    //超时时间
@@ -292,10 +397,10 @@ function saveDraw(fileName,filePath)//save graphics to server
 			    		else{
 			    			///////编辑productLayer add 添加
 			    			//////merge_gpserver
-			    			/////step 1 生成 sample 还需要执行
+			    			/////step 1 生成 add.shp 还需要执行
 			    			////step 2 执行地理处理
 			    			//////todo 
-			    			doGeoprocessor();
+//			    			doGeoprocessor();
 			    		}
 			    		
 		    		
@@ -308,11 +413,13 @@ function saveDraw(fileName,filePath)//save graphics to server
 		    		}
 			    },
 			    error:function(xhr,textStatus){
+			    	$("#mapDiv_productionConf").busyLoad("hide");
 			        console.log('错误')
 			        console.log(xhr)
 			        console.log(textStatus)
 			    },
 			    complete:function(){
+			    	$("#mapDiv_productionConf").busyLoad("hide");
 			        console.log('结束')
 			    }
 			})
@@ -333,6 +440,9 @@ function initFilesTable()
 		    beforeSend:function(xhr){
 		        //console.log(xhr)
 		        console.log('发送前')
+		        $("#mapDiv_productionConf").busyLoad("show", { text: "LOADING ...",
+		    		textPosition: "top"
+		    	});
 		    },
 		    success:function(data,textStatus,jqXHR){
 //		    	alert("ok");
@@ -350,13 +460,27 @@ function initFilesTable()
 		    			app.files_excel.row.add(file).draw();
 		    		}
 		    		$('#fileModal_addbtn').click( function () {
+		    			$("#mapDiv_productionConf").busyLoad("show", { text: "LOADING ...",
+				    		textPosition: "top"
+				    	});
 //		    			console.log(app.files_excel.row('.selected').data());
-		    			var productfileName = "2018-05-05_72_1.shp";
-		    			var workspaceId = "Area";
-		    			addProductFeatureLayer(workspaceId,productfileName);
+		    			//加载遥感影像的同时加载与影像关联的临时中间产品数据
+		    			app.tifFileName = app.files_excel.row('.selected').data()[0];
+		    			//将选中的tif文件copy to gpmodels ，备改变波段显示
+		    			copyAreaTifFile2gpWorkspace(app.tifFileName);
+		    			
+		    			var tifFileNamePrefix = app.tifFileName.lastIndexOf('.');
+		    			var tempproductfileName = app.tifFileName.substring(0,tifFileNamePrefix)+"_temp.shp";
+//		    			var workspaceId = "Area";
+		    			
+		    			addRasterLayer(app.tifFileName);
+		    			console.log("fileModal_addbtn---"+tempproductfileName);
+		    			//在workspace空间中，加载对应日期的中间产品数据，
+		    			//如果空间中有对应的数据，即加载，若无，不会加载成功
+		    			addProductFeatureLayer(areaworkspaceId,tempproductfileName);
 //		    			
-		    			var fileName = app.files_excel.row('.selected').data()[0];
-		    			addRasterLayer(fileName);
+		    			
+		    			
 		    	    } );
 		    		
 	            }  
@@ -366,12 +490,45 @@ function initFilesTable()
 		        console.log('错误')
 		        console.log(xhr)
 		        console.log(textStatus)
+		        $("#mapDiv_productionConf").busyLoad("hide");
 		    },
 		    complete:function(){
 		        console.log('结束')
+		        $("#mapDiv_productionConf").busyLoad("hide");
 		    }
 		})
 
+}
+function copyAreaTifFile2gpWorkspace(tifFileName){
+	console.log("copyAreaTifFile2gpWorkspace---begin");
+	$.ajax({
+	    url:'/jf/thairice/t1parameter/copyAreaTifFile2gpWorkspace',//获取面积相关的遥感影像 文件列表
+	    type:'POST', //GET
+	    async:true,    //或false,是否异步
+	    data:{
+	    	tifFileName:tifFileName
+	    },
+	    timeout:5000,    //超时时间
+	    dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+	    beforeSend:function(xhr){
+	        //console.log(xhr)
+	        console.log('发送前')
+	    },
+	    success:function(data,textStatus,jqXHR){
+	    	if(data.flag) {  
+	    		console.log("copyAreaTifFile2gpWorkspace---success");
+            }  
+            
+	    },
+	    error:function(xhr,textStatus){
+	        console.log('错误')
+	        console.log(xhr)
+	        console.log(textStatus)
+	    },
+	    complete:function(){
+	        console.log('结束')
+	    }
+	})
 }
 function addRasterLayer(fileName)
 {
@@ -479,6 +636,7 @@ function addProductFeatureLayer(workspaceId,fileName)
 	    app.featureLayer.on("load",function(evt){
 //	    	add();
 //	    	initEditing(evt);
+	    	$("#mapDiv_productionConf").busyLoad("hide");
 	    });
 	});
 	
@@ -492,9 +650,9 @@ function EditFeatures(addOrdelete){
 	app.graphicsLayer.clear();
 	app.toolbar.activate("polygon");
 }
-function Edit_Save()
+function Edit_Preview()
 {
-	console.log("begin---Edit_Save");
+	console.log("begin---Edit_Preview");
 	var fileName;//add.shp or erase.shp
 	var filePath;
 //	var geoprocessor_url;
@@ -504,10 +662,11 @@ function Edit_Save()
 	if(app.edit =='add')
 	{
 		app.geoprocessor_url = mergeUrl;
-		fileName = "add.shp";
-		filePath = "E:/arcgisData/models/";
-		//在服务器端生成add.shp
-		saveDraw(fileName,filePath);
+//		fileName = "add.shp";
+//		filePath = "E:/arcgisData/models/";
+//		//在服务器端生成add.shp
+//		saveDraw(fileName,filePath);
+		doGeoprocessor();
 	}
 	//执行delete--》》erase 
 	///直接在客户端生成Graphics 不用传递到服务器端生成shp
@@ -526,8 +685,57 @@ function Edit_Save()
 	
 	
 }
+//保存编辑之后的结果数据，即最终数据
+function Edit_Save()
+{
+	//SaveAreaEditedProduct
+	if(app.tifFileName)
+	{
+		var tifFileNamePrefix = app.tifFileName.lastIndexOf('.');
+		var fileinfo = app.tifFileName.substring(0,tifFileNamePrefix);
+		$.ajax({
+		    url:'/jf/thairice/t1parameter/SaveAreaEditedProduct',//
+		    type:'POST', //GET
+		    async:true,    //或false,是否异步
+		    data:{
+		    	fileinfo:fileinfo
+		    },
+		    timeout:5000,    //超时时间
+		    dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+		    beforeSend:function(xhr){
+		        //console.log(xhr)
+		        console.log('SaveAreaEditedProduct---发送前');
+		        $("#mapDiv_productionConf").busyLoad("show", { text: "LOADING ...",
+		    		textPosition: "top"
+		    	});
+		    },
+		    success:function(data,textStatus,jqXHR){
+
+		    	if(data.flag) {  
+		    		
+		    		console.log('SaveAreaEditedProduct---success')
+	            }  
+	            
+		    },
+		    error:function(xhr,textStatus){
+		    	$("#mapDiv_productionConf").busyLoad("hide");
+		        console.log('SaveAreaEditedProduct---错误')
+		        console.log(xhr)
+		        console.log(textStatus)
+		    },
+		    complete:function(){
+		    	$("#mapDiv_productionConf").busyLoad("hide");
+		        console.log('SaveAreaEditedProduct---结束')
+		    }
+		})
+	}
+	
+}
 function doGeoprocessor(){
 	console.log("begin---doGeoprocessor");
+	$("#mapDiv_productionConf").busyLoad("show", { text: "LOADING ...",
+		textPosition: "top"
+	});
 	require(["esri/tasks/Geoprocessor","esri/tasks/query","esri/symbols/SimpleFillSymbol","esri/tasks/FeatureSet","esri/layers/FeatureLayer", 
 	      "esri/renderers/SimpleRenderer","esri/Color","esri/layers/ImageParameters","esri/layers/LayerDrawingOptions",
 	      "esri/geometry/projection","esri/SpatialReference",
@@ -536,28 +744,34 @@ function doGeoprocessor(){
 	    		  SimpleFillSymbol,FeatureSet,FeatureLayer,SimpleRenderer,Color,
 	    		  ImageParameters,LayerDrawingOptions,projection,SpatialReference,webMercatorUtils,dom){
 				  var gp_params={};
+				  
+				  var addOrerase_features = app.graphicsLayer.graphics;
+//			        console.log(addOrerase_features);
+				  var outSpatialReference = new SpatialReference(4326);
+				  var features = [];  
+		          addOrerase_features.forEach(function(graphic){
+		//			  graphic.geometry = projection.project(graphic.geometry, outSpatialReference);
+					  if (webMercatorUtils.canProject(graphic.geometry, outSpatialReference)) {
+						  var result = webMercatorUtils.project(graphic.geometry, outSpatialReference);
+						  var graphic = new esri.Graphic(result, null);
+						  features.push(graphic);
+						}
+					  
+					});
+//			        console.log(features);
+		          var addOrerasefeatureSet = new FeatureSet();
+		          addOrerasefeatureSet.features = features;
+		          
 				  if(app.edit =='add')
 				  {
-					  gp_params = null;
+//					  gp_params = null;
+					  gp_params = {
+					            "add": addOrerasefeatureSet
+					          };
 				  }
 				  if(app.edit =='delete')
 				  {
-					var addOrerase_features = app.graphicsLayer.graphics;
-//				        console.log(addOrerase_features);
-					var outSpatialReference = new SpatialReference(4326);
-					var features = [];  
-			        addOrerase_features.forEach(function(graphic){
-			//			  graphic.geometry = projection.project(graphic.geometry, outSpatialReference);
-						  if (webMercatorUtils.canProject(graphic.geometry, outSpatialReference)) {
-							  var result = webMercatorUtils.project(graphic.geometry, outSpatialReference);
-							  var graphic = new esri.Graphic(result, null);
-							  features.push(graphic);
-							}
-						  
-						});
-//				        console.log(features);
-			          var addOrerasefeatureSet = new FeatureSet();
-			          addOrerasefeatureSet.features = features;
+					
 			          gp_params = {
 			            "eraseshp": addOrerasefeatureSet
 			          };
@@ -577,9 +791,8 @@ function doGeoprocessor(){
 			        var imageParams = new ImageParameters();
 			        imageParams.imageSpatialReference = app.map.spatialReference;
 			        geoprocessor.getResultImageLayer(jobInfo.jobId, "result",imageParams, function(gpLayer){
-		//	        	console.log(gpLayer);
-		//	        	alert("1111");
-		//	          gpLayer.setOpacity(0.5);
+			        	$("#mapDiv_productionConf").busyLoad("hide");
+		//	        	gpLayer.setOpacity(0.5);
 		//	        	  app.gpLayer = gpLayer;
 				          app.map.removeLayer(app.featureLayer);
 				          app.featureLayer = gpLayer;
@@ -653,7 +866,55 @@ function Edit_Cancel()
 	app.undoManager.clearUndo();
 	app.graphicsLayer.clear();
 }
-
+function areaRasterbandsExtract(){
+	console.log("areaRasterbandsExtract---begin");
+	$("#mapDiv_productionConf").busyLoad("show", { text: "LOADING ...",
+		textPosition: "top"
+	});
+	var bands = [];
+	var rgb_red_band = $('#rgb_red option:selected').val();//red选中的值
+	bands.push(rgb_red_band);
+	var rgb_green_band = $('#rgb_green option:selected').val();//green选中的值
+	bands.push(rgb_green_band);
+	var rgb_blue_band = $('#rgb_blue option:selected').val();//blue选中的值
+	bands.push(rgb_blue_band);
+	console.log(bands);
+	require(["esri/tasks/Geoprocessor","esri/tasks/query","esri/layers/ImageParameters",
+		"esri/layers/LayerDrawingOptions","dojo/dom",
+		    "dojo/domReady!"],function(Geoprocessor,Query,ImageParameters,LayerDrawingOptions,dom){
+		var gp_params={};
+		gp_params = {
+	            "bands":bands
+	    };
+		var geoprocessor = new Geoprocessor(arearasterbandsextractUrl);
+	      geoprocessor.setOutSpatialReference({
+	        wkid: 4326
+	      });
+	      geoprocessor.submitJob(gp_params, completeCallback, statusCallback,errback);
+	      function statusCallback(jobInfo){
+	            console.log(jobInfo.jobStatus);
+	      }
+	      function completeCallback(jobInfo) {
+	    	console.log(jobInfo.jobId);
+	        var imageParams = new ImageParameters();
+	        imageParams.imageSpatialReference = app.map.spatialReference;
+	        geoprocessor.getResultImageLayer(jobInfo.jobId, "output",imageParams, function(gpLayer){
+	        	
+	        	$("#mapDiv_productionConf").busyLoad("hide");
+//	        	
+		          app.map.removeLayer(app.renderLayer);
+		          app.renderLayer = gpLayer;
+		     
+		          app.map.addLayer(app.renderLayer,2);
+		          
+	        });
+	       }
+	      function errback(error){
+	    	  console.log(error);
+	      }
+	});
+}
+/*
 function initEditing(evt) {
 	alert("okkkkkk");
 	require(["esri/toolbars/edit","dojo/_base/event", "esri/tasks/query","dojo/domReady!"],
@@ -686,6 +947,7 @@ function initEditing(evt) {
 	});
     
   }
+*/
 /*
 function test(shpFileName)
 {

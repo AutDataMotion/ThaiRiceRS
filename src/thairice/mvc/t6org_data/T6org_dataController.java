@@ -99,10 +99,12 @@ public class T6org_dataController extends BaseController {
 			 * res = new ResultEntity("0001"); LOG.debug(res.getDesc()); renderJson(res);
 			 */
 			setAttr("page_head", "Data management");
+			setAttr("queryAllParm", "active");
 			renderWithPath("/adm2018/data_management.html");
 		} catch (Exception e) {
 			setAttr("flag", "9");
 			LOG.error("查询原始数据文件发生异常!" + e);
+			setAttr("queryAllParm", "active");
 			renderWithPath("/adm2018/data_management.html");
 		}
 	}
@@ -138,6 +140,7 @@ public class T6org_dataController extends BaseController {
 		
 		//t6org_data.save();		//guiid
 		t6org_data.saveGenIntId();	//serial int id
+		setAttr("queryAllParm", "active");
 		renderWithPath(pthv+"add.html");
 	}
 	
@@ -148,6 +151,7 @@ public class T6org_dataController extends BaseController {
 		//T6org_data t6org_data = T6org_data.dao.findById(getPara());	//guuid
 		T6org_data t6org_data = T6org_dataService.service.SelectById(getParaToInt());		//serial int id
 		setAttr("t6org_data", t6org_data);
+		setAttr("queryAllParm", "active");
 		renderWithPath(pthv+"update.html");
 
 	}
@@ -168,6 +172,7 @@ public class T6org_dataController extends BaseController {
 		//T6org_data t6org_data = T6org_data.dao.findById(getPara());	//guuid
 		T6org_data t6org_data = T6org_dataService.service.SelectById(getParaToInt());		//serial int id
 		setAttr("t6org_data", t6org_data);
+		setAttr("queryAllParm", "active");
 		renderWithPath(pthv+"view.html");
 	}
 	
