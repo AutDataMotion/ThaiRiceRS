@@ -12,6 +12,7 @@ import java.util.Map;
 
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
+import org.eclipse.jetty.util.log.Log;
 
 import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
@@ -429,6 +430,16 @@ public class T1parameterController extends BaseController {
 				///arearaster+.tif--->arearaster.tif
 				String copyTo = models_workspace+models_workspace_tempAreaTifFilePreName+resultFileSuffix;
 				File newfile = new File(copyTo);
+//				if(newfile.exists())
+//				{
+//					boolean del_res = newfile.delete();
+//					if(!del_res)
+//					{
+//						System.gc();
+//						newfile.delete();
+//						LOG.debug(newfile.getAbsolutePath()+"---delete----success");
+//					}
+//				}
 				boolean result = ReportUtil.fileCopy(file,newfile);
 				if(result)
 				{
