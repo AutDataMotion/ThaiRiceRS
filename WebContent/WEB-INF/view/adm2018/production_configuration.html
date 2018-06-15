@@ -175,10 +175,26 @@
   			<div role="tabpanel" class="tab-pane" id="production02">
               <div class="tab-box">
             <h4> < MODIS files download path > </h4>
-            <input type="text" class="form-control" style="margin-bottom:15px;" name="ftpSrcPath0" id="ftpSrcPath0"  size = '50' value=${ftpSrcPath0!} > 
-            <input type="text" class="form-control" style="margin-bottom:15px;" name="ftpSrcPath1" id="ftpSrcPath1"  size = '50' value=${ftpSrcPath1!} >
-            <input type="text" class="form-control" style="margin-bottom:15px;" name="ftpSrcPath2" id="ftpSrcPath2"  size = '50' value=${ftpSrcPath2!} > 
-            <input type="text" class="form-control" style="margin-bottom:15px;" name="ftpSrcPath3" id="ftpSrcPath3"  size = '50' value=${ftpSrcPath3!} > 
+            
+            <div class="input-group">
+            	<span class="input-group-addon">Path of MOD13Q1</span>
+            	<input type="text" class="form-control"  name="ftpSrcPath0" id="ftpSrcPath0"  size = '50' value=${ftpSrcPath0!} >
+        	</div>
+        	
+        	            <div class="input-group">
+            	<span class="input-group-addon">Path of MOD13A2</span>
+            	<input type="text" class="form-control"  name="ftpSrcPath1" id="ftpSrcPath1"  size = '50' value=${ftpSrcPath1!} >
+        	</div>
+        	
+        	            <div class="input-group">
+            	<span class="input-group-addon">Path of MOD11A2</span>
+            	<input type="text" class="form-control"  name="ftpSrcPath2" id="ftpSrcPath2"  size = '50' value=${ftpSrcPath2!} >
+        	</div>
+        	
+        	            <div class="input-group">
+            	<span class="input-group-addon">Path of MOD12Q1</span>
+            	<input type="text" class="form-control"  name="ftpSrcPath3" id="ftpSrcPath3"  size = '50' value=${ftpSrcPath3!} >
+        	</div>
             <div class="form-group" style="text-align:center;">
                   <button class="btn btn-primary" onclick="updateParams('001')">submit</button>
                   <button class="btn btn-default">reset</button>
@@ -273,12 +289,12 @@
               <div class="tab-box">
             <h4> < Rice growth configuration > </h4>
             <div class="form-group">
-            	  <label class="control-label" style="width:60px; float:left; text-align:center; line-height:34px; padding-top:0;">From</label>
-                  <div class="input-group" id="starttime11" style="width:200px; float:left;">
+            	  <label class="control-label" style="width:60px; float:left; text-align:center; line-height:34px; padding-top:0;">Year</label>
+                  <div class="input-group" id="starttime11" style="width:160px; float:left;">
                 <input type="text" class="form-control" name="inStartYear" id="inStartYear" placeholder="input year as 2018" style="float:left; ">
                 <!-- <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span> --></div>
-                  <label class="control-label" style="width:60px; float:left; text-align:center; line-height:34px; padding-top:0;">to</label>
-                  <div class="input-group" id="endtime11" style="width:200px; float:left;">
+                  <label class="control-label" style="width:60px; float:left; text-align:center; line-height:34px; padding-top:0;">-</label>
+                  <div class="input-group" id="endtime11" style="width:160px; float:left;">
                 <input type="text" class="form-control" name="inEndYear" id="inEndYear" placeholder="input year as 2020" style="float:left; ">
                 <!-- <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span> --></div>
                 </div>
