@@ -570,11 +570,47 @@ var sta = {};
 	}
 	function getChildAreaCodeAndNameByParentAreaCode(areaCode)
 	{
-		var ChildAreaCodeAndName_Array = [{'NAME':'MUEANG SUPHAN BURI','CODE':'7201'},{'NAME':'DOEM BANG NANG BUAT','CODE':'7202'},
-			{'NAME':'DAN CHANG','CODE':'7203'},{'NAME':'BANG PLA MA','CODE':'7204'},
-			{'NAME':'SI PRACHAN','CODE':'7205'},{'NAME':'DON CHEDI','CODE':'7206'},{'NAME':'SONG PHI NONG','CODE':'7207'},
-			{'NAME':'SAM CHUK','CODE':'7208'},{'NAME':'U THONG','CODE':'7209'},{'NAME':'NONG YA SAI','CODE':'7210'}];
-		
+//		var ChildAreaCodeAndName_Array = [{'NAME':'MUEANG SUPHAN BURI','CODE':'7201'},{'NAME':'DOEM BANG NANG BUAT','CODE':'7202'},
+//			{'NAME':'DAN CHANG','CODE':'7203'},{'NAME':'BANG PLA MA','CODE':'7204'},
+//			{'NAME':'SI PRACHAN','CODE':'7205'},{'NAME':'DON CHEDI','CODE':'7206'},{'NAME':'SONG PHI NONG','CODE':'7207'},
+//			{'NAME':'SAM CHUK','CODE':'7208'},{'NAME':'U THONG','CODE':'7209'},{'NAME':'NONG YA SAI','CODE':'7210'}];
+//		
+		var ChildAreaCodeAndName_Array;
+		$.ajax({
+		    url:'/jf/thairice/t10pdt_report/getChildAreaCodeAndNameByParentAreaCode',
+		    type:'POST', //GET
+		    async:true,    //或false,是否异步
+		    data:{
+		    	
+		    	parentareaCode:areaCode
+		    	
+		    },
+		    timeout:5000,    //超时时间
+		    dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+		    beforeSend:function(xhr){
+		        
+		        console.log('发送前')
+		    },
+		    success:function(data,textStatus,jqXHR){
+		    	
+//		    	alert("success");
+		    	if(data.result)
+		    	{
+		    		
+		    	}
+		    	else{
+		    		
+		    	}
+		    },
+		    error:function(xhr,textStatus){
+		    	console.log('错误')
+		        console.log(xhr)
+		        console.log(textStatus)
+		    },
+		    complete:function(){
+		        console.log('结束')
+		    }
+		})
 		return ChildAreaCodeAndName_Array;
 	}
 	//得到Province-Country 根据省---》市
