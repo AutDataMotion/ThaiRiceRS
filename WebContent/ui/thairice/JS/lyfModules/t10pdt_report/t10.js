@@ -577,13 +577,11 @@ var sta = {};
 //		
 		var ChildAreaCodeAndName_Array;
 		$.ajax({
-		    url:'/jf/thairice/t10pdt_report/getChildAreaCodeAndNameByParentAreaCode',
+		    url:'/jf/thairice/t13region/getChildAreaCodeAndNameByParentAreaCode',
 		    type:'POST', //GET
-		    async:true,    //或false,是否异步
+		    async:false,    //或false,是否异步
 		    data:{
-		    	
 		    	parentareaCode:areaCode
-		    	
 		    },
 		    timeout:5000,    //超时时间
 		    dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
@@ -594,9 +592,10 @@ var sta = {};
 		    success:function(data,textStatus,jqXHR){
 		    	
 //		    	alert("success");
-		    	if(data.result)
+		    	if(data.flag)
 		    	{
-		    		
+//		    		console.log(data);
+		    		ChildAreaCodeAndName_Array = data.childRegions;
 		    	}
 		    	else{
 		    		
@@ -611,6 +610,7 @@ var sta = {};
 		        console.log('结束')
 		    }
 		})
+//		console.log(ChildAreaCodeAndName_Array);
 		return ChildAreaCodeAndName_Array;
 	}
 	//得到Province-Country 根据省---》市
@@ -661,7 +661,7 @@ var sta = {};
       	//var datas = [];
       	//var value = 0;
     	console.log("sta---->");
-    	console.log(features);
+//    	console.log(features);
     	var len = features.length;//控制位
       	dojo.forEach(features,function(feature){
       		

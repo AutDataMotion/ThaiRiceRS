@@ -370,9 +370,5 @@ public class T10pdt_reportController extends BaseController {
 		setAttr("result",result);
 		renderJson();
 	}
-	@Clear
-	public void getChildAreaCodeAndNameByParentAreaCode()
-	{
-		String parentAreaCode = getPara("areaCode");
-	}
+	
 }

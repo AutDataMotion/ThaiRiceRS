@@ -19,6 +19,7 @@ import thairice.mvc.t8message.T8message;
 import thairice.mvc.t9sample_info.T9sample_info;
 import thairice.mvc.t10pdt_report.T10pdt_report;
 import thairice.mvc.t11zone.T11zone;
+import thairice.mvc.t13region.T13Region;
 import thairice.mvc.tkvalue.Tkvalue;
 
 import com.jfinal.config.Constants;
@@ -68,6 +69,7 @@ public class MyConfig extends JFinalConfig {
 		arp.addMapping("t10pdt_report", "id", T10pdt_report.class);
 		arp.addMapping("t11zone", "id", T11zone.class);
 		arp.addMapping("tkvalue", "id", Tkvalue.class);	
+		arp.addMapping("t13region", "id", T13Region.class);
 		System.out.println("test");
 	}
 	@Override
