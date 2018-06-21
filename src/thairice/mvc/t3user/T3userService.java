@@ -104,6 +104,16 @@ public class T3userService extends BaseService {
 		T3user user = T3user.dao.findFirst("select * from t3user where email=?", mailBox);
 		return user == null ? true : false;
 	}
+	public boolean valiMailBox2(String mailBox) {
+		// TODO Auto-generated method stub
+		T3user user = T3user.dao.findFirst("select * from t3user where email=?", mailBox);
+		if(user!=null) {
+		    if(user.getStatus_().equals("03")||user.getStatus_().equals("04")) {
+			    return true;
+			}   
+		}
+		return user == null ? true : false;
+	}
 
 	public boolean valiMailBoxForFindPass(String mailBox) {
 		T3user user = T3user.dao.findFirst("select * from t3user where email=?", mailBox);

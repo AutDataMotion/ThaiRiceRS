@@ -6,6 +6,7 @@ import java.util.List;
 
 import com.jfinal.aop.Duang;
 import com.jfinal.core.Controller;
+import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.cron4j.ITask;
 
 import thairice.constant.ConstantInitMy;
@@ -25,10 +26,16 @@ public class overdueRemind extends Controller implements ITask {
 	public void run() {
 		List<T3user> list = Duang.duang(T3userService.class).selectUsers();
 		for (T3user t3user : list) {
-			long day = TimeUtil.dateDiff(t3user.getTimestamp("Prdt_EfDt").toString(),
-					t3user.getTimestamp("PD_ExDat").toString(), "yyyy-MM-dd HH:mm:ss", "d");
+/*			long day = TimeUtil.dateDiff(t3user.getTimestamp("Prdt_EfDt").toString(),
+					t3user.getTimestamp("PD_ExDat").toString(), "yyyy-MM-dd HH:mm:ss", "d");*/
+			
+			long day = TimeUtil.dateDiff(TimeUtil.getNow(),t3user.getTimestamp("PD_ExDat").toString(), "yyyy-MM-dd HH:mm:ss", "d");
+			//用户过期将其设置为04标识
+			if(day<0) {
+			    Db.use(ConstantInitMy.db_dataSource_main).update("UPDATE t3user SET status_='04' WHERE id=?", t3user.getBigInteger("id"));
+			}
 			// 距离服务到期还有7天提醒用户续费
-			if (day ==30||day ==10||day ==3) {
+			if (day <0||day ==30||day ==10||day ==3) {
 				// 避免重复发送
 				List<T8message> message_list = T8message.dao.find("select * from t8message where send_userid=? and flag=3",
 						t3user.getBigInteger("id"));

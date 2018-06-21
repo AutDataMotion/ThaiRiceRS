@@ -12,6 +12,9 @@
 <link type="text/css" rel="stylesheet" href="${cxt!}/ui/thairice/CSS/bootstrapValidator.css">
 <style type="text/css">
 .fw{margin-top: 20px;}
+.list{padding: 10px;}
+.list .item{border-bottom: 1px dashed darkgray;padding: 10px;}
+.del{float: right;color: red;cursor: pointer;}
 </style>
 </head>
 
@@ -22,7 +25,7 @@
 			<h2></h2>
 			<div class="container">
 				<form id="fm" class="form-horizontal"
-					style="width: 829px; margin: 0 auto;" method="post">
+					style="width: 839px; margin: 0 auto;" method="post">
 					<div class="form_selfinfo">
 						<p class="title">Create an Account</p>
 					<div class="form-group">
@@ -57,10 +60,10 @@
 							</div>
 						</div>
 						<div class="form-group">
-							<label class="col-sm-2 control-label">* Email address</label>
+							<label class="col-sm-2 control-label">* Email</label>
 							<div class="col-sm-8">
 								<input id="email" type="email" class="form-control"
-									placeholder="Your Email address like someone@exmaple.com"
+									placeholder="Your Email like someone@exmaple.com"
 									name="t3user.email">
 							</div>
 						</div>
@@ -105,22 +108,25 @@
 								class="btn btn-primary btn-lg btn_selfinfo">Next step >></button> 
 							</p>
 						</div>
+						<div class="form-group">
+							<p class="account_in">
+								Already have an account? <a href="${cxt!}/jf/thairice/t3user/login?returnUrl=/jf/thairice/t3user/exit#page4">Sign
+									In</a>
+							</p>
+						</div>
 					</div>
 					<div class="form-horizontal form_serviceinfo"
 						style="width: 801px; margin: 0 auto;">
 						<p class="title">Create account- Service information</p>
 						<div class="form-group" style="margin-top: 20px;">
-							<label class="col-sm-2 control-label">*Select Area</label>
+							<label class="col-sm-2 control-label">Select Area&nbsp&nbsp&nbsp*</label>
 							<div class="col-sm-8">
-						        <div class="input-group">
-		                    	 <select id="seachprov" name="province" onChange="changeComplexProvince(this.value, sub_array, 'seachcity', 'seachdistrict');" style="padding: 8px;"></select>
-			                     <select id="seachcity" name="city" onChange="changeCity(this.value,'seachdistrict','seachdistrict');" style="padding: 8px;"></select>
-			                     <select id="seachdistrict" name="area" style="padding: 8px;"></select>
-		                      </div>
+	                               <button type="button" class="btn btn-primary btn-lg" data-toggle="modal"   data-target="#systemModal">Add Area</button>
+                                   <div class="list" ></div>
 							</div>
 						</div>
 						<div class="form-group" style="margin-top: 20px;">
-							<label class="col-sm-2 control-label">*Select Service</label>
+							<label class="col-sm-2 control-label">Select Service*</label>
 							<div class="col-sm-8 service">
 								<label><input type="checkbox" value="01" name="PD_TpCd">Rice acreage</label> 
 								<label><input type="checkbox" value="02" name="PD_TpCd">Rice growth</label> 
@@ -129,14 +135,14 @@
 							</div>
 						</div>
 						<div class="form-group" style="margin-top: 20px;">
-							<label class="col-sm-2 control-label">*Service Term</label>
+							<label class="col-sm-2 control-label">Service Term*</label>
 							<div class="col-sm-9">
 							    <div class="col-sm-1" style="text-align: center;">
 									<label class="control-label">From</label>
 								</div>
 								<div class="col-sm-4">
 									<div class="input-group date" id="Prdt_EfDt">
-										<input type="text" class="form-control" name="Prdt_EfDt">
+										<input type="text" class="form-control" id="Prdt_EfDt1" name="Prdt_EfDt">
 										<span class="input-group-addon"><i
 											class="glyphicon glyphicon-calendar"></i></span>
 									</div>
@@ -146,22 +152,21 @@
 								</div>
 								<div class="col-sm-4">
 									<div class="input-group date" id='PD_ExDat'>
-										<input type="text" class="form-control" name="PD_ExDat">
+										<input type="text" class="form-control" id='PD_ExDat1' name="PD_ExDat">
 										<span class="input-group-addon"><i
 											class="glyphicon glyphicon-calendar"></i></span>
 									</div>
 								</div>
 							</div>
 						</div>
-						
+						<div class="fw"> <input type="checkbox" id="agree">&nbsp&nbsp<a onclick="privacy()">I have read and agree to the relevant terms of service and privacy policy.</a></div>
 						<div class="form-group" style="margin: 35px 0 0;">
 							<p>
-							    <button type="button"  class="btn btn-primary btn-lg" id="previous" style="margin-right: 50px;" >Previous step</button>
+							    <button type="button"  class="btn btn-primary btn-lg" id="previous" style="margin-right: 50px;" > << Previous step</button>
 								<button type="button" class="btn btn-primary btn-lg"
 									onclick="submitForm()">Create Account</button>
 							</p>
 						</div>
-						<div class="fw"> <input type="checkbox" id="agree" checked="checked">&nbsp&nbsp<a onclick="privacy()">I have read and agree to the relevant terms of service and privacy policy.</a></div>
 						<div class="form-group">
 							<p class="account_in">
 								Already have an account? <a href="${cxt!}/jf/thairice/t3user/login?returnUrl=/jf/thairice/t3user/exit#page4">Sign
@@ -175,6 +180,30 @@
 
 		</div>
 	</div>
+	
+	<div class="modal fade" id="systemModal" tabindex="-1" role="dialog" aria-labelledby="systemModalLabel"
+     aria-hidden="true">
+    <div class="modal-dialog" role="document" style="width: 800px;">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Select Area</h5>
+                <button class="close" type="button"  data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body">
+            <div id="custom_data">
+            <select class="province" id="province" style="padding: 7px;width: 220px;"></select>
+            <select class="city" id="city" style="padding: 7px;width: 220px;"></select>
+            <select class="area" id="area" style="padding: 7px;width: 220px;"></select>
+            </div>
+            </div>
+            <div class="modal-footer" style="text-align:center;">
+                <a class="btn btn-primary go_btn"  type="button"  id="add">Confirm</a>
+            </div>
+        </div>
+    </div>
+   </div>
+	
 	<script src="${cxt!}/ui/thairice/JS/jquery.min.js"></script>
 	<script src="${cxt!}/ui/thairice/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 	<script src="${cxt!}/ui/thairice/datetime-picker/moment.js"></script>
@@ -183,12 +212,26 @@
 	<script type="text/javascript" src="${cxt!}/ui/thairice/JS/layer/layer.js"></script>
 	<script type="text/javascript" src="${cxt!}/ui/thairice/JS/md5.js"></script>
 	<script src="${cxt!}/ui/thairice/JS/index.js"></script>
-	<script src="${cxt!}/ui/thairice/area-select/Area.js"></script>
-	<script src="${cxt!}/ui/thairice/area-select/AreaData_min.js"></script>
+    <script src="${cxt!}/ui/thairice/area/jquery.cxselect.js"></script>
 	<script src="${cxt!}/ui/thairice/common.js"></script>
 	<script type="text/javascript">
-	initComplexArea('seachprov', 'seachcity', 'seachdistrict', area_array, sub_array, '44','0','0');  
-	
+	sendAjax("${cxt!}/jf/thairice/t3user/region_list",null,function (res) {
+		   $('#custom_data').cxSelect({
+			    selects: ['province', 'city', 'area'],
+			    required: true,
+			    jsonValue: 'v',
+			   data: res
+			   });
+	   });
+	   $("#add").click(function(){
+		   var  result='<div class="item"><span id="p" type='+$('#province').val()+'>'+$('#province option:selected').text()+'</span>-<span id="c" type='+$('#city').val()+'>'+$('#city option:selected').text()+'</span>-<span id="a" type='+$('#area').val()+'>'+$('#area option:selected').text()+'</span><div class="del" onclick="del(this)">Delete</div></div>'
+	       $('.list').append(result);
+		   $("#systemModal").modal("hide");
+		   layer.msg('Add success, you can continue to add', {icon: 6});
+	   })
+	   function del(obj){
+	          $(obj).parent().remove();
+	     }
 	function privacy(){
 		layer.open({
 			type : 2,

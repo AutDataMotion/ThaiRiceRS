@@ -57,6 +57,7 @@
 <script src="${cxt!}/ui/thairice/JS/main.js"></script>
 <script type="text/javascript" src="${cxt!}/ui/thairice/JS/layer/layer.js"></script>
 <script src="${cxt!}/ui/thairice/common.js"></script>
+<script src="${cxt!}/ui/thairice/area/jquery.cxselect.js"></script>
 <script>
 	//进度条及文件预览
 	$(function () {  
@@ -155,17 +156,12 @@
 <div class="BbAreaSelect" style="z-index: 9;position: fixed;">
   <form class="form-inline">
     <div class="form-group">
-      <select id="seachprov" name="seachprov" onChange="changeComplexProvince(this.value, sub_array, 'seachcity', 'seachdistrict');">
-      </select>
+            <div id="custom_data">
+            <select class="province" id="province"  style="padding: 13px;border: 0px;"></select>
+            <select class="city" id="city" style="padding: 13px;border: 0px;"></select>
+            <select class="area" id="area" style="padding: 13px;border: 0px;"></select>
+            </div>
     </div>
-    <div class="form-group">
-      <select id="seachcity" name="homecity" onChange="changeCity(this.value,'seachdistrict','seachdistrict');">
-      </select>
-    </div>
-    <div class="form-group"> <span id="seachdistrict_div">
-      <select id="seachdistrict" name="seachdistrict">
-      </select>
-      </span> </div>
     <div class="form-group">
       <label style="line-height:50px; padding:0 5px; font-weight:normal;">时间：</label>
       <div class="input-group date" id='date_choose'>
@@ -416,7 +412,25 @@
 </div>
 <script type="text/javascript">
       if('${session.user.status_!}'=='01'){
-    	  showMessage("Not audit");
+    	  showMessage("Sorry, your application is not authorized yet");
+      }else if
+	      ('${session.user.status_!}'=='03'){
+	    	  showMessage("Sorry, your application is not approved");
+	      }else if
+	      ('${session.user.status_!}'=='04'){
+	    	  showMessage("Your user has expired, please pay the fee"); 
+	      }
+	  getAddress();
+  	 //获取服务地区
+      function getAddress(){
+          sendAjax("${cxt!}/jf/thairice/t3user/region",{'userId':'${session.user.id!}'},function (res) {
+          	 $('#custom_data').cxSelect({
+          		    selects: ['province', 'city', 'area'],
+          		    required: true,
+          		    jsonValue: 'v',
+          		   data: res
+              });
+          })
       }
 </script>
 </body>

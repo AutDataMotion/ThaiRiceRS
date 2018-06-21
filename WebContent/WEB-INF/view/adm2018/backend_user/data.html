@@ -1,7 +1,7 @@
 <% var cssSec={ %>
 <style>
 .input-group{width: 250px;float: right;}
-table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td{vertical-align: middle;text-align: left;}
+table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td{vertical-align: middle;text-align: center;}
 .even{background-color: rgb(219, 239, 246)!important;}
 </style>
 <% }; %>
@@ -22,13 +22,13 @@ table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td
                     <span class="input-group-btn"><button id="btn_search" class="btn btn-primary" type="button">Search</button></span>
                 </div>
                 <table class="table table-bordered data-table" id="dataTable01" width="100%" cellspacing="0"
-                       align="left">
+                       align="center">
                     <thead>
                     <tr>
-                        <th width="8%"><input type="checkbox" name="cb-check-all">Select all</th>
+                        <th width="6%"><input type="checkbox" name="cb-check-all">All</th>
                         <th>Account</th>
                         <th>Mobile</th>
-                        <th>Email address</th>
+                        <th>Email</th>
                         <th>Nickname</th>
                         <th>Creation time</th>
                     </tr>
@@ -84,14 +84,14 @@ table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td
                             <input type="text" class="form-control" placeholder="Address" id="address" name="t3user.address" >
                         </div>
                     </div>
-                    <div class="form-group">
+               <!--      <div class="form-group">
                         <label class="col-md-3 control-label" style="width:120px;">Industry</label>
                         <div class="col-md-9" style="width:470px;">
                             <select class="form-control" name="t3user.industry" id="industry">
                                 <option value="agricultural">Agricultural</option>
                             </select>
                         </div>
-                    </div>
+                    </div> -->
                     <input type="hidden" id="userid" name="t3user.id">
                 </form>
             </div>

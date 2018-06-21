@@ -37,23 +37,23 @@
 									style="width: 100px; height: 100px; border: none; padding: 0;">
 									<img
 										src="${cxt!}${admin.heading!'/ui/thairice/Images/self_info/photo.jpg'}"
-										id='picImg' alt="" />
+										id='picImg' alt="" style="cursor: pointer;"/>
 								</div>
 								<div class="fileinput-preview fileinput-exists thumbnail"
 									style="width: 100px; height: 100px; border: none; padding: 0;"></div>
-								<div style="cursor: pointer;">
+		<!-- 						<div style="cursor: pointer;">
 									<span class="btn-file"
 										style="cursor: pointer; background-color: rgba(240, 248, 255, 0);">
 										<span class="fileinput-new">Change picture</span> <span
 										class="fileinput-exists">Change picture</span>
 									</span>
-								</div>
+								</div> -->
 							</div>
 						</div>
 					</form>
 				</dt>
 				<dd class="self_dd">
-					<p class="name">${admin.name_}</p>
+					<p class="name" style="font-size: 16px;">${admin.name_}</p>
 					<!-- <p>928078226</p> -->
 				</dd>
 			</dl>
@@ -74,7 +74,7 @@
 			style="width: 640px; margin: 0 auto;">
 			<p class="text-center form_title">< User information ></p>
 			<div class="form-group">
-				<label class="col-md-3 control-label" style="width: 120px;">Your account</label>
+				<label class="col-md-3 control-label" style="width: 120px;">Account</label>
 				<div class="col-md-9" style="width: 470px;">
 					<input type="text" class="form-control" readonly
 						value="${admin.account}" placeholder="Jone">
@@ -88,7 +88,7 @@
 				</div>
 			</div>
 			<div class="form-group">
-				<label class="col-md-3 control-label" style="width: 120px;">Email address</label>
+				<label class="col-md-3 control-label" style="width: 120px;">Email</label>
 				<div class="col-md-9" style="width: 470px;">
 					<input type="email" class="form-control" id="u_email"
 						name="t3user.email" value="${admin.email}"
@@ -124,13 +124,13 @@
 						value="${admin.address}" placeholder="Your address">
 				</div>
 			</div>
-			<div class="form-group">
+<!-- 			<div class="form-group">
 				<label class="col-md-3 control-label" style="width: 120px;">Industry</label>
 				<div class="col-md-9" style="width: 470px;">
 					<input type="text" class="form-control" name="t3user.industry"
 						value="${admin.industry}" placeholder="Your industry">
 				</div>
-			</div>
+			</div> -->
 			<div class="form-group">
 				<button type="button"
 					class="btn btn-primary btn-lg btn-block modify_btn" id="modify_btn"
@@ -185,7 +185,7 @@
 				</div>
 			</div>
 			<div class="modal-footer" style="text-align: center;">
-				<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+				<button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
 			</div>
 		</div>
 	</div>
@@ -220,7 +220,7 @@
 					</div>
 
 					<div class="form-group">
-						<label class="col-sm-3 control-label">Email address</label>
+						<label class="col-sm-3 control-label">Email</label>
 						<div class="col-sm-9">
 							<div class="input-group">
 								<input type="email" class="form-control"
@@ -267,6 +267,7 @@
 				sendAjax('${cxt!}/jf/thairice/admin/user/edit_info', $("#info")
 						.serialize(), function(res) {
 					$('#eemail').val($('#u_email').val());
+					$("#info").bootstrapValidator('resetForm');
 					showMessage(res.desc);
 				});
 			})
@@ -307,7 +308,7 @@
 			id : '${admin.id}'
 		},
 		uploadUrl : '${cxt!}/jf/thairice/admin/user/upload_head', //上传的地址
-		allowedFileExtensions : [ 'jpg', 'png' ],//接收的文件后缀
+		allowedFileExtensions : [ 'jpg', 'png','gif' ],//接收的文件后缀
 		showUpload : false, //是否显示上传按钮
 		showCaption : false,//是否显示标题
 		showCancel : false,

@@ -99,7 +99,6 @@ public class T6org_dataController extends BaseController {
 			 * res = new ResultEntity("0001"); LOG.debug(res.getDesc()); renderJson(res);
 			 */
 			setAttr("page_head", "Data management");
-			setAttr("queryAllParm", "active");
 			renderWithPath("/adm2018/data_management.html");
 		} catch (Exception e) {
 			setAttr("flag", "9");

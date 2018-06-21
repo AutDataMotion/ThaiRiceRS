@@ -3,10 +3,18 @@
  .mm{margin-left: 215px;position: absolute;z-index: 1;}
  .error {color: red;font-weight: bold;}
  .success {color: #5bb85d;font-weight:bold;}
+ .expired {color: #337ab7;font-weight: bold;}
  .head{width: 40px;height: 40px;border-radius: 50%;}
  .bc{width: 70px;height:35px;}
- table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td{vertical-align: middle;text-align: left;}
+ table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td{vertical-align: middle;text-align: center;}
 .even{background-color: rgb(219, 239, 246)!important;}
+
+        .list{padding: 10px;margin-top: -16px;}
+	    .list .item{border-bottom: 1px dashed darkgray;padding: 10px;}
+	    .del{float: right;color: red;cursor: pointer;}
+	    .btn-group-lg>.btn, .btn-lg{padding: 6px 16px;font-size: 12px;margin-top: -35px;float: right;margin-right:-10px;}
+	    .pp{padding:10px;border-bottom: 1px solid #d1d1d1;}
+ 
 </style>
 <% }; %>
 
@@ -27,12 +35,12 @@
                             <input type="text" id="max" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                         </div>
                     </div>
-                    <div class="form-group" style="margin-right:20px;">
+<!--                     <div class="form-group" style="margin-right:20px;">
                         <label>Area</label>
                         <select class="form-control" id="region">
                             <option value="ALL">ALL</option>
                         </select>
-                    </div>
+                    </div> -->
                     <div class="form-group">
                         <label>Authorization</label>
                         <select class="form-control" id="audit">
@@ -44,7 +52,7 @@
                         </select>
                     </div>
                     <div class="form-group">
-                        <label>Service type</label>
+                        <label>Products</label>
                         <select class="form-control" id="type">
                             <option value="">ALL</option>
                             <option value="01">Rice acreage</option>
@@ -55,10 +63,10 @@
                     </div> 
                     <div class="form-group">
                         <button type="button" id="btn_search" class="btn btn-primary">Search</button>
-                        <button type="button" class="btn btn-warning" style="margin-left:15px;" onclick="open_message(0,2)">
+                        <button type="button" class="btn btn-primary" style="margin-left:15px;" onclick="open_message(0,2)">
                             Broadcast messages
                         </button>
-                        <button type="button"  class="btn btn-primary"  style="margin-left: 12px;" onclick="exp()">Export to Excel</button>
+                        <button type="button"  class="btn btn-primary"  style="margin-left:15px;" onclick="exp()">Export to Excel</button>
                     </div>
                 </form>
             </div>
@@ -69,12 +77,12 @@
                 <table class="table table-bordered data-table" id="dataTable01" width="100%" cellspacing="0">
                     <thead>
                     <tr>
-                        <th width="8%"><input type="checkbox" name="cb-check-all">Select all</th>
+                        <th width="6%"><input type="checkbox" name="cb-check-all">All</th>
                         <th>Account</th>
                         <th>Mobile</th>
-                        <th>Email address</th>
+                        <th>Email</th>
                         <th>Service term</th>
-                        <th>Service type</th>
+                        <th>Products</th>
                         <th>Authorization</th>
                         <th width="6%">Send a message</th>
                     </tr>
@@ -97,26 +105,27 @@
                     <div class="form-group">
                         <label class="col-sm-3">Service area</label>
                         <div class="col-sm-9">
-                              <div data-toggle="distpicker">
-                                <select id="eprovinceName" name="province" style="padding: 7px;"></select>
-                                <select id="ecityName" name="city" style="padding: 7px;"></select>
-                                <select id="edistrictName" name="area" style="padding: 7px;"></select>
-                               </div>
+                                         <div id="custom_data">
+                                         <select class="province" id="province" style="padding: 7px;width: 120px;"></select>
+                                         <select class="city" id="city" style="padding: 7px;width: 120px;"></select>
+                                         <select class="area" id="area" style="padding: 7px;width: 120px;"></select>
+                                         </div>
+                                           <button type="button" class="btn btn-primary btn-lg" data-toggle="modal"   data-target="#address">Edit</button>  
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3">Service term</label>
                         <label style="margin:0 8px; float:left;">From</label>
-                        <div class="input-group" style="padding-left:1px; width:120px;">
+                        <div class="input-group" style="padding-left:1px; width:120px;" id="p1">
                             <input type="text" name="Prdt_EfDt" id="Prdt_EfDt" class="form-control" style="width:100px; margin-right:0;"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                         </div>
                         <label style="margin:0 7px; float:left;">To</label>
-                        <div class="input-group" style="width:120px;">
+                        <div class="input-group" style="width:120px;" id="p2">
                             <input type="text" name="PD_ExDat" id="PD_ExDat" class="form-control" style="width:100px; margin-right:0;"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                         </div>
                     </div>
                     <div class="form-group">
-                        <label class="col-sm-3">Service selection</label>
+                        <label class="col-sm-3">Products</label>
                         <div class="col-sm-9">
                             <label><input type="checkbox" value="01" name="PD_TpCd"> Rice acreage</label><br>
                             <label><input type="checkbox" value="02" name="PD_TpCd"> Rice growth</label><br>
@@ -173,6 +182,28 @@
     </div>
     <!-- ------------------- -->
 </div>
+<!-- 编辑服务地区-->
+<div class="modal fade" id="address" tabindex="-1" role="dialog" aria-labelledby="systemModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h5 class="modal-title">Service area</h5>
+                <button class="close" type="button"  data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+            </div>
+            <div class="modal-body">
+            <div id="address_data">
+            <select class="p" id="p" style="padding: 7px;width: 130px;"></select>
+            <select class="c" id="c" style="padding: 7px;width: 130px;"></select>
+            <select class="a" id="a" style="padding: 7px;width: 130px;"></select>
+            <a class="btn btn-primary go_btn"  type="button"  onclick="add_address()">Add</a>
+            </div>
+            <!--  <p class="pp">Selected:</p> -->
+             <div class="list" ></div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- 编辑服务地区-->
 <% }; %> <% var jsSec={ %>
 <script src="${cxt!}/ui/thairice/JS/jquery.dataTables.js"></script>
 <script src="${cxt!}/ui/thairice/JS/dataTables.bootstrap4.js"></script>
@@ -181,7 +212,9 @@
 <script src="${cxt!}/ui/thairice/area-select/distpicker.data.js"></script>
 <script type="text/javascript" src="${cxt!}/ui/thairice/JS/layer/layer.js"></script>
 <script src="${cxt!}/ui/thairice/common.js"></script>
+<script src="${cxt!}/ui/thairice/area/jquery.cxselect.js"></script>
 <script>
+        var userId=0;
         $("#distpicker").distpicker('destroy');
         $("#distpicker").distpicker({
         province: '省份名',
@@ -198,7 +231,7 @@
         {"data": "phone"},
         {"data": "email", orderable: false},
         {"data": null,render: function (data, type, row, meta) {
-            return ''+data.prdt_efdt.substring(0,11)+'to '+data.pd_exdat.substring(0,11);
+            return ''+data.prdt_efdt.substring(0,11)+'---  '+data.pd_exdat.substring(0,11);
         }},
         {"data": null,render: function (data, type, row, meta) {
             return ''+change(data.pd_tpcd);
@@ -209,13 +242,15 @@
                          + '<button type="button" class="btn btn-danger btn-sm bc" onclick="open_message(' + data.id + ',' + 3 + ')">Refuse</button>';
                 } else if (data.status_ == '02') {
                     return '<span class="success">Approved</span> <i class="glyphicon glyphicon-edit edit"></i>';
-                } else {
+                } else if (data.status_ == '03') {
                     return '<span class="error">Refused</span>';
+                }else if (data.status_ == '04') {
+                    return '<span class="expired">Expired</span> <i class="glyphicon glyphicon-edit edit"></i>';
                 }
             }
         },
         {"data": null, orderable: false,render: function (data, type, row, meta) {
-                return '<span class="glyphicon glyphicon-comment" onclick="open_message(' + data.id + ',' + 1 + ')"></span>';
+                return '<span class="glyphicon glyphicon-envelope" style="font-size: 25px;color: #06a6cd;" onclick="open_message(' + data.id + ',' + 1 + ')"></span>';
             }
         }
     ];
@@ -242,7 +277,7 @@
         } else {
             $("#flag").val(3);
             $("#receive_userid").val(id);
-            $('.modal-title').html("Please indicate that the authorze failed to approve the reason");
+            $('.modal-title').html("Please indicate the reasons for the failure of the authorization");
         }
         $("#content").val('');
         $("#message_modal").modal('show');
@@ -252,12 +287,20 @@
     $table.on("click",".audit",function() {
         var item = _table.row($(this).closest('tr')).data();
         setData(item);
-        $('#app_btn').html("Through the review");
+		//服务地区
+        initAddress();
+        getAddress(item.id);
+        userId=item.id;
+        $('#app_btn').html("Confirm");
         $('#modal-title').html("Review the user information");
         $("#approved_modal").modal('show');
      }).on("click",".edit",function() {
         var item = _table.row($(this).closest('tr')).data();
         setData(item);
+		//服务地区
+        initAddress();
+        getAddress(item.id);
+        userId=item.id;
         $('#app_btn').html("Ok");
         $('#modal-title').html("Modify the user service information");
         $("#approved_modal").modal('show');
@@ -342,6 +385,72 @@
     		window.location.href="${cxt!}/jf/thairice/admin/user/export?select=zd&ids="+ids;
     	}
     }
+	
+	
+	
+	//初始化服务地区
+    function initAddress(){
+    	sendAjax("${cxt!}/jf/thairice/t3user/region_list",null,function (res) {
+      	 $('#address_data').cxSelect({
+ 		    selects: ['p', 'c', 'a'],
+ 		    required: true,
+ 		    jsonValue: 'v',
+ 		   data: res
+        });
+      });	 
+    }
+    //获取服务地区
+    function getAddress(id){
+        sendAjax("${cxt!}/jf/thairice/admin/user/region",{'userId':id},function (res) {
+        	$('.list').empty();
+        	res.forEach(function(item,index){
+            	 var name='';
+           	  	 var ids=''
+           	  	 item.s.forEach(function(item2,index2){
+           	  		name=item2.n+" --- ";
+           	  	    ids=item2.v+","
+           	  		  item2.s.forEach(function(item3,index3){
+           	  		  	  name+=item3.n;
+           	  		      ids+=item3.v
+           	  		        var  result='<div class="item"><span style="color: #31708f;">'+item.n+'</span> --- '+name+'<div class="del" onclick="del(this,'+item.v+','+ids+')">Delete</div></div>';
+                     	  	$('.list').append(result);
+           	  		  })
+           	  	  })
+           	  })
+        	 $('#custom_data').cxSelect({
+        		    selects: ['province', 'city', 'area'],
+        		    required: true,
+        		    jsonValue: 'v',
+        		   data: res
+            });
+        })
+    }
+    //添加服务地区
+    function add_address(){
+    	var data={'province':$("#p").val(),'city':$("#c").val(),'area':$("#a").val(),'userId':userId}
+    	 sendAjax("${cxt!}/jf/thairice/admin/user/add_address",data,function (res) {
+       		getAddress(userId);
+       	 })
+    }
+    //删除服务地区
+    function del(obj,a1,a2,a3){
+    	//询问框
+    	layer.confirm('Please confirm whether you want to delete this record?', {
+    		title: ['Tips'],btn: ['Confirm','Cancel'] //按钮
+    	}, function(){
+          	$(obj).parent().remove();
+          	var ids=a1+','+a2+','+a3; 
+           	 sendAjax("${cxt!}/jf/thairice/admin/user/del_address",{'ids':ids},function (res) {
+          		getAddress(userId);
+          	 })
+          	layer.closeAll();
+    	}, function(){
+    	});
+    }
+	
+	
+	
+	
     //拼装查询条件
     function getQueryCondition(data) {
         var param = {};
@@ -386,15 +495,15 @@
         format: 'YYYY-MM-DD',
         locale: moment.locale('zh-cn')
     });
-    $('#Prdt_EfDt').datetimepicker({
+    $('#p1').datetimepicker({
         format: 'YYYY-MM-DD',
         locale: moment.locale('zh-cn')
     });
-    $('#PD_ExDat').datetimepicker({
+    $('#p2').datetimepicker({
         format: 'YYYY-MM-DD',
         locale: moment.locale('zh-cn')
     });
 </script>
   <% }; %> <%
-    include("../layout.html",{cssSec:cssSec,contSec:contSec,jsSec:jsSec}){}
+  include("../layout.html",{cssSec:cssSec,contSec:contSec,jsSec:jsSec}){}
     %>

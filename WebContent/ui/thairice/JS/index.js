@@ -9,11 +9,11 @@ $(function () {
         locale: moment.locale('zh-cn')
     });
     $('.btn_selfinfo').click(function () {
-        //$("#fm").bootstrapValidator('validate');
-        //if ($("#fm").data('bootstrapValidator').isValid()) {
+        $("#fm").bootstrapValidator('validate');
+        if ($("#fm").data('bootstrapValidator').isValid()) {
             $('.form_selfinfo').hide();
             $('.form_serviceinfo').show();
-       // }
+        }
     });
     $('#previous').click(function () {
     	 $('.form_selfinfo').show();
@@ -96,7 +96,7 @@ $(function () {
                         message: 'The input is not a valid email address'
                     },
                     remote: {//ajax验证。server result:{"valid",true or false}
-                        url: '/jf/thairice/t3user/valiMailBox',
+                        url: '/jf/thairice/t3user/valiMailBox2',
                         message: 'The email address has already exist!',
                         delay: 2000,
                         type: 'POST',
@@ -149,10 +149,10 @@ $(function () {
     });
 });
 //bootstrapValidator与datetimepicker混合使用时日期验证不刷新
-$("#Prdt_EfDt").blur(function(){
+$("#Prdt_EfDt1").blur(function(){
     $('#fm').data('bootstrapValidator').updateStatus('Prdt_EfDt','NOT_VALIDATED',null).validateField('Prdt_EfDt');
 });
-$("#PD_ExDat").blur(function(){
+$("#PD_ExDat1").blur(function(){
     $('#fm').data('bootstrapValidator').updateStatus('PD_ExDat','NOT_VALIDATED',null).validateField('PD_ExDat');
 });
 function submitForm() {
@@ -160,6 +160,10 @@ function submitForm() {
     if(!$("#fm").data('bootstrapValidator').isValid()){
         return;
     }
+	  var list=[];
+  	  $('.item').each(function(){
+  	    list.push({'province':$(this).find('#p').attr("type"),'city':$(this).find('#c').attr("type"),'area':$(this).find('#a').attr("type")})
+  	 })
     if(!$("#agree").is(":checked")){
     	showMessage('Please agree with the terms of service first');
     	return;
@@ -167,7 +171,7 @@ function submitForm() {
     var psd = hex_md5($('#pwd').val());
     $('#pwd').val(psd);
     showLoading();
-    sendAjax("/jf/thairice/t3user/doReg", $("#fm").serialize(), function (res) {
+	sendAjax("/jf/thairice/t3user/doReg", $("#fm").serialize()+"&list="+JSON.stringify(list), function (res) {
     	cancelLoading();
         showMessage(res.desc);
         if (res.code == 1) {

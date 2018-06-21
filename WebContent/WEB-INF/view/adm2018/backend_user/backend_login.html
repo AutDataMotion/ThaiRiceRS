@@ -59,7 +59,7 @@
     	showLoading();
         sendAjax("${cxt!}/jf/thairice/admin/user/Login", $("#form").serialize()+'&pass='+hex_md5($("#pass").val()), function (res) {
         	  cancelLoading();   
-        	  layer.msg(res.desc, {icon: 6});
+        	  layer.msg(res.desc);
                if(res.code==1){
                    if ("${returnUrl!}"== '') {
                        window.location.href = "${cxt!}/jf/thairice/admin/user/main";

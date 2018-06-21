@@ -238,18 +238,18 @@
 	        var accountVal = $("#account").val();
 	        var passwordVal = $("#password").val();
 	          if (accountVal == null || accountVal.trim() == '') {
-	            showMessage("Account is  required and can\'t be empty");
+	            showMessage("Account is required and can\'t be empty");
 	            return;
 	        }
 	        if (passwordVal == null || passwordVal.trim() == '') {
-	            showMessage("Password is  required and can\'t be empty");
+	            showMessage("Password is required and can\'t be empty");
 	            return;
 	        }
 	        var data={account: accountVal,password: hex_md5(passwordVal), authCode:$("#authCode").val()}
 	        showLoading();
 	        sendAjax("${cxt!}/jf/thairice/t3user/Login",data,function(res){
 	        	cancelLoading();
-	            layer.msg(res.desc, {icon: 6});
+	            layer.msg(res.desc);
 	            if(res.code==1){
 	                setTimeout(function(){
 	                    if ("${returnUrl!}"== '') {
@@ -259,6 +259,7 @@
 	                    }
 	                },500);
 	            }else{
+	            //showMessage(res.desc);
 	            	refresh ();
 	            }
 	        });
