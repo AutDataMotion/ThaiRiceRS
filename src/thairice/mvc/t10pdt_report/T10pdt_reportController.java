@@ -365,8 +365,8 @@ public class T10pdt_reportController extends BaseController {
 	{
 		String productKind = getPara("productKind");
 		String productDate = getPara("productDate");
-		String areaCode = getPara("areaCode");
-		boolean result = ReportUtil.getProductDataAndCopy2Workspace(productKind,productDate,areaCode);
+		String prov_code = getPara("prov_code");
+		boolean result = ReportUtil.getProductDataAndCopy2Workspace(productKind,productDate,prov_code);
 		setAttr("result",result);
 		renderJson();
 	}
