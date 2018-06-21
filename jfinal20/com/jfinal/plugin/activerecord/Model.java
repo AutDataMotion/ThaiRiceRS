@@ -967,6 +967,7 @@ public abstract class Model<M extends Model> implements Serializable {
 	
 	private Class<? extends Model> getUsefulClass() {
 		Class c = getClass();
+//		Class c1 = c.getName().indexOf("EnhancerByCGLIB") == -1 ? c : c.getSuperclass();
 		return c.getName().indexOf("EnhancerByCGLIB") == -1 ? c : c.getSuperclass();	// com.demo.blog.Blog$$EnhancerByCGLIB$$69a17158
 	}
 }

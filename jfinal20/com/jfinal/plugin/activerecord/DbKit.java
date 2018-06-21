@@ -86,6 +86,8 @@ public final class DbKit {
 	}
 	
 	public static Config getConfig(Class<? extends Model> modelClass) {
+//		System.out.println("DbKit-----");
+//		System.out.println(modelToConfig);
 		return modelToConfig.get(modelClass);
 	}
 	

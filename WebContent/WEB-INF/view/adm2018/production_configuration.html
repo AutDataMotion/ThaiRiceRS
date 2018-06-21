@@ -1,3 +1,4 @@
+
 <% var cssSec={ %>
 <style>
  .undoIcon { background-image:url(${cxt}/ui/thairice/Images/production/undo1.png); width:30px; height:30px; }
@@ -10,19 +11,19 @@
           <!--Nav tabs-->
           <ul class="nav nav-tabs" role="tablist">
             <li role="presentation" class="active">
-                <a href="#production01" aria-controls="production01" role="tab" data-toggle="tab">Monitoring samples</a>
+                <a href="#production01" aria-controls="production01" role="tab" data-toggle="tab">Sample management</a>
             </li>
             <li role="presentation">
-                <a href="#production02" onclick="queryParams('001')"  aria-controls="production02" role="tab" data-toggle="tab">Data of area</a>
+                <a href="#production02" onclick="queryParams('001')"  aria-controls="production02" role="tab" data-toggle="tab">Data download path</a>
             </li>
             <li role="presentation">
-                <a href="#production03" onclick="queryParams('002')"  aria-controls="production03" role="tab" data-toggle="tab">Drought monitoring</a>
+                <a href="#production03" onclick="queryParams('002')"  aria-controls="production03" role="tab" data-toggle="tab">Rice drought</a>
             </li>
             <li role="presentation">
-                <a href="#production04" onclick="queryParams('003')"  aria-controls="production04" role="tab" data-toggle="tab">Condition monitoring</a>
+                <a href="#production04" onclick="queryParams('003')"  aria-controls="production04" role="tab" data-toggle="tab">Rice growth</a>
             </li>
             <li role="presentation">
-                <a href="#production05" aria-controls="production05" role="tab" data-toggle="tab">Production estimates</a>
+                <a href="#production05" aria-controls="production05" role="tab" data-toggle="tab">Rice yield</a>
             </li>
           </ul>
           <!--Tab panes-->
@@ -174,11 +175,27 @@
             </div>		
   			<div role="tabpanel" class="tab-pane" id="production02">
               <div class="tab-box">
-            <h4> < MODIS Upload > </h4>
-            <input type="text" class="form-control" style="margin-bottom:15px;" name="ftpSrcPath0" id="ftpSrcPath0"  size = '50' value=${ftpSrcPath0!} > 
-            <input type="text" class="form-control" style="margin-bottom:15px;" name="ftpSrcPath1" id="ftpSrcPath1"  size = '50' value=${ftpSrcPath1!} >
-            <input type="text" class="form-control" style="margin-bottom:15px;" name="ftpSrcPath2" id="ftpSrcPath2"  size = '50' value=${ftpSrcPath2!} > 
-            <input type="text" class="form-control" style="margin-bottom:15px;" name="ftpSrcPath3" id="ftpSrcPath3"  size = '50' value=${ftpSrcPath3!} > 
+            <h4> < MODIS files download path > </h4>
+            
+            <div class="input-group">
+            	<span class="input-group-addon">Path of MOD13Q1</span>
+            	<input type="text" class="form-control"  name="ftpSrcPath0" id="ftpSrcPath0"  size = '50' value=${ftpSrcPath0!} >
+        	</div>
+        	
+        	            <div class="input-group">
+            	<span class="input-group-addon">Path of MOD13A2</span>
+            	<input type="text" class="form-control"  name="ftpSrcPath1" id="ftpSrcPath1"  size = '50' value=${ftpSrcPath1!} >
+        	</div>
+        	
+        	            <div class="input-group">
+            	<span class="input-group-addon">Path of MOD11A2</span>
+            	<input type="text" class="form-control"  name="ftpSrcPath2" id="ftpSrcPath2"  size = '50' value=${ftpSrcPath2!} >
+        	</div>
+        	
+        	            <div class="input-group">
+            	<span class="input-group-addon">Path of MOD12Q1</span>
+            	<input type="text" class="form-control"  name="ftpSrcPath3" id="ftpSrcPath3"  size = '50' value=${ftpSrcPath3!} >
+        	</div>
             <div class="form-group" style="text-align:center;">
                   <button class="btn btn-primary" onclick="updateParams('001')">submit</button>
                   <button class="btn btn-default">reset</button>
@@ -188,33 +205,33 @@
             
     <div role="tabpanel" class="tab-pane" id="production03">
               <div class="tab-box">
-            <h4> < Classification threshold > </h4>
+            <h4> < Drought threshold > </h4>
             <div class="form-group" style="margin-bottom:0;">
                   <div class="input-group">
                 <div class="input-group-addon color-one">driest to drought</div>
                  <input type="text" class="form-control" name="droughtThreshold1" id="droughtThreshold1" placeholder="0.35" >
-                <div class="input-group-addon" style="background:none;">value:0.3 - 0.4</div>
+                <div class="input-group-addon" style="background:none;">value:0 - 0.2</div>
               </div>
                 </div>
             <div class="form-group" style="margin-bottom:0;">
                   <div class="input-group">
                 <div class="input-group-addon color-two">drought to normal</div>
                 <input type="text" class="form-control" name="droughtThreshold2" id="droughtThreshold2" placeholder="0.35" >
-                <div class="input-group-addon" style="background:none;">value:0.4 - 0.5</div>
+                <div class="input-group-addon" style="background:none;">value:0.2 - 0.4</div>
               </div>
                 </div>
             <div class="form-group" style="margin-bottom:0;">
                   <div class="input-group">
                 <div class="input-group-addon color-three">normal to little wet</div>
                 <input type="text" class="form-control" name="droughtThreshold3" id="droughtThreshold3" placeholder="0.35" >
-                <div class="input-group-addon" style="background:none;">value:0.5 - 0.6</div>
+                <div class="input-group-addon" style="background:none;">value:0.4 - 0.6</div>
               </div>
                 </div>
             <div class="form-group" style="margin-bottom:0;">
                   <div class="input-group">
                 <div class="input-group-addon color-four"> little wet to wet</div>
                 <input type="text" class="form-control" name="droughtThreshold4" id="droughtThreshold4" placeholder="0.35" >
-                <div class="input-group-addon" style="background:none;">value:0.6 - 0.7</div>
+                <div class="input-group-addon" style="background:none;">value:0.6 - 0.8</div>
               </div>
                 </div>
             <div class="form-group" style="text-align:center;">
@@ -271,42 +288,43 @@
             
                         <div role="tabpanel" class="tab-pane" id="production04">
               <div class="tab-box">
-            <h4> < Classification threshold > </h4>
+            <h4> < Rice growth configuration > </h4>
             <div class="form-group">
-                  <div class="input-group" id="starttime11" style="width:200px; float:left;">
+            	  <label class="control-label" style="width:60px; float:left; text-align:center; line-height:34px; padding-top:0;">Year</label>
+                  <div class="input-group" id="starttime11" style="width:160px; float:left;">
                 <input type="text" class="form-control" name="inStartYear" id="inStartYear" placeholder="input year as 2018" style="float:left; ">
                 <!-- <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span> --></div>
-                  <label class="control-label" style="width:60px; float:left; text-align:center; line-height:34px; padding-top:0;">to</label>
-                  <div class="input-group" id="endtime11" style="width:200px; float:left;">
+                  <label class="control-label" style="width:60px; float:left; text-align:center; line-height:34px; padding-top:0;">-</label>
+                  <div class="input-group" id="endtime11" style="width:160px; float:left;">
                 <input type="text" class="form-control" name="inEndYear" id="inEndYear" placeholder="input year as 2020" style="float:left; ">
                 <!-- <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span> --></div>
                 </div>
             <div class="form-group" style="margin-bottom:0;">
                   <div class="input-group">
                 <div class="input-group-addon color-one">worst to poor</div>
-                <input type="text" class="form-control" name="conditionThreshold1" id="conditionThreshold1" placeholder="0.35" >
-                <div class="input-group-addon" style="background:none;">value:0.3 - 0.4</div>
+                <input type="text" class="form-control" name="conditionThreshold1" id="conditionThreshold1" placeholder="-0.3" >
+                <div class="input-group-addon" style="background:none;">value:-0.3 ~-0.1</div>
               </div>
                 </div>
             <div class="form-group" style="margin-bottom:0;">
                   <div class="input-group">
                 <div class="input-group-addon color-two">poor to normal</div>
-                <input type="text" class="form-control" name="conditionThreshold2" id="conditionThreshold2" placeholder="0.35" >
-                <div class="input-group-addon" style="background:none;">value:0.4 - 0.5</div>
+                <input type="text" class="form-control" name="conditionThreshold2" id="conditionThreshold2" placeholder="-0.1" >
+                <div class="input-group-addon" style="background:none;">value:-0.1 ~ 0.1</div>
               </div>
                 </div>
             <div class="form-group" style="margin-bottom:0;">
                   <div class="input-group">
                 <div class="input-group-addon color-three">normal to better</div>
-                <input type="text" class="form-control" name="conditionThreshold3" id="conditionThreshold3" placeholder="0.35" >
-                <div class="input-group-addon" style="background:none;">value:0.5 - 0.6</div>
+                <input type="text" class="form-control" name="conditionThreshold3" id="conditionThreshold3" placeholder="0.1" >
+                <div class="input-group-addon" style="background:none;">value:0.1 ~ 0.3</div>
               </div>
                 </div>
             <div class="form-group" style="margin-bottom:0;">
                   <div class="input-group">
                 <div class="input-group-addon color-four">better to best</div>
-                <input type="text" class="form-control" name="conditionThreshold4" id="conditionThreshold4" placeholder="0.35" >
-                <div class="input-group-addon" style="background:none;">value:0.6 - 0.7</div>
+                <input type="text" class="form-control" name="conditionThreshold4" id="conditionThreshold4" placeholder="0.3" >
+                <div class="input-group-addon" style="background:none;">>0.3</div>
               </div>
                 </div>
             <div class="form-group" style="text-align:center;">
@@ -320,7 +338,7 @@
             
             <div role="tabpanel" class="tab-pane" id="production05">
             	<form class="form-horizontal tab-form" style="width:500px; margin:100px auto 0; background:#fff; border-radius:5px; padding:5px 20px;">
-                	<h4> < Production estimates data upload > </h4>
+                	<h4> < Statistic yield file upload > </h4>
                     <input type="file" name="txt_file" id="txt_file06" multiple class="file" />
                     <div class="form-group" style="text-align:center;">
                     	<button class="btn btn-success">submit</button>
@@ -619,3 +637,4 @@
 <% }; %> <%
 include("operator_layout.html",{cssSec:cssSec,contSec:contSec,jsSec:jsSec}){}
 %>
+

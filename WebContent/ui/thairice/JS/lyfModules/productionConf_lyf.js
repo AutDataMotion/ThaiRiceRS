@@ -11,7 +11,8 @@ var rasterLayerWorkspace = "areatif";
 var areaworkspaceId = "Area";
 var eraseUrl = "http://localhost:6080/arcgis/rest/services/erase/GPServer/erase";
 var mergeUrl = "http://localhost:6080/arcgis/rest/services/merge/GPServer/merge";
-var arearasterbandsextractUrl = "http://localhost:6080/arcgis/rest/services/arearasterbandsextract/GPServer/arearasterbandsextract";
+var arearasterbandsextractUrl = "http://127.0.0.1:6080/arcgis/rest/services/arearasterbandsextract1/GPServer/arearasterbandsextract";
+var areatifsBaseUrl = "http://localhost:8080/areatifs/";
 //var merge_gpserver_workspace = "C:/arcgisserver/directories/arcgisjobs/merge_gpserver/";
 //var erase_gpserver_workspace = "C:/arcgisserver/directories/arcgisjobs/erase_gpserver/";
 function init_productionConf_Monitoring()
@@ -459,7 +460,7 @@ function initFilesTable()
 //		    			dataSet.push(file);
 		    			app.files_excel.row.add(file).draw();
 		    		}
-		    		$('#fileModal_addbtn').click( function () {
+		    		$('#fileModal_addbtn').unbind('click').click( function () {
 		    			$("#mapDiv_productionConf").busyLoad("show", { text: "LOADING ...",
 				    		textPosition: "top"
 				    	});
@@ -467,18 +468,18 @@ function initFilesTable()
 		    			//加载遥感影像的同时加载与影像关联的临时中间产品数据
 		    			app.tifFileName = app.files_excel.row('.selected').data()[0];
 		    			//将选中的tif文件copy to gpmodels ，备改变波段显示
-		    			copyAreaTifFile2gpWorkspace(app.tifFileName);
+//		    			copyAreaTifFile2gpWorkspace(app.tifFileName);
 		    			
 		    			var tifFileNamePrefix = app.tifFileName.lastIndexOf('.');
 		    			var tempproductfileName = app.tifFileName.substring(0,tifFileNamePrefix)+"_temp.shp";
-//		    			var workspaceId = "Area";
+		    			
 		    			
 		    			addRasterLayer(app.tifFileName);
-		    			console.log("fileModal_addbtn---"+tempproductfileName);
+		    			console.log("addProductFeatureLayer---"+tempproductfileName);
 		    			//在workspace空间中，加载对应日期的中间产品数据，
 		    			//如果空间中有对应的数据，即加载，若无，不会加载成功
 		    			addProductFeatureLayer(areaworkspaceId,tempproductfileName);
-//		    			
+		    			
 		    			
 		    			
 		    	    } );
@@ -500,7 +501,7 @@ function initFilesTable()
 
 }
 function copyAreaTifFile2gpWorkspace(tifFileName){
-	console.log("copyAreaTifFile2gpWorkspace---begin");
+	console.log("copyAreaTifFile2gpWorkspace---begin--"+tifFileName);
 	$.ajax({
 	    url:'/jf/thairice/t1parameter/copyAreaTifFile2gpWorkspace',//获取面积相关的遥感影像 文件列表
 	    type:'POST', //GET
@@ -517,21 +518,28 @@ function copyAreaTifFile2gpWorkspace(tifFileName){
 	    success:function(data,textStatus,jqXHR){
 	    	if(data.flag) {  
 	    		console.log("copyAreaTifFile2gpWorkspace---success");
+	    		
+	    		var tifFileNamePrefix = app.tifFileName.lastIndexOf('.');
+    			var tempproductfileName = app.tifFileName.substring(0,tifFileNamePrefix)+"_temp.shp";
+    			
+    			addRasterLayer(app.tifFileName);
+    			addProductFeatureLayer(areaworkspaceId,tempproductfileName);
             }  
             
 	    },
 	    error:function(xhr,textStatus){
-	        console.log('错误')
+	    	console.log("copyAreaTifFile2gpWorkspace---错误");
 	        console.log(xhr)
 	        console.log(textStatus)
 	    },
 	    complete:function(){
-	        console.log('结束')
+	    	console.log("copyAreaTifFile2gpWorkspace---结束");
 	    }
 	})
 }
 function addRasterLayer(fileName)
 {
+	console.log("addRasterLayer---"+fileName);
 	/************************/
 	if (app.hasOwnProperty("renderLayer") ) {//删除之前的图层
 		 
@@ -572,6 +580,7 @@ function addRasterLayer(fileName)
 //         	app.map.setExtent(layerExt.expand(1));
 //        	getHeight()getWidth()
     		app.map.centerAt(layerExt.getCenter());
+//    		$("#mapDiv_productionConf").busyLoad("hide");
     	});
     	
     });
@@ -581,6 +590,7 @@ function addRasterLayer(fileName)
 function addProductFeatureLayer(workspaceId,fileName)
 {
 //	alert(fileName);
+	console.log("addProductFeatureLayer---"+fileName);
 	if (app.hasOwnProperty("featureLayer") ) {//删除之前的图层
 		 
 		 app.map.removeLayer(app.featureLayer);
@@ -879,13 +889,21 @@ function areaRasterbandsExtract(){
 	var rgb_blue_band = $('#rgb_blue option:selected').val();//blue选中的值
 	bands.push(rgb_blue_band);
 	console.log(bands);
-	require(["esri/tasks/Geoprocessor","esri/tasks/query","esri/layers/ImageParameters",
+	require(["esri/tasks/Geoprocessor","esri/tasks/query","esri/tasks/RasterData","esri/layers/ImageParameters",
 		"esri/layers/LayerDrawingOptions","dojo/dom",
-		    "dojo/domReady!"],function(Geoprocessor,Query,ImageParameters,LayerDrawingOptions,dom){
+		    "dojo/domReady!"],function(Geoprocessor,Query,RasterData,ImageParameters,LayerDrawingOptions,dom){
 		var gp_params={};
+		
+		var rasterData = new RasterData();
+		
+		rasterData.url=areatifsBaseUrl+app.tifFileName;
+		rasterData.format="tif";
+		
 		gp_params = {
-	            "bands":bands
+	            "bands":bands,
+	            "input":rasterData
 	    };
+		console.log(gp_params);
 		var geoprocessor = new Geoprocessor(arearasterbandsextractUrl);
 	      geoprocessor.setOutSpatialReference({
 	        wkid: 4326
