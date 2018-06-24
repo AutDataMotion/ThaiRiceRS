@@ -41,6 +41,7 @@ public class T2syslogController extends BaseController {
 		// 提取前100条
 		List<T2syslog> list = T2syslogService.service.SelectPage(0, 10);
 		setAttr("list", list);
+		setAttr("t2syslog", "active");
 		renderWithPath(pthv + pthvm);
 	}
 

@@ -2,11 +2,15 @@ package thairice.mvc.t3user;
 
 import java.math.BigInteger;
 import java.sql.Timestamp;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.json.JSONArray;
+import org.json.JSONObject;
 
 import com.jfinal.aop.Before;
 import com.jfinal.aop.Clear;
@@ -80,7 +84,7 @@ public class T3userController extends BaseController {
 	 */
 	@Clear
 	@Before(T3userValidator.class)
-	public void doLogin() {
+	public void Login() {
 		boolean authCode = authCode();
 		String account = null;
 		Result res;
@@ -91,12 +95,12 @@ public class T3userController extends BaseController {
 		} else {
 			res = new Result(0, "Verification code is error, please re-enter");
 		}
-		if(res.getCode()==1) {
+	/*	if(res.getCode()==1) {
 		    T3user user = getSessionAttr("user");
 		    T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), account, "Log in", res.toString());  
 		}else {
 		    T2syslogService.addLog(EnumT2sysLog.INFO, BigInteger.ONE , account, "Log in", res.toString());  
-		}
+		}*/
 		renderJson(res);
 	}
 
@@ -104,7 +108,10 @@ public class T3userController extends BaseController {
 	public void reg() {
 		renderWithPath(pthv + "reg.html");
 	}
-
+	@Clear
+	public void privacy() {
+	    renderWithPath(pthv + "privacy.html");
+	}
 	/**
 	 * 注册操作
 	 */
@@ -125,6 +132,29 @@ public class T3userController extends BaseController {
 		t3user.set("PD_TpCd", l);
 		boolean rlt = t3user.use(ConstantInitMy.db_dataSource_main).saveGenIntId();
 		if (rlt) {
+		        //添加地区
+			JSONArray array=new JSONArray(getPara("list"));
+			for(int i=0;i<array.length();i++){
+				JSONObject object=array.getJSONObject(i);
+				if(StrKit.notBlank(object.getString("province"))){
+					Record record=new Record();
+					record.set("userId", t3user.getId());
+					record.set("regionId", object.getInt("province"));
+					Db.use(ConstantInitMy.db_dataSource_main).save("t14my_region", record);
+				}
+				if(StrKit.notBlank(object.getString("city"))){
+					Record record2=new Record();
+					record2.set("userId", t3user.getId());
+					record2.set("regionId",object.getInt("city"));
+					Db.use(ConstantInitMy.db_dataSource_main).save("t14my_region", record2);
+				}
+				if(StrKit.notBlank(object.getString("area"))){
+					Record record3=new Record();
+					record3.set("userId", t3user.getId());
+					record3.set("regionId",object.getInt("area"));
+					Db.use(ConstantInitMy.db_dataSource_main).save("t14my_region", record3);
+				}
+			}
 			String authCode = codeService.createAuthCode(new BigInteger(t3user.get("id").toString()), 0, 3600);
 			if (StrKit.notBlank(authCode)) {
 				String url = PropKit.get("activation_url") + authCode;
@@ -143,7 +173,75 @@ public class T3userController extends BaseController {
 			renderJson(new Result(0, "Registration failed"));
 		}
 	}
-
+	 //所有的地址列表
+		@Clear
+		public void region_list(){
+			      List<Record>all=new ArrayList<>();
+		          List<Record>list=Db.use(ConstantInitMy.db_dataSource_main).find("select id,name from t13region where parentId=0 GROUP BY name");
+		          if(!list.isEmpty()){
+		        	 for (Record record : list) {
+		        		 List<Record>list_c=Db.use(ConstantInitMy.db_dataSource_main).find("select id,name from t13region where parentId=?",record.getInt("id"));
+		        		 List<Record>r2_list=new ArrayList<>();
+		        		 Record r1=new Record();
+		        		 r1.set("v", record.getInt("id"));
+		        		 r1.set("n", record.getStr("name"));
+		        		 for (Record record2 : list_c) {
+		        			 Record r2=new Record();
+		        			 r2.set("v", record2.getInt("id"));
+		        			 r2.set("n", record2.getStr("name"));
+		        			 List<Record>list_d=Db.use(ConstantInitMy.db_dataSource_main).find("select id,name from t13region where parentId=?",record2.getInt("id"));
+		        			 List<Record>r3_list=new ArrayList<>();
+		        			 for (Record record3 : list_d) {
+		        				 Record r3=new Record();
+			        			 r3.set("v", record3.getInt("id"));
+			        			 r3.set("n", record3.getStr("name"));
+			        			 r3_list.add(r3);
+			        			 r2.set("s", r3_list);
+							}
+		        			 r2_list.add(r2);
+		        			 r1.set("s", r2_list);
+						}
+		        		 all.add(r1);
+					}
+		          }
+			      renderJson(all);
+		}
+		
+		/**
+		 * 用户选择的地区
+		 */
+		public void region() {
+		      List<Record>all=new ArrayList<>();
+	          List<Record>list=Db.use(ConstantInitMy.db_dataSource_main).find("SELECT r.name,r.id as regionId,m.id FROM t13region r LEFT JOIN t14my_region m ON m.regionId = r.id WHERE r.parentId=0 and m.userId=? GROUP BY r.name",getParaToInt("userId"));
+	          if(!list.isEmpty()){
+	        	 for (Record record : list) {
+	        		 List<Record>list_c=Db.use(ConstantInitMy.db_dataSource_main).find("SELECT r.name,r.id as regionId,m.id FROM t13region r LEFT JOIN t14my_region m ON m.regionId = r.id LEFT JOIN t13region tr ON tr.id = r.parentId WHERE r.parentId =? and userId=?",record.getInt("regionId"),getParaToInt("userId"));
+	        		 List<Record>r2_list=new ArrayList<>();
+	        		 Record r1=new Record();
+	        		 r1.set("v", record.getInt("id"));
+	        		 r1.set("n", record.getStr("name"));
+	        		 for (Record record2 : list_c) {
+	        			 Record r2=new Record();
+	        			 r2.set("v", record2.getInt("id"));
+	        			 r2.set("n", record2.getStr("name"));
+	        			 List<Record>list_d=Db.use(ConstantInitMy.db_dataSource_main).find("SELECT r.name,m.id FROM t13region r LEFT JOIN t14my_region m ON m.regionId = r.id LEFT JOIN t13region tr ON tr.id = r.parentId WHERE r.parentId =? and userId=?",record2.getInt("regionId"),getParaToInt("userId"));
+	        			 List<Record>r3_list=new ArrayList<>();
+	        			 for (Record record3 : list_d) {
+	        				 Record r3=new Record();
+		        			 r3.set("v", record3.getInt("id"));
+		        			 r3.set("n", record3.getStr("name"));
+		        			 r3_list.add(r3);
+		        			 r2.set("s", r3_list);
+						}
+	        			 r2_list.add(r2);
+	        			 r1.set("s", r2_list);
+					}
+	        		 all.add(r1);
+				}
+	          }
+		      renderJson(all);
+		}
+		
 	/**
 	 * 显示还没激活页面
 	 */
@@ -190,6 +288,15 @@ public class T3userController extends BaseController {
 		boolean bool = T3userService.service.valiMailBox(mailBox);
 		renderJson("valid", bool);
 	}
+	/**
+	 * 验证邮箱是否可用(用于邮箱注册)
+	 */
+	@Clear
+	public void valiMailBox2() {
+		String mailBox = getPara("mailBox");
+		boolean bool = T3userService.service.valiMailBox2(mailBox);
+		renderJson("valid", bool);
+	}
 
 	/**
 	 * 验证邮箱是否可用(用于密码找回)
@@ -210,9 +317,13 @@ public class T3userController extends BaseController {
 		Page page  = T10pdt_report.dao.paginate(getParaToInt(0, 1), 10, "select *", "from T10pdt_report order by id asc");
 		setAttr("blogPage",page );
 		setAttr("province", ad[0]);
+		T3user info=srv.SelectById(user.getBigInteger("id"));
+		if(TimeUtil.isLaterThanNow(info.getPD_ExDat().toString())) {
+		    info.setStatus_("04");    
+		}
 		setAttr("city", ad[1]);
 		setAttr("area", ad[2]);
-		setAttr("user", srv.SelectById(user.getBigInteger("id")));
+		setAttr("user", info);
 		renderWithPath(pthv + "self_center.html");
 	}
 
@@ -342,7 +453,10 @@ public class T3userController extends BaseController {
 		// 创建授权码
 		String authCode = codeService.createAuthCode(t3user.getBigInteger("id"), 0, 3600);
 		boolean success = Mail.sendEmail(getParaToInt("type", 0) == 0 ? "Thailand agricultural remote sensing monitoring platform password assistance" : "change Password",
-				"To verify your identity, please use the following code:\n\n" + authCode+"\n\nWe hope to see you again soon.", getPara("email"), Mail.MODE_TEXT);
+				"Hi,\n\nAre you trying to sign in?\nIf so, use this code to finish signing in.\n" + authCode+
+				 "\n\nDidn't sign in recently?\r\n" + 
+				 "\r\n" + 
+				 "If this wasn't you, someone entered your email address by mistake so you can disregard this email.\n\n\nThanks.", getPara("email"), Mail.MODE_TEXT);
 		if (success) {
 			renderJson(new Result(1, "For your security, we need to verify your identity. We've sent a code to the email.Please enter it below."));
 		} else {

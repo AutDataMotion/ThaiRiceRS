@@ -65,9 +65,9 @@ public class AuthCodeService {
 			// 使用后删除授权码
 			// Db.update("delete from thairice.auth_code where id=?",
 			// authCodeId);
-			return new Result(1, "Recovery success");
+			return new Result(1, "Reset successed");
 		} else {
-			return new Result(1, "Recovery failed");
+			return new Result(1, "Reset failed");
 		}
 	}
 

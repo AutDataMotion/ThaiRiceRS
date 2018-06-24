@@ -149,20 +149,36 @@ function initapp()
 	    "dojo/dom",
 	    "dojo/on",
 	    "esri/layers/ArcGISDynamicMapServiceLayer",
+	    "esri/layers/FeatureLayer",
+	    "esri/symbols/SimpleFillSymbol", "esri/symbols/SimpleLineSymbol","esri/Color", "esri/renderers/SimpleRenderer",
 	    "esri/geometry/Extent",
 	    "dojo/domReady!"], function (
-	        Map,Scalebar,dom,on, ArcGISDynamicMapServiceLayer,Extent) {
+	        Map,Scalebar,dom,on, ArcGISDynamicMapServiceLayer,FeatureLayer,SimpleFillSymbol, SimpleLineSymbol,Color, SimpleRenderer,Extent) {
 	    //var map = new Map("mapDiv");
 	    
 //		var layer1 = new ArcGISDynamicMapServiceLayer("http://localhost:6080/arcgis/rest/services/tai_wgs84/MapServer");
 	    //app.map.addLayer(layer1);
 //	    var initExtent = layer1.fullExtent;
 //	    console.log(layer1.fullExtent);
+		
 	    app.map = new Map("mapDiv", {
 	    	basemap: "satellite",
 	    	extent: new Extent({xmin:97.34370447600008,ymin:5.612765642000056,xmax:105.63700411400004,ymax:20.46490708700003,spatialReference:{wkid:4326}}),
 	        logo:false
 	      });
+	    
+	    // Carbon storage of trees in Warren Wilson College.
+	    var featureLayer = new FeatureLayer("http://localhost:6080/arcgis/rest/services/Thailand_shp/MapServer/0");
+		
+	    var symbol = new SimpleFillSymbol()
+	    .setColor(new Color([255,0,0,0]))
+	    .setOutline(new SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID, new Color([255,215,0]), 2)); ;
+	    var renderer = new SimpleRenderer(symbol);
+
+	    featureLayer.setRenderer(renderer);
+	    
+	    app.map.addLayer(featureLayer);
+	    
 	    var scalebar = new Scalebar({
 	          map: app.map,
 	          // "dual" displays both miles and kilometers

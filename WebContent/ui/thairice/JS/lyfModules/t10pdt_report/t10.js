@@ -34,14 +34,16 @@ function AssembleProductLayerInfo(areaCode,productDate,productKind_code)
 			 app.featureLayer = null;
 			 //app.map.removeAllLayers();
 		}
-		getProductDataAndCopy2Workspace(areaCode,productDate,productKind_des);
+		var prov_code = areaCode.substring(0,2);
+		getProductDataAndCopy2Workspace(prov_code,productDate,productKind_des);
+//		getProductDataAndCopy2Workspace(areaCode,productDate,productKind_des);
 
 //		
 //		addProductLayer(areaCode,productDate,productKind_des);
 	}
 
 }
-function getProductDataAndCopy2Workspace(areaCode,productDate,productKind_des)
+function getProductDataAndCopy2Workspace(prov_code,productDate,productKind_des)
 {
 	$.ajax({
 	    url:'/jf/thairice/t10pdt_report/CopyProductData2Workspace',
@@ -51,7 +53,7 @@ function getProductDataAndCopy2Workspace(areaCode,productDate,productKind_des)
 	    	
 	    	productKind:productKind_des,//产品种类 yield等
 			productDate:productDate,//选择的产品日期
-			areaCode:areaCode,//选择的产品行政区域
+			prov_code:prov_code,//选择的产品行政区域
 	    	
 	    },
 	    timeout:5000,    //超时时间
@@ -65,7 +67,7 @@ function getProductDataAndCopy2Workspace(areaCode,productDate,productKind_des)
 //	    	alert("success");
 	    	if(data.result)
 	    	{
-	    		addProductLayer(areaCode,productDate,productKind_des);
+	    		addProductLayer(prov_code,productDate,productKind_des);
 	    	}
 	    	else{
 	    		// 隐藏loading
@@ -103,9 +105,9 @@ function getProductDataAndCopy2Workspace(areaCode,productDate,productKind_des)
 	    }
 	})
 }
-function addProductLayer(areaCode,productDate,productKind_des)
+function addProductLayer(prov_code,productDate,productKind_des)
 {
-	var featureLayer_outFields = ["value"];
+	var featureLayer_outFields = ["value","PROV_NAME","AMP_NAME","TAM_NAME","prov_code","amp_code","tam_code"];
 	var renderLayer_id = productKind_des;
 	var Render_field = 'value';
 	//var workspaceId = 'yield';
@@ -115,15 +117,15 @@ function addProductLayer(areaCode,productDate,productKind_des)
 	if(productKind_des=="Yield")//估产
 	{
 //		dataSourceName = '72_Yield_2017_193.shp';
-		dataSourceName = productDate+'_'+areaCode+'.shp';
+		dataSourceName = productDate+'_'+prov_code+'.shp';
 	}
 	if(productKind_des=="Drought")//干旱
 	{
-		dataSourceName = productDate+'_'+areaCode+'.shp';
+		dataSourceName = productDate+'_'+prov_code+'.shp';
 	}
 	if(productKind_des=="Area")//面积
 	{
-		dataSourceName = productDate+'_'+areaCode+'.shp';
+		dataSourceName = productDate+'_'+prov_code+'.shp';
 	}
 	
 	
@@ -137,13 +139,28 @@ function addProductLayer(areaCode,productDate,productKind_des)
 		
 		//var layerSource = getLayerSource("yield","72_Yield_2017_193.shp");
 		var layerSource = getLayerSource(workspaceId,dataSourceName);
+		///根据行政区划代码 确定需要过滤的字段
+		var definitionExpression_str;
+//		alert(app.areaCode);
+		if(app.areaCode.length == 2)//选择的是省
+		{
+			definitionExpression_str = "prov_code = '"+app.areaCode+"'";
+		}
+		else if(app.areaCode.length == 4)//选择的是市
+		{
+			definitionExpression_str = "amp_code = '"+app.areaCode+"'";
+		}
+		else{//选择的是县
+			definitionExpression_str = "tam_code = '"+app.areaCode+"'";
+		}
 		//定义一个要素图层:注意链接为动态图层的地址dynamicLayer  可以在点击连接看到 
 		//供查询分级使用
-	    app.featureLayer = new FeatureLayer(featureLayerUrl, {
+		app.featureLayer = new FeatureLayer(featureLayerUrl, {
 	        mode: FeatureLayer.MODE_ONDEMAND,
 	        //outFields: ["value"],
 	        outFields: featureLayer_outFields,
-	        source: layerSource
+	        source: layerSource,
+	        definitionExpression:definitionExpression_str
 	    });
 //	    console.log(app.featureLayer);
 //	    console.log(app.featureLayer.fullExtent);
@@ -168,6 +185,11 @@ function addProductLayer(areaCode,productDate,productKind_des)
         dynamicLayerInfos.push(dynamicLayerInfo);
         
         app.renderLayer.setDynamicLayerInfos(dynamicLayerInfos, true);
+        //根据选择的行政区划代码 过滤要素
+        var layerDefinitions = [];
+        layerDefinitions[0] = definitionExpression_str;
+//        layerDefinitions[0] = "value > 28";
+        app.renderLayer.setLayerDefinitions(layerDefinitions);
         
 	    //渲染图层
 	    //createRender(app.featureLayer,app.renderLayer,"value",5);
@@ -281,10 +303,10 @@ function createClassBreakRenderLayer(featureLayer,renderLayer,field,numbreaks,le
              featureLayer.refresh();
 	       	//地图添加动态图层
 	         
-	         featureLayer.on("load",function(res){
-	        	 preview(featureLayer);//缩放到指定范围
-	        	 createLegend(app.map, featureLayer,legendTitle);
-	         });
+//	         featureLayer.on("load",function(res){
+//	        	 preview(featureLayer);//缩放到指定范围
+//	        	 createLegend(app.map, featureLayer,legendTitle);
+//	         });
 //             console.log("11");
 	         app.map.addLayer(renderLayer);
 
@@ -546,14 +568,59 @@ var sta = {};
 	{
 		
 	}
+	function getChildAreaCodeAndNameByParentAreaCode(areaCode)
+	{
+//		var ChildAreaCodeAndName_Array = [{'NAME':'MUEANG SUPHAN BURI','CODE':'7201'},{'NAME':'DOEM BANG NANG BUAT','CODE':'7202'},
+//			{'NAME':'DAN CHANG','CODE':'7203'},{'NAME':'BANG PLA MA','CODE':'7204'},
+//			{'NAME':'SI PRACHAN','CODE':'7205'},{'NAME':'DON CHEDI','CODE':'7206'},{'NAME':'SONG PHI NONG','CODE':'7207'},
+//			{'NAME':'SAM CHUK','CODE':'7208'},{'NAME':'U THONG','CODE':'7209'},{'NAME':'NONG YA SAI','CODE':'7210'}];
+//		
+		var ChildAreaCodeAndName_Array;
+		$.ajax({
+		    url:'/jf/thairice/t13region/getChildAreaCodeAndNameByParentAreaCode',
+		    type:'POST', //GET
+		    async:false,    //或false,是否异步
+		    data:{
+		    	parentareaCode:areaCode
+		    },
+		    timeout:5000,    //超时时间
+		    dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+		    beforeSend:function(xhr){
+		        
+		        console.log('发送前')
+		    },
+		    success:function(data,textStatus,jqXHR){
+		    	
+//		    	alert("success");
+		    	if(data.flag)
+		    	{
+//		    		console.log(data);
+		    		ChildAreaCodeAndName_Array = data.childRegions;
+		    	}
+		    	else{
+		    		
+		    	}
+		    },
+		    error:function(xhr,textStatus){
+		    	console.log('错误')
+		        console.log(xhr)
+		        console.log(textStatus)
+		    },
+		    complete:function(){
+		        console.log('结束')
+		    }
+		})
+//		console.log(ChildAreaCodeAndName_Array);
+		return ChildAreaCodeAndName_Array;
+	}
 	//得到Province-Country 根据省---》市
-	function getCountry(Province,featureLayer,field)
+	function getCountry(areaCode,featureLayer,field)
 	{
 		
 		$("#staChartModal").busyLoad("show", { text: "LOADING ...",
 			textPosition: "top"
 		});
-		//console.log(app.featureLayer);
+		/*
 		var queryTask = new esri.tasks.QueryTask(featureQueryUrl);
         var query = new esri.tasks.Query();
         query.outFields = ["CODE","NAME"];//
@@ -577,8 +644,11 @@ var sta = {};
         function errorHandler(err) {
             console.log('Oops, error: ', err);
           }
-        
-
+        */
+		var ChildAreaCodeAndName_Array = getChildAreaCodeAndNameByParentAreaCode(areaCode);
+		app.staData = [];
+        //console.log("sta",results);
+        sta(ChildAreaCodeAndName_Array,featureLayer,field,app.staData);
       //按行政区域进行统计
       /*
        / features---》
@@ -590,6 +660,8 @@ var sta = {};
       {
       	//var datas = [];
       	//var value = 0;
+    	console.log("sta---->");
+//    	console.log(features);
     	var len = features.length;//控制位
       	dojo.forEach(features,function(feature){
       		
@@ -600,21 +672,31 @@ var sta = {};
       	//根据行政单元的地理范围查询地理范围内的features
       	function staDataByUnitGeometry(len,feature,featureLayer,field,staData)
       	{
-      		var data = {};
-      		data.name = feature.attributes["NAME"];//
-      		data.code = feature.attributes["CODE"];//
+      		  var data = {};
+//      		data.name = feature.attributes["NAME"];//
+//      		data.code = feature.attributes["CODE"];//
+      		  data.name = feature["NAME"];//
+      		  data.code = feature["CODE"];//
 //      		console.log(data.code);
       		  var queryParams = new esri.tasks.Query();
               queryParams.outFields = [field];
-              //queryParams.outStatistics = [ minStatDef, maxStatDef];
+              
+              if(app.areaCode.length == 2)//选择的是省--->市
+	      		{
+            	  	queryParams.where = "amp_code = '"+feature["CODE"]+"'";//行政代码相同
+	      		}
+	      		else{//选择的是//选择的是市--->县
+	      			queryParams.where = "tam_code = '"+feature["CODE"]+"'";
+	      		}
+	          /*
               if(app.productKind_code=="01"){//Area
-            	  //queryParams.where = "1=1";
+            	  
             	  queryParams.where = "code = '"+feature.attributes["CODE"]+"'";//行政代码相同
               }
-              //queryParams.where = "1=1";
               else{
             	  queryParams.geometry = feature.geometry;
               }
+              */
               var countTry = 5;//queryFeatures如果出错，尝试执行5次
               featureLayer.queryFeatures(queryParams, getStats, errback);
               

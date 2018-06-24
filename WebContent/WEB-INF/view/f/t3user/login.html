@@ -30,14 +30,14 @@
     <div class="container" style="width:1000px; margin:0 auto;">
     	<h2 class="announce_title"><span>News</span></h2>
         <ul class="list-group">
-          <li class="list-group-item">泰国全境水稻最新长势监测产品现已发布（2018年7月13日）</li>
-          <li class="list-group-item">Suphan Buri府水稻种植分布与面积测算产品已更新（2018年夏季）</li>
-          <li class="list-group-item">Nakhon Phanom府旱情监测报告已更新（2018年7月3日）</li>
-          <li class="list-group-item">Srakaeo府、Rayong府2018年夏季水稻产量估算现可查询（2018年7月3日）</li>
-          <li class="list-group-item">泰国全境水稻最新长势监测产品现已发布（2018年7月13日）</li>
-          <li class="list-group-item">Suphan Buri府水稻种植分布与面积测算产品已更新（2018年夏季）</li>
-          <li class="list-group-item">Nakhon Phanom府旱情监测报告已更新（2018年7月3日）</li>
-          <li class="list-group-item last">Srakaeo府、Rayong府2018年夏季水稻产量估算现可查询（2018年7月3日）</li>
+          <li class="list-group-item">Lateset rice growth monitoring product of all of Thailand has been released. (13 Jul 2018)</li>
+          <li class="list-group-item">Rice acreage product of Suphan Buri Province has been updated. (10 Jul 2018)</li>
+          <li class="list-group-item">Rice drought monitoring report has been updated. (3 Jul 2018)</li>
+          <li class="list-group-item">Rice yield estimate of Srakaeo Province and Rayong Province can be queryed now. (3 Jul 2018)</li>
+          <li class="list-group-item">Lateset rice growth monitoring product of all of Thailand has been released. (23 Jun 2018)</li>
+          <li class="list-group-item">Rice acreage product of Suphan Buri Province has been updated. (20 Jun 2018)</li>
+          <li class="list-group-item">Rice drought monitoring report has been updated. (20 Jun 2018)</li>
+          <li class="list-group-item last">Rice yield estimate of Srakaeo Province and Rayong Province can be queryed now. (17 Jun 2018)</li>
         </ul>
     </div>
   </div>
@@ -163,7 +163,7 @@
             </div>
           </div>
           <div class="form-group">
-            <a type="button"  onclick="doLogin()" class="btn btn-info btn-lg welcome_btn1" role="button">LOG IN</a>
+            <a type="button"  onclick="Login()" class="btn btn-info btn-lg welcome_btn1" role="button">LOG IN</a>
           </div>
           <div class="form-group">
             <p class="line">or</p>
@@ -172,7 +172,7 @@
             <a href="${cxt!}/jf/thairice/t3user/reg" type="button" class="btn btn-primary btn-lg welcome_btn1" role="button">SIGN UP</a>
           </div>
           <div class="form-group">
-            <a class="forget_password" href="${cxt!}/jf/thairice/t3user/forget_pass">Forget password?</a>
+            <a class="forget_password" href="${cxt!}/jf/thairice/t3user/forget_pass">Forget password</a>
           </div>
         </form>
     </div>
@@ -234,22 +234,22 @@
 	        var verify=document.getElementById('autoCode');
 	        verify.setAttribute('src','${cxt!}/jf/platform/authImg?rand='+Math.random());
 	    }
-	    function doLogin() {
+	    function Login() {
 	        var accountVal = $("#account").val();
 	        var passwordVal = $("#password").val();
 	          if (accountVal == null || accountVal.trim() == '') {
-	            showMessage("Account is  required and can\'t be empty");
+	            showMessage("Account is required and can\'t be empty");
 	            return;
 	        }
 	        if (passwordVal == null || passwordVal.trim() == '') {
-	            showMessage("Password is  required and can\'t be empty");
+	            showMessage("Password is required and can\'t be empty");
 	            return;
 	        }
 	        var data={account: accountVal,password: hex_md5(passwordVal), authCode:$("#authCode").val()}
 	        showLoading();
-	        sendAjax("${cxt!}/jf/thairice/t3user/doLogin",data,function(res){
+	        sendAjax("${cxt!}/jf/thairice/t3user/Login",data,function(res){
 	        	cancelLoading();
-	            layer.msg(res.desc, {icon: 6});
+	            layer.msg(res.desc);
 	            if(res.code==1){
 	                setTimeout(function(){
 	                    if ("${returnUrl!}"== '') {
@@ -259,10 +259,17 @@
 	                    }
 	                },500);
 	            }else{
+	            //showMessage(res.desc);
 	            	refresh ();
 	            }
 	        });
 	    }
+		//键盘事件
+		$('#authCode').bind('keyup', function(event) {
+			if (event.keyCode == "13") {
+				Login();
+			}
+		});
 </script>
 </body>
 </html>

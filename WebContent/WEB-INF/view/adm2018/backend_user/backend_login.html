@@ -19,16 +19,16 @@
                     <input type="password" class="form-control" placeholder="Password"  id="pass">
                     <div class="form-group" style="margin-left:0;">
                     <input type="text" id="authCode"  name="authCode"  class="form-control" style="width:200px; float:left; margin-top:0;" placeholder="Verification code"><img id="autoCode" onclick="refresh()" style="width: 75px;border-radius: 3px;height: 32px;margin-left: 10px;cursor: pointer;" src="${cxt!}/jf/platform/authImg"/></span><span class="checkcode_text"  style="margin-left: 10px;" onclick="refresh()">Refresh</span>
-                </div>
+                    </div>
                 </div>
                 <div class="form-group">
-                    <a type="button" class="btn btn-info btn-lg backend_btn" role="button"  id="login">LOG IN</a>
+                    <a type="button" class="btn btn-info btn-lg backend_btn" role="button"  onclick="Login()">LOG IN</a>
                 </div>
                 <div class="form-group" style="margin-bottom:5px;">
                     <p class="line">or</p>
                 </div>
                 <div class="form-group">
-                    <a class="forget_password" href="${cxt!}/jf/thairice/admin/user/find_pass">Forget password?</a>
+                    <a class="forget_password" href="${cxt!}/jf/thairice/admin/user/find_pass">Forget password</a>
                 </div>
             </form>
         </div>
@@ -45,7 +45,7 @@
         verify.setAttribute('src','${cxt!}/jf/platform/authImg?rand='+Math.random());
      }
      //登录
-    $("#login").click(function () {
+     function Login(){
     	 var accountVal = $("#account").val();
 	     var passwordVal = $("#pass").val();
 	          if (accountVal == null || accountVal.trim() == '') {
@@ -57,9 +57,9 @@
 	            return;
 	        }
     	showLoading();
-        sendAjax("${cxt!}/jf/thairice/admin/user/doLogin", $("#form").serialize()+'&pass='+hex_md5($("#pass").val()), function (res) {
+        sendAjax("${cxt!}/jf/thairice/admin/user/Login", $("#form").serialize()+'&pass='+hex_md5($("#pass").val()), function (res) {
         	  cancelLoading();   
-        	  layer.msg(res.desc, {icon: 6});
+        	  layer.msg(res.desc);
                if(res.code==1){
                    if ("${returnUrl!}"== '') {
                        window.location.href = "${cxt!}/jf/thairice/admin/user/main";
@@ -69,8 +69,14 @@
                }else{
             	   refresh ();
                }
-        })
-    });
+        }) 
+     }
+	//键盘事件
+	$('#authCode').bind('keyup', function(event) {
+		if (event.keyCode == "13") {
+			Login();
+		}
+	});
 </script>
 </body>
 </html>

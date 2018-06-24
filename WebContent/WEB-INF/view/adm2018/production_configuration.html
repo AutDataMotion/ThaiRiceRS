@@ -1,3 +1,4 @@
+
 <% var cssSec={ %>
 <style>
  .undoIcon { background-image:url(${cxt}/ui/thairice/Images/production/undo1.png); width:30px; height:30px; }
@@ -10,19 +11,19 @@
           <!--Nav tabs-->
           <ul class="nav nav-tabs" role="tablist">
             <li role="presentation" class="active">
-                <a href="#production01" aria-controls="production01" role="tab" data-toggle="tab">Monitoring samples</a>
+                <a href="#production01" aria-controls="production01" role="tab" data-toggle="tab">Sample management</a>
             </li>
             <li role="presentation">
-                <a href="#production02" onclick="queryParams('001')"  aria-controls="production02" role="tab" data-toggle="tab">Data of area</a>
+                <a href="#production02" onclick="queryParams('001')"  aria-controls="production02" role="tab" data-toggle="tab">Data download path</a>
             </li>
             <li role="presentation">
-                <a href="#production03" onclick="queryParams('002')"  aria-controls="production03" role="tab" data-toggle="tab">Drought monitoring</a>
+                <a href="#production03" onclick="queryParams('002')"  aria-controls="production03" role="tab" data-toggle="tab">Rice drought</a>
             </li>
             <li role="presentation">
-                <a href="#production04" onclick="queryParams('003')"  aria-controls="production04" role="tab" data-toggle="tab">Condition monitoring</a>
+                <a href="#production04" onclick="queryParams('003')"  aria-controls="production04" role="tab" data-toggle="tab">Rice growth</a>
             </li>
             <li role="presentation">
-                <a href="#production05" aria-controls="production05" role="tab" data-toggle="tab">Production estimates</a>
+                <a href="#production05" aria-controls="production05" role="tab" data-toggle="tab">Rice yield</a>
             </li>
           </ul>
           <!--Tab panes-->
@@ -31,18 +32,43 @@
             	<div id="mapDiv_productionConf"></div>   
                 <div class="form-group">
 		            <ul class="operation_tools">
-		                  <li class="one" onclick="initFilesTable()"><a href="#" data-toggle="modal" data-target="#fileModal" title="click to start"></a></li>
-		                  <li id="undo" data-dojo-type="dijit/form/Button"
-				                  data-dojo-props="disabled: true, iconClass: 'undoGrayIcon'">
-		                  	Undo
-				          </li>
-		                  <li id="redo" data-dojo-type="dijit/form/Button"
-					                  data-dojo-props="disabled: true, iconClass: 'redoGrayIcon'">
-		                  	Redo
+		                  <li class="one" onclick="initFilesTable()">
+		                  	<a href="#"  class="btn btn-info" data-toggle="modal" data-target="#fileModal" title="open file">
+		                  		<span class="glyphicon glyphicon-folder-open"></span>
+		                  	</a>
 		                  </li>
-		                  <!--li class="four"><a href="#" title="remove"></a></li>
-		                  <li class="five"><a href="#" title="crop"></a></li>
-		                  <li class="six"><a href="#" title="save"></a></li-->
+		                  <li class="two" onclick="EditFeatures('add')">
+		                  	<a href="#" class="btn btn-info" title="Add Feaures">
+					          <span class="glyphicon glyphicon-plus-sign"></span>
+					        </a>
+				          </li>
+		                  <li class="three" onclick="EditFeatures('delete')">
+		                  	<a href="#" class="btn btn-info" title="Delete Feaures">
+		                  		<span class="glyphicon glyphicon-minus-sign"></span>
+		                  	</a>
+		                  </li>
+		                  <li class="four" onclick="Edit_Preview()">
+		                  	<a href="#" class="btn btn-info" title="Preview">
+		                  		<span class="glyphicon glyphicon-eye-open"></span>
+		                  	</a>
+		                  </li>
+		                  <li class="five" onclick="Edit_Cancel()">
+		                  	<a href="#" class="btn btn-info" title="Cancel">
+		                  		<span class="glyphicon glyphicon-remove-sign"></span>
+		                  	</a>
+		                  </li>
+		                  <li class="six" onclick="Edit_Save()">
+		                  	<a href="#" class="btn btn-info" title="Save">
+		                  		<span class="glyphicon glyphicon-saved"></span>
+		                  	</a>
+		                  </li>
+		                  <li id="undo" data-dojo-type="dijit/form/Button" title="Undo"
+				                  data-dojo-props="disabled: true, iconClass: 'undoGrayIcon'">
+		                  </li>
+		                  <li id="redo" data-dojo-type="dijit/form/Button" title="Redo"
+					                  data-dojo-props="disabled: true, iconClass: 'redoGrayIcon'">
+		                  </li>
+		                  
 		            </ul>
                 </div>
                     <!--显示模式和分类样本-->
@@ -52,60 +78,63 @@
 	                  <div class="BbProductMenu">
 	                <div class="list-group">
 	                      <div class="list-group-item" style="padding-bottom:0;">
-	                    <h4 class="list-group-item-heading">Editing</h4>
-	                    
+	                    <h4 class="list-group-item-heading">RGB</h4>
+	                    <span id ="rgbChange"><i class="glyphicon glyphicon-refresh"></i></span>
 	                    <div class="table-wrap">
-	                          <table id="editing_excel" class="table display table-bordered" align="center">
-	                        	<thead>
-						            <tr class="title">
-						                <th>Start Editing</th>
-						                <th>Option</th>
-						            </tr>
-						        </thead>
+	                          <table id="rgb_change_excel" class="table display table-bordered" align="center">
 	                        	
 	                            <tr>
 	                              <td>
-	                              	<button id="editing_addFeatures" onclick="EditFeatures('add')" type="button" class="btn btn-default btn-sm">
-							          <span class="glyphicon glyphicon-plus-sign"></span>Add Features
-							        </button>
+	                              	  <label for="rgb_red" class="col-sm-6 control-label rgb_change_excel_td rgb_change_excel_td_red">Red</label>
+								      <div class="col-sm-6 rgb_change_excel_td">
+								        <select id="rgb_red" class="form-control">
+								          <option value="1">1</option>
+								           <option value="2">2</option>
+								            <option value="3">3</option>
+								             <option value="4">4</option>
+								              <option value="5" selected>5</option>
+								               <option value="6">6</option>
+								                <option value="7">7</option>
+								        </select>
+								      </div>
 							      </td>
 	                              <td>
-	                              	<!-- button id="editing_preview" onclick="Edit_Preview()" type="button" class="btn btn-default btn-sm">
-							          <span class="glyphicon glyphicon-eye-open"></span>Preview
-							        </button-->
-							        <button id="editing_save" onclick="Edit_Save()" type="button" class="btn btn-default btn-sm">
-							          <span class="glyphicon glyphicon-ok-circle"></span>Save
-							        </button>
-							        <button id="editing_cancel" onclick="Edit_Cancel()" type="button" class="btn btn-default btn-sm">
-							          <span class="glyphicon glyphicon-remove-sign"></span>Cancel
-							        </button>
+	                              	<label for="rgb_green" class="col-sm-6 control-label rgb_change_excel_td rgb_change_excel_td_green">Green</label>
+								      <div class="col-sm-6 rgb_change_excel_td">
+								        <select id="rgb_green" class="form-control">
+								          <option value="1">1</option>
+								           <option value="2">2</option>
+								            <option value="3">3</option>
+								             <option value="4" selected>4</option>
+								              <option value="5">5</option>
+								               <option value="6">6</option>
+								                <option value="7">7</option>
+								        </select>
+								      </div>
+							      </td>
+							      <td>
+	                              	<label for="rgb_blue" class="col-sm-6 control-label rgb_change_excel_td rgb_change_excel_td_blue">Blue</label>
+								      <div class="col-sm-6 rgb_change_excel_td">
+								        <select id="rgb_blue" class="form-control">
+								          <option value="1">1</option>
+								           <option value="2">2</option>
+								            <option value="3" selected>3</option>
+								             <option value="4">4</option>
+								              <option value="5">5</option>
+								               <option value="6">6</option>
+								                <option value="7">7</option>
+								        </select>
+								      </div>
 							      </td>
 	                            </tr>
-	                             <tr>
-	                              <td>
-	                              	<button id="editing_deleteFeatures" onclick="EditFeatures('delete')" type="button" class="btn btn-default btn-sm">
-							          <span class="glyphicon glyphicon-minus-sign"></span>Delete Features
-							        </button>
-							      </td>
-	                              <td>
-	                                <!-- button id="editing_preview" onclick="Edit_Preview()" type="button" class="btn btn-default btn-sm">
-							          <span class="glyphicon glyphicon-eye-open"></span>Preview
-							        </button-->
-							        <button id="editing_save" onclick="Edit_Save()" type="button" class="btn btn-default btn-sm">
-							          <span class="glyphicon glyphicon-ok-circle"></span>Save
-							        </button>
-							        <button id="editing_cancel" onclick="Edit_Cancel()" type="button" class="btn btn-default btn-sm">
-							          <span class="glyphicon glyphicon-remove-sign"></span>Cancel
-							        </button>
-							       </td>
-	                            </tr>
+	                           
 	                          </table>
 	                      </div>
+	                      
 	                  </div>
 	                    </div>
 	              </div>
 	                </div>
-	            <!--button class="btn btn-primary okay_btn" type="button" data-toggle="modal" data-target="#RunModal">OK</button-->
 	          </div>
                   <!--显示模式和分类样本-->
               <div class="modes_samples">
@@ -132,6 +161,11 @@
 	                            </tr-->
 	                          </table>
 	                      </div>
+	                      <div align="center">
+	                      	<button type="button" onclick="generateTempProduct()" class="btn btn-primary">
+  								<span class="glyphicon glyphicon-file"></span>Generate
+							</button>
+						</div>
 	                  </div>
 	                    </div>
 	              </div>
@@ -141,11 +175,27 @@
             </div>		
   			<div role="tabpanel" class="tab-pane" id="production02">
               <div class="tab-box">
-            <h4> < MODIS Upload > </h4>
-            <input type="text" class="form-control" style="margin-bottom:15px;" name="ftpSrcPath0" id="ftpSrcPath0"  size = '50' value=${ftpSrcPath0!} > 
-            <input type="text" class="form-control" style="margin-bottom:15px;" name="ftpSrcPath1" id="ftpSrcPath1"  size = '50' value=${ftpSrcPath1!} >
-            <input type="text" class="form-control" style="margin-bottom:15px;" name="ftpSrcPath2" id="ftpSrcPath2"  size = '50' value=${ftpSrcPath2!} > 
-            <input type="text" class="form-control" style="margin-bottom:15px;" name="ftpSrcPath3" id="ftpSrcPath3"  size = '50' value=${ftpSrcPath3!} > 
+            <h4> < MODIS files download path > </h4>
+            
+            <div class="input-group">
+            	<span class="input-group-addon">Path of MOD13Q1</span>
+            	<input type="text" class="form-control"  name="ftpSrcPath0" id="ftpSrcPath0"  size = '50' value=${ftpSrcPath0!} >
+        	</div>
+        	
+        	            <div class="input-group">
+            	<span class="input-group-addon">Path of MOD13A2</span>
+            	<input type="text" class="form-control"  name="ftpSrcPath1" id="ftpSrcPath1"  size = '50' value=${ftpSrcPath1!} >
+        	</div>
+        	
+        	            <div class="input-group">
+            	<span class="input-group-addon">Path of MOD11A2</span>
+            	<input type="text" class="form-control"  name="ftpSrcPath2" id="ftpSrcPath2"  size = '50' value=${ftpSrcPath2!} >
+        	</div>
+        	
+        	            <div class="input-group">
+            	<span class="input-group-addon">Path of MOD12Q1</span>
+            	<input type="text" class="form-control"  name="ftpSrcPath3" id="ftpSrcPath3"  size = '50' value=${ftpSrcPath3!} >
+        	</div>
             <div class="form-group" style="text-align:center;">
                   <button class="btn btn-primary" onclick="updateParams('001')">submit</button>
                   <button class="btn btn-default">reset</button>
@@ -155,33 +205,33 @@
             
     <div role="tabpanel" class="tab-pane" id="production03">
               <div class="tab-box">
-            <h4> < Classification threshold > </h4>
+            <h4> < Drought threshold > </h4>
             <div class="form-group" style="margin-bottom:0;">
                   <div class="input-group">
                 <div class="input-group-addon color-one">driest to drought</div>
                  <input type="text" class="form-control" name="droughtThreshold1" id="droughtThreshold1" placeholder="0.35" >
-                <div class="input-group-addon" style="background:none;">value:0.3 - 0.4</div>
+                <div class="input-group-addon" style="background:none;">value:0 - 0.2</div>
               </div>
                 </div>
             <div class="form-group" style="margin-bottom:0;">
                   <div class="input-group">
                 <div class="input-group-addon color-two">drought to normal</div>
                 <input type="text" class="form-control" name="droughtThreshold2" id="droughtThreshold2" placeholder="0.35" >
-                <div class="input-group-addon" style="background:none;">value:0.4 - 0.5</div>
+                <div class="input-group-addon" style="background:none;">value:0.2 - 0.4</div>
               </div>
                 </div>
             <div class="form-group" style="margin-bottom:0;">
                   <div class="input-group">
                 <div class="input-group-addon color-three">normal to little wet</div>
                 <input type="text" class="form-control" name="droughtThreshold3" id="droughtThreshold3" placeholder="0.35" >
-                <div class="input-group-addon" style="background:none;">value:0.5 - 0.6</div>
+                <div class="input-group-addon" style="background:none;">value:0.4 - 0.6</div>
               </div>
                 </div>
             <div class="form-group" style="margin-bottom:0;">
                   <div class="input-group">
                 <div class="input-group-addon color-four"> little wet to wet</div>
                 <input type="text" class="form-control" name="droughtThreshold4" id="droughtThreshold4" placeholder="0.35" >
-                <div class="input-group-addon" style="background:none;">value:0.6 - 0.7</div>
+                <div class="input-group-addon" style="background:none;">value:0.6 - 0.8</div>
               </div>
                 </div>
             <div class="form-group" style="text-align:center;">
@@ -238,42 +288,43 @@
             
                         <div role="tabpanel" class="tab-pane" id="production04">
               <div class="tab-box">
-            <h4> < Classification threshold > </h4>
+            <h4> < Rice growth configuration > </h4>
             <div class="form-group">
-                  <div class="input-group" id="starttime11" style="width:200px; float:left;">
+            	  <label class="control-label" style="width:60px; float:left; text-align:center; line-height:34px; padding-top:0;">Year</label>
+                  <div class="input-group" id="starttime11" style="width:160px; float:left;">
                 <input type="text" class="form-control" name="inStartYear" id="inStartYear" placeholder="input year as 2018" style="float:left; ">
                 <!-- <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span> --></div>
-                  <label class="control-label" style="width:60px; float:left; text-align:center; line-height:34px; padding-top:0;">to</label>
-                  <div class="input-group" id="endtime11" style="width:200px; float:left;">
+                  <label class="control-label" style="width:60px; float:left; text-align:center; line-height:34px; padding-top:0;">-</label>
+                  <div class="input-group" id="endtime11" style="width:160px; float:left;">
                 <input type="text" class="form-control" name="inEndYear" id="inEndYear" placeholder="input year as 2020" style="float:left; ">
                 <!-- <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span> --></div>
                 </div>
             <div class="form-group" style="margin-bottom:0;">
                   <div class="input-group">
                 <div class="input-group-addon color-one">worst to poor</div>
-                <input type="text" class="form-control" name="conditionThreshold1" id="conditionThreshold1" placeholder="0.35" >
-                <div class="input-group-addon" style="background:none;">value:0.3 - 0.4</div>
+                <input type="text" class="form-control" name="conditionThreshold1" id="conditionThreshold1" placeholder="-0.3" >
+                <div class="input-group-addon" style="background:none;">value:-0.3 ~-0.1</div>
               </div>
                 </div>
             <div class="form-group" style="margin-bottom:0;">
                   <div class="input-group">
                 <div class="input-group-addon color-two">poor to normal</div>
-                <input type="text" class="form-control" name="conditionThreshold2" id="conditionThreshold2" placeholder="0.35" >
-                <div class="input-group-addon" style="background:none;">value:0.4 - 0.5</div>
+                <input type="text" class="form-control" name="conditionThreshold2" id="conditionThreshold2" placeholder="-0.1" >
+                <div class="input-group-addon" style="background:none;">value:-0.1 ~ 0.1</div>
               </div>
                 </div>
             <div class="form-group" style="margin-bottom:0;">
                   <div class="input-group">
                 <div class="input-group-addon color-three">normal to better</div>
-                <input type="text" class="form-control" name="conditionThreshold3" id="conditionThreshold3" placeholder="0.35" >
-                <div class="input-group-addon" style="background:none;">value:0.5 - 0.6</div>
+                <input type="text" class="form-control" name="conditionThreshold3" id="conditionThreshold3" placeholder="0.1" >
+                <div class="input-group-addon" style="background:none;">value:0.1 ~ 0.3</div>
               </div>
                 </div>
             <div class="form-group" style="margin-bottom:0;">
                   <div class="input-group">
                 <div class="input-group-addon color-four">better to best</div>
-                <input type="text" class="form-control" name="conditionThreshold4" id="conditionThreshold4" placeholder="0.35" >
-                <div class="input-group-addon" style="background:none;">value:0.6 - 0.7</div>
+                <input type="text" class="form-control" name="conditionThreshold4" id="conditionThreshold4" placeholder="0.3" >
+                <div class="input-group-addon" style="background:none;">>0.3</div>
               </div>
                 </div>
             <div class="form-group" style="text-align:center;">
@@ -287,7 +338,7 @@
             
             <div role="tabpanel" class="tab-pane" id="production05">
             	<form class="form-horizontal tab-form" style="width:500px; margin:100px auto 0; background:#fff; border-radius:5px; padding:5px 20px;">
-                	<h4> < Production estimates data upload > </h4>
+                	<h4> < Statistic yield file upload > </h4>
                     <input type="file" name="txt_file" id="txt_file06" multiple class="file" />
                     <div class="form-group" style="text-align:center;">
                     	<button class="btn btn-success">submit</button>
@@ -586,3 +637,4 @@
 <% }; %> <%
 include("operator_layout.html",{cssSec:cssSec,contSec:contSec,jsSec:jsSec}){}
 %>
+

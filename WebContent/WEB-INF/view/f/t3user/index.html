@@ -53,12 +53,12 @@
 </style>
 
 
-<script src="${cxt!}/JS/jquery-2.0.0.min.js"></script>
+<script src="${cxt!}/ui/thairice/JS/jquery-2.0.0.min.js"></script>
+<script type="text/javascript" src="${cxt!}/ui/thairice/JS/layer/layer.js"></script>
+<script src="${cxt!}/ui/thairice/area/jquery.cxselect.js"></script>
 <script src="${cxt!}/ui/DataTables/datatables.min.js"></script>
 <script src="${cxt!}/ui/loading/app.min.js"></script>
 <script src="${cxt!}/ui/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
-<script src="${cxt!}/jsFile/area-select/Area.js"></script>
-<script src="${cxt!}/jsFile/area-select/AreaData_min.js"></script>
 <!--script src="${cxt!}/ui/datetime-picker/moment.js"></script-->
 <script src="${cxt!}/ui/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
 <script src="${cxt!}/ui/thairice/JS/lyfModules/index.js"></script>
@@ -68,6 +68,8 @@
 <script src="https://js.arcgis.com/3.23/"></script>
 
 <script src="${cxt!}/ui/thairice/JS/lyfModules/t10pdt_report/t10.js"></script>
+
+<script src="${cxt!}/ui/thairice/common.js"></script>
 
 <script>
 	//进度条及文件预览
@@ -131,8 +133,6 @@
             }
             
         });
-		//地区选择插件
-		initComplexArea('seachprov', 'seachcity', 'seachdistrict', area_array, sub_array, '44', '0', '0');  
 	});
 	//得到地区码
 	function getAreaID(){
@@ -216,17 +216,12 @@
 <div class="BbAreaSelect" style="z-index: 9;position: fixed;">
   <form class="form-inline">
     <div class="form-group">
-      <select id="seachprov" name="seachprov" onChange="changeComplexProvince(this.value, sub_array, 'seachcity', 'seachdistrict');">
-      </select>
+            <div id="custom_data">
+            <select class="province" id="province"  style="padding: 13px;border: 0px;width: 200px;"></select>
+            <select class="city" id="city" style="padding: 13px;border: 0px;width: 200px;"></select>
+            <select class="area" id="area" style="padding: 13px;border: 0px;width: 200px;"></select>
+            </div>
     </div>
-    <div class="form-group">
-      <select id="seachcity" name="homecity" onChange="changeCity(this.value,'seachdistrict','seachdistrict');">
-      </select>
-    </div>
-    <div class="form-group"> <span id="seachdistrict_div">
-      <select id="seachdistrict" name="seachdistrict" onChange="changeDistrict(this.value);">
-      </select>
-      </span> </div>
     <div class="form-group">
       <label for="dateChoosed" style="line-height:50px; padding:0 5px; font-weight:normal;">Time：</label>
 	      	<!--div class="input-group date" id='date_choose' data-date="" data-date-format="yyyy-mm-dd" data-link-format="yyyy-mm-dd">
@@ -449,5 +444,27 @@
 			</div>
 		</div>
 	</div-->
+<script type="text/javascript">
+      if('${session.user.status_!}'=='01'){
+    	       showMessage("Sorry, your application is not authorized yet");
+      }else if('${session.user.status_!}'=='03'){
+	    	  showMessage("Sorry, your application is not approved");
+	  }else if('${session.user.status_!}'=='04'){
+	    	  showMessage("Your user has expired, please pay the fee"); 
+	  }else{
+		      getAddress();
+	  }
+  	 //获取服务地区
+      function getAddress(){
+          sendAjax("${cxt!}/jf/thairice/t3user/region",{'userId':'${session.user.id!}'},function (res) {
+          	 $('#custom_data').cxSelect({
+          		    selects: ['province', 'city', 'area'],
+          		    required: true,
+          		    jsonValue: 'v',
+          		   data: res
+              });
+          })
+      }
+</script>
 </body>
 </html>

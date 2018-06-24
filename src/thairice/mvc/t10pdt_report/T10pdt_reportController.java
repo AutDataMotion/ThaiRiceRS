@@ -102,16 +102,26 @@ public class T10pdt_reportController extends BaseController {
 		//renderWithPath(pthv+"list.html");
 		//renderWithPath(pthv+"FeatureLayer.html");
 		T3user user = getSessionAttr("user");
-		String[]ad=user.getStr("area").split(" ");
-		Page page  = T10pdt_report.dao.paginate(getParaToInt(0, 1), 10, "select *", "from T10pdt_report order by id asc");
-		setAttr("blogPage",page );
-		setAttr("province", ad[0]);
-		setAttr("city", ad[1]);
-		setAttr("area", ad[2]);
-		setAttr("user", srv.SelectById(user.getBigInteger("id")));
-		setAttr("count", srv.getCount(user.getBigInteger("id")));
-		setAttr("PersonInfoOrMyreport", 1);
+		String[]ad = null;
 		
+		if(null != user) {
+			ad=user.getStr("area").split(" ");
+			setAttr("province", ad[0]);
+			setAttr("city", ad[1]);
+			setAttr("area", ad[2]);
+			setAttr("user", srv.SelectById(user.getBigInteger("id")));
+			setAttr("count", srv.getCount(user.getBigInteger("id")));
+		}
+		Page page  = T10pdt_report.dao.paginate(getParaToInt(0, 1), 10, "select t.start_time, t.end_time, t.zone_code,(case t.pdt_type \r\n" + 
+				"when '01' then 'Area monitoring' \r\n" + 
+				"when '02' then 'Growth monitoring'\r\n" + 
+				"when '03' then 'Estimated production'\r\n" + 
+				"when '04' then 'Drought monitoring'\r\n" + 
+				"else ''\r\n" + 
+				"end) as pdt_type, t.suffix", "from T10pdt_report order by id asc");
+		setAttr("blogPage",page );
+		setAttr("PersonInfoOrMyreport", 1);
+		setAttr("queryAllParm", "active");
 		renderWithPath("/f/t3user/self_center.html");
 	}
 	
@@ -149,6 +159,7 @@ public class T10pdt_reportController extends BaseController {
 		//T10pdt_report t10pdt_report = T10pdt_report.dao.findById(getPara());	//guuid
 		T10pdt_report t10pdt_report = T10pdt_reportService.service.SelectById(getParaToInt());		//serial int id
 		setAttr("t10pdt_report", t10pdt_report);
+		setAttr("queryAllParm", "active");
 		renderWithPath(pthv+"update.html");
 
 	}
@@ -169,6 +180,7 @@ public class T10pdt_reportController extends BaseController {
 		//T10pdt_report t10pdt_report = T10pdt_report.dao.findById(getPara());	//guuid
 		T10pdt_report t10pdt_report = T10pdt_reportService.service.SelectById(getParaToInt());		//serial int id
 		setAttr("t10pdt_report", t10pdt_report);
+		setAttr("queryAllParm", "active");
 		renderWithPath(pthv+"view.html");
 	}
 	
@@ -353,8 +365,8 @@ public class T10pdt_reportController extends BaseController {
 	{
 		String productKind = getPara("productKind");
 		String productDate = getPara("productDate");
-		String areaCode = getPara("areaCode");
-		boolean result = ReportUtil.getProductDataAndCopy2Workspace(productKind,productDate,areaCode);
+		String prov_code = getPara("prov_code");
+		boolean result = ReportUtil.getProductDataAndCopy2Workspace(productKind,productDate,prov_code);
 		setAttr("result",result);
 		renderJson();
 	}

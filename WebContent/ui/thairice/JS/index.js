@@ -15,6 +15,10 @@ $(function () {
             $('.form_serviceinfo').show();
         }
     });
+    $('#previous').click(function () {
+    	 $('.form_selfinfo').show();
+         $('.form_serviceinfo').hide();
+    });
     //$('#multiple_select').multiselect();
     $("#fm").bootstrapValidator({
         message: 'This value is not valid',
@@ -52,11 +56,11 @@ $(function () {
             't3user.pwd': {
                 validators: {
                     notEmpty: {
-                        message: 'The pwd is  required and can\'t be empty '
+                        message: 'The pwd is required and can\'t be empty '
                     },
                     regexp: {
-                    	regexp: /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,12}$/,
-                        message: 'The password is made up of 6 to 12 letters and Numbers'
+                    	regexp: /^(?![\d]+$)(?![a-zA-Z]+$)(?![^\da-zA-Z]+$).{6,20}$/,
+                        message: 'The passwords must contain at least 2 kinds of letters, numbers and symbols and the length is 6-20 characters'
                     }
                 }
             },
@@ -64,7 +68,7 @@ $(function () {
                 message: 'The password is invalid',
                 validators: {
                     notEmpty: {
-                        message: 'The password is  required and can\'t be empty'
+                        message: 'The password is required and can\'t be empty'
                     },
                     identical: {//相同
                         field: 't3user.pwd',
@@ -75,7 +79,7 @@ $(function () {
             't3user.phone': {
                 validators: {
                     notEmpty: {
-                        message: 'Mob is  required and can\'t be empty'
+                        message: 'Mob is required and can\'t be empty'
                     },                    
                     regexp: {
                         regexp: /^0\d{9}$/,
@@ -92,7 +96,7 @@ $(function () {
                         message: 'The input is not a valid email address'
                     },
                     remote: {//ajax验证。server result:{"valid",true or false}
-                        url: '/jf/thairice/t3user/valiMailBox',
+                        url: '/jf/thairice/t3user/valiMailBox2',
                         message: 'The email address has already exist!',
                         delay: 2000,
                         type: 'POST',
@@ -145,10 +149,10 @@ $(function () {
     });
 });
 //bootstrapValidator与datetimepicker混合使用时日期验证不刷新
-$("#Prdt_EfDt").blur(function(){
+$("#Prdt_EfDt1").blur(function(){
     $('#fm').data('bootstrapValidator').updateStatus('Prdt_EfDt','NOT_VALIDATED',null).validateField('Prdt_EfDt');
 });
-$("#PD_ExDat").blur(function(){
+$("#PD_ExDat1").blur(function(){
     $('#fm').data('bootstrapValidator').updateStatus('PD_ExDat','NOT_VALIDATED',null).validateField('PD_ExDat');
 });
 function submitForm() {
@@ -156,10 +160,18 @@ function submitForm() {
     if(!$("#fm").data('bootstrapValidator').isValid()){
         return;
     }
+	  var list=[];
+  	  $('.item').each(function(){
+  	    list.push({'province':$(this).find('#p').attr("type"),'city':$(this).find('#c').attr("type"),'area':$(this).find('#a').attr("type")})
+  	 })
+    if(!$("#agree").is(":checked")){
+    	showMessage('Please agree with the terms of service first');
+    	return;
+    }
     var psd = hex_md5($('#pwd').val());
     $('#pwd').val(psd);
     showLoading();
-    sendAjax("/jf/thairice/t3user/doReg", $("#fm").serialize(), function (res) {
+	sendAjax("/jf/thairice/t3user/doReg", $("#fm").serialize()+"&list="+JSON.stringify(list), function (res) {
     	cancelLoading();
         showMessage(res.desc);
         if (res.code == 1) {
