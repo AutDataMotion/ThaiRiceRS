@@ -266,7 +266,7 @@
 				}
 				sendAjax('${cxt!}/jf/thairice/admin/user/edit_info', $("#info")
 						.serialize(), function(res) {
-					$('#eemail').val($('#u_email').val());
+					$('#email').val($('#u_email').val());
 					$("#info").bootstrapValidator('resetForm');
 					showMessage(res.desc);
 				});
