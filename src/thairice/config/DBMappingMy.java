@@ -4,6 +4,8 @@ import org.apache.log4j.Logger;
 
 import thairice.autotask.autoInitFtpScan;
 import thairice.constant.ConstantInitMy;
+import thairice.rpcjob.PreProcessScheduleJob;
+import thairice.rpcjob.ProductScheduleJob;
 import thairice.utils.FtpUtils;
 
 import com.alibaba.druid.filter.stat.StatFilter;
@@ -115,5 +117,10 @@ public class DBMappingMy extends BaseMapping{
 //		plugins.add(new Cron4jPlugin(PropKit.use("autoRemoteFtpScan.properties")));
 //		// 定时自动扫描待下载文件并启动ftp下载
 //		plugins.add(new Cron4jPlugin(PropKit.use("autoFtpDownload.properties")));
+		
+		Cron4jPlugin cp = new Cron4jPlugin();
+		// 测试时间，实际需调整时间
+		  cp.addTask("*/1 * * * *", new PreProcessScheduleJob());
+		  cp.addTask("*/1 * * * *", new ProductScheduleJob());
 	}
 }
