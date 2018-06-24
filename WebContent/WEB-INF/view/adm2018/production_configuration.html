@@ -36,6 +36,8 @@
         filter: alpha(opacity=0); /*兼容IE8及以下--filter属性是IE特有的，它还有很多其它滤镜效果，而filter: alpha(opacity=0); 兼容IE8及以下的IE浏览器(如果你的电脑IE是8以下的版本，使用某些效果是可能会有一个允许ActiveX的提示,注意点一下就ok啦)*/
         cursor: pointer;
     }
+    
+    .fieldset_div{float:left;margin-bottom:2px;}
 </style>
 
 <% }; %> <% var contSec={ %>
@@ -395,8 +397,17 @@
 <input type="file" id="upload" style="display: none;" />
  <label class="ui-upload">upload<input type="file" style="display: none;" /></label> -->
 
-<label class="btn btn-success" ><input class="file_input" type="file" name="file"  onchange="submit"> Select</label>
-<input type="submit" class="btn btn-success" value="Submit"> </div>
+<!-- <label class="btn btn-success" ><input class="file_input" type="file" name="file"  onchange="submit"> Select</label>
+<input type="submit" class="btn btn-success" value="Submit"> </div> -->
+
+
+<div class="fieldset_div">
+<span><input type="text" class="form-control"  style="width:250px;" name="uploadFilePath" id="uploadFilePath" placeholder="Click the Browse button and select"></span><span><label class="btn btn-success" ><input class="file_input" type="file" name="file" id="hhhh" onchange="document.getElementById('uploadFilePath').value = document.getElementById('hhhh').value;"> Browse...</label></span>
+<input type="submit" class="btn btn-success" value="Submit"> 
+</div>
+</div>  
+
+
 
 </form>   
 <!-- <label for="upload" class="ui-upload">upload</label> 
@@ -720,9 +731,18 @@ sssssssss
 
     <script type="text/javascript">
         function message() {
-         alert("Upload success!");
+         var filePath = document.getElementById('hhhh').value;
+         if(filePath==null || filePath==""){
+        	 alert("Please click the browse button and select a file first!");
+        	 return;
+         } else
+         	alert("Upload success!");
         }
+        
+        
+        
     </script>
+    
 
 
 <script> function PostData() { $.ajax({ type:"POST", 
