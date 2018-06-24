@@ -314,7 +314,19 @@ public class T3userController extends BaseController {
 	public void self_center() {
 		T3user user = getSessionAttr("user");
 		String[]ad=user.getStr("area").split(" ");
-		Page page  = T10pdt_report.dao.paginate(getParaToInt(0, 1), 10, "select *", "from T10pdt_report order by id asc");
+		//Page page  = T10pdt_report.dao.paginate(getParaToInt(0, 1), 10, "select *", "from T10pdt_report order by id asc");
+		Page page  = T10pdt_report.dao.paginate(getParaToInt(0, 1), 10, "select *,(case pdt_type \r\n" + 
+				"when '01' then 'Area monitoring' \r\n" + 
+				"when '02' then 'Growth monitoring'\r\n" + 
+				"when '03' then 'Estimated production'\r\n" + 
+				"when '04' then 'Drought monitoring'\r\n" + 
+				"else ''\r\n" + 
+				"end) as pdt_type,"
+				+ "(case suffix \r\n" + 
+						"when '01' then 'doc' \r\n" + 
+						"when '02' then 'pdf'\r\n" + 
+						"else ''\r\n" + 
+						"end) as suffix", "from T10pdt_report order by id asc");
 		setAttr("blogPage",page );
 		setAttr("province", ad[0]);
 		T3user info=srv.SelectById(user.getBigInteger("id"));
