@@ -106,11 +106,11 @@
                         <label class="col-sm-3">Service area</label>
                         <div class="col-sm-9">
                                          <div id="custom_data">
-                                         <select class="province" id="province" style="padding: 7px;width: 120px;"></select>
-                                         <select class="city" id="city" style="padding: 7px;width: 120px;"></select>
+                                         <select class="province" id="province" style="padding: 7px;width: 120px;"  onchange="initaddCityArea('city')"></select>
+                                         <select class="city" id="city" style="padding: 7px;width: 120px;"  onchange="initaddCityArea('area')"></select>
                                          <select class="area" id="area" style="padding: 7px;width: 120px;"></select>
                                          </div>
-                                           <button type="button" class="btn btn-primary btn-lg" data-toggle="modal"   data-target="#address">Edit</button>  
+                                         <button type="button" class="btn btn-primary btn-lg" data-toggle="modal"   data-target="#address">Edit</button>   
                         </div>
                     </div>
                     <div class="form-group">
@@ -192,9 +192,10 @@
             </div>
             <div class="modal-body">
             <div id="address_data">
-            <select class="p" id="p" style="padding: 7px;width: 130px;"></select>
-            <select class="c" id="c" style="padding: 7px;width: 130px;"></select>
-            <select class="a" id="a" style="padding: 7px;width: 130px;"></select>
+            <span style="width: 170px;display:inline-block;">PROV_NAME</span><span style="width: 160px;display:inline-block;">AMP_NAME</span><span style="width: 160px;display:inline-block;">TAM_NAME</span><br>
+            <select class="p" id="p" style="padding: 7px;width: 160px;"  onchange="addCityArea('city')"></select>
+            <select class="c" id="c" style="padding: 7px;width: 160px;"  onchange="addCityArea('area')"></select>
+            <select class="a" id="a" style="padding: 7px;width: 160px;"></select>&nbsp;&nbsp;&nbsp;
             <a class="btn btn-primary go_btn"  type="button"  onclick="add_address()">Add</a>
             </div>
             <!--  <p class="pp">Selected:</p> -->
@@ -215,14 +216,14 @@
 <script src="${cxt!}/ui/thairice/area/jquery.cxselect.js"></script>
 <script>
         var userId=0;
-        $("#distpicker").distpicker('destroy');
+   /*      $("#distpicker").distpicker('destroy');
         $("#distpicker").distpicker({
         province: '省份名',
         city: '城市名',
         district: '区名',
         autoSelect: true,
         placeholder: false
-        });
+        }); */
     var $wrapper = $('#div-table-container');
     var $table = $('#dataTable01');
     var columns = [
@@ -270,14 +271,14 @@
         if (type == 1) {
             $("#flag").val(1);
             $("#receive_userid").val(id);
-            $('.modal-title').html("Send a message to the specified user");
+            $('.modal-title').html("Send a message to the user");
         } else if (type == 2) {
             $("#flag").val(2);
             $('.modal-title').html("Send a message to all users");
         } else {
             $("#flag").val(3);
             $("#receive_userid").val(id);
-            $('.modal-title').html("Please indicate the reasons for the failure of the authorization");
+            $('.modal-title').html("The reasons for the failure of the authorization");
         }
         $("#content").val('');
         $("#message_modal").modal('show');
@@ -292,7 +293,7 @@
         getAddress(item.id);
         userId=item.id;
         $('#app_btn').html("Confirm");
-        $('#modal-title').html("Review the user information");
+        $('#modal-title').html("The service information");
         $("#approved_modal").modal('show');
      }).on("click",".edit",function() {
         var item = _table.row($(this).closest('tr')).data();
@@ -302,7 +303,7 @@
         getAddress(item.id);
         userId=item.id;
         $('#app_btn').html("Ok");
-        $('#modal-title').html("Modify the user service information");
+        $('#modal-title').html("The service information");
         $("#approved_modal").modal('show');
      }).on("change", ":checkbox", function () {
         if ($(this).is("[name='cb-check-all']")) {
@@ -390,39 +391,133 @@
 	
 	//初始化服务地区
     function initAddress(){
-    	sendAjax("${cxt!}/jf/thairice/t3user/region_list",null,function (res) {
+    	/*sendAjax("${cxt!}/jf/thairice/t3user/region_list",null,function (res) {
       	 $('#address_data').cxSelect({
  		    selects: ['p', 'c', 'a'],
  		    required: true,
  		    jsonValue: 'v',
  		   data: res
         });
-      });	 
+      });*/
+      //初始化服务地区
+        sendAjax("${cxt!}/jf/thairice/t3user/province",null,function (res) {
+        	var optionstring = "<option value=\"\" >Please Select</option>";
+            $.each(res, function(i,item){
+                optionstring += "<option value=\"" + item.id + "\" >" + item.name + "</option>";
+            });
+            $("#p").html(optionstring);
+            sendAjax("${cxt!}/jf/thairice/t3user/cityArea",{id:''},function (res) {
+                var optionstring = "";
+                optionstring += "<option value=\"\" >ALL</option>";
+                $.each(res, function(i,item){
+                    optionstring += "<option value=\"" + item.id + "\" >" + item.name + "</option>";
+                });
+                $("#c").html(optionstring);
+            });
+            sendAjax("${cxt!}/jf/thairice/t3user/cityArea",{id:''},function (res) {
+                var optionstring = "";
+                optionstring += "<option value=\"\" >ALL</option>";
+                $.each(res, function(i,item){
+                    optionstring += "<option value=\"" + item.id + "\" >" + item.name + "</option>";
+                });
+                $("#a").html(optionstring);
+            });
+        });
     }
+//用户注册的地区
+        function initaddCityArea(type) {
+            if(type=="city"){
+                $("#city").html("");
+                $("#area").html("<option value=\"\" >TAM_NAME</option>");
+                console.log($('#province').val());
+                if($('#province').val()==""){
+                    $("#city").html("<option value=\"\" >AMP_NAME</option>");
+                    return false;
+                }
+                sendAjax("${cxt!}/jf/thairice/t3user/adminUserCityArea?type=c",{id:$('#province').val(),'userId':userId},function (res) {
+                    var optionstring = "";
+                    optionstring += "<option value=\"\" >AMP_NAME</option>";
+                    $.each(res, function(i,item){
+                        optionstring += "<option value=\"" + item.id + "\" >" + item.name + "</option>";
+                    });
+                    $("#city").html(optionstring);
+                });
+            }else if(type=="area"){
+                if($('#city').val()==""){
+                    $("#area").html("<option value=\"\" >TAM_NAME</option>");
+                    return false;
+                }
+                sendAjax("${cxt!}/jf/thairice/t3user/adminUserCityArea?type=a",{id:$('#city').val(),'userId':userId},function (res) {
+                    var optionstring = "";
+                    optionstring += "<option value=\"\" >TAM_NAME</option>";
+                    $.each(res, function(i,item){
+                        optionstring += "<option value=\"" + item.id + "\" >" + item.name + "</option>";
+                    });
+                    $("#area").html(optionstring);
+                });
+            }
+        }
+
+        function addCityArea(type) {
+            if(type=="city"){
+                $("#a").html("");
+                if($('#p').val()==""){
+                    $("#c").html("");
+                    return false;
+                }
+                sendAjax("${cxt!}/jf/thairice/t3user/cityArea",{id:$('#p').val()},function (res) {
+                    var optionstring = "";
+                    optionstring += "<option value=\"\" >ALL</option>";
+                    $.each(res, function(i,item){
+                        optionstring += "<option value=\"" + item.id + "\" >" + item.name + "</option>";
+                    });
+                    $("#c").html(optionstring);
+                });
+            }else if(type=="area"){
+                if($('#c').val()==""){
+                    $("#a").html("");
+                    return false;
+                }
+                sendAjax("${cxt!}/jf/thairice/t3user/cityArea",{id:$('#c').val()},function (res) {
+                    var optionstring = "";
+                    optionstring += "<option value=\"\" >ALL</option>";
+                    $.each(res, function(i,item){
+                        optionstring += "<option value=\"" + item.id + "\" >" + item.name + "</option>";
+                    });
+                    $("#a").html(optionstring);
+                });
+            }
+        }
+
     //获取服务地区
     function getAddress(id){
         sendAjax("${cxt!}/jf/thairice/admin/user/region",{'userId':id},function (res) {
         	$('.list').empty();
         	res.forEach(function(item,index){
-            	 var name='';
-           	  	 var ids=''
-           	  	 item.s.forEach(function(item2,index2){
-           	  		name=item2.n+" --- ";
-           	  	    ids=item2.v+","
-           	  		  item2.s.forEach(function(item3,index3){
-           	  		  	  name+=item3.n;
-           	  		      ids+=item3.v
-           	  		        var  result='<div class="item"><span style="color: #31708f;">'+item.n+'</span> --- '+name+'<div class="del" onclick="del(this,'+item.v+','+ids+')">Delete</div></div>';
-                     	  	$('.list').append(result);
-           	  		  })
-           	  	  })
-           	  })
-        	 $('#custom_data').cxSelect({
-        		    selects: ['province', 'city', 'area'],
-        		    required: true,
-        		    jsonValue: 'v',
-        		   data: res
+        	    var cityname=item.cityname;
+        	    if(cityname == null){
+                    cityname="ALL";
+                    return
+                }
+        	    var areaname=item.areaname;
+        	    if(areaname == null){
+                    areaname="ALL";
+                }
+                console.log(cityname+"======");
+                var result='<div class="item"><span style="color: #31708f;">'+item.provincename+'</span>--------<span style="color: #31708f;">'+cityname+'</span>--------<span style="color: #31708f;">'+areaname+'</span><div class="del" onclick="del(this,'+item.id+')">Delete</div></div>';
+                $('.list').append(result);
+           	  });
+
+            sendAjax("${cxt!}/jf/thairice/t3user/adminUserCityArea?type=p",{id:0,'userId':userId},function (res) {
+                var optionstring = "<option value=\"\" >PROV_NAME</option>";
+                $.each(res, function(i,item){
+                    optionstring += "<option value=\"" + item.id + "\" >" + item.name + "</option>";
+                });
+                $("#province").html(optionstring);
             });
+            $("#city").html("<option value=\"\" >AMP_NAME</option>");
+            $("#area").html("<option value=\"\" >TAM_NAME</option>");
+
         })
     }
     //添加服务地区
@@ -433,16 +528,16 @@
        	 })
     }
     //删除服务地区
-    function del(obj,a1,a2,a3){
+    function del(obj,a1){
     	//询问框
     	layer.confirm('Please confirm whether you want to delete this record?', {
     		title: ['Tips'],btn: ['Confirm','Cancel'] //按钮
     	}, function(){
           	$(obj).parent().remove();
-          	var ids=a1+','+a2+','+a3; 
+          	var ids=a1;
            	 sendAjax("${cxt!}/jf/thairice/admin/user/del_address",{'ids':ids},function (res) {
           		getAddress(userId);
-          	 })
+          	 });
           	layer.closeAll();
     	}, function(){
     	});

@@ -1,4 +1,3 @@
-
 <% var cssSec={ %>
 <style>
  .undoIcon { background-image:url(${cxt}/ui/thairice/Images/production/undo1.png); width:30px; height:30px; }
@@ -6,6 +5,41 @@
  .undoGrayIcon { background-image:url(${cxt}/ui/thairice/Images/production/undo_gray1.png); width:30px; height:30px; }
  .redoGrayIcon { background-image:url(${cxt}/ui/thairice/Images/production/redo_gray1.png); width:30px; height:30px; }
 </style>
+
+<style> .ui-upload { height: 30px; width: 80px; background-color: #00abff; font-size: 14px; line-height: 30px; cursor: pointer; display: inline-block; text-align: center; color: #fff; border-radius: 3px; margin-left: 20px; } </style>
+
+<style>
+    .div1 {
+        position: relative;
+    }
+
+    .div2 {
+        width: 100px;
+        height: 36px;
+        background: #2178fc;
+        color: #fff;
+        text-align: center;
+        line-height: 36px;
+    }
+
+    .file_input {
+        width: 200px;/*因为file-input在部分浏览器中会自带一个输入框，需要双击才可以点击上传,放大后将其定位到div外面就好啦*/
+        height: 36px;
+        position: absolute;
+        left: -100px;
+        top: 0;
+        z-index:1;
+        -moz-opacity: 0;
+        -ms-opacity: 0;
+        -webkit-opacity: 0;
+        opacity: 0;  /*css属性——opcity不透明度，取值0-1*/
+        filter: alpha(opacity=0); /*兼容IE8及以下--filter属性是IE特有的，它还有很多其它滤镜效果，而filter: alpha(opacity=0); 兼容IE8及以下的IE浏览器(如果你的电脑IE是8以下的版本，使用某些效果是可能会有一个允许ActiveX的提示,注意点一下就ok啦)*/
+        cursor: pointer;
+    }
+    
+    .fieldset_div{float:left;margin-bottom:2px;}
+</style>
+
 <% }; %> <% var contSec={ %>
 
           <!--Nav tabs-->
@@ -197,8 +231,8 @@
             	<input type="text" class="form-control"  name="ftpSrcPath3" id="ftpSrcPath3"  size = '50' value=${ftpSrcPath3!} >
         	</div>
             <div class="form-group" style="text-align:center;">
-                  <button class="btn btn-primary" onclick="updateParams('001')">submit</button>
-                  <button class="btn btn-default">reset</button>
+                  <button class="btn btn-primary" onclick="updateParams('001')">Submit</button>
+                 <!--  <button class="btn btn-default">reset</button> -->
                 </div>
           </div>
             </div>
@@ -235,8 +269,8 @@
               </div>
                 </div>
             <div class="form-group" style="text-align:center;">
-                    	<button class="btn btn-primary" onclick="updateParams('002')">submit</button>
-                    	<button class="btn btn-default">reset</button>
+                    	<button class="btn btn-primary" onclick="updateParams('002')">Submit</button>
+                    	<!-- <button class="btn btn-default">reset</button> -->
                 </div>
           </div>
             </div>
@@ -279,7 +313,7 @@
                         </div>
                     </div>
                     <div class="form-group" style="text-align:center;">
-                    	<button class="btn btn-primary" onclick="updateParams('003')">submit</button>
+                    	<button class="btn btn-primary" onclick="updateParams('003')">Submit</button>
                     	<button class="btn btn-default">reset</button>
                     </div>
                 </form>
@@ -328,8 +362,8 @@
               </div>
                 </div>
             <div class="form-group" style="text-align:center;">
-                    	<button class="btn btn-primary" onclick="updateParams('003')">submit</button>
-                    	<button class="btn btn-default">reset</button>
+                    	<button class="btn btn-primary" onclick="updateParams('003')">Submit</button>
+                    	<!-- <button class="btn btn-default">reset</button> -->
                 </div>
           </div>
             </div>
@@ -337,14 +371,70 @@
             
             
             <div role="tabpanel" class="tab-pane" id="production05">
-            	<form class="form-horizontal tab-form" style="width:500px; margin:100px auto 0; background:#fff; border-radius:5px; padding:5px 20px;">
-                	<h4> < Statistic yield file upload > </h4>
+<!--             	<form class="form-horizontal tab-form" style="width:500px; margin:100px auto 0; background:#fff; border-radius:5px; padding:5px 20px;">
+                	<h4> < Statistic yield file upload 444444444> </h4>
                     <input type="file" name="txt_file" id="txt_file06" multiple class="file" />
                     <div class="form-group" style="text-align:center;">
-                    	<button class="btn btn-success">submit</button>
+                    	<button class="btn btn-success">Submit</button>
                     	<button class="btn btn-default">reset</button>
                     </div>
-                </form>
+                </form> -->
+                
+                                <!--这个iframe拿到post过来的表单数据后会开始在自身内部访问post过来的页面地址,在内部中它
+会刷新页面，但是这已不重要了，因为当前的iframe已经被我display:none隐藏了！所以这样给用
+户看起来像是无刷新的页面文件上传，其实只是做一个小小的技巧！-->
+<iframe id="framFile" name="framFile" style="display:none;"></iframe>
+
+                <form method="post" action="riceYieldUpload" enctype="multipart/form-data" target="framFile"  onsubmit="return message();" class="form-horizontal tab-form" style="width:500px; margin:100px auto 0; background:#fff; border-radius:5px; padding:5px 20px;"> 
+ <div align="center">               <h4> < Statistic yield file upload> </h4>
+                
+<!--                 <div class="div1">
+    <div class="div2">点击上传</div>
+    <input type="file" class="file_input">
+</div>
+
+<label for="upload" class="ui-upload">upload</label> 
+<input type="file" id="upload" style="display: none;" />
+ <label class="ui-upload">upload<input type="file" style="display: none;" /></label> -->
+
+<!-- <label class="btn btn-success" ><input class="file_input" type="file" name="file"  onchange="submit"> Select</label>
+<input type="submit" class="btn btn-success" value="Submit"> </div> -->
+
+
+<div class="fieldset_div">
+<span><input type="text" class="form-control"  style="width:250px;" name="uploadFilePath" id="uploadFilePath" placeholder="Click the Browse button and select"></span><span><label class="btn btn-success" ><input class="file_input" type="file" name="file" id="hhhh" onchange="document.getElementById('uploadFilePath').value = document.getElementById('hhhh').value;"> Browse...</label></span>
+<input type="submit" class="btn btn-success" value="Submit"> 
+</div>
+</div>  
+
+
+
+</form>   
+<!-- <label for="upload" class="ui-upload">upload</label> 
+<input type="file" id="upload" style="display: none;" />
+ <label class="ui-upload">upload<input type="file" style="display: none;" /></label> -->
+          
+
+
+<!--<form id="form1" onsubmit="return false" action="##" method="post"  enctype="multipart/form-data">
+<input type="file" name="file"> 
+<input type="submit" onclick="login()" value="上传"> 
+sssssssss
+</form>  -->
+
+
+
+<!--                 <form onsubmit="return PostData()"  enctype="multipart/form-data" id="riceYieldUpload"> 
+<input type="file" name="file"> 
+<input type="submit" value="上传"> 
+sssssssss
+</form>  -->
+
+<!-- <form onsubmit="return PostData()">
+    <input type="text" value="">
+    <input type="submit">
+</form> -->
+
             </div>
           </div>
         </div>
@@ -397,6 +487,10 @@
             <button class="close" type="button" data-dismiss="modal" aria-label="Close">
               <span aria-hidden="true">×</span>
             </button>
+            
+            
+
+
           </div>
           <div class="modal-body">
           	<!-- input type="file" name="txt_file" id="txt_file01" multiple class="file" /-->
@@ -634,7 +728,37 @@
     		});
     	}
 </script> 
+
+    <script type="text/javascript">
+        function message() {
+         var filePath = document.getElementById('hhhh').value;
+         if(filePath==null || filePath==""){
+        	 alert("Please click the browse button and select a file first!");
+        	 return;
+         } else
+         	alert("Upload success!");
+        }
+        
+        
+        
+    </script>
+    
+
+
+<script> function PostData() { $.ajax({ type:"POST", 
+	url: "/jf/thairice/t1parameter/riceYieldUpload",
+	data : , 
+/* 	headers:{
+		'Content-Type':'multipart/form-data'
+	}, */
+	success: function(msg) {
+		
+	} 
+	}); 
+	return false; 
+	} 
+	</script>
+
 <% }; %> <%
 include("operator_layout.html",{cssSec:cssSec,contSec:contSec,jsSec:jsSec}){}
 %>
-

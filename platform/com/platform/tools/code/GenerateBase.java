@@ -56,7 +56,8 @@ public abstract class GenerateBase {
 //	     {null, "t11zone", null, "T11zone","行政区"},
 //	     {null, "tkvalue", null, "Tkvalue","键值"}
 //    		{null, "t12_pre_process_inf", null, "T12PreProcessInf","预处理信息表"}
-    		{null, "t13region", null, "T13Region","泰国行政区划信息表"}
+//    		{null, "t13region", null, "T13Region","泰国行政区划信息表"}
+//    		{null, "t14my_region", null, "t14my_region","用户注册的地区表"}
     };
 
     // String prjName = "targrecog";
