@@ -38,6 +38,7 @@
     }
     
     .fieldset_div{float:left;margin-bottom:2px;}
+    
 </style>
 
 <% }; %> <% var contSec={ %>
@@ -401,13 +402,14 @@
 <input type="submit" class="btn btn-success" value="Submit"> </div> -->
 
 
-<div class="fieldset_div">
-<span><input type="text" class="form-control"  style="width:250px;" name="uploadFilePath" id="uploadFilePath" placeholder="Click the Browse button and select"></span><span><label class="btn btn-success" ><input class="file_input" type="file" name="file" id="hhhh" onchange="document.getElementById('uploadFilePath').value = document.getElementById('hhhh').value;"> Browse...</label></span>
-<input type="submit" class="btn btn-success" value="Submit"> 
-</div>
+
+<input type="text" class="form-control"  style="Float:left;width:250px;margin:2px"  name="uploadFilePath" id="uploadFilePath" placeholder="Click the Browse button and select" >
+&nbsp<label class="btn btn-success" style="Float:left;margin:2px"><input class="file_input" type="file" name="file" id="hhhh" onchange="document.getElementById('uploadFilePath').value = document.getElementById('hhhh').value;" > Browse...</label>
+
+&nbsp<input type="submit" class="btn btn-success" value="Submit" style="Float:left;margin:2px"> 
+
+
 </div>  
-
-
 
 </form>   
 <!-- <label for="upload" class="ui-upload">upload</label> 
