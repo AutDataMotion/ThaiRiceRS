@@ -503,7 +503,7 @@ public class T3userController extends BaseController {
 						"when '01' then 'doc' \r\n" + 
 						"when '02' then 'pdf'\r\n" + 
 						"else ''\r\n" + 
-						"end) as suffix", "from T10pdt_report order by id asc");
+						"end) as suffix", "from T10pdt_report where userid = "+String.valueOf(user.getBigInteger("id"))+" order by id asc");
         setAttr("blogPage", page);
         setAttr("province", ad[0]);
         T3user info = srv.SelectById(user.getBigInteger("id"));

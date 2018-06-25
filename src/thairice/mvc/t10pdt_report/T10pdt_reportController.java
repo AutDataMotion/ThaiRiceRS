@@ -216,7 +216,10 @@ public class T10pdt_reportController extends BaseController {
 	
 	@Clear
 	public void generateRoprt() {
-		String userID = getPara("userID");
+//		String userID = getPara("userID");
+		T3user user = getSessionAttr("user");
+		String userID= String.valueOf(user.getBigInteger("id"));
+		
 		String ProductKind = getPara("ProductKind");
 		String productDate = getPara("productDate");
 		String areaCode = getPara("areaCode");
