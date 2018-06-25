@@ -20,6 +20,11 @@ public class T13RegionService extends BaseService {
 		T13Region mdl = T13Region.dao.findFirst("select * from t13region where id=?", id);
 		return mdl;
 	}
+	public List<T13Region>  SelectById__Custom(Integer id){
+		
+		List<T13Region> mdl  = T13Region.dao.find("select * from t13region where Id=?", id);
+		return mdl;
+	}
 	public List<T13Region> SelectByparentId(Integer parentId){
 		
 		List<T13Region> mdl = T13Region.dao.find("select * from t13region where parentId=?", parentId);
