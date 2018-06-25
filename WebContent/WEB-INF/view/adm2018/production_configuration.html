@@ -1,282 +1,323 @@
 <% var cssSec={ %>
 <style>
- .undoIcon { background-image:url(${cxt}/ui/thairice/Images/production/undo1.png); width:30px; height:30px; }
- .redoIcon { background-image:url(${cxt}/ui/thairice/Images/production/redo1.png); width:30px; height:30px;}
- .undoGrayIcon { background-image:url(${cxt}/ui/thairice/Images/production/undo_gray1.png); width:30px; height:30px; }
- .redoGrayIcon { background-image:url(${cxt}/ui/thairice/Images/production/redo_gray1.png); width:30px; height:30px; }
-</style>
+.undoIcon {
+	background-image: url(${cxt}/ui/thairice/Images/production/undo1.png);
+	width: 30px;
+	height: 30px;
+}
 
-<style> .ui-upload { height: 30px; width: 80px; background-color: #00abff; font-size: 14px; line-height: 30px; cursor: pointer; display: inline-block; text-align: center; color: #fff; border-radius: 3px; margin-left: 20px; } </style>
+.redoIcon {
+	background-image: url(${cxt}/ui/thairice/Images/production/redo1.png);
+	width: 30px;
+	height: 30px;
+}
+
+.undoGrayIcon {
+	background-image:
+		url(${cxt}/ui/thairice/Images/production/undo_gray1.png);
+	width: 30px;
+	height: 30px;
+}
+
+.redoGrayIcon {
+	background-image:
+		url(${cxt}/ui/thairice/Images/production/redo_gray1.png);
+	width: 30px;
+	height: 30px;
+}
+</style>
+<!-- 
+<style>
+.ui-upload {
+	height: 30px;
+	width: 80px;
+	background-color: #00abff;
+	font-size: 14px;
+	line-height: 30px;
+	cursor: pointer;
+	display: inline-block;
+	text-align: center;
+	color: #fff;
+	border-radius: 3px;
+	margin-left: 20px;
+}
+</style>
 
 <style>
-    .div1 {
-        position: relative;
-    }
+.div1 {
+	position: relative;
+}
 
-    .div2 {
-        width: 100px;
-        height: 36px;
-        background: #2178fc;
-        color: #fff;
-        text-align: center;
-        line-height: 36px;
-    }
+.div2 {
+	width: 100px;
+	height: 36px;
+	background: #2178fc;
+	color: #fff;
+	text-align: center;
+	line-height: 36px;
+}
 
-    .file_input {
-        width: 200px;/*因为file-input在部分浏览器中会自带一个输入框，需要双击才可以点击上传,放大后将其定位到div外面就好啦*/
-        height: 36px;
-        position: absolute;
-        left: -100px;
-        top: 0;
-        z-index:1;
-        -moz-opacity: 0;
-        -ms-opacity: 0;
-        -webkit-opacity: 0;
-        opacity: 0;  /*css属性——opcity不透明度，取值0-1*/
-        filter: alpha(opacity=0); /*兼容IE8及以下--filter属性是IE特有的，它还有很多其它滤镜效果，而filter: alpha(opacity=0); 兼容IE8及以下的IE浏览器(如果你的电脑IE是8以下的版本，使用某些效果是可能会有一个允许ActiveX的提示,注意点一下就ok啦)*/
-        cursor: pointer;
-    }
-    
-    .fieldset_div{float:left;margin-bottom:2px;}
-</style>
+.file_input {
+	width: 200px;
+	/*因为file-input在部分浏览器中会自带一个输入框，需要双击才可以点击上传,放大后将其定位到div外面就好啦*/
+	height: 36px;
+	position: absolute;
+	left: -100px;
+	top: 0;
+	z-index: 1;
+	-moz-opacity: 0;
+	-ms-opacity: 0;
+	-webkit-opacity: 0;
+	opacity: 0; /*css属性——opcity不透明度，取值0-1*/
+	filter: alpha(opacity = 0);
+	/*兼容IE8及以下--filter属性是IE特有的，它还有很多其它滤镜效果，而filter: alpha(opacity=0); 兼容IE8及以下的IE浏览器(如果你的电脑IE是8以下的版本，使用某些效果是可能会有一个允许ActiveX的提示,注意点一下就ok啦)*/
+	cursor: pointer;
+}
+
+.fieldset_div {
+	float: left;
+	margin-bottom: 2px;
+}
+</style> -->
 
 <% }; %> <% var contSec={ %>
 
-          <!--Nav tabs-->
-          <ul class="nav nav-tabs" role="tablist">
-            <li role="presentation" class="active">
-                <a href="#production01" aria-controls="production01" role="tab" data-toggle="tab">Sample management</a>
-            </li>
-            <li role="presentation">
-                <a href="#production02" onclick="queryParams('001')"  aria-controls="production02" role="tab" data-toggle="tab">Data download path</a>
-            </li>
-            <li role="presentation">
-                <a href="#production03" onclick="queryParams('002')"  aria-controls="production03" role="tab" data-toggle="tab">Rice drought</a>
-            </li>
-            <li role="presentation">
-                <a href="#production04" onclick="queryParams('003')"  aria-controls="production04" role="tab" data-toggle="tab">Rice growth</a>
-            </li>
-            <li role="presentation">
-                <a href="#production05" aria-controls="production05" role="tab" data-toggle="tab">Rice yield</a>
-            </li>
-          </ul>
-          <!--Tab panes-->
-          <div class="tab-content" style="position:relative;">
-            <div role="tabpanel" class="tab-pane active" id="production01">
-            	<div id="mapDiv_productionConf"></div>   
-                <div class="form-group">
-		            <ul class="operation_tools">
-		                  <li class="one" onclick="initFilesTable()">
-		                  	<a href="#"  class="btn btn-info" data-toggle="modal" data-target="#fileModal" title="open file">
-		                  		<span class="glyphicon glyphicon-folder-open"></span>
-		                  	</a>
-		                  </li>
-		                  <li class="two" onclick="EditFeatures('add')">
-		                  	<a href="#" class="btn btn-info" title="Add Feaures">
-					          <span class="glyphicon glyphicon-plus-sign"></span>
-					        </a>
-				          </li>
-		                  <li class="three" onclick="EditFeatures('delete')">
-		                  	<a href="#" class="btn btn-info" title="Delete Feaures">
-		                  		<span class="glyphicon glyphicon-minus-sign"></span>
-		                  	</a>
-		                  </li>
-		                  <li class="four" onclick="Edit_Preview()">
-		                  	<a href="#" class="btn btn-info" title="Preview">
-		                  		<span class="glyphicon glyphicon-eye-open"></span>
-		                  	</a>
-		                  </li>
-		                  <li class="five" onclick="Edit_Cancel()">
-		                  	<a href="#" class="btn btn-info" title="Cancel">
-		                  		<span class="glyphicon glyphicon-remove-sign"></span>
-		                  	</a>
-		                  </li>
-		                  <li class="six" onclick="Edit_Save()">
-		                  	<a href="#" class="btn btn-info" title="Save">
-		                  		<span class="glyphicon glyphicon-saved"></span>
-		                  	</a>
-		                  </li>
-		                  <li id="undo" data-dojo-type="dijit/form/Button" title="Undo"
-				                  data-dojo-props="disabled: true, iconClass: 'undoGrayIcon'">
-		                  </li>
-		                  <li id="redo" data-dojo-type="dijit/form/Button" title="Redo"
-					                  data-dojo-props="disabled: true, iconClass: 'redoGrayIcon'">
-		                  </li>
-		                  
-		            </ul>
-                </div>
-                    <!--显示模式和分类样本-->
-              <div class="modes_editing">
-            
-	            <div class="editing">
-	                  <div class="BbProductMenu">
-	                <div class="list-group">
-	                      <div class="list-group-item" style="padding-bottom:0;">
-	                    <h4 class="list-group-item-heading">RGB</h4>
-	                    <span id ="rgbChange"><i class="glyphicon glyphicon-refresh"></i></span>
-	                    <div class="table-wrap">
-	                          <table id="rgb_change_excel" class="table display table-bordered" align="center">
-	                        	
-	                            <tr>
-	                              <td>
-	                              	  <label for="rgb_red" class="col-sm-6 control-label rgb_change_excel_td rgb_change_excel_td_red">Red</label>
-								      <div class="col-sm-6 rgb_change_excel_td">
-								        <select id="rgb_red" class="form-control">
-								          <option value="1">1</option>
-								           <option value="2">2</option>
-								            <option value="3">3</option>
-								             <option value="4">4</option>
-								              <option value="5" selected>5</option>
-								               <option value="6">6</option>
-								                <option value="7">7</option>
-								        </select>
-								      </div>
-							      </td>
-	                              <td>
-	                              	<label for="rgb_green" class="col-sm-6 control-label rgb_change_excel_td rgb_change_excel_td_green">Green</label>
-								      <div class="col-sm-6 rgb_change_excel_td">
-								        <select id="rgb_green" class="form-control">
-								          <option value="1">1</option>
-								           <option value="2">2</option>
-								            <option value="3">3</option>
-								             <option value="4" selected>4</option>
-								              <option value="5">5</option>
-								               <option value="6">6</option>
-								                <option value="7">7</option>
-								        </select>
-								      </div>
-							      </td>
-							      <td>
-	                              	<label for="rgb_blue" class="col-sm-6 control-label rgb_change_excel_td rgb_change_excel_td_blue">Blue</label>
-								      <div class="col-sm-6 rgb_change_excel_td">
-								        <select id="rgb_blue" class="form-control">
-								          <option value="1">1</option>
-								           <option value="2">2</option>
-								            <option value="3" selected>3</option>
-								             <option value="4">4</option>
-								              <option value="5">5</option>
-								               <option value="6">6</option>
-								                <option value="7">7</option>
-								        </select>
-								      </div>
-							      </td>
-	                            </tr>
-	                           
-	                          </table>
-	                      </div>
-	                      
-	                  </div>
-	                    </div>
-	              </div>
-	                </div>
-	          </div>
-                  <!--显示模式和分类样本-->
-              <div class="modes_samples">
-            
-	            <div class="samples">
-	                  <div class="BbProductMenu">
-	                <div class="list-group">
-	                      <div class="list-group-item" style="padding-bottom:0;">
-	                    <h4 class="list-group-item-heading">Sample classification</h4>
-	                    <span id ="addRow"><i class="glyphicon glyphicon-plus plus"></i></span>
-	                    <div class="table-wrap">
-	                          <table id="sample_excel" class="table display table-bordered" align="center">
-	                        	<thead>
-						            <tr class="title">
-						                <th style="width:110px !important">Sample Name</th>
-						                <th style="width:auto !important">Option</th>
-						            </tr>
-						        </thead>
-	                        	
-	                            <!--tr>
-	                              <td></td>
-	                              <td></td>
-	                              <td></td>
-	                            </tr-->
-	                          </table>
-	                      </div>
-	                      <div align="center">
-	                      	<button type="button" onclick="generateTempProduct()" class="btn btn-primary">
-  								<span class="glyphicon glyphicon-file"></span>Generate
-							</button>
+<!--Nav tabs-->
+<ul class="nav nav-tabs" role="tablist">
+	<li role="presentation" class="active"><a href="#production01"
+		aria-controls="production01" role="tab" data-toggle="tab">Sample
+			management</a></li>
+	<li role="presentation"><a href="#production02"
+		onclick="queryParams('001')" aria-controls="production02" role="tab"
+		data-toggle="tab">Data download path</a></li>
+	<li role="presentation"><a href="#production03"
+		onclick="queryParams('002')" aria-controls="production03" role="tab"
+		data-toggle="tab">Rice drought</a></li>
+	<li role="presentation"><a href="#production04"
+		onclick="queryParams('003')" aria-controls="production04" role="tab"
+		data-toggle="tab">Rice growth</a></li>
+	<li role="presentation"><a href="#production05"
+		aria-controls="production05" role="tab" data-toggle="tab">Rice
+			yield</a></li>
+</ul>
+<!--Tab panes-->
+<div class="tab-content" style="position: relative;">
+	<div role="tabpanel" class="tab-pane active" id="production01">
+		<div id="mapDiv_productionConf"></div>
+		<div class="form-group">
+			<ul class="operation_tools">
+				<li class="one" onclick="initFilesTable()"><a href="#"
+					class="btn btn-info" data-toggle="modal" data-target="#fileModal"
+					title="open file"> <span
+						class="glyphicon glyphicon-folder-open"></span>
+				</a></li>
+				<li class="two" onclick="EditFeatures('add')"><a href="#"
+					class="btn btn-info" title="Add Feaures"> <span
+						class="glyphicon glyphicon-plus-sign"></span>
+				</a></li>
+				<li class="three" onclick="EditFeatures('delete')"><a href="#"
+					class="btn btn-info" title="Delete Feaures"> <span
+						class="glyphicon glyphicon-minus-sign"></span>
+				</a></li>
+				<li class="four" onclick="Edit_Preview()"><a href="#"
+					class="btn btn-info" title="Preview"> <span
+						class="glyphicon glyphicon-eye-open"></span>
+				</a></li>
+				<li class="five" onclick="Edit_Cancel()"><a href="#"
+					class="btn btn-info" title="Cancel"> <span
+						class="glyphicon glyphicon-remove-sign"></span>
+				</a></li>
+				<li class="six" onclick="Edit_Save()"><a href="#"
+					class="btn btn-info" title="Save"> <span
+						class="glyphicon glyphicon-saved"></span>
+				</a></li>
+				<li id="undo" data-dojo-type="dijit/form/Button" title="Undo"
+					data-dojo-props="disabled: true, iconClass: 'undoGrayIcon'"></li>
+				<li id="redo" data-dojo-type="dijit/form/Button" title="Redo"
+					data-dojo-props="disabled: true, iconClass: 'redoGrayIcon'"></li>
+
+			</ul>
+		</div>
+		<!--显示模式和分类样本-->
+		<div class="modes_editing">
+
+			<div class="editing">
+				<div class="BbProductMenu">
+					<div class="list-group">
+						<div class="list-group-item" style="padding-bottom: 0;">
+							<h4 class="list-group-item-heading">RGB</h4>
+							<span id="rgbChange"><i
+								class="glyphicon glyphicon-refresh"></i></span>
+							<div class="table-wrap">
+								<table id="rgb_change_excel"
+									class="table display table-bordered" align="center">
+
+									<tr>
+										<td><label for="rgb_red"
+											class="col-sm-6 control-label rgb_change_excel_td rgb_change_excel_td_red">Red</label>
+											<div class="col-sm-6 rgb_change_excel_td">
+												<select id="rgb_red" class="form-control">
+													<option value="1">1</option>
+													<option value="2">2</option>
+													<option value="3">3</option>
+													<option value="4">4</option>
+													<option value="5" selected>5</option>
+													<option value="6">6</option>
+													<option value="7">7</option>
+												</select>
+											</div></td>
+										<td><label for="rgb_green"
+											class="col-sm-6 control-label rgb_change_excel_td rgb_change_excel_td_green">Green</label>
+											<div class="col-sm-6 rgb_change_excel_td">
+												<select id="rgb_green" class="form-control">
+													<option value="1">1</option>
+													<option value="2">2</option>
+													<option value="3">3</option>
+													<option value="4" selected>4</option>
+													<option value="5">5</option>
+													<option value="6">6</option>
+													<option value="7">7</option>
+												</select>
+											</div></td>
+										<td><label for="rgb_blue"
+											class="col-sm-6 control-label rgb_change_excel_td rgb_change_excel_td_blue">Blue</label>
+											<div class="col-sm-6 rgb_change_excel_td">
+												<select id="rgb_blue" class="form-control">
+													<option value="1">1</option>
+													<option value="2">2</option>
+													<option value="3" selected>3</option>
+													<option value="4">4</option>
+													<option value="5">5</option>
+													<option value="6">6</option>
+													<option value="7">7</option>
+												</select>
+											</div></td>
+									</tr>
+
+								</table>
+							</div>
+
 						</div>
-	                  </div>
-	                    </div>
-	              </div>
-	                </div>
-	            <!--button class="btn btn-primary okay_btn" type="button" data-toggle="modal" data-target="#RunModal">OK</button-->
-	          </div>
-            </div>		
-  			<div role="tabpanel" class="tab-pane" id="production02">
-              <div class="tab-box">
-            <h4> < MODIS files download path > </h4>
-            
-            <div class="input-group">
-            	<span class="input-group-addon">Path of MOD13Q1</span>
-            	<input type="text" class="form-control"  name="ftpSrcPath0" id="ftpSrcPath0"  size = '50' value=${ftpSrcPath0!} >
-        	</div>
-        	
-        	            <div class="input-group">
-            	<span class="input-group-addon">Path of MOD13A2</span>
-            	<input type="text" class="form-control"  name="ftpSrcPath1" id="ftpSrcPath1"  size = '50' value=${ftpSrcPath1!} >
-        	</div>
-        	
-        	            <div class="input-group">
-            	<span class="input-group-addon">Path of MOD11A2</span>
-            	<input type="text" class="form-control"  name="ftpSrcPath2" id="ftpSrcPath2"  size = '50' value=${ftpSrcPath2!} >
-        	</div>
-        	
-        	            <div class="input-group">
-            	<span class="input-group-addon">Path of MOD12Q1</span>
-            	<input type="text" class="form-control"  name="ftpSrcPath3" id="ftpSrcPath3"  size = '50' value=${ftpSrcPath3!} >
-        	</div>
-            <div class="form-group" style="text-align:center;">
-                  <button class="btn btn-primary" onclick="updateParams('001')">Submit</button>
-                 <!--  <button class="btn btn-default">reset</button> -->
-                </div>
-          </div>
-            </div>
-            
-    <div role="tabpanel" class="tab-pane" id="production03">
-              <div class="tab-box">
-            <h4> < Drought threshold > </h4>
-            <div class="form-group" style="margin-bottom:0;">
-                  <div class="input-group">
-                <div class="input-group-addon color-one">driest to drought</div>
-                 <input type="text" class="form-control" name="droughtThreshold1" id="droughtThreshold1" placeholder="0.35" >
-                <div class="input-group-addon" style="background:none;">value:0 - 0.2</div>
-              </div>
-                </div>
-            <div class="form-group" style="margin-bottom:0;">
-                  <div class="input-group">
-                <div class="input-group-addon color-two">drought to normal</div>
-                <input type="text" class="form-control" name="droughtThreshold2" id="droughtThreshold2" placeholder="0.35" >
-                <div class="input-group-addon" style="background:none;">value:0.2 - 0.4</div>
-              </div>
-                </div>
-            <div class="form-group" style="margin-bottom:0;">
-                  <div class="input-group">
-                <div class="input-group-addon color-three">normal to little wet</div>
-                <input type="text" class="form-control" name="droughtThreshold3" id="droughtThreshold3" placeholder="0.35" >
-                <div class="input-group-addon" style="background:none;">value:0.4 - 0.6</div>
-              </div>
-                </div>
-            <div class="form-group" style="margin-bottom:0;">
-                  <div class="input-group">
-                <div class="input-group-addon color-four"> little wet to wet</div>
-                <input type="text" class="form-control" name="droughtThreshold4" id="droughtThreshold4" placeholder="0.35" >
-                <div class="input-group-addon" style="background:none;">value:0.6 - 0.8</div>
-              </div>
-                </div>
-            <div class="form-group" style="text-align:center;">
-                    	<button class="btn btn-primary" onclick="updateParams('002')">Submit</button>
-                    	<!-- <button class="btn btn-default">reset</button> -->
-                </div>
-          </div>
-            </div>
-            
-            
- <!--            <div role="tabpanel" class="tab-pane" id="production04">
+					</div>
+				</div>
+			</div>
+		</div>
+		<!--显示模式和分类样本-->
+		<div class="modes_samples">
+
+			<div class="samples">
+				<div class="BbProductMenu">
+					<div class="list-group">
+						<div class="list-group-item" style="padding-bottom: 0;">
+							<h4 class="list-group-item-heading">Sample classification</h4>
+							<span id="addRow"><i class="glyphicon glyphicon-plus plus"></i></span>
+							<div class="table-wrap">
+								<table id="sample_excel" class="table display table-bordered"
+									align="center">
+									<thead>
+										<tr class="title">
+											<th style="width: 110px !important">Sample Name</th>
+											<th style="width: auto !important">Option</th>
+										</tr>
+									</thead>
+								</table>
+							</div>
+							<div align="center">
+								<button type="button" onclick="generateTempProduct()"
+									class="btn btn-primary">
+									<span class="glyphicon glyphicon-file"></span>Generate
+								</button>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+			<!--button class="btn btn-primary okay_btn" type="button" data-toggle="modal" data-target="#RunModal">OK</button-->
+		</div>
+	</div>
+	<div role="tabpanel" class="tab-pane" id="production02">
+		<div class="tab-box">
+			<h4>< MODIS files download path ></h4>
+
+			<div class="input-group">
+				<span class="input-group-addon">Path of MOD13Q1</span> <input
+					type="text" class="form-control" name="ftpSrcPath0"
+					id="ftpSrcPath0" size='50' value=${ftpSrcPath0!}>
+			</div>
+
+			<div class="input-group">
+				<span class="input-group-addon">Path of MOD13A2</span> <input
+					type="text" class="form-control" name="ftpSrcPath1"
+					id="ftpSrcPath1" size='50' value=${ftpSrcPath1!}>
+			</div>
+
+			<div class="input-group">
+				<span class="input-group-addon">Path of MOD11A2</span> <input
+					type="text" class="form-control" name="ftpSrcPath2"
+					id="ftpSrcPath2" size='50' value=${ftpSrcPath2!}>
+			</div>
+
+			<div class="input-group">
+				<span class="input-group-addon">Path of MOD12Q1</span> <input
+					type="text" class="form-control" name="ftpSrcPath3"
+					id="ftpSrcPath3" size='50' value=${ftpSrcPath3!}>
+			</div>
+			<div class="form-group" style="text-align: center;">
+				<button class="btn btn-primary" onclick="updateParams('001')">Submit</button>
+				<!--  <button class="btn btn-default">reset</button> -->
+			</div>
+		</div>
+	</div>
+
+	<div role="tabpanel" class="tab-pane" id="production03">
+		<div class="tab-box">
+			<h4>< Drought threshold ></h4>
+			<div class="form-group" style="margin-bottom: 0;">
+				<div class="input-group">
+					<div class="input-group-addon color-one">driest to drought</div>
+					<input type="text" class="form-control" name="droughtThreshold1"
+						id="droughtThreshold1" placeholder="0.35">
+					<div class="input-group-addon" style="background: none;">value:0
+						- 0.2</div>
+				</div>
+			</div>
+			<div class="form-group" style="margin-bottom: 0;">
+				<div class="input-group">
+					<div class="input-group-addon color-two">drought to normal</div>
+					<input type="text" class="form-control" name="droughtThreshold2"
+						id="droughtThreshold2" placeholder="0.35">
+					<div class="input-group-addon" style="background: none;">value:0.2
+						- 0.4</div>
+				</div>
+			</div>
+			<div class="form-group" style="margin-bottom: 0;">
+				<div class="input-group">
+					<div class="input-group-addon color-three">normal to little
+						wet</div>
+					<input type="text" class="form-control" name="droughtThreshold3"
+						id="droughtThreshold3" placeholder="0.35">
+					<div class="input-group-addon" style="background: none;">value:0.4
+						- 0.6</div>
+				</div>
+			</div>
+			<div class="form-group" style="margin-bottom: 0;">
+				<div class="input-group">
+					<div class="input-group-addon color-four">little wet to wet</div>
+					<input type="text" class="form-control" name="droughtThreshold4"
+						id="droughtThreshold4" placeholder="0.35">
+					<div class="input-group-addon" style="background: none;">value:0.6
+						- 0.8</div>
+				</div>
+			</div>
+			<div class="form-group" style="text-align: center;">
+				<button class="btn btn-primary" onclick="updateParams('002')">Submit</button>
+				<!-- <button class="btn btn-default">reset</button> -->
+			</div>
+		</div>
+	</div>
+
+
+	<!--            <div role="tabpanel" class="tab-pane" id="production04">
             	<form class="form-horizontal tab-form" style="width:500px; margin:100px auto 0; background:#fff; border-radius:5px; padding:5px 20px;">
                 	<h4> < Classification threshold > </h4>
                     <div class="form-group">
@@ -318,287 +359,275 @@
                     </div>
                 </form>
             </div>
-  -->           
-            
-                        <div role="tabpanel" class="tab-pane" id="production04">
-              <div class="tab-box">
-            <h4> < Rice growth configuration > </h4>
-            <div class="form-group">
-            	  <label class="control-label" style="width:60px; float:left; text-align:center; line-height:34px; padding-top:0;">Year</label>
-                  <div class="input-group" id="starttime11" style="width:160px; float:left;">
-                <input type="text" class="form-control" name="inStartYear" id="inStartYear" placeholder="input year as 2018" style="float:left; ">
-                <!-- <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span> --></div>
-                  <label class="control-label" style="width:60px; float:left; text-align:center; line-height:34px; padding-top:0;">-</label>
-                  <div class="input-group" id="endtime11" style="width:160px; float:left;">
-                <input type="text" class="form-control" name="inEndYear" id="inEndYear" placeholder="input year as 2020" style="float:left; ">
-                <!-- <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span> --></div>
-                </div>
-            <div class="form-group" style="margin-bottom:0;">
-                  <div class="input-group">
-                <div class="input-group-addon color-one">worst to poor</div>
-                <input type="text" class="form-control" name="conditionThreshold1" id="conditionThreshold1" placeholder="-0.3" >
-                <div class="input-group-addon" style="background:none;">value:-0.3 ~-0.1</div>
-              </div>
-                </div>
-            <div class="form-group" style="margin-bottom:0;">
-                  <div class="input-group">
-                <div class="input-group-addon color-two">poor to normal</div>
-                <input type="text" class="form-control" name="conditionThreshold2" id="conditionThreshold2" placeholder="-0.1" >
-                <div class="input-group-addon" style="background:none;">value:-0.1 ~ 0.1</div>
-              </div>
-                </div>
-            <div class="form-group" style="margin-bottom:0;">
-                  <div class="input-group">
-                <div class="input-group-addon color-three">normal to better</div>
-                <input type="text" class="form-control" name="conditionThreshold3" id="conditionThreshold3" placeholder="0.1" >
-                <div class="input-group-addon" style="background:none;">value:0.1 ~ 0.3</div>
-              </div>
-                </div>
-            <div class="form-group" style="margin-bottom:0;">
-                  <div class="input-group">
-                <div class="input-group-addon color-four">better to best</div>
-                <input type="text" class="form-control" name="conditionThreshold4" id="conditionThreshold4" placeholder="0.3" >
-                <div class="input-group-addon" style="background:none;">>0.3</div>
-              </div>
-                </div>
-            <div class="form-group" style="text-align:center;">
-                    	<button class="btn btn-primary" onclick="updateParams('003')">Submit</button>
-                    	<!-- <button class="btn btn-default">reset</button> -->
-                </div>
-          </div>
-            </div>
-            
-            
-            
-            <div role="tabpanel" class="tab-pane" id="production05">
-<!--             	<form class="form-horizontal tab-form" style="width:500px; margin:100px auto 0; background:#fff; border-radius:5px; padding:5px 20px;">
-                	<h4> < Statistic yield file upload 444444444> </h4>
-                    <input type="file" name="txt_file" id="txt_file06" multiple class="file" />
-                    <div class="form-group" style="text-align:center;">
-                    	<button class="btn btn-success">Submit</button>
-                    	<button class="btn btn-default">reset</button>
-                    </div>
-                </form> -->
-                
-                                <!--这个iframe拿到post过来的表单数据后会开始在自身内部访问post过来的页面地址,在内部中它
-会刷新页面，但是这已不重要了，因为当前的iframe已经被我display:none隐藏了！所以这样给用
-户看起来像是无刷新的页面文件上传，其实只是做一个小小的技巧！-->
-<iframe id="framFile" name="framFile" style="display:none;"></iframe>
+  -->
 
-                <form method="post" action="riceYieldUpload" enctype="multipart/form-data" target="framFile"  onsubmit="return message();" class="form-horizontal tab-form" style="width:500px; margin:100px auto 0; background:#fff; border-radius:5px; padding:5px 20px;"> 
- <div align="center">               <h4> < Statistic yield file upload> </h4>
-                
-<!--                 <div class="div1">
-    <div class="div2">点击上传</div>
-    <input type="file" class="file_input">
+	<div role="tabpanel" class="tab-pane" id="production04">
+		<div class="tab-box">
+			<h4>< Rice growth configuration ></h4>
+			<div class="form-group">
+				<label class="control-label"
+					style="width: 60px; float: left; text-align: center; line-height: 34px; padding-top: 0;">Year</label>
+				<div class="input-group" id="starttime11"
+					style="width: 160px; float: left;">
+					<input type="text" class="form-control" name="inStartYear"
+						id="inStartYear" placeholder="input year as 2018"
+						style="float: left;">
+					<!-- <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span> -->
+				</div>
+				<label class="control-label"
+					style="width: 60px; float: left; text-align: center; line-height: 34px; padding-top: 0;">-</label>
+				<div class="input-group" id="endtime11"
+					style="width: 160px; float: left;">
+					<input type="text" class="form-control" name="inEndYear"
+						id="inEndYear" placeholder="input year as 2020"
+						style="float: left;">
+					<!-- <span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span> -->
+				</div>
+			</div>
+			<div class="form-group" style="margin-bottom: 0;">
+				<div class="input-group">
+					<div class="input-group-addon color-one">worst to poor</div>
+					<input type="text" class="form-control" name="conditionThreshold1"
+						id="conditionThreshold1" placeholder="-0.3">
+					<div class="input-group-addon" style="background: none;">value:-0.3
+						~-0.1</div>
+				</div>
+			</div>
+			<div class="form-group" style="margin-bottom: 0;">
+				<div class="input-group">
+					<div class="input-group-addon color-two">poor to normal</div>
+					<input type="text" class="form-control" name="conditionThreshold2"
+						id="conditionThreshold2" placeholder="-0.1">
+					<div class="input-group-addon" style="background: none;">value:-0.1
+						~ 0.1</div>
+				</div>
+			</div>
+			<div class="form-group" style="margin-bottom: 0;">
+				<div class="input-group">
+					<div class="input-group-addon color-three">normal to better</div>
+					<input type="text" class="form-control" name="conditionThreshold3"
+						id="conditionThreshold3" placeholder="0.1">
+					<div class="input-group-addon" style="background: none;">value:
+						0.1 ~ 0.3</div>
+				</div>
+			</div>
+			<div class="form-group" style="margin-bottom: 0;">
+				<div class="input-group">
+					<div class="input-group-addon color-four">better to best</div>
+					<input type="text" class="form-control" name="conditionThreshold4"
+						id="conditionThreshold4" placeholder="0.3">
+					<div class="input-group-addon" style="background: none;">value:
+						> 0.3</div>
+				</div>
+			</div>
+			<div class="form-group" style="text-align: center;">
+				<button class="btn btn-primary" onclick="updateParams('003')">Submit</button>
+				<!-- <button class="btn btn-default">reset</button> -->
+			</div>
+		</div>
+	</div>
+	<div role="tabpanel" class="tab-pane" id="production05">
+
+		<iframe id="framFile" name="framFile" style="display: none;"></iframe>
+		<form method="post" action="riceYieldUpload"
+			enctype="multipart/form-data" target="framFile"
+			onsubmit="return message();" class="form-horizontal tab-form"
+			style="width: 500px; margin: 100px auto 0; background: #fff; border-radius: 5px; padding: 5px 20px;">
+			<div align="center">
+				<h4>< Statistic yield file upload></h4>
+				<input type="text" class="form-control"
+					style="Float: left; width: 250px; margin: 2px"
+					name="uploadFilePath" id="uploadFilePath"
+					placeholder="Click the Browse button and select"> &nbsp<label
+					class="btn btn-success" style="Float: left; margin: 2px"><input
+					class="file_input" type="file" name="file" id="hhhh"
+					onchange="document.getElementById('uploadFilePath').value = document.getElementById('hhhh').value;">
+					Browse...</label> &nbsp<input type="submit" class="btn btn-success"
+					value="Submit" style="Float: left; margin: 2px">
+			</div>
+		</form>
+	</div>
 </div>
-
-<label for="upload" class="ui-upload">upload</label> 
-<input type="file" id="upload" style="display: none;" />
- <label class="ui-upload">upload<input type="file" style="display: none;" /></label> -->
-
-<!-- <label class="btn btn-success" ><input class="file_input" type="file" name="file"  onchange="submit"> Select</label>
-<input type="submit" class="btn btn-success" value="Submit"> </div> -->
-
-
-<div class="fieldset_div">
-<span><input type="text" class="form-control"  style="width:250px;" name="uploadFilePath" id="uploadFilePath" placeholder="Click the Browse button and select"></span><span><label class="btn btn-success" ><input class="file_input" type="file" name="file" id="hhhh" onchange="document.getElementById('uploadFilePath').value = document.getElementById('hhhh').value;"> Browse...</label></span>
-<input type="submit" class="btn btn-success" value="Submit"> 
 </div>
-</div>  
+</div>
+</div>
+<!-- Hint Modal-->
+<div class="modal fade" id="hintModal" tabindex="-1" role="dialog"
+	aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Tip!</h5>
+				<button class="close" type="button" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body" id="hintContent"></div>
+			<div class="modal-footer">
+				<button class="btn btn-secondary" type="button" data-dismiss="modal"
+					id="hintModal_okbtn">OK</button>
+
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Logout Modal-->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+	aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+				<button class="close" type="button" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body">Select "Logout" below if you are ready
+				to end your current session.</div>
+			<div class="modal-footer">
+				<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+				<a class="btn btn-primary" href="${cxt!}/jf/thairice/t3user/exit">Logout</a>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- upload Modal-->
+<div class="modal fade" id="fileModal" tabindex="-1" role="dialog"
+	aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">File upload</h5>
+				<button class="close" type="button" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
 
 
 
-</form>   
-<!-- <label for="upload" class="ui-upload">upload</label> 
-<input type="file" id="upload" style="display: none;" />
- <label class="ui-upload">upload<input type="file" style="display: none;" /></label> -->
-          
 
-
-<!--<form id="form1" onsubmit="return false" action="##" method="post"  enctype="multipart/form-data">
-<input type="file" name="file"> 
-<input type="submit" onclick="login()" value="上传"> 
-sssssssss
-</form>  -->
-
-
-
-<!--                 <form onsubmit="return PostData()"  enctype="multipart/form-data" id="riceYieldUpload"> 
-<input type="file" name="file"> 
-<input type="submit" value="上传"> 
-sssssssss
-</form>  -->
-
-<!-- <form onsubmit="return PostData()">
-    <input type="text" value="">
-    <input type="submit">
-</form> -->
-
-            </div>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- Hint Modal-->
-    <div class="modal fade" id="hintModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Tip!</h5>
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-          <div class="modal-body" id="hintContent">
-          	
-          </div>
-          <div class="modal-footer">
-          	<button class="btn btn-secondary" type="button" data-dismiss="modal" id="hintModal_okbtn">OK</button>
-            
-          </div>
-        </div>
-      </div>
-    </div>
-	<!-- Logout Modal-->
-    <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-          <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
-          <div class="modal-footer">
-            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-            <a class="btn btn-primary" href="${cxt!}/jf/thairice/t3user/exit">Logout</a>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- upload Modal-->
-    <div class="modal fade" id="fileModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">File upload</h5>
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">×</span>
-            </button>
-            
-            
-
-
-          </div>
-          <div class="modal-body">
-          	<!-- input type="file" name="txt_file" id="txt_file01" multiple class="file" /-->
-          		<p class="self_title text-center">Files</p>
+			</div>
+			<div class="modal-body">
+				<!-- input type="file" name="txt_file" id="txt_file01" multiple class="file" /-->
+				<p class="self_title text-center">Files</p>
 				<div class="row">
-                     <div class="col-sm-10 col-md-10" style="width:100%;">
-                     	<table id="files_excel" class="hover" style="width:100%"></table>
-			              
-                     </div>
-			
-                 </div>
-          </div>
-          <div class="modal-footer" style="text-align:center;">
-            <button id="fileModal_addbtn" class="btn btn-primary upload_btn" type="button" data-dismiss="modal">Add</button>
-          </div>
-        </div>
-      </div>
-    </div>
-	<!-- Run Modal-->
-    <div class="modal fade" id="RunModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLabel">Perform parameter</h5>
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-          <div class="modal-body">
-          	<form role="form" class="form-horizontal user_form">
-            	  <div class="form-group" style="margin-bottom:0;">
-                    <label class="col-sm-4">service band</label>
-                    <div class="col-sm-8" style="line-height:40px;">
-                    	<input type="checkbox" checked style="margin-top:10px; margin-right:8px;">select all
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="col-sm-4"></label>
-                    <div class="col-sm-8">
-                    	<label class="checkbox-inline">
-                          <input type="checkbox" checked style="margin-top:10px; margin-right:8px;" value="option1"> band1
-                        </label>
-                        <label class="checkbox-inline">
-                          <input type="checkbox" checked style="margin-top:10px; margin-right:8px;" value="option2"> band2
-                        </label>
-                        <label class="checkbox-inline">
-                          <input type="checkbox" checked style="margin-top:10px; margin-right:8px;" value="option3"> band3
-                        </label>
-                        <label class="checkbox-inline">
-                          <input type="checkbox" checked style="margin-top:10px; margin-right:8px;" value="option4"> band4
-                        </label>
-                    </div>
-                  </div>
-                  <div class="form-group">
-                    <label class="col-sm-4">Selection algorithm:</label>
-                    <div class="col-sm-8">
-                      <label>
-                          <input type="radio" value="option1"> Minimum likelihood classification
-                      </label><br>
-                      <label>
-                          <input type="radio" value="option1"> Spectral Angle Mapper
-                      </label><br>
-                    </div>
-                  </div>
+					<div class="col-sm-10 col-md-10" style="width: 100%;">
+						<table id="files_excel" class="hover" style="width: 100%"></table>
 
-            </form>
-          </div>
-          <div class="modal-footer" style="text-align:center;">
-            <button class="btn btn-primary run_btn" type="button" data-dismiss="modal" data-toggle="modal" data-target="#RunResultModal">Run</button>
-            <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
-          </div>
-        </div>
-      </div>
-    </div>
-    <!-- RunResult Modal-->
-    <div class="modal fade" id="RunResultModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-      <div class="modal-dialog dialog-special" role="document" style="margin-top:100px;">
-        <div class="modal-content">
-          <div class="modal-header" style="height:45px;">
-            <h5 class="modal-title" id="exampleModalLabel" style="height:45px; line-height:45px;">The results</h5>
-            <button class="close" type="button" data-dismiss="modal" aria-label="Close" style="margin-top:13px;">
-              <span aria-hidden="true">×</span>
-            </button>
-          </div>
-          <div class="modal-body">
-          	<div class="container-fluid">
-            	<div class="row">
-                	<div class="col-sm-6 col-md-6">
-                    	<p class="text">The original image</p>
-                        <img class="img-responsive" src="Images/production/img01.jpg">
-                    </div>
-                    <div class="col-sm-6 col-md-6">
-                    	<p class="text">Results the image</p>
-                        <img class="img-responsive" src="Images/production/img01.jpg">
-                    </div>
-                </div>
-            </div>
-          </div>
-          <div class="modal-footer">
-            <input type="radio" name="rice">Rice
-            <input type="radio" name="rice" style="margin-left:10px;">Not rice
-            <button class="btn btn-primary result_btn" type="button" style="margin-left:10px;" data-dismiss="modal">Run</button>
-          </div>
-        </div>
- 
- <% }; %> <% var jsSec={ %>
+					</div>
 
-  	<script>
+				</div>
+			</div>
+			<div class="modal-footer" style="text-align: center;">
+				<button id="fileModal_addbtn" class="btn btn-primary upload_btn"
+					type="button" data-dismiss="modal">Add</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Run Modal-->
+<div class="modal fade" id="RunModal" tabindex="-1" role="dialog"
+	aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Perform
+					parameter</h5>
+				<button class="close" type="button" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<form role="form" class="form-horizontal user_form">
+					<div class="form-group" style="margin-bottom: 0;">
+						<label class="col-sm-4">service band</label>
+						<div class="col-sm-8" style="line-height: 40px;">
+							<input type="checkbox" checked
+								style="margin-top: 10px; margin-right: 8px;">select all
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-4"></label>
+						<div class="col-sm-8">
+							<label class="checkbox-inline"> <input type="checkbox"
+								checked style="margin-top: 10px; margin-right: 8px;"
+								value="option1"> band1
+							</label> <label class="checkbox-inline"> <input type="checkbox"
+								checked style="margin-top: 10px; margin-right: 8px;"
+								value="option2"> band2
+							</label> <label class="checkbox-inline"> <input type="checkbox"
+								checked style="margin-top: 10px; margin-right: 8px;"
+								value="option3"> band3
+							</label> <label class="checkbox-inline"> <input type="checkbox"
+								checked style="margin-top: 10px; margin-right: 8px;"
+								value="option4"> band4
+							</label>
+						</div>
+					</div>
+					<div class="form-group">
+						<label class="col-sm-4">Selection algorithm:</label>
+						<div class="col-sm-8">
+							<label> <input type="radio" value="option1">
+								Minimum likelihood classification
+							</label><br> <label> <input type="radio" value="option1">
+								Spectral Angle Mapper
+							</label><br>
+						</div>
+					</div>
+
+				</form>
+			</div>
+			<div class="modal-footer" style="text-align: center;">
+				<button class="btn btn-primary run_btn" type="button"
+					data-dismiss="modal" data-toggle="modal"
+					data-target="#RunResultModal">Run</button>
+				<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- RunResult Modal-->
+<div class="modal fade" id="RunResultModal" tabindex="-1" role="dialog"
+	aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog dialog-special" role="document"
+		style="margin-top: 100px;">
+		<div class="modal-content">
+			<div class="modal-header" style="height: 45px;">
+				<h5 class="modal-title" id="exampleModalLabel"
+					style="height: 45px; line-height: 45px;">The results</h5>
+				<button class="close" type="button" data-dismiss="modal"
+					aria-label="Close" style="margin-top: 13px;">
+					<span aria-hidden="true">×</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-sm-6 col-md-6">
+							<p class="text">The original image</p>
+							<img class="img-responsive" src="Images/production/img01.jpg">
+						</div>
+						<div class="col-sm-6 col-md-6">
+							<p class="text">Results the image</p>
+							<img class="img-responsive" src="Images/production/img01.jpg">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<input type="radio" name="rice">Rice <input type="radio"
+					name="rice" style="margin-left: 10px;">Not rice
+				<button class="btn btn-primary result_btn" type="button"
+					style="margin-left: 10px;" data-dismiss="modal">Run</button>
+			</div>
+		</div>
+
+		<% }; %> <% var jsSec={ %>
+
+		<script>
   	
     var dojoConfig = {
       has: {
@@ -659,8 +688,8 @@ sssssssss
 			})*/
 		})
     </script>
-       
-<script type="text/javascript"> 
+
+		<script type="text/javascript"> 
     function updateParams(flag){
 	$.ajax({
 		  type: 'POST',
@@ -727,25 +756,19 @@ sssssssss
     		  dataType: "json"
     		});
     	}
-</script> 
+</script>
 
-    <script type="text/javascript">
+		<script type="text/javascript">
         function message() {
          var filePath = document.getElementById('hhhh').value;
          if(filePath==null || filePath==""){
         	 alert("Please click the browse button and select a file first!");
         	 return;
          } else
-         	alert("Upload success!");
-        }
-        
-        
-        
+         	alert("Upload successfully!");
+        }        
     </script>
-    
-
-
-<script> function PostData() { $.ajax({ type:"POST", 
+		<script> function PostData() { $.ajax({ type:"POST", 
 	url: "/jf/thairice/t1parameter/riceYieldUpload",
 	data : , 
 /* 	headers:{
@@ -759,6 +782,6 @@ sssssssss
 	} 
 	</script>
 
-<% }; %> <%
-include("operator_layout.html",{cssSec:cssSec,contSec:contSec,jsSec:jsSec}){}
-%>
+		<% }; %> <%
+		include("operator_layout.html",{cssSec:cssSec,contSec:contSec,jsSec:jsSec}){}
+		%>
