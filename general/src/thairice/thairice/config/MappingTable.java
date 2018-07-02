@@ -8,7 +8,6 @@
 package thairice.config;
 
 import org.apache.log4j.Logger;
-import thairice.mvc.t14my_region.t14my_region;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 /**
  * 创建时间：2016年3月12日 上午10:11:42
@@ -34,7 +33,6 @@ public class MappingTable {
 	private static Logger log = Logger.getLogger(MappingTable.class);
 	public static void mapping(ActiveRecordPlugin arp){
 		log.info("thairice MappingTable 表手工注册-----begin");
-		arp.addMapping("t14my_region", "id", t14my_region.class);
 		log.info("thairice MappingTable 表手工注册-----end");
 		
 	}

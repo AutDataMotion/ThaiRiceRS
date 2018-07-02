@@ -262,39 +262,12 @@ public class BackendUserController extends BaseController {
      * 用户选择的服务地区
      */
     public void region() {
-        List<Record> all = new ArrayList<>();
         List<Record> list = Db.use(ConstantInitMy.db_dataSource_main).find("SELECT r.id,m.name as provinceName,m.id as provinceId,l.name as cityName,\n" +
                 "l.id as cityId,n.name as areaName,n.id as areaId FROM t14my_region r \n" +
                 "LEFT JOIN t13region m ON m.Id = r.provinceId \n" +
                 "LEFT JOIN t13region l ON l.Id = r.cityId \n" +
                 "LEFT JOIN t13region n ON n.Id = r.areaId \n" +
                 "WHERE r.userId=? GROUP BY r.id", getParaToInt("userId"));
-          /*if(!list.isEmpty()){
-             for (Record record : list) {
-        		 List<Record>list_c=Db.use(ConstantInitMy.db_dataSource_main).find("SELECT r.name,r.id as regionId,m.id FROM t13region r LEFT JOIN t14my_region m ON m.regionId = r.id LEFT JOIN t13region tr ON tr.id = r.parentId WHERE r.parentId =? and userId=?",record.getInt("regionId"),getParaToInt("userId"));
-        		 List<Record>r2_list=new ArrayList<>();
-        		 Record r1=new Record();
-        		 r1.set("v", record.getInt("id"));
-        		 r1.set("n", record.getStr("name"));
-        		 for (Record record2 : list_c) {
-        			 Record r2=new Record();
-        			 r2.set("v", record2.getInt("id"));
-        			 r2.set("n", record2.getStr("name"));
-        			 List<Record>list_d=Db.use(ConstantInitMy.db_dataSource_main).find("SELECT r.name,m.id FROM t13region r LEFT JOIN t14my_region m ON m.regionId = r.id LEFT JOIN t13region tr ON tr.id = r.parentId WHERE r.parentId =? and userId=?",record2.getInt("regionId"),getParaToInt("userId"));
-        			 List<Record>r3_list=new ArrayList<>();
-        			 for (Record record3 : list_d) {
-        				 Record r3=new Record();
-	        			 r3.set("v", record3.getInt("id"));
-	        			 r3.set("n", record3.getStr("name"));
-	        			 r3_list.add(r3);
-	        			 r2.set("s", r3_list);
-					}
-        			 r2_list.add(r2);
-        			 r1.set("s", r2_list);
-				}
-        		 all.add(r1);
-			}
-          }*/
         renderJson(list);
     }
 
@@ -307,13 +280,45 @@ public class BackendUserController extends BaseController {
 
     //添加服务地区
     public void add_address() {
+        int province = getParaToInt("province");
+        int city = getParaToInt("city", 0);
+        int area = getParaToInt("area", 0);
+        //判断选择是否重复
+        boolean ret = true;
+        List<Record> list1 = Db.use(ConstantInitMy.db_dataSource_main).find("select * from t14my_region where userId=?", getParaToInt("userId"));
+        for (int i = 0; i < list1.size(); i++) {
+            Record record = list1.get(i);
+            int p = record.getInt("provinceId");
+            int c = record.getInt("cityId");
+            int a = record.getInt("areaId");
+            if (province == p && city == c && area == a) {
+                ret = false;
+            }
+            if (province == p) {
+                if (c == 0 && city != 0) {
+                    ret = false;
+                }
+            }
+            if (province == p) {
+                if (city == c) {
+                    if (a == 0 && area != 0) {
+                        ret = false;
+                    }
+                }
+            }
+        }
+        if (!ret) {
+            renderJson(new Result(300, "error"));
+            return;
+        }
+
         Record record = new Record();
         record.set("userId", getParaToInt("userId"));
         record.set("provinceId", getParaToInt("province"));
-        record.set("cityId", getParaToInt("city"));
-        record.set("areaId", getParaToInt("area"));
+        record.set("cityId", getParaToInt("city", 0));
+        record.set("areaId", getParaToInt("area", 0));
         Db.use(ConstantInitMy.db_dataSource_main).save("t14my_region", record);
-			/*Record record2=new Record();
+            /*Record record2=new Record();
 			record2.set("userId", getParaToInt("userId"));
 			record2.set("regionId",getParaToInt("city"));
 			Db.use(ConstantInitMy.db_dataSource_main).save("t14my_region", record2);

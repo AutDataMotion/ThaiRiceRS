@@ -14,12 +14,48 @@
     <link rel="stylesheet" href="${cxt!}/ui/thairice/CSS/bootstrap-imginput.css">
     <link type="text/css" id="skin" rel="stylesheet" href="${cxt!}/ui/thairice/CSS/skin/color_one.css">
     <style>
-        .btn-file{background-color: #0c7897;}
-        .btn-primary:hover{background-color: #03A9F4;}
-        .r{height: 500px;text-align: center;overflow: hidden;}
-        .r img{max-width: 300px!important;max-height: 300px!important;}
-        .ribbon-wrapper{width:80px;height:88px;position:absolute;top:-3px;right:-3px;overflow:hidden}
-        .ribbon{text-align:center;color:#fff;font-weight:500;padding:7px 0;width:120px;background-color:#F44336;box-shadow:1px 1px 3px rgba(0,0,0,.2),inset 1px 1px 0 rgba(255,255,255,.1);font-size:16px;transform:rotate(45deg);position:relative;top:12px;left:-3px}
+        .btn-file {
+            background-color: #0c7897;
+        }
+
+        .btn-primary:hover {
+            background-color: #03A9F4;
+        }
+
+        .r {
+            height: 500px;
+            text-align: center;
+            overflow: hidden;
+        }
+
+        .r img {
+            max-width: 300px !important;
+            max-height: 300px !important;
+        }
+
+        .ribbon-wrapper {
+            width: 80px;
+            height: 88px;
+            position: absolute;
+            top: -3px;
+            right: -3px;
+            overflow: hidden
+        }
+
+        .ribbon {
+            text-align: center;
+            color: #fff;
+            font-weight: 500;
+            padding: 7px 0;
+            width: 120px;
+            background-color: #F44336;
+            box-shadow: 1px 1px 3px rgba(0, 0, 0, .2), inset 1px 1px 0 rgba(255, 255, 255, .1);
+            font-size: 16px;
+            transform: rotate(45deg);
+            position: relative;
+            top: 12px;
+            left: -3px
+        }
     </style>
 </head>
 <body>
@@ -30,24 +66,34 @@
     <div class="row">
         <div class="col-sm-3 col-md-2 sidebar left_menu">
             <div class="self_info">
-             <% if(user.status_=='02'){ %>
-             <div class="ribbon-wrapper"><div class="ribbon" style="background-color:#4CAF50">Approved</div></div>
-             <% }else if(user.status_=='01'){ %>
-              <div class="ribbon-wrapper"><div class="ribbon">Unauthorized</div></div>
-             <% }else if(user.status_=='03'){ %>
-             <div class="ribbon-wrapper"><div class="ribbon">Refused</div></div>
-             <% }else if(user.status_=='04'){ %>
-             <div class="ribbon-wrapper"><div class="ribbon" style="background-color:#4CAF50">Expired</div></div>
-             <% }%>
+                <% if(user.status_=='02'){ %>
+                <div class="ribbon-wrapper">
+                    <div class="ribbon" style="background-color:#4CAF50">Approved</div>
+                </div>
+                <% }else if(user.status_=='01'){ %>
+                <div class="ribbon-wrapper">
+                    <div class="ribbon">Unauthorized</div>
+                </div>
+                <% }else if(user.status_=='03'){ %>
+                <div class="ribbon-wrapper">
+                    <div class="ribbon">Refused</div>
+                </div>
+                <% }else if(user.status_=='04'){ %>
+                <div class="ribbon-wrapper">
+                    <div class="ribbon" style="background-color:#4CAF50">Expired</div>
+                </div>
+                <% }%>
                 <p class="self_title text-center">User Profile</p>
                 <dl class="dl-horizontal">
                     <dt class="self_photo">
                     <form id="uploadForm">
                         <div class="form-group" data-toggle="modal" data-target="#upload">
-                            <div class="fileinput fileinput-new" data-provides="fileinput" id="exampleInputUpload" style="background-color: none;">
+                            <div class="fileinput fileinput-new" data-provides="fileinput" id="exampleInputUpload"
+                                 style="background-color: none;">
                                 <div class="fileinput-new thumbnail"
                                      style="width: 100px;height: 100px; border:none; padding:0;">
-                                    <img src="${cxt!}${user.heading!'/ui/thairice/Images/self_info/photo.jpg'}" id='picImg' alt="" style="cursor: pointer;"/>
+                                    <img src="${cxt!}${user.heading!'/ui/thairice/Images/self_info/photo.jpg'}"
+                                         id='picImg' alt="" style="cursor: pointer;"/>
                                 </div>
                                 <div class="fileinput-preview fileinput-exists thumbnail"
                                      style="width: 100px;height: 100px; border:none; padding:0;"></div>
@@ -63,22 +109,23 @@
                     </dt>
                     <dd class="self_dd">
                         <p class="name" style="font-size: 13px;">${user.name_}</p>
-                      
+
                     </dd>
                 </dl>
                 <button type="button" class="btn btn-primary btn-lg btn-block reset_btn" data-toggle="modal"
                         data-target="#passwordModal">Reset password
                 </button>
-                <a  type="button" class="btn btn-primary btn-lg btn-block logout_btn"
+                <a type="button" class="btn btn-primary btn-lg btn-block logout_btn"
                    role="button" data-toggle="modal" data-target="#exampleModal">Log out</a>
-                
+
             </div>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
             <div class="self_tablist">
                 <ul class="nav nav-pills" id="myTabs">
-                    <li id="personInfotab" class="active"><a href="#tab_one" data-toggle="tab">Personal information</a></li>
-                    <li id="myreporttab" ><a href="#tab_two" data-toggle="tab">My report</a></li>
+                    <li id="personInfotab" class="active"><a href="#tab_one" data-toggle="tab">Personal information</a>
+                    </li>
+                    <li id="myreporttab"><a href="#tab_two" data-toggle="tab">My report</a></li>
                 </ul>
             </div>
             <div class="tab-content">
@@ -89,28 +136,29 @@
                             <label class="col-md-3 control-label" style="width:120px;">Account</label>
                             <div class="col-md-9" style="width:470px;">
                                 <input type="text" class="form-control" readonly value="${user.account}"
-                                       placeholder="Jone">
+                                       placeholder="The Account is made up of 6 to 12 letters and Numbers">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-3 control-label" style="width:120px;">Mobile</label>
                             <div class="col-md-9" style="width:470px;">
                                 <input type="text" class="form-control" name="t3user.phone" value="${user.phone}"
-                                       placeholder="+66 0808899999">
+                                       placeholder="The Mobile Phone begins with 0 and the length is 10">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-3 control-label" style="width:120px;">Email</label>
                             <div class="col-md-9" style="width:470px;">
-                                <input type="email" class="form-control" id="u_email" name="t3user.email" value="${user.email}"
-                                       placeholder="jone@example.com">
+                                <input type="email" class="form-control" id="u_email" name="t3user.email"
+                                       value="${user.email}"
+                                       placeholder="Your Email like someone@exmaple.com">
                             </div>
                         </div>
                         <div class="form-group">
                             <label class="col-md-3 control-label" style="width:120px;">Nickname</label>
                             <div class="col-md-9" style="width:470px;">
                                 <input type="text" class="form-control" name="t3user.name_" value="${user.name_}"
-                                       placeholder="Yingluck Chinnawat">
+                                       placeholder="Your nickname">
                             </div>
                         </div>
                         <div class="form-group">
@@ -120,20 +168,21 @@
                                        placeholder="Your current job">
                             </div>
                         </div>
-                         <div class="form-group">
+                        <div class="form-group">
                             <label class="col-md-3 control-label" style="width:120px;">Zip code</label>
                             <div class="col-md-9" style="width:470px;">
-                                <input type="text" class="form-control" name="t3user.zip_encode" value="${user.zip_encode}"
+                                <input type="text" class="form-control" name="t3user.zip_encode"
+                                       value="${user.zip_encode}"
                                        placeholder="Zip code">
                             </div>
                         </div>
-                          <div class="form-group">
+                        <div class="form-group">
                             <label class="col-md-3 control-label" style="width:120px;">Address</label>
                             <div class="col-md-9" style="width:470px;">
                                 <input type="text" class="form-control" name="t3user.address" value="${user.address}"
                                        placeholder="Your address">
                             </div>
-                        </div> 
+                        </div>
                         <div class="form-group">
                             <label class="col-md-3 control-label" style="width:120px;">Industry</label>
                             <div class="col-md-9" style="width:470px;">
@@ -143,59 +192,74 @@
                         </div>
                         <p class="text-center form_title"> < Service information > </p>
                         <div style="position: relative;background-color: white;padding: 12px 0px 15px 0px;">
-                       <!--  <div class="ribbon-wrapper"><div class="ribbon" style="background-color:#838883">Unchange</div></div> -->
-                        <div class="form-group">
-                            <label class="col-md-3 control-label" style="width:120px;">Confirm area</label>
-                            <div class="col-md-9" style="width:500px;">
-            <div id="custom_data">
-            <select class="province" id="province"  style="padding: 7px;width: 150px;" onchange="initaddCityArea('city')"></select>
-            <select class="city" id="city" style="padding: 7px;width: 150px;" onchange="initaddCityArea('area')"></select>
-            <select class="area" id="area" style="padding: 7px;width: 150px;"></select>
-            </div>
-                            </div>
-                        </div>
-                        <div class="form-group">
-                            <label class="col-md-3 control-label" style="width:120px; padding-left:0;">Products</label>
-                            <div class="col-md-9" style="width:470px;">
-                                <div class="checkbox">
-                                    <label><input type="checkbox" name="PD_TpCd" value="01" disabled>Rice acreage</label>
-                                </div>
-                                <div class="checkbox">
-                                    <label><input type="checkbox" name="PD_TpCd" value="02" disabled>Rice growth</label>
-                                </div>
-                                <div class="checkbox">
-                                    <label><input type="checkbox" name="PD_TpCd" value="03" disabled>Rice yield</label>
-                                </div>
-                                <div class="checkbox">
-                                    <label><input type="checkbox" name="PD_TpCd" value="04" disabled>Rice drought</label>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="form-group" style="margin-top:100px;">
-                            <label class="col-sm-2 control-label" style="width:120px;">Service Term</label>
-                            <div class="col-sm-10" style="width:540px;">
-                             <span style="float: left;margin-top: 7px;">From</span>
-                                <div class="col-sm-4">
-                                    <div class="input-group date" style="width:151px;">
-                                        <input type="text" id='starttime1' class="form-control" name="Prdt_EfDt"
-                                               value="${user.Prdt_EfDt}" disabled>
-                                        <span class="input-group-addon"><i
-                                                class="glyphicon glyphicon-calendar"></i></span>
-                                    </div>
-                                </div>
-                                <div class="col-sm-1" style="text-align:center;">
-                                    <label class="control-label">To</label>
-                                </div>
-                                <div class="col-sm-4">
-                                    <div class="input-group date" style="width:151px;">
-                                        <input type="text" id='endtime1' class="form-control" name="PD_ExDat"
-                                               value="${user.PD_ExDat}" disabled>
-                                        <span class="input-group-addon"><i
-                                                class="glyphicon glyphicon-calendar"></i></span>
+                            <!--  <div class="ribbon-wrapper"><div class="ribbon" style="background-color:#838883">Unchange</div></div> -->
+                            <div class="form-group">
+                                <label class="col-md-3 control-label" style="width:120px;">Service area</label>
+                                <div class="col-md-9" style="width:500px;">
+                                    <div id="custom_data">
+                                        <select class="province" id="province" style="padding: 7px;width: 150px;"
+                                                onchange="initaddCityArea('city')"></select>
+                                        <select class="city" id="city" style="padding: 7px;width: 150px;"
+                                                onchange="initaddCityArea('area')"></select>
+                                        <select class="area" id="area" style="padding: 7px;width: 150px;"></select>
                                     </div>
                                 </div>
                             </div>
-                        </div>
+                            <div class="form-group">
+                                <label class="col-md-3 control-label"
+                                       style="width:120px; padding-left:0;">Products</label>
+                                <div class="col-md-9" style="width:470px;">
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" name="PD_TpCd" value="01" disabled>Rice
+                                            acreage</label>
+                                        <!-- </div>
+                                        <div class="checkbox"> -->
+                                        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                        <label><input type="checkbox" name="PD_TpCd" value="02" disabled>Rice
+                                            growth</label>
+                                    </div>
+                                    <div class="checkbox">
+                                        <label><input type="checkbox" name="PD_TpCd" value="03" disabled>Rice
+                                            yield</label>
+                                        <!-- </div>
+                                        <div class="checkbox"> -->
+                                        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                        <label><input type="checkbox" name="PD_TpCd" value="04" disabled>Rice
+                                            drought</label>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group" style="margin-top:50px;">
+                                <label class="col-sm-2 control-label" style="width:120px;">Service Term</label>
+                                <div class="col-sm-10" style="width:540px;">
+                                    <span style="float: left;margin-top: 7px;">From</span>
+                                    <div class="col-sm-4">
+                                        <div class="input-group date" style="width:151px;">
+                                            <input type="text" id='starttime1' class="form-control" name="Prdt_EfDt"
+                                                   value="${user.Prdt_EfDt}" disabled>
+                                            <span class="input-group-addon"><i
+                                                    class="glyphicon glyphicon-calendar"></i></span>
+                                        </div>
+                                    </div>
+                                    <div class="col-sm-1" style="text-align:center;">
+                                        <label class="control-label">To</label>
+                                    </div>
+                                    <div class="col-sm-4">
+                                        <div class="input-group date" style="width:151px;">
+                                            <input type="text" id='endtime1' class="form-control" name="PD_ExDat"
+                                                   value="${user.PD_ExDat}" disabled>
+                                            <span class="input-group-addon"><i
+                                                    class="glyphicon glyphicon-calendar"></i></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                         <input type="hidden" value="${user.id}" name="t3user.id">
                         <div class="form-group">
@@ -211,42 +275,43 @@
                         <button type="button" class="btn btn-info">Merging download</button>
                     </div-->
                     <div class="tab_table_wrap">
-							<table class="table table-bordered table-condensed"
-								align="center" cellpadding="0" cellspacing="0">
-								<thead>
-									<tr>
-										<th style="border-bottom: none;"><input type="checkbox"
-											align="center">Select</th>
-										<th style="border-bottom: none;">Start date</th>
-										<th style="border-bottom: none;">End date</th>
-										<th style="border-bottom: none;">Zone code</th>
-										<th style="border-bottom: none;">Pdt type</th>
-										<th style="border-bottom: none;">Suffix</th>
-										<th style="border-bottom: none;">Option</th>
-									</tr>
-								</thead>
-								<tbody>
-									<%for(x in blogPage.list){ %>
-									<tr>
-										<td style="text-align: center;"><input type="checkbox" class="reportDownloadCheckbox"
-											name="${x.id}" value="${x.download_path}"></td>
-										<td style="text-align: center;">${x.start_time}</td>
-										<td style="text-align: center;">${x.end_time}</td>
-										<td style="text-align: center;">${x.zone_code}</td>
-										<td style="text-align: center;">${x.pdt_type}</td>
-										<td style="text-align: center;">${x.suffix}</td>
-										<td style="text-align: center;">
-											<a href="/jf/thairice/t10pdt_report/delete/?id=${x.id}&filepath=${x.download_path}">delete</a>
-											<a href="${x.download_path}" target="_blank">download</a>
-										</td>
-									</tr>
-									<%}%>
-								</tbody>
-							</table>
-							<%includeFileTemplate("/common/_paginate.html",
-							{"currentPage":blogPage.pageNumber,"totalPage":blogPage.totalPage,"actionUrl":"/jf/thairice/t10pdt_report/"})
-							{} %>
-						</div>
+                        <table class="table table-bordered table-condensed"
+                               align="center" cellpadding="0" cellspacing="0">
+                            <thead>
+                            <tr>
+                                <th style="border-bottom: none;"><input type="checkbox"
+                                                                        align="center">Select
+                                </th>
+                                <th style="border-bottom: none;">Start date</th>
+                                <th style="border-bottom: none;">End date</th>
+                                <th style="border-bottom: none;">Zone code</th>
+                                <th style="border-bottom: none;">Pdt type</th>
+                                <th style="border-bottom: none;">Suffix</th>
+                                <th style="border-bottom: none;">Option</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <%for(x in blogPage.list){ %>
+                            <tr>
+                                <td style="text-align: center;"><input type="checkbox" class="reportDownloadCheckbox"
+                                                                       name="${x.id}" value="${x.download_path}"></td>
+                                <td style="text-align: center;">${x.start_time}</td>
+                                <td style="text-align: center;">${x.end_time}</td>
+                                <td style="text-align: center;">${x.zone_code}</td>
+                                <td style="text-align: center;">${x.pdt_type}</td>
+                                <td style="text-align: center;">${x.suffix}</td>
+                                <td style="text-align: center;">
+                                    <a href="/jf/thairice/t10pdt_report/delete/?id=${x.id}&filepath=${x.download_path}">delete</a>
+                                    <a href="${x.download_path}" target="_blank">download</a>
+                                </td>
+                            </tr>
+                            <%}%>
+                            </tbody>
+                        </table>
+                        <%includeFileTemplate("/common/_paginate.html",
+                        {"currentPage":blogPage.pageNumber,"totalPage":blogPage.totalPage,"actionUrl":"/jf/thairice/t10pdt_report/"})
+                        {} %>
+                    </div>
                 </div>
             </div>
         </div>
@@ -279,11 +344,12 @@
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Upload a profile picture</h5>
-                <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                <button class="close" type="button" data-dismiss="modal" aria-label="Close"><span
+                        aria-hidden="true">×</span></button>
             </div>
             <div class="modal-body">
                 <div class="r">
-                    <input id="file-Portrait1" name="head"  type="file" style="background-color: none;">
+                    <input id="file-Portrait1" name="head" type="file" style="background-color: none;">
                 </div>
             </div>
             <div class="modal-footer" style="text-align:center;">
@@ -295,7 +361,7 @@
 <!--password modify modal-->
 <div class="modal fade" id="passwordModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
-    <div class="modal-dialog" role="document"  style="width: 650px;">
+    <div class="modal-dialog" role="document" style="width: 650px;">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="exampleModalLabel">Reset Password</h5>
@@ -307,29 +373,35 @@
                     <div class="form-group">
                         <label class="col-sm-3 control-label">New password</label>
                         <div class="col-sm-9">
-                            <input type="password"  name="pwd" class="form-control"  placeholder="The passwords must contain at least 2 kinds of letters, numbers and symbols">
+                            <input type="password" name="pwd" class="form-control"
+                                   placeholder="The passwords must be at least 2 kinds of letters, numbers and symbols">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Re-enter password</label>
                         <div class="col-sm-9">
-                            <input type="password" class="form-control" name="again" placeholder="Re-enter new password">
+                            <input type="password" class="form-control" name="again"
+                                   placeholder="Re-enter new password">
                         </div>
                     </div>
-                    
+
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Email</label>
                         <div class="col-sm-9">
-                        <div class="input-group">
-                              <input type="email" class="form-control" placeholder="your E-mai like someone@exmaple.com"  name="email"  id="email"  value="${user.email}" readonly>
-                              <span class="input-group-addon" id="send_email" style="background-color:#5cb85c;color: #fff;background-color: #5cb85c;cursor: pointer;">Send authorization code</span>
-                         </div>
+                            <div class="input-group">
+                                <input type="email" class="form-control"
+                                       placeholder="your E-mai like someone@exmaple.com" name="email" id="email"
+                                       value="${user.email}" readonly>
+                                <span class="input-group-addon" id="send_email"
+                                      style="background-color:#5cb85c;color: #fff;background-color: #5cb85c;cursor: pointer;">Send authorization code</span>
+                            </div>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Verification code</label>
                         <div class="col-sm-9">
-                            <input type="text" class="form-control" placeholder="Please enter the verification code from your e-mail"  name="code" >
+                            <input type="text" class="form-control"
+                                   placeholder="Please enter the verification code from your e-mail" name="code">
                         </div>
                     </div>
                 </form>
@@ -354,16 +426,15 @@
 <script type="text/javascript" src="${cxt!}/ui/thairice/common.js"></script>
 <script>
 
-$("#navbar_user").addClass("active");
-	if('${PersonInfoOrMyreport!}'==1)
-	{
-		$("#personInfotab").removeClass("active");
-		$("#tab_one").removeClass("in");
-		$("#tab_one").removeClass("active");
-		$("#myreporttab").addClass("active");
-		$("#tab_two").addClass("in");
-		$("#tab_two").addClass("active");
-	}
+    $("#navbar_user").addClass("active");
+    if ('${PersonInfoOrMyreport!}' == 1) {
+        $("#personInfotab").removeClass("active");
+        $("#tab_one").removeClass("in");
+        $("#tab_one").removeClass("active");
+        $("#myreporttab").addClass("active");
+        $("#tab_two").addClass("in");
+        $("#tab_two").addClass("active");
+    }
     //初始化复选框
     '${user.PD_TpCd}'.split(",").forEach(function (item) {
         $("input[type=checkbox]").each(function () {
@@ -374,29 +445,33 @@ $("#navbar_user").addClass("active");
     });
     //修改个人信息
     $('#modify_btn').click(function () {
-    	 $("#info").bootstrapValidator('validate');
-    	 if (!$("#info").data('bootstrapValidator').isValid()) {return;}
+        $("#info").bootstrapValidator('validate');
+        if (!$("#info").data('bootstrapValidator').isValid()) {
+            return;
+        }
         sendAjax('${cxt!}/jf/thairice/t3user/edit_info', $("#info").serialize(), function (res) {
-        	$('#email').val($('#u_email').val());
+            $('#email').val($('#u_email').val());
             showMessage(res.desc);
             $("#info").bootstrapValidator('resetForm');
         });
     })
     //发送邮箱授权码
-   $('#send_email').click(function () {
-	    sendAjax("${cxt!}/jf/thairice/t3user/send_code",{email:$("#email").val()},function(res){
-           showMessage(res.desc);
-	   });     
+    $('#send_email').click(function () {
+        sendAjax("${cxt!}/jf/thairice/t3user/send_code", {email: $("#email").val()}, function (res) {
+            showMessage(res.desc);
+        });
     })
     //修改密码
     $('#pass_btn').click(function () {
-    	 $("#edit_pass").bootstrapValidator('validate');
-    	 if (!$("#edit_pass").data('bootstrapValidator').isValid()) {return;}
+        $("#edit_pass").bootstrapValidator('validate');
+        if (!$("#edit_pass").data('bootstrapValidator').isValid()) {
+            return;
+        }
         sendAjax('${cxt!}/jf/thairice/t3user/edit_pass', $("#edit_pass").serialize(), function (res) {
             layer.msg(res.desc);
             if (res.code == 1) {
-            	$("#passwordModal").modal("hide");
-            	$("#systemModal").modal("show");
+                $("#passwordModal").modal("hide");
+                $("#systemModal").modal("show");
                 setTimeout(function () {
                     window.location.href = "${cxt!}/jf/thairice/t3user/exit"
                 }, 5000);
@@ -414,10 +489,10 @@ $("#navbar_user").addClass("active");
         showCancel: false,
         autoReplace: true,
         showBrowse: true,
-        showClose:false,
+        showClose: false,
         dropZoneEnabled: false,//是否允许拖拽
         uploadAsync: true,
-        maxFileSize:1024,
+        maxFileSize: 1024,
         maxFileCount: 1,
         browseClass: "btn btn-primary", //按钮样式
         previewFileIcon: "<i class='glyphicon glyphicon-king'></i>",
@@ -425,9 +500,9 @@ $("#navbar_user").addClass("active");
     //异步上传返回结果处理
     $("#file-Portrait1").on("fileuploaded", function (event, data, previewId, index) {
         console.log(JSON.stringify(data));
-        if(data.response.code==1){
+        if (data.response.code == 1) {
             layer.msg('Uploaded successful');
-            $('#picImg').attr("src","${cxt!}"+data.response.desc);
+            $('#picImg').attr("src", "${cxt!}" + data.response.desc);
         }
     });
     /*换肤*/
@@ -460,51 +535,51 @@ $("#navbar_user").addClass("active");
         $('.tab_table_wrap tbody tr:odd td').css('background-color', '#dbeff6');
     })
 
-sendAjax("${cxt!}/jf/thairice/t3user/userCityArea?type=p",{id:0},function (res) {
-    var optionstring = "<option value=\"\" >PROV_NAME</option>";
-    $.each(res, function(i,item){
-        optionstring += "<option value=\"" + item.id + "\" >" + item.name + "</option>";
+    sendAjax("${cxt!}/jf/thairice/t3user/userCityArea?type=p", {id: 0}, function (res) {
+        var optionstring = "<option value=\"\" >PROV</option>";
+        $.each(res, function (i, item) {
+            optionstring += "<option value=\"" + item.id + "\" >" + item.name + "</option>";
+        });
+        $("#province").html(optionstring);
     });
-    $("#province").html(optionstring);
-});
-$("#city").html("<option value=\"\" >AMP_NAME</option>");
-$("#area").html("<option value=\"\" >TAM_NAME</option>");
+    $("#city").html("<option value=\"\" >AMP</option>");
+    $("#area").html("<option value=\"\" >TAM</option>");
 
-function initaddCityArea(type) {
-    if(type=="city"){
-        $("#city").html("");
-        $("#area").html("<option value=\"\" >TAM_NAME</option>");
-        console.log($('#province').val());
-        if($('#province').val()==""){
-            $("#city").html("<option value=\"\" >AMP_NAME</option>");
-            return false;
-        }
-        sendAjax("${cxt!}/jf/thairice/t3user/userCityArea?type=c",{id:$('#province').val()},function (res) {
-            var optionstring = "";
-            optionstring += "<option value=\"\" >AMP_NAME</option>";
-            $.each(res, function(i,item){
-                optionstring += "<option value=\"" + item.id + "\" >" + item.name + "</option>";
+    function initaddCityArea(type) {
+        if (type == "city") {
+            $("#city").html("");
+            $("#area").html("<option value=\"\" >TAM</option>");
+            console.log($('#province').val());
+            if ($('#province').val() == "") {
+                $("#city").html("<option value=\"\" >AMP</option>");
+                return false;
+            }
+            sendAjax("${cxt!}/jf/thairice/t3user/userCityArea?type=c", {id: $('#province').val()}, function (res) {
+                var optionstring = "";
+                optionstring += "<option value=\"\" >AMP</option>";
+                $.each(res, function (i, item) {
+                    optionstring += "<option value=\"" + item.id + "\" >" + item.name + "</option>";
+                });
+                $("#city").html(optionstring);
             });
-            $("#city").html(optionstring);
-        });
-    }else if(type=="area"){
-        if($('#city').val()==""){
-            $("#area").html("<option value=\"\" >TAM_NAME</option>");
-            return false;
-        }
-        sendAjax("${cxt!}/jf/thairice/t3user/userCityArea?type=a",{id:$('#city').val()},function (res) {
-            var optionstring = "";
-            optionstring += "<option value=\"\" >TAM_NAME</option>";
-            $.each(res, function(i,item){
-                optionstring += "<option value=\"" + item.id + "\" >" + item.name + "</option>";
+        } else if (type == "area") {
+            if ($('#city').val() == "") {
+                $("#area").html("<option value=\"\" >TAM</option>");
+                return false;
+            }
+            sendAjax("${cxt!}/jf/thairice/t3user/userCityArea?type=a", {id: $('#city').val()}, function (res) {
+                var optionstring = "";
+                optionstring += "<option value=\"\" >TAM</option>";
+                $.each(res, function (i, item) {
+                    optionstring += "<option value=\"" + item.id + "\" >" + item.name + "</option>";
+                });
+                $("#area").html(optionstring);
             });
-            $("#area").html(optionstring);
-        });
+        }
     }
-}
-    
+
     //修改密码参数校验 
-     $("#edit_pass").bootstrapValidator({
+    $("#edit_pass").bootstrapValidator({
         message: 'This value is not valid',
         feedbackIcons: {
             /*输入框不同状态，显示图片的样式*/
@@ -519,7 +594,7 @@ function initaddCityArea(type) {
                         message: 'The password is required and can\'t be empty '
                     },
                     regexp: {
-                    	regexp: /^(?![\d]+$)(?![a-zA-Z]+$)(?![^\da-zA-Z]+$).{6,20}$/,
+                        regexp: /^(?![\d]+$)(?![a-zA-Z]+$)(?![^\da-zA-Z]+$).{6,20}$/,
                         message: 'The passwords must contain at least 2 kinds of letters, numbers and symbols and the length is 6-20 characters'
                     }
                 }
@@ -536,7 +611,7 @@ function initaddCityArea(type) {
                     }
                 }
             },
-         'code': {
+            'code': {
                 message: 'Password is invalid',
                 validators: {
                     notEmpty: {
@@ -544,35 +619,35 @@ function initaddCityArea(type) {
                     }
                 }
             }
-      }
-  });
+        }
+    });
     //修改个人信息参数校验 
     $("#info").bootstrapValidator({
-       message: 'This value is not valid',
-       feedbackIcons: {
-           /*输入框不同状态，显示图片的样式*/
-           valid: 'glyphicon glyphicon-ok',
-           validating: 'glyphicon glyphicon-refresh'
-       },
-       fields: {
-           /*验证*/
-           't3user.phone': {
-               validators: {
-                   notEmpty: {
-                       message: 'Phone is required and can\'t be empty'
-                   },
-                   stringLength: {
-                       /*长度提示*/
-                       min: 6,
-                       max: 12,
-                       message: 'Mobile  length is 10'
-                   },
-                   regexp: {
-                       regexp: /^0\d{9}$/,
-                       message: 'Mobile number is not correct '
-                   }
-               }
-           }
-     }
- });
+        message: 'This value is not valid',
+        feedbackIcons: {
+            /*输入框不同状态，显示图片的样式*/
+            valid: 'glyphicon glyphicon-ok',
+            validating: 'glyphicon glyphicon-refresh'
+        },
+        fields: {
+            /*验证*/
+            't3user.phone': {
+                validators: {
+                    notEmpty: {
+                        message: 'Phone is required and can\'t be empty'
+                    },
+                    stringLength: {
+                        /*长度提示*/
+                        min: 6,
+                        max: 12,
+                        message: 'Mobile  length is 10'
+                    },
+                    regexp: {
+                        regexp: /^0\d{9}$/,
+                        message: 'Mobile number is not correct '
+                    }
+                }
+            }
+        }
+    });
 </script>

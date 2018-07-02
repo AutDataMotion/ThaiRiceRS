@@ -6,7 +6,6 @@
  * @version 1.0
  */
 package thairice.config;
-import thairice.mvc.t14my_region.t14my_regionController;
 import com.jfinal.config.Routes;
 /**
  * 创建时间：2016年1月28日 下午2:15:23
@@ -30,6 +29,5 @@ import com.jfinal.config.Routes;
 public class RoutePlugins extends Routes {
 	@Override
 	public void config() {
-		add("/jf/thairice/t14my_region", t14my_regionController.class);
 	}
 }
