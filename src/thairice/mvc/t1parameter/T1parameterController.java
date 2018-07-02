@@ -120,8 +120,7 @@ public class T1parameterController extends BaseController {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		
+		}		
 		UploadFile  upFile = getFile("file",webContentPath + "\\upload", maxSize, "utf-8");
 		File file=new File(upFile.getSaveDirectory() + "\\" + upFile.getFileName());  
 		System.out.println(upFile.getSaveDirectory() + "\\statistic_yield_file.csv");
@@ -132,52 +131,8 @@ public class T1parameterController extends BaseController {
 				fileOld.delete();
 			file.renameTo(new File(upFile.getSaveDirectory() + "\\statistic_yield_file.csv"));			
 		}
-		
-		//后面的123456.jpg是重命名的文件名
-//		getFile("file").getFile().renameTo(new File(webContentPath + "statistic_yield_file.csv"));
-		
 		renderWithPath("/adm2018/production_configuration.html");
 	}
-	
-	/**
-	 * Statistic yield file upload 
-	 */
-	@Clear
-	public void riceYieldUpload2() {
-		
-		System.out.println("上传后文件名："  + getAttrForStr("url"));
-		renderJson(new Result(1, getAttrForStr("url")));
-		
-/*		
-		int maxSize = 10 * 1024 * 1024;              //上传文件大小10M
-		// 获取文件路径
-		// 获取工程路径
-		String webContentPath = "";
-		try {
-			String path = Class.class.getResource("/").toURI().getPath();
-			webContentPath = new File(path).getParentFile().getParentFile().getCanonicalPath();
-			LOG.info("webContentPath=" + webContentPath);
-		} catch (URISyntaxException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		UploadFile  upFile = getFile("file",webContentPath + "\\upload", maxSize, "utf-8");
-		File file=new File(upFile.getSaveDirectory() + "\\" + upFile.getFileName());  
-		if(file.exists()){
-			file.renameTo(new File(upFile.getSaveDirectory() + "\\statistic_yield_file.csv"));
-		}*/
-		
-		//后面的123456.jpg是重命名的文件名
-//		getFile("file").getFile().renameTo(new File(webContentPath + "statistic_yield_file.csv"));
-		
-		/*renderWithPath("/adm2018/production_configuration.html");*/
-	}
-	
-
 
 	/**
 	 * ftp源路径查询 zhuchaobin, 2018-03-13

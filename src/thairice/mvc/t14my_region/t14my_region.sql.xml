@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<sql-statement namespace="thairice.t14my_region">
+	
+	<!-- 分页查询：from -->
+	<sql id="splitPageFrom">
+		<![CDATA[ 
+        	from 
+        		t14my_region
+			
+			where 1=1 
+				
+    	]]>
+	</sql>
+	
+</sql-statement>

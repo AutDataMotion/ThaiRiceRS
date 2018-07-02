@@ -18,12 +18,34 @@ $(function(){
     });
 	var productKind_code="";
 	$('.list-group-item-text').click(function(e) {
-		
+//		console.log(app.province_code);
+//		console.log(app.city_code);
+//		console.log(app.town_code);
+		if(app.town_code!=0)
+		{
+			app.areaCode = app.town_code;
+			
+		}
+		else if(app.city_code!=0)
+		{
+			app.areaCode = app.city_code;
+			
+		}
+		else if(app.province_code!=0)
+		{
+			app.areaCode = app.province_code;
+			
+		}
+		else{
+			alert("area null");
+		}
+//		console.log(app.areaCode);
 		//whichSelected = $(this).text();
 		productKind_code = $(this).attr("value");
 		app.productKind_code = productKind_code;
 		if(app.areaCode&&app.productDate)
 		{
+			console.log(app.areaCode+","+app.productDate);
 			AssembleProductLayerInfo(app.areaCode,app.productDate,app.productKind_code);
 		}
 		

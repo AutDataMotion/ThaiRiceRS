@@ -34,16 +34,16 @@ function AssembleProductLayerInfo(areaCode,productDate,productKind_code)
 			 app.featureLayer = null;
 			 //app.map.removeAllLayers();
 		}
-		var prov_code = areaCode.substring(0,2);
-		getProductDataAndCopy2Workspace(prov_code,productDate,productKind_des);
-//		getProductDataAndCopy2Workspace(areaCode,productDate,productKind_des);
+//		var prov_code = areaCode.substring(0,2);
+//		getProductDataAndCopy2Workspace(prov_code,productDate,productKind_des);
+		getProductDataAndCopy2Workspace(areaCode,productDate,productKind_des);
 
 //		
 //		addProductLayer(areaCode,productDate,productKind_des);
 	}
 
 }
-function getProductDataAndCopy2Workspace(prov_code,productDate,productKind_des)
+function getProductDataAndCopy2Workspace(areaCode,productDate,productKind_des)
 {
 	$.ajax({
 	    url:'/jf/thairice/t10pdt_report/CopyProductData2Workspace',
@@ -53,7 +53,7 @@ function getProductDataAndCopy2Workspace(prov_code,productDate,productKind_des)
 	    	
 	    	productKind:productKind_des,//产品种类 yield等
 			productDate:productDate,//选择的产品日期
-			prov_code:prov_code,//选择的产品行政区域
+			areaCode:areaCode,//选择的产品行政区域
 	    	
 	    },
 	    timeout:5000,    //超时时间
@@ -67,6 +67,8 @@ function getProductDataAndCopy2Workspace(prov_code,productDate,productKind_des)
 //	    	alert("success");
 	    	if(data.result)
 	    	{
+	    		var prov_code = areaCode.substring(0,2);
+	    		
 	    		addProductLayer(prov_code,productDate,productKind_des);
 	    	}
 	    	else{
