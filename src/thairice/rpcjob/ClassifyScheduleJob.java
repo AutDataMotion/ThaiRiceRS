@@ -20,9 +20,9 @@ import thairice.mvc.t6org_data.T6org_data;
  * @author zw
  *
  */
-public class PreProcessScheduleJob extends AbsScheduleJob implements ITask {
+public class ClassifyScheduleJob extends AbsScheduleJob implements ITask {
 
-	private static Logger log = Logger.getLogger(PreProcessScheduleJob.class);
+	private static Logger log = Logger.getLogger(ClassifyScheduleJob.class);
 	
 	public List<T6org_data> loadDataFromDb(){
 		

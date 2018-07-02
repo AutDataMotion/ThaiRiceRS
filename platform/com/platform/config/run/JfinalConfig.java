@@ -34,9 +34,9 @@ import com.platform.tools.ToolString;
 import thairice.config.ConfMain;
 import thairice.config.DBMappingMy;
 import thairice.constant.PropertiesInitMy;
-
-import zeroc.util.IceClientUtil;
 import thairice.interceptor.AdminLoginInterceptor;
+import thairice.rpcjob.PreProcessScheduleJob;
+import zeroc.util.IceClientUtil;
 
 
 /**
@@ -135,6 +135,10 @@ public class JfinalConfig extends JFinalConfig {
 		// 配置定时任务插件
 		Cron4jPlugin cron4 = new Cron4jPlugin("overdueRemind.properties");
 		plugins.add(cron4);
+		Cron4jPlugin cp = new Cron4jPlugin();
+		// 测试时间，实际需调整时间
+		  cp.addTask("*/1 * * * *", new PreProcessScheduleJob());
+		  plugins.add(cp);
 	}
 
 	/**
