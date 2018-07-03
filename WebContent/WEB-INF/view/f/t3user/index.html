@@ -477,14 +477,16 @@
 
 
       sendAjax("${cxt!}/jf/thairice/t3user/userCityArea?type=p",{id:0},function (res) {
-          var optionstring = "<option value=\"0\" >PROV_NAME</option>";
+          var optionstring = "<option value=\"\" >PROV</option>";
           $.each(res, function(i,item){
               optionstring += "<option value=\"" + item.id + "\" >" + item.name + "</option>";
           });
           $("#province").html(optionstring);
       });
-      $("#city").html("<option value=\"0\" >AMP_NAME</option>");
-      $("#area").html("<option value=\"0\" >TAM_NAME</option>");
+
+      $("#city").html("<option value=\"\" >AMP</option>");
+      $("#area").html("<option value=\"\" >TAM</option>");
+
 
       function initaddCityArea(type) {
     	  /*
@@ -498,15 +500,17 @@
     	  
           if(type=="city"){
               $("#city").html("");
-              $("#area").html("<option value=\"0\" >TAM_NAME</option>");
+
+              $("#area").html("<option value=\"\" >TAM</option>");
               console.log($('#province').val());
               if($('#province').val()==""){
-                  $("#city").html("<option value=\"0\" >AMP_NAME</option>");
+                  $("#city").html("<option value=\"\" >AMP</option>");
                   return false;
               }
               sendAjax("${cxt!}/jf/thairice/t3user/userCityArea?type=c",{id:$('#province').val()},function (res) {
                   var optionstring = "";
-                  optionstring += "<option value=\"0\" >AMP_NAME</option>";
+
+                  optionstring += "<option value=\"\" >AMP</option>";
                   $.each(res, function(i,item){
                       optionstring += "<option value=\"" + item.id + "\" >" + item.name + "</option>";
                   });
@@ -514,12 +518,12 @@
               });
           }else if(type=="area"){
               if($('#city').val()==""){
-                  $("#area").html("<option value=\"0\" >TAM_NAME</option>");
+                  $("#area").html("<option value=\"\" >TAM</option>");
                   return false;
               }
               sendAjax("${cxt!}/jf/thairice/t3user/userCityArea?type=a",{id:$('#city').val()},function (res) {
                   var optionstring = "";
-                  optionstring += "<option value=\"0\" >TAM_NAME</option>";
+                  optionstring += "<option value=\"\" >TAM</option>";
                   $.each(res, function(i,item){
                       optionstring += "<option value=\"" + item.id + "\" >" + item.name + "</option>";
                   });

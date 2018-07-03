@@ -46,7 +46,7 @@ public class T3userController extends BaseController {
     public static final String pthc = "/jf/thairice/t3user/";
     public static final String pthv = "/f/t3user/";
 
-    private static final thairice.mvc.t3user.T3userService srv = Duang.duang(T3userService.class);
+    private static final T3userService srv = Duang.duang(T3userService.class);
     private static final T8messageService message_service = Duang.duang(T8messageService.class);
     private static final AuthCodeService codeService = Duang.duang(AuthCodeService.class);
 
@@ -97,7 +97,7 @@ public class T3userController extends BaseController {
             res = new Result(0, "Verification code is error, please re-enter");
         }
     /*	if(res.getCode()==1) {
-		    T3user user = getSessionAttr("user");
+            T3user user = getSessionAttr("user");
 		    T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), account, "Log in", res.toString());  
 		}else {
 		    T2syslogService.addLog(EnumT2sysLog.INFO, BigInteger.ONE , account, "Log in", res.toString());  
@@ -143,16 +143,16 @@ public class T3userController extends BaseController {
                 Record record = new Record();
                 record.set("userId", t3user.getId());
                 record.set("provinceId", object.getInt("province"));
-                String city =  object.get("city")+"";
-                String area =  object.get("area")+"";
-                if(StrKit.isBlank(city)){
+                String city = object.get("city") + "";
+                String area = object.get("area") + "";
+                if (StrKit.isBlank(city)) {
                     record.set("cityId", 0);
-                }else{
+                } else {
                     record.set("cityId", object.getInt("city"));
                 }
-                if(StrKit.isBlank(area)){
+                if (StrKit.isBlank(area)) {
                     record.set("areaId", 0);
-                }else{
+                } else {
                     record.set("areaId", object.getInt("area"));
                 }
                 Db.use(ConstantInitMy.db_dataSource_main).save("t14my_region", record);
@@ -219,11 +219,12 @@ public class T3userController extends BaseController {
     @Clear
     public void cityArea() {
         String id = getPara("id");
-        if(StrKit.isBlank(id)){
-            renderNull();
+        if (StrKit.isBlank(id)) {
+            List<Record> list = new ArrayList<>();
+            renderJson(list);
             return;
         }
-        List<Record> list = Db.use(ConstantInitMy.db_dataSource_main).find("select id,name from t13region where parentId=? GROUP BY name",id);
+        List<Record> list = Db.use(ConstantInitMy.db_dataSource_main).find("select id,name from t13region where parentId=? GROUP BY name", id);
         renderJson(list);
     }
 
@@ -231,78 +232,87 @@ public class T3userController extends BaseController {
     public void userCityArea() {
         String id = getPara("id");
         String type = getPara("type");
-        if(StrKit.isBlank(id)){
-            renderNull();
+        if (StrKit.isBlank(id)) {
+            List<Record> list = new ArrayList<>();
+            renderJson(list);
             return;
         }
         T3user user = getSessionAttr("user");
-        BigInteger userId= user.getBigInteger("id");
-        if(type.equals("p")){
-            List<Record> list1 = Db.use(ConstantInitMy.db_dataSource_main).find("select * from t14my_region where userId=?",userId);
-            String p="";
-            for (int i = 0; i < list1.size(); i++) {
-                Record record = list1.get(i);
-                p = p+"'"+record.getInt("provinceId")+"',";
+        BigInteger userId = user.getBigInteger("id");
+        if (type.equals("p")) {
+            List<Record> list1 = Db.use(ConstantInitMy.db_dataSource_main).find("select * from t14my_region where userId=?", userId);
+            String p = "";
+            if (list1.size() > 0) {
+                for (int i = 0; i < list1.size(); i++) {
+                    Record record = list1.get(i);
+                    p = p + "'" + record.getInt("provinceId") + "',";
+                }
+                List<Record> list = Db.use(ConstantInitMy.db_dataSource_main).find("select id,name from t13region where Id in (" + p.substring(0, p.length() - 1) + ") GROUP BY name");
+                renderJson(list);
+                return;
+            } else {
+                List<Record> list = new ArrayList<>();
+                renderJson(list);
+                return;
             }
-            List<Record> list = Db.use(ConstantInitMy.db_dataSource_main).find("select id,name from t13region where Id in ("+p.substring(0,p.length()-1)+") GROUP BY name");
-            renderJson(list);
-            return;
         }
-        if(type.equals("c")){
-            List<Record> list1 = Db.use(ConstantInitMy.db_dataSource_main).find("select * from t14my_region where userId=?",userId);
-            String c="";
+        if (type.equals("c")) {
+            List<Record> list1 = Db.use(ConstantInitMy.db_dataSource_main).find("select * from t14my_region where userId=?", userId);
+            String c = "";
             for (int i = 0; i < list1.size(); i++) {
                 Record record = list1.get(i);
-                if(record.getInt("cityId")==0){
-                   int provinceId = record.getInt("provinceId");
-                    List<Record> list = Db.use(ConstantInitMy.db_dataSource_main).find("select id,name from t13region where parentId=?",provinceId);
+                if (record.getInt("cityId") == 0) {
+                    int provinceId = record.getInt("provinceId");
+                    List<Record> list = Db.use(ConstantInitMy.db_dataSource_main).find("select id,name from t13region where parentId=?", provinceId);
                     for (int j = 0; j < list.size(); j++) {
                         Record record1 = list.get(j);
-                        c = c+"'"+record1.getInt("id")+"',";
+                        c = c + "'" + record1.getInt("id") + "',";
                     }
-                }else{
-                    c = c+"'"+record.getInt("cityId")+"',";
+                } else {
+                    c = c + "'" + record.getInt("cityId") + "',";
                 }
             }
-            List<Record> list = Db.use(ConstantInitMy.db_dataSource_main).find("select id,name from t13region where Id in ("+c.substring(0,c.length()-1)+") and parentId="+id+" GROUP BY name");
+            List<Record> list = Db.use(ConstantInitMy.db_dataSource_main).find("select id,name from t13region where Id in (" + c.substring(0, c.length() - 1) + ") and parentId=" + id + " GROUP BY name");
             renderJson(list);
             return;
         }
-        if(type.equals("a")){
-            List<Record> list1 = Db.use(ConstantInitMy.db_dataSource_main).find("select * from t14my_region where userId=?",userId);
-            String a="";
+        if (type.equals("a")) {
+            List<Record> list1 = Db.use(ConstantInitMy.db_dataSource_main).find("select * from t14my_region where userId=?", userId);
+            String a = "";
             for (int i = 0; i < list1.size(); i++) {
                 Record record = list1.get(i);
-                if(record.getInt("areaId")==0){
-                    if(record.getInt("cityId")==0){
+                if (record.getInt("areaId") == 0) {
+                    if (record.getInt("cityId") == 0) {
                         int provinceId = record.getInt("provinceId");
-                        List<Record> list = Db.use(ConstantInitMy.db_dataSource_main).find("select id,name from t13region where parentId=?",provinceId);
+                        List<Record> list = Db.use(ConstantInitMy.db_dataSource_main).find("select id,name from t13region where parentId=?", provinceId);
                         for (int j = 0; j < list.size(); j++) {
                             Record record3 = list.get(j);
                             int cityId = record3.getInt("id");
-                            List<Record> list2 = Db.use(ConstantInitMy.db_dataSource_main).find("select id,name from t13region where parentId=?",cityId);
-                            for (int k = 0; k  < list2.size(); k ++) {
+                            List<Record> list2 = Db.use(ConstantInitMy.db_dataSource_main).find("select id,name from t13region where parentId=?", cityId);
+                            for (int k = 0; k < list2.size(); k++) {
                                 Record record1 = list2.get(k);
-                                a= a+"'"+record1.getInt("id")+"',";
+                                a = a + "'" + record1.getInt("id") + "',";
                             }
                         }
-                    }else{
+                    } else {
                         int cityId = record.getInt("cityId");
-                        List<Record> list = Db.use(ConstantInitMy.db_dataSource_main).find("select id,name from t13region where parentId=?",cityId);
+                        List<Record> list = Db.use(ConstantInitMy.db_dataSource_main).find("select id,name from t13region where parentId=?", cityId);
                         for (int j = 0; j < list.size(); j++) {
                             Record record1 = list.get(j);
-                            a= a+"'"+record1.getInt("id")+"',";
+                            a = a + "'" + record1.getInt("id") + "',";
                         }
                     }
-                }else{
-                    a= a+"'"+record.getInt("areaId")+"',";
+                } else {
+                    a = a + "'" + record.getInt("areaId") + "',";
                 }
             }
-            List<Record> list = Db.use(ConstantInitMy.db_dataSource_main).find("select id,name from t13region where Id in ("+a.substring(0,a.length()-1)+") and parentId="+id+" GROUP BY name");
+            List<Record> list = Db.use(ConstantInitMy.db_dataSource_main).find("select id,name from t13region where Id in (" + a.substring(0, a.length() - 1) + ") and parentId=" + id + " GROUP BY name");
             renderJson(list);
             return;
         }
-        renderNull();
+        List<Record> list = new ArrayList<>();
+        renderJson(list);
+        return;
     }
 
 
@@ -310,77 +320,86 @@ public class T3userController extends BaseController {
     public void adminUserCityArea() {
         String id = getPara("id");
         String type = getPara("type");
-        if(StrKit.isBlank(id)){
-            renderNull();
+        if (StrKit.isBlank(id)) {
+            List<Record> list = new ArrayList<>();
+            renderJson(list);
             return;
         }
         int userId = getParaToInt("userId");
-        if(type.equals("p")){
-            List<Record> list1 = Db.use(ConstantInitMy.db_dataSource_main).find("select * from t14my_region where userId=?",userId);
-            String p="";
-            for (int i = 0; i < list1.size(); i++) {
-                Record record = list1.get(i);
-                p = p+"'"+record.getInt("provinceId")+"',";
+        if (type.equals("p")) {
+            List<Record> list1 = Db.use(ConstantInitMy.db_dataSource_main).find("select * from t14my_region where userId=?", userId);
+            String p = "";
+            if (list1.size() > 0) {
+                for (int i = 0; i < list1.size(); i++) {
+                    Record record = list1.get(i);
+                    p = p + "'" + record.getInt("provinceId") + "',";
+                }
+                List<Record> list = Db.use(ConstantInitMy.db_dataSource_main).find("select id,name from t13region where Id in (" + p.substring(0, p.length() - 1) + ") GROUP BY name");
+                renderJson(list);
+                return;
+            } else {
+                List<Record> list = new ArrayList<>();
+                renderJson(list);
+                return;
             }
-            List<Record> list = Db.use(ConstantInitMy.db_dataSource_main).find("select id,name from t13region where Id in ("+p.substring(0,p.length()-1)+") GROUP BY name");
-            renderJson(list);
-            return;
         }
-        if(type.equals("c")){
-            List<Record> list1 = Db.use(ConstantInitMy.db_dataSource_main).find("select * from t14my_region where userId=?",userId);
-            String c="";
+        if (type.equals("c")) {
+            List<Record> list1 = Db.use(ConstantInitMy.db_dataSource_main).find("select * from t14my_region where userId=?", userId);
+            String c = "";
             for (int i = 0; i < list1.size(); i++) {
                 Record record = list1.get(i);
-                if(record.getInt("cityId")==0){
+                if (record.getInt("cityId") == 0) {
                     int provinceId = record.getInt("provinceId");
-                    List<Record> list = Db.use(ConstantInitMy.db_dataSource_main).find("select id,name from t13region where parentId=?",provinceId);
+                    List<Record> list = Db.use(ConstantInitMy.db_dataSource_main).find("select id,name from t13region where parentId=?", provinceId);
                     for (int j = 0; j < list.size(); j++) {
                         Record record1 = list.get(j);
-                        c = c+"'"+record1.getInt("id")+"',";
+                        c = c + "'" + record1.getInt("id") + "',";
                     }
-                }else{
-                    c = c+"'"+record.getInt("cityId")+"',";
+                } else {
+                    c = c + "'" + record.getInt("cityId") + "',";
                 }
             }
-            List<Record> list = Db.use(ConstantInitMy.db_dataSource_main).find("select id,name from t13region where Id in ("+c.substring(0,c.length()-1)+") and parentId="+id+" GROUP BY name");
+            List<Record> list = Db.use(ConstantInitMy.db_dataSource_main).find("select id,name from t13region where Id in (" + c.substring(0, c.length() - 1) + ") and parentId=" + id + " GROUP BY name");
             renderJson(list);
             return;
         }
-        if(type.equals("a")){
-            List<Record> list1 = Db.use(ConstantInitMy.db_dataSource_main).find("select * from t14my_region where userId=?",userId);
-            String a="";
+        if (type.equals("a")) {
+            List<Record> list1 = Db.use(ConstantInitMy.db_dataSource_main).find("select * from t14my_region where userId=?", userId);
+            String a = "";
             for (int i = 0; i < list1.size(); i++) {
                 Record record = list1.get(i);
-                if(record.getInt("areaId")==0){
-                    if(record.getInt("cityId")==0){
+                if (record.getInt("areaId") == 0) {
+                    if (record.getInt("cityId") == 0) {
                         int provinceId = record.getInt("provinceId");
-                        List<Record> list = Db.use(ConstantInitMy.db_dataSource_main).find("select id,name from t13region where parentId=?",provinceId);
+                        List<Record> list = Db.use(ConstantInitMy.db_dataSource_main).find("select id,name from t13region where parentId=?", provinceId);
                         for (int j = 0; j < list.size(); j++) {
                             Record record3 = list.get(j);
                             int cityId = record3.getInt("id");
-                            List<Record> list2 = Db.use(ConstantInitMy.db_dataSource_main).find("select id,name from t13region where parentId=?",cityId);
-                            for (int k = 0; k  < list2.size(); k ++) {
+                            List<Record> list2 = Db.use(ConstantInitMy.db_dataSource_main).find("select id,name from t13region where parentId=?", cityId);
+                            for (int k = 0; k < list2.size(); k++) {
                                 Record record1 = list2.get(k);
-                                a= a+"'"+record1.getInt("id")+"',";
+                                a = a + "'" + record1.getInt("id") + "',";
                             }
                         }
-                    }else{
+                    } else {
                         int cityId = record.getInt("cityId");
-                        List<Record> list = Db.use(ConstantInitMy.db_dataSource_main).find("select id,name from t13region where parentId=?",cityId);
+                        List<Record> list = Db.use(ConstantInitMy.db_dataSource_main).find("select id,name from t13region where parentId=?", cityId);
                         for (int j = 0; j < list.size(); j++) {
                             Record record1 = list.get(j);
-                            a= a+"'"+record1.getInt("id")+"',";
+                            a = a + "'" + record1.getInt("id") + "',";
                         }
                     }
-                }else{
-                    a= a+"'"+record.getInt("areaId")+"',";
+                } else {
+                    a = a + "'" + record.getInt("areaId") + "',";
                 }
             }
-            List<Record> list = Db.use(ConstantInitMy.db_dataSource_main).find("select id,name from t13region where Id in ("+a.substring(0,a.length()-1)+") and parentId="+id+" GROUP BY name");
+            List<Record> list = Db.use(ConstantInitMy.db_dataSource_main).find("select id,name from t13region where Id in (" + a.substring(0, a.length() - 1) + ") and parentId=" + id + " GROUP BY name");
             renderJson(list);
             return;
         }
-        renderNull();
+        List<Record> list = new ArrayList<>();
+        renderJson(list);
+        return;
     }
 
     /**
