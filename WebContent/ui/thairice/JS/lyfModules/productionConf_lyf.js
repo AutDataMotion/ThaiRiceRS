@@ -4,15 +4,15 @@
 var DEBUG = true;
 
 var app = {};
-var rasterLayerUrl = "http://localhost:6080/arcgis/rest/services/tai_wgs84/MapServer";
-var featureLayerUrl = "http://localhost:6080/arcgis/rest/services/tai_wgs84/MapServer";
+var rasterLayerUrl = hostIP+":6080/arcgis/rest/services/tai_wgs84/MapServer";
+var featureLayerUrl = hostIP+":6080/arcgis/rest/services/tai_wgs84/MapServer";
 var rasterLayerWorkspace = "areatif";
 //var tempProductfileName = "tempProduct.shp";
 var areaworkspaceId = "Area";
-var eraseUrl = "http://localhost:6080/arcgis/rest/services/erase/GPServer/erase";
-var mergeUrl = "http://localhost:6080/arcgis/rest/services/merge/GPServer/merge";
-var arearasterbandsextractUrl = "http://127.0.0.1:6080/arcgis/rest/services/arearasterbandsextract1/GPServer/arearasterbandsextract";
-var areatifsBaseUrl = "http://localhost:8080/areatifs/";
+var eraseUrl = hostIP+":6080/arcgis/rest/services/erase/GPServer/erase";
+var mergeUrl = hostIP+":6080/arcgis/rest/services/merge/GPServer/merge";
+var arearasterbandsextractUrl = hostIP+":6080/arcgis/rest/services/arearasterbandsextract/GPServer/arearasterbandsextract";
+var areatifsBaseUrl = hostIP+":8080/areatifs/";
 //var merge_gpserver_workspace = "C:/arcgisserver/directories/arcgisjobs/merge_gpserver/";
 //var erase_gpserver_workspace = "C:/arcgisserver/directories/arcgisjobs/erase_gpserver/";
 function init_productionConf_Monitoring()

@@ -52,7 +52,11 @@
 }
 </style>
 
-
+<script type="text/javascript">
+	
+	var cxt = "${cxt!}";
+	var hostIP = cxt.substring(0,cxt.length-3);
+</script>
 <script src="${cxt!}/ui/thairice/JS/jquery-2.0.0.min.js"></script>
 <script type="text/javascript" src="${cxt!}/ui/thairice/JS/layer/layer.js"></script>
 
@@ -448,6 +452,8 @@
 		</div>
 	</div-->
 <script type="text/javascript">
+	
+	
       if('${session.user.status_!}'=='01'){
     	       showMessage("Sorry, your application is not authorized yet");
       }else if('${session.user.status_!}'=='03'){

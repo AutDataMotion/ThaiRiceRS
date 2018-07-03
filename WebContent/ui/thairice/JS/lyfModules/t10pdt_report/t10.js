@@ -4,10 +4,10 @@
 /**********************************************************************************************************
  * 添加产品数据
  */
-var featureLayerUrl = "http://localhost:6080/arcgis/rest/services/tai_wgs84/MapServer/dynamicLayer";
-var renderLayerUrl = "http://localhost:6080/arcgis/rest/services/tai_wgs84/MapServer";
-var featureQueryUrl = "http://localhost:6080/arcgis/rest/services/taicode/MapServer/0";
-var printMapUrl = "http://localhost:6080/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task";
+var featureLayerUrl = hostIP+":6080/arcgis/rest/services/tai_wgs84/MapServer/dynamicLayer";
+var renderLayerUrl = hostIP+":6080/arcgis/rest/services/tai_wgs84/MapServer";
+//var featureQueryUrl = "http://localhost:6080/arcgis/rest/services/taicode/MapServer/0";
+var printMapUrl = hostIP+":6080/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task";
 productKind_code_2_des = {
 		'01':'Area',
 		'02':'Growth',
@@ -21,7 +21,6 @@ productKind_code_2_des = {
  */
 function AssembleProductLayerInfo(areaCode,productDate,productKind_code)
 {
-	
 	productKind_des = productKind_code_2_des[productKind_code];
 	if(areaCode&&productDate&&productKind_des)
 	{
@@ -279,15 +278,15 @@ function createClassBreakRenderLayer(featureLayer,renderLayer,field,numbreaks,le
 	    		if(i==numbreaks-1)
 	   			{
 	   			 renderer.addBreak(
-	       				 min + (i*breaks), 
-	       				 max,
+	       				 (min + (i*breaks)).toFixed(2), 
+	       				 max.toFixed(2),
 	           			new SimpleFillSymbol("solid", null, new Color(renderColor[i]))
 	           	        );
 	   			}
 	       		 else{
 	       			renderer.addBreak(
-	        				 min + (i*breaks), 
-	        				 min + ((i+1)*breaks),
+	        				 (min + (i*breaks)).toFixed(2), 
+	        				 (min + ((i+1)*breaks)).toFixed(2),
 	            			new SimpleFillSymbol("solid", null, new Color(renderColor[i]))
 	            	        );
 	       		 }
@@ -747,12 +746,15 @@ var sta = {};
 	{
 		if(app.productKind_code=="01"){//Area
 //			console.log(data);
-//			console.log(features);
 			var sum = 0;        
 	    	 dojo.forEach(features,function(feature) {
-	    		 sum += feature.attributes[field];
+	    		 var feature_area = calculatorArea(feature);
+	    		
+//	    		 sum += feature.attributes[field];
+	    		 sum += feature_area;
 	    	 });
-	    	 data.value = sum.toFixed(2)*900;
+//	    	 data.value = sum.toFixed(2)*900;
+	    	 data.value = sum.toFixed(2);
 	    	 staData.push(data);
 		} 
 		if(app.productKind_code=="03"){//Yield
@@ -808,7 +810,21 @@ var sta = {};
     	 
     	return staData;
 	}
-	
+	function calculatorArea(feature)
+	{
+		var area_RAI;
+		require(["esri/geometry/webMercatorUtils","esri/geometry/geodesicUtils", "esri/units"], 
+				function(webMercatorUtils,geodesicUtils, Units) {
+			//console.log(feature);
+			var area_SQUARE_METERS = geodesicUtils.geodesicAreas([feature.geometry], esri.Units.SQUARE_METERS);
+			area_RAI = area_SQUARE_METERS[0]/1600;//泰国常用面积单位
+//			console.log("calculatorArea-----"+area_SQUARE_METERS);
+//			console.log("calculatorArea-----"+area_RAI);
+			
+		});
+//		console.log("calculatorArea-----"+area_RAI);
+		return area_RAI;
+	}
 	//功能：归100     
 	function toHundred(x) {   
 		var f = parseFloat(x);    
@@ -827,7 +843,42 @@ var sta = {};
 		}          
 		f = Math.round(x*100)/100;  
 		return f;        
-	}    
+	}   
+	function Num2EnFormat()
+	{
+		var iValue = 20002365879; //要转换的数字
+		var sValue = iValue+'';
+		var aValue = new Array();
+		var iNum = sValue.length%3;
+		var aResult; //转换结果
+		var index = 0;
+		if(sValue.length<=3){
+		    console.log(sValue);
+		}else{
+		    if(iNum == 0){
+		    for(var i=0; i<sValue.length; i=i+3){
+		        aValue[index] = sValue[i]+''+sValue[i+1]+''+sValue[i+2];
+		        index++;
+		    }
+		}else if(iNum == 1){
+		    aValue[0] = sValue[0];
+		    index = 1;
+		    for(var i=1; i<sValue.length; i=i+3){
+		        aValue[index] = sValue[i]+''+sValue[i+1]+''+sValue[i+2];
+		        index++;
+		    }
+		}else if(iNum == 2){
+		    aValue[0] = sValue[0]+''+sValue[1];
+		    index = 1;
+		    for(var i=2; i<sValue.length; i=i+3){
+		        aValue[index] = sValue[i]+''+sValue[i+1]+''+sValue[i+2];
+		        index++;
+		    }
+		}
+		aResult = aValue.join(',');
+		console.log(aResult.toString());//输出20,002,365,879
+		}   
+	}
 	function ChartStaData(staData)
 	{
 		//console.log(staData);
@@ -866,7 +917,7 @@ var sta = {};
 //    		        "destroy": true,
     		        columns: [
     		            { title: "Name" },
-    		            { title: "Value/m2" }
+    		            { title: "Value/rai" }
     		        ]
     		    });
     		// 指定图表的配置项和数据
@@ -910,7 +961,7 @@ var sta = {};
                     data: names
                 },
                 yAxis: {
-                	name:"Area/m2",
+                	name:"Area/rai",
                 	//nameLocation:'middle',
                 	nameTextStyle:{
                 		color:'#fff'
@@ -1236,6 +1287,7 @@ function printMap()
 //			 console.log(evt);
 //	           
 //	       }); 
+		var tryCount = 5;
 		printTask.execute(params, printResult,errback);
 		
 		function printResult(Result)
@@ -1254,8 +1306,15 @@ function printMap()
 			//getReport();
 		}
 		function errback(err){
-       	 console.log("Couldn't print mapPic. ", err);
-        }
+			tryCount--;
+			if(tryCount>0)
+			{
+				printTask.execute(params, printResult,errback);
+			}
+			else{
+				console.log("Couldn't print mapPic. ", err);
+			}
+       	}
 	});
 }
 //传入图片路径url，返回base64

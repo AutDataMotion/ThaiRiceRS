@@ -6,8 +6,9 @@ app.legendDiv = "#legendinfo";
 app.staChartDiv = "#stainfo";
 app.userID = '0';
 app.staExcelInit = false;
+app.Thai_shp_url =  hostIP+":6080/arcgis/rest/services/Thailand_shp/MapServer/0"
 $(function(){
-	
+//	alert(hostIP);
 	initapp();
 	
 	$('.list-group-item-text').mouseover(function(e) {
@@ -190,7 +191,7 @@ function initapp()
 	      });
 	    
 	    // Carbon storage of trees in Warren Wilson College.
-	    var featureLayer = new FeatureLayer("http://localhost:6080/arcgis/rest/services/Thailand_shp/MapServer/0");
+	    var featureLayer = new FeatureLayer(app.Thai_shp_url);
 		
 	    var symbol = new SimpleFillSymbol()
 	    .setColor(new Color([255,0,0,0]))
