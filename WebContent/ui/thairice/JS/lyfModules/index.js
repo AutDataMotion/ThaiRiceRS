@@ -171,18 +171,28 @@ function initapp()
 		"esri/dijit/Scalebar",
 	    "dojo/dom",
 	    "dojo/on",
+	    "dojo/parser",
+	    "esri/urlUtils",
+	    "esri/config",
 	    "esri/layers/ArcGISDynamicMapServiceLayer",
 	    "esri/layers/FeatureLayer",
 	    "esri/symbols/SimpleFillSymbol", "esri/symbols/SimpleLineSymbol","esri/Color", "esri/renderers/SimpleRenderer",
 	    "esri/geometry/Extent",
 	    "dojo/domReady!"], function (
-	        Map,Scalebar,dom,on, ArcGISDynamicMapServiceLayer,FeatureLayer,SimpleFillSymbol, SimpleLineSymbol,Color, SimpleRenderer,Extent) {
+	        Map,Scalebar,dom,on, parser,urlUtils,esriConfig,ArcGISDynamicMapServiceLayer,FeatureLayer,SimpleFillSymbol, SimpleLineSymbol,Color, SimpleRenderer,Extent) {
 	    //var map = new Map("mapDiv");
 	    
 //		var layer1 = new ArcGISDynamicMapServiceLayer("http://localhost:6080/arcgis/rest/services/tai_wgs84/MapServer");
 	    //app.map.addLayer(layer1);
 //	    var initExtent = layer1.fullExtent;
 //	    console.log(layer1.fullExtent);
+		parser.parse();
+//		urlUtils.addProxyRule({
+//	          urlPrefix: hostIP+":6080",
+//	          proxyUrl: hostIP+":8080/Java/proxy.jsp"
+//	        });
+		esriConfig.defaults.io.proxyUrl = hostIP+":8080/Java/proxy.jsp";
+		esriConfig.defaults.io.alwaysUseProxy = false;
 		
 	    app.map = new Map("mapDiv", {
 	    	basemap: "satellite",

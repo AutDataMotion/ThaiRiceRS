@@ -75,7 +75,8 @@ function init_productionConf_Monitoring()
         "esri/layers/DynamicLayerInfo", "esri/layers/LayerDataSource",
 	      "esri/layers/LayerDrawingOptions","esri/layers/RasterDataSource",
 //        "lyfModules/customoperation",
-        "dojo/_base/connect", "esri/Color", "dojo/parser", "dijit/registry",
+        "dojo/_base/connect", "esri/Color", "dojo/parser", 
+        "esri/urlUtils","esri/config","dijit/registry",
 	    "dojo/dom",
 	    "dojo/on",
 	    "esri/layers/ArcGISDynamicMapServiceLayer",
@@ -84,11 +85,16 @@ function init_productionConf_Monitoring()
 	        Map,Scalebar,UndoManager,Draw, Graphic,
 	        SimpleMarkerSymbol, SimpleLineSymbol,SimpleFillSymbol,GraphicsLayer,RasterDataSource,
 	        DynamicLayerInfo,LayerDataSource,LayerDrawingOptions,
-	        connect, Color, parser, registry,
+	        connect, Color, parser, urlUtils,esriConfig,registry,
 	        dom,on, ArcGISDynamicMapServiceLayer,Extent) {
 	    //var map = new Map("mapDiv");
 		 	parser.parse();
-
+//		 	urlUtils.addProxyRule({
+//		          urlPrefix: hostIP+":6080",
+//		          proxyUrl: hostIP+":8080/Java/proxy.jsp"
+//		        });
+		 	esriConfig.defaults.io.proxyUrl = hostIP+":8080/Java/proxy.jsp";
+			esriConfig.defaults.io.alwaysUseProxy = false;
 	        //specify the number of undo operations allowed using the maxOperations parameter
 	        app.undoManager = new UndoManager();
 	        // hook up undo/redo buttons
