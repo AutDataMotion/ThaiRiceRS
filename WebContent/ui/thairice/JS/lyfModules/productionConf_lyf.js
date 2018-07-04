@@ -47,6 +47,10 @@ function init_productionConf_Monitoring()
         "ordering": false,
         "info":     false
     } );
+	$('.editing_list').on( 'click', function () {
+		$('.editing').toggle();
+		$('.samples').toggle();
+    } );
 	$('#addRow').on( 'click', function () {
 		app.undoManager.clearRedo();
 		app.undoManager.clearUndo();

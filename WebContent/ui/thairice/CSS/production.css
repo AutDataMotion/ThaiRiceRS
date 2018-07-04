@@ -128,10 +128,10 @@ a:focus{
 	height:auto;
 	position:absolute;
 	
-	display:block;
+	/*display:block;*/
 	    right: 0px;
     top: 120px;
-    /* display: none; */
+    display: none;
     margin-right: -20px;
 }
 .editing{
@@ -139,10 +139,15 @@ a:focus{
 	height:auto;
 	position:absolute;
 	
-	display:block;
+	/*display:block;*/
 	    right: 0px;
     top: 45px;
-    /* display: none; */
+    display: none;
+    margin-right: -20px;
+}
+.editing_list{
+    position: absolute;
+    right: 0px;
     margin-right: -20px;
 }
 .okay_btn{
