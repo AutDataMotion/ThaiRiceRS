@@ -844,39 +844,42 @@ var sta = {};
 		f = Math.round(x*100)/100;  
 		return f;        
 	}   
-	function Num2EnFormat()
+	function Num2EnFormat(iValue)
 	{
-		var iValue = 20002365879; //要转换的数字
+//		var iValue = 20002365879.12; //要转换的数字
 		var sValue = iValue+'';
+		var needProcessSvalue = (sValue.indexOf('.')>0)?sValue.substring(0,sValue.indexOf('.')):sValue;//'20002365879'
+		var floatNumStr = (sValue.indexOf('.')>0)?sValue.substring(sValue.indexOf('.')):'';//'.12'
 		var aValue = new Array();
-		var iNum = sValue.length%3;
+		var iNum = needProcessSvalue.length%3;
 		var aResult; //转换结果
 		var index = 0;
-		if(sValue.length<=3){
-		    console.log(sValue);
+		if(needProcessSvalue.length<=3){
+		    return sValue;
 		}else{
 		    if(iNum == 0){
-		    for(var i=0; i<sValue.length; i=i+3){
-		        aValue[index] = sValue[i]+''+sValue[i+1]+''+sValue[i+2];
-		        index++;
-		    }
-		}else if(iNum == 1){
-		    aValue[0] = sValue[0];
-		    index = 1;
-		    for(var i=1; i<sValue.length; i=i+3){
-		        aValue[index] = sValue[i]+''+sValue[i+1]+''+sValue[i+2];
-		        index++;
-		    }
-		}else if(iNum == 2){
-		    aValue[0] = sValue[0]+''+sValue[1];
-		    index = 1;
-		    for(var i=2; i<sValue.length; i=i+3){
-		        aValue[index] = sValue[i]+''+sValue[i+1]+''+sValue[i+2];
-		        index++;
-		    }
-		}
+			    for(var i=0; i<needProcessSvalue.length; i=i+3){
+			        aValue[index] = needProcessSvalue[i]+''+needProcessSvalue[i+1]+''+needProcessSvalue[i+2];
+			        index++;
+			    }
+			}else if(iNum == 1){
+			    aValue[0] = needProcessSvalue[0];
+			    index = 1;
+			    for(var i=1; i<needProcessSvalue.length; i=i+3){
+			        aValue[index] = needProcessSvalue[i]+''+needProcessSvalue[i+1]+''+needProcessSvalue[i+2];
+			        index++;
+			    }
+			}
+			else if(iNum == 2){
+			    aValue[0] = needProcessSvalue[0]+''+needProcessSvalue[1];
+			    index = 1;
+			    for(var i=2; i<needProcessSvalue.length; i=i+3){
+			        aValue[index] = needProcessSvalue[i]+''+needProcessSvalue[i+1]+''+needProcessSvalue[i+2];
+			        index++;
+			    }
+			}
 		aResult = aValue.join(',');
-		console.log(aResult.toString());//输出20,002,365,879
+		return aResult.toString()+floatNumStr;//输出20,002,365,879
 		}   
 	}
 	function ChartStaData(staData)
@@ -905,7 +908,7 @@ var sta = {};
         		 datas.push(stadata["value"]);
         		 var data = [];
         		 data.push(stadata["name"]);
-        		 data.push(stadata["value"]);
+        		 data.push(Num2EnFormat(stadata["value"]));
         		 dataSet.push(data);
         	 });
     		//统计表
@@ -1002,7 +1005,7 @@ var sta = {};
         		 datas.push(stadata["value"]);
         		 var data = [];
         		 data.push(stadata["name"]);
-        		 data.push(stadata["value"]);
+        		 data.push(Num2EnFormat(stadata["value"]));
         		 dataSet.push(data);
         	 });
     		//统计表
