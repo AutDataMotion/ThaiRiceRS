@@ -57,7 +57,7 @@ public class T3userValidator extends Validator {
     		addError("desc", "Please enter your password!");
     	}
     	if(StrKit.isBlank(c.getPara("authCode"))){
-    		addError("desc", "Please enter verification code!");
+    		addError("desc", "Please enter verification code");
     	}
     }
         
@@ -65,17 +65,17 @@ public class T3userValidator extends Validator {
         //用户注册
         if (actionKey.equals(T3userController.pthc + "doReg")) {
         	if(TimeUtil.dateDiff(c.getPara("Prdt_EfDt",TimeUtil.getNow()), c.getPara("PD_ExDat"), "yyyy-MM-dd", "d")<=0){
-        		addError("desc", "The service expiration time cannot be less than the start time!");
+        		addError("desc", "The expiration time of the product should be greater than the start time");
         	}
         }
         //找回密码或修改密码
         if (actionKey.equals(T3userController.pthc + "edit_pass")||actionKey.equals(T3userController.pthc + "rest_pass")) {
-            validateEmail("email", "desc", "E-mail format is incorrect!");
-            validateRequired("code", "desc", "Please enter the authorization code!");
+            validateEmail("email", "desc", "Please input the vaild email");
+            validateRequired("code", "desc", "Please enter verification code");
         }
         //找回密码或修改密码
         if (actionKey.equals(T3userController.pthc + "send_code")) {
-            validateEmail("email", "desc", "E-mail format is incorrect!");
+            validateEmail("email", "desc", "Please input the vaild email");
         }
     }
 

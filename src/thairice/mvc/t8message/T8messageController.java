@@ -70,7 +70,7 @@ public class T8messageController extends BaseController {
 	if (row > 0) {
 	    renderJson(new Result(1, "Operation succeeded"));
 	} else {
-	    renderJson(new Result(1, "operation failed"));
+	    renderJson(new Result(1, "Operation failed"));
 	}
     }
 

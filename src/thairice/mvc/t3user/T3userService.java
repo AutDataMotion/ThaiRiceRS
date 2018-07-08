@@ -52,7 +52,7 @@ public class T3userService extends BaseService {
 		// 1.取用户
 		T3user user = T3user.dao.findFirst("select * from t3user where account=? and type_='01'" , userName);
 		if (user == null) {
-			return new Result(0, "Account name does not exist, please re-enter!");
+			return new Result(0, "Account does not exist, please re-enter!");
 		}
 		// 2.验证密码
 		if (!user.getStr(T3user.column_pwd).equals(passWord)) {
@@ -74,7 +74,7 @@ public class T3userService extends BaseService {
 					"Your account has not been activated. Please go to the email and click the link to activate");
 		}
 		c.setSessionAttr("user", user);
-		return new Result(1, "login successful");
+		return new Result(1, "Login Successful");
 	}
 
 	public List<T3user> selectUsers() {

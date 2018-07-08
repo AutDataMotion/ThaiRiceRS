@@ -325,10 +325,16 @@
 				    if(c=="" && city!=""){
                         ret= false;
 					}
+				    if(c!="" && city==""){
+                        ret= false;
+					}
 				}
 				if(province==p){
 				    if(city==c){
 				        if(a=="" && area!=""){
+                            ret= false;
+						}
+				        if(a!="" && area==""){
                             ret= false;
 						}
 					}
