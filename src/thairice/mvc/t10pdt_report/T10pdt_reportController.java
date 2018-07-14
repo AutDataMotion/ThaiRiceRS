@@ -247,9 +247,16 @@ public class T10pdt_reportController extends BaseController {
 		}
 		if(ProductKind.equals("Drought"))
 		{
-			List<ReportUtil.Drought> Droughtlist = new ArrayList<ReportUtil.Drought>();
-			Droughtlist = ReportUtil.getDrought(staData);
+			List<ReportUtil.Drought_Growth> Droughtlist = new ArrayList<ReportUtil.Drought_Growth>();
+			Droughtlist = ReportUtil.getDrought_Growth(staData);
 			dataMap.put("Droughtlist", Droughtlist);
+			
+		}
+		if(ProductKind.equals("Growth"))
+		{
+			List<ReportUtil.Drought_Growth> Growthlist = new ArrayList<ReportUtil.Drought_Growth>();
+			Growthlist = ReportUtil.getDrought_Growth(staData);
+			dataMap.put("Growthlist", Growthlist);
 			
 		}
 		//System.out.println(staData);
