@@ -2,8 +2,8 @@
 *.class
 */init.properties
 */init_rice.properties
-productReport/*
-!productReport/reportTemplate/
+*/productReport/
+!*/productReport/reportTemplate/
 # Log file
 *.log
 
