@@ -181,6 +181,16 @@ public class FileUtils {
 				}
 				// 文件类型代码
 				// orgDataObj.setType_(fileAttr[0]);
+				if("MOD13Q1".equals(fileAttr[0]))
+					orgDataObj.setType_("02");
+				else if("MOD13A2".equals(fileAttr[0]))
+						orgDataObj.setType_("01");
+				else if("MOD11A2".equals(fileAttr[0]))
+					orgDataObj.setType_("03");
+				else {
+					LOG.error("文件类型解析发生错误，文件类型不符合MOD13Q1、MOD13A2、MOD11A2三种之一！");
+					orgDataObj.setType_("99");
+				}
 				// 行列号
 				orgDataObj.setRow_column(fileAttr[2]);
 			} else {

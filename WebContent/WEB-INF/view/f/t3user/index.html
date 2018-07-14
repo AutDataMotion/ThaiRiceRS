@@ -52,10 +52,15 @@
 }
 </style>
 
-
+<script type="text/javascript">
+	
+	var cxt = "${cxt!}";
+	var hostIP = cxt.substring(0,cxt.length-3);
+	//var hostIP = "http://10.2.29.51";
+</script>
 <script src="${cxt!}/ui/thairice/JS/jquery-2.0.0.min.js"></script>
 <script type="text/javascript" src="${cxt!}/ui/thairice/JS/layer/layer.js"></script>
-<script src="${cxt!}/ui/thairice/area/jquery.cxselect.js"></script>
+
 <script src="${cxt!}/ui/DataTables/datatables.min.js"></script>
 <script src="${cxt!}/ui/loading/app.min.js"></script>
 <script src="${cxt!}/ui/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
@@ -127,11 +132,12 @@
 			forceParse: 0
 	    }).on('changeDate', function (ev) {//在控件显示时就触发事件
             app.productDate = $('#dateChoosed').val();//选择的产品日期
+            /*
             if(app.areaCode&&app.productKind_code)
             {
             	AssembleProductLayerInfo(app.areaCode,app.productDate,app.productKind_code);
             }
-            
+            */
         });
 	});
 	//得到地区码
@@ -176,6 +182,8 @@
         var ob = document.getElementById('skin');
         ob.href='${cxt!}/CSS/skin/color_three.css';
     }
+
+
 </script>
 </head>
 
@@ -217,9 +225,9 @@
   <form class="form-inline">
     <div class="form-group">
             <div id="custom_data">
-            <select class="province" id="province"  style="padding: 13px;border: 0px;width: 200px;"></select>
-            <select class="city" id="city" style="padding: 13px;border: 0px;width: 200px;"></select>
-            <select class="area" id="area" style="padding: 13px;border: 0px;width: 200px;"></select>
+            <select class="province" id="province"  style="padding: 13px;border: 0px;width: 200px;" onchange="initaddCityArea('city')"></select>
+            <select class="city" id="city" style="padding: 13px;border: 0px;width: 200px;" onchange="initaddCityArea('area')"></select>
+            <select class="area" id="area" style="padding: 13px;border: 0px;width: 200px;" onchange="initaddCityArea('town')"></select>
             </div>
     </div>
     <div class="form-group">
@@ -445,6 +453,8 @@
 		</div>
 	</div-->
 <script type="text/javascript">
+	
+	
       if('${session.user.status_!}'=='01'){
     	       showMessage("Sorry, your application is not authorized yet");
       }else if('${session.user.status_!}'=='03'){
@@ -452,10 +462,10 @@
 	  }else if('${session.user.status_!}'=='04'){
 	    	  showMessage("Your user has expired, please pay the fee"); 
 	  }else{
-		      getAddress();
+		      //getAddress();
 	  }
   	 //获取服务地区
-      function getAddress(){
+   /*   function getAddress(){
           sendAjax("${cxt!}/jf/thairice/t3user/region",{'userId':'${session.user.id!}'},function (res) {
           	 $('#custom_data').cxSelect({
           		    selects: ['province', 'city', 'area'],
@@ -464,6 +474,63 @@
           		   data: res
               });
           })
+      }*/
+
+
+      sendAjax("${cxt!}/jf/thairice/t3user/userCityArea?type=p",{id:0},function (res) {
+          var optionstring = "<option value=\"\" >PROV</option>";
+          $.each(res, function(i,item){
+              optionstring += "<option value=\"" + item.id + "\" >" + item.name + "</option>";
+          });
+          $("#province").html(optionstring);
+      });
+
+      $("#city").html("<option value=\"\" >AMP</option>");
+      $("#area").html("<option value=\"\" >TAM</option>");
+
+
+      function initaddCityArea(type) {
+    	  /*
+    	  app.province_code = $('#province option:selected').val();//选中的sheng
+    	  app.city_code = $('#city option:selected').val();//选中的shi
+    	  app.town_code = $('#area option:selected').val();//选中的xian
+    	  */
+    	  app.province_code = $('#province').val();//选中的sheng
+    	  app.city_code = $('#city').val();//选中的shi
+    	  app.town_code = $('#area').val();//选中的xian
+    	  
+          if(type=="city"){
+              $("#city").html("");
+
+              $("#area").html("<option value=\"\" >TAM</option>");
+              console.log($('#province').val());
+              if($('#province').val()==""){
+                  $("#city").html("<option value=\"\" >AMP</option>");
+                  return false;
+              }
+              sendAjax("${cxt!}/jf/thairice/t3user/userCityArea?type=c",{id:$('#province').val()},function (res) {
+                  var optionstring = "";
+
+                  optionstring += "<option value=\"\" >AMP</option>";
+                  $.each(res, function(i,item){
+                      optionstring += "<option value=\"" + item.id + "\" >" + item.name + "</option>";
+                  });
+                  $("#city").html(optionstring);
+              });
+          }else if(type=="area"){
+              if($('#city').val()==""){
+                  $("#area").html("<option value=\"\" >TAM</option>");
+                  return false;
+              }
+              sendAjax("${cxt!}/jf/thairice/t3user/userCityArea?type=a",{id:$('#city').val()},function (res) {
+                  var optionstring = "";
+                  optionstring += "<option value=\"\" >TAM</option>";
+                  $.each(res, function(i,item){
+                      optionstring += "<option value=\"" + item.id + "\" >" + item.name + "</option>";
+                  });
+                  $("#area").html(optionstring);
+              });
+          }
       }
 </script>
 </body>

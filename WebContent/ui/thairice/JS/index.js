@@ -41,7 +41,7 @@ $(function () {
                     },
                     remote: {//ajax验证。server result:{"valid",true or false}
                         url: '/jf/thairice/t3user/valiUserName',
-                        message: 'The account has already exist!',
+                        message: 'The account has already exist',
                         delay: 2000,
                         type: 'POST',
                         //自定义参数
@@ -83,7 +83,7 @@ $(function () {
                     },                    
                     regexp: {
                         regexp: /^0\d{9}$/,
-                        message: 'Mob number is not correct '
+                        message: 'The Mob number is invalid'
                     }
                 }
             },
@@ -97,7 +97,7 @@ $(function () {
                     },
                     remote: {//ajax验证。server result:{"valid",true or false}
                         url: '/jf/thairice/t3user/valiMailBox2',
-                        message: 'The email address has already exist!',
+                        message: 'The email address has already exist',
                         delay: 2000,
                         type: 'POST',
                         //自定义参数
@@ -163,9 +163,13 @@ function submitForm() {
 	  var list=[];
   	  $('.item').each(function(){
   	    list.push({'province':$(this).find('#p').attr("type"),'city':$(this).find('#c').attr("type"),'area':$(this).find('#a').attr("type")})
-  	 })
+  	 });
     if(!$("#agree").is(":checked")){
     	showMessage('Please agree with the terms of service first');
+    	return;
+    }
+    if(list.length==0){
+    	showMessage('Please select the service area');
     	return;
     }
     var psd = hex_md5($('#pwd').val());

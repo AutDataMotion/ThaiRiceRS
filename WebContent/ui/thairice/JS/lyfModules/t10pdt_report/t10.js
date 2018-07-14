@@ -4,16 +4,20 @@
 /**********************************************************************************************************
  * 添加产品数据
  */
-var featureLayerUrl = "http://localhost:6080/arcgis/rest/services/tai_wgs84/MapServer/dynamicLayer";
-var renderLayerUrl = "http://localhost:6080/arcgis/rest/services/tai_wgs84/MapServer";
-var featureQueryUrl = "http://localhost:6080/arcgis/rest/services/taicode/MapServer/0";
-var printMapUrl = "http://localhost:6080/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task";
+var featureLayerUrl = hostIP+":6080/arcgis/rest/services/tai_wgs84/MapServer/dynamicLayer";
+var renderLayerUrl = hostIP+":6080/arcgis/rest/services/tai_wgs84/MapServer";
+//var featureQueryUrl = "http://localhost:6080/arcgis/rest/services/taicode/MapServer/0";
+var printMapUrl = hostIP+":6080/arcgis/rest/services/Utilities/PrintingTools/GPServer/Export%20Web%20Map%20Task";
 productKind_code_2_des = {
 		'01':'Area',
 		'02':'Growth',
 		'03':'Yield',
 		'04':'Drought'
 }
+var renderLabel_Drought_Growth = {
+		"Drought":["Moist","Normal","Light Drought","Middling","Heavy"],
+		"Growth":["Very Bad","Bad","Average","Good","Excellent"],
+};
 /*
  * areaCode:选择的行政区域
  * productDate:选择的产品日期
@@ -21,9 +25,8 @@ productKind_code_2_des = {
  */
 function AssembleProductLayerInfo(areaCode,productDate,productKind_code)
 {
-	
-	productKind_des = productKind_code_2_des[productKind_code];
-	if(areaCode&&productDate&&productKind_des)
+	app.productKind_des = productKind_code_2_des[productKind_code];
+	if(areaCode&&productDate&&app.productKind_des)
 	{
 		$("#mapDiv").busyLoad("show", { text: "LOADING ...",
 		textPosition: "top"
@@ -34,16 +37,16 @@ function AssembleProductLayerInfo(areaCode,productDate,productKind_code)
 			 app.featureLayer = null;
 			 //app.map.removeAllLayers();
 		}
-		var prov_code = areaCode.substring(0,2);
-		getProductDataAndCopy2Workspace(prov_code,productDate,productKind_des);
-//		getProductDataAndCopy2Workspace(areaCode,productDate,productKind_des);
+//		var prov_code = areaCode.substring(0,2);
+//		getProductDataAndCopy2Workspace(prov_code,productDate,productKind_des);
+		getProductDataAndCopy2Workspace(areaCode,productDate,app.productKind_des);
 
 //		
 //		addProductLayer(areaCode,productDate,productKind_des);
 	}
 
 }
-function getProductDataAndCopy2Workspace(prov_code,productDate,productKind_des)
+function getProductDataAndCopy2Workspace(areaCode,productDate,productKind_des)
 {
 	$.ajax({
 	    url:'/jf/thairice/t10pdt_report/CopyProductData2Workspace',
@@ -53,7 +56,7 @@ function getProductDataAndCopy2Workspace(prov_code,productDate,productKind_des)
 	    	
 	    	productKind:productKind_des,//产品种类 yield等
 			productDate:productDate,//选择的产品日期
-			prov_code:prov_code,//选择的产品行政区域
+			areaCode:areaCode,//选择的产品行政区域
 	    	
 	    },
 	    timeout:5000,    //超时时间
@@ -67,6 +70,8 @@ function getProductDataAndCopy2Workspace(prov_code,productDate,productKind_des)
 //	    	alert("success");
 	    	if(data.result)
 	    	{
+	    		var prov_code = areaCode.substring(0,2);
+	    		
 	    		addProductLayer(prov_code,productDate,productKind_des);
 	    	}
 	    	else{
@@ -127,7 +132,10 @@ function addProductLayer(prov_code,productDate,productKind_des)
 	{
 		dataSourceName = productDate+'_'+prov_code+'.shp';
 	}
-	
+	if(productKind_des=="Growth")//面积
+	{
+		dataSourceName = productDate+'_'+prov_code+'.shp';
+	}
 	
 	require(["esri/layers/ArcGISDynamicMapServiceLayer","esri/layers/FeatureLayer",
 	      "esri/layers/DynamicLayerInfo", "esri/layers/LayerDataSource",
@@ -201,6 +209,10 @@ function addProductLayer(prov_code,productDate,productKind_des)
     	if(productKind_des=="Drought")
     	{
     		createUniqueValueRenderLayer(app.featureLayer,app.renderLayer,Render_field,5,"Drought");
+    	}
+    	if(productKind_des=="Growth")
+    	{
+    		createUniqueValueRenderLayer(app.featureLayer,app.renderLayer,Render_field,5,"Growth");
     	}
     	if(productKind_des=="Area")
     	{
@@ -277,15 +289,15 @@ function createClassBreakRenderLayer(featureLayer,renderLayer,field,numbreaks,le
 	    		if(i==numbreaks-1)
 	   			{
 	   			 renderer.addBreak(
-	       				 min + (i*breaks), 
-	       				 max,
+	       				 (min + (i*breaks)).toFixed(2), 
+	       				 max.toFixed(2),
 	           			new SimpleFillSymbol("solid", null, new Color(renderColor[i]))
 	           	        );
 	   			}
 	       		 else{
 	       			renderer.addBreak(
-	        				 min + (i*breaks), 
-	        				 min + ((i+1)*breaks),
+	        				 (min + (i*breaks)).toFixed(2), 
+	        				 (min + ((i+1)*breaks)).toFixed(2),
 	            			new SimpleFillSymbol("solid", null, new Color(renderColor[i]))
 	            	        );
 	       		 }
@@ -356,36 +368,39 @@ function createUniqueValueRenderLayer(featureLayer,renderLayer,field,uniqueKinds
 		
 	    var renderer = new UniqueValueRenderer(null, field);
 	    var renderColor = [[0, 255, 127, 1],[152, 251, 152, 1],[255, 255, 0, 1],[255, 128, 0, 1],[255, 0, 0, 1]];
-	    
+//	    var renderLabel = {
+//	    		"Drought":["Moist","Normal","Light Drought","Middling","Heavy"],
+//	    		"Growth":["Very Bad","Bad","Average","Good","Excellent"],
+//	    };
 	      renderer.addValue({
 	        value: "1",
 	        symbol: new SimpleFillSymbol("solid", null, new Color(renderColor[0])),
-	        label: "Moist",
-	        description: "Moist"
+	        label: renderLabel_Drought_Growth[legendTitle][0],
+	        description: renderLabel_Drought_Growth[legendTitle][0]
 	      });
 	      renderer.addValue({
 	        value: "2",
 	        symbol: new SimpleFillSymbol("solid", null, new Color(renderColor[1])),
-	        label: "Normal",
-	        description: "Normal"  
+	        label: renderLabel_Drought_Growth[legendTitle][1],
+	        description: renderLabel_Drought_Growth[legendTitle][1]
 	      });
 	      renderer.addValue({
 	        value: "3",
 	        symbol: new SimpleFillSymbol("solid", null, new Color(renderColor[2])),
-	        label: "Light Drought",
-	        description: "Light Drought"  
+	        label: renderLabel_Drought_Growth[legendTitle][2],
+	        description: renderLabel_Drought_Growth[legendTitle][2]
 	      });
 	      renderer.addValue({
 	        value: "4",
 	        symbol: new SimpleFillSymbol("solid", null, new Color(renderColor[3])),
-	        label: "Middling",
-	        description: "Middling"  
+	        label: renderLabel_Drought_Growth[legendTitle][3],
+	        description: renderLabel_Drought_Growth[legendTitle][3]
 	      });
 	      renderer.addValue({
 	        value: "5",
 	        symbol: new SimpleFillSymbol("solid", null, new Color(renderColor[4])),
-	        label: "Heavy",
-	        description: "Heavy"  
+	        label: renderLabel_Drought_Growth[legendTitle][4],
+	        description: renderLabel_Drought_Growth[legendTitle][4]
 	      });
 	      
 	      drawingOptions.renderer = renderer;
@@ -646,6 +661,7 @@ var sta = {};
           }
         */
 		var ChildAreaCodeAndName_Array = getChildAreaCodeAndNameByParentAreaCode(areaCode);
+//		console.log(ChildAreaCodeAndName_Array);
 		app.staData = [];
         //console.log("sta",results);
         sta(ChildAreaCodeAndName_Array,featureLayer,field,app.staData);
@@ -745,12 +761,15 @@ var sta = {};
 	{
 		if(app.productKind_code=="01"){//Area
 //			console.log(data);
-//			console.log(features);
 			var sum = 0;        
 	    	 dojo.forEach(features,function(feature) {
-	    		 sum += feature.attributes[field];
+	    		 var feature_area = calculatorArea(feature);
+	    		
+//	    		 sum += feature.attributes[field];
+	    		 sum += feature_area;
 	    	 });
-	    	 data.value = sum.toFixed(2)*900;
+//	    	 data.value = sum.toFixed(2)*900;
+	    	 data.value = sum.toFixed(2);
 	    	 staData.push(data);
 		} 
 		if(app.productKind_code=="03"){//Yield
@@ -762,7 +781,7 @@ var sta = {};
 	    	 data.value = sum.toFixed(2);
 	    	 staData.push(data);
 		}
-		if(app.productKind_code=="04"){//Drought
+		if(app.productKind_code=="04"||app.productKind_code=="02"){//Drought or Growth
 			
 			 var sum = 0; 
 			 var moistNum = 0;
@@ -806,7 +825,21 @@ var sta = {};
     	 
     	return staData;
 	}
-	
+	function calculatorArea(feature)
+	{
+		var area_RAI;
+		require(["esri/geometry/webMercatorUtils","esri/geometry/geodesicUtils", "esri/units"], 
+				function(webMercatorUtils,geodesicUtils, Units) {
+			//console.log(feature);
+			var area_SQUARE_METERS = geodesicUtils.geodesicAreas([feature.geometry], esri.Units.SQUARE_METERS);
+			area_RAI = area_SQUARE_METERS[0]/1600;//泰国常用面积单位
+//			console.log("calculatorArea-----"+area_SQUARE_METERS);
+//			console.log("calculatorArea-----"+area_RAI);
+			
+		});
+//		console.log("calculatorArea-----"+area_RAI);
+		return area_RAI;
+	}
 	//功能：归100     
 	function toHundred(x) {   
 		var f = parseFloat(x);    
@@ -825,7 +858,45 @@ var sta = {};
 		}          
 		f = Math.round(x*100)/100;  
 		return f;        
-	}    
+	}   
+	function Num2EnFormat(iValue)
+	{
+//		var iValue = 20002365879.12; //要转换的数字
+		var sValue = iValue+'';
+		var needProcessSvalue = (sValue.indexOf('.')>0)?sValue.substring(0,sValue.indexOf('.')):sValue;//'20002365879'
+		var floatNumStr = (sValue.indexOf('.')>0)?sValue.substring(sValue.indexOf('.')):'';//'.12'
+		var aValue = new Array();
+		var iNum = needProcessSvalue.length%3;
+		var aResult; //转换结果
+		var index = 0;
+		if(needProcessSvalue.length<=3){
+		    return sValue;
+		}else{
+		    if(iNum == 0){
+			    for(var i=0; i<needProcessSvalue.length; i=i+3){
+			        aValue[index] = needProcessSvalue[i]+''+needProcessSvalue[i+1]+''+needProcessSvalue[i+2];
+			        index++;
+			    }
+			}else if(iNum == 1){
+			    aValue[0] = needProcessSvalue[0];
+			    index = 1;
+			    for(var i=1; i<needProcessSvalue.length; i=i+3){
+			        aValue[index] = needProcessSvalue[i]+''+needProcessSvalue[i+1]+''+needProcessSvalue[i+2];
+			        index++;
+			    }
+			}
+			else if(iNum == 2){
+			    aValue[0] = needProcessSvalue[0]+''+needProcessSvalue[1];
+			    index = 1;
+			    for(var i=2; i<needProcessSvalue.length; i=i+3){
+			        aValue[index] = needProcessSvalue[i]+''+needProcessSvalue[i+1]+''+needProcessSvalue[i+2];
+			        index++;
+			    }
+			}
+		aResult = aValue.join(',');
+		return aResult.toString()+floatNumStr;//输出20,002,365,879
+		}   
+	}
 	function ChartStaData(staData)
 	{
 		//console.log(staData);
@@ -852,7 +923,7 @@ var sta = {};
         		 datas.push(stadata["value"]);
         		 var data = [];
         		 data.push(stadata["name"]);
-        		 data.push(stadata["value"]);
+        		 data.push(Num2EnFormat(stadata["value"]));
         		 dataSet.push(data);
         	 });
     		//统计表
@@ -864,7 +935,7 @@ var sta = {};
 //    		        "destroy": true,
     		        columns: [
     		            { title: "Name" },
-    		            { title: "Value/m2" }
+    		            { title: "Value/rai" }
     		        ]
     		    });
     		// 指定图表的配置项和数据
@@ -908,7 +979,7 @@ var sta = {};
                     data: names
                 },
                 yAxis: {
-                	name:"Area/m2",
+                	name:"Area/rai",
                 	//nameLocation:'middle',
                 	nameTextStyle:{
                 		color:'#fff'
@@ -949,7 +1020,7 @@ var sta = {};
         		 datas.push(stadata["value"]);
         		 var data = [];
         		 data.push(stadata["name"]);
-        		 data.push(stadata["value"]);
+        		 data.push(Num2EnFormat(stadata["value"]));
         		 dataSet.push(data);
         	 });
     		//统计表
@@ -1035,7 +1106,7 @@ var sta = {};
             app.staChart.clear();
             app.staChart.setOption(option);
 		}
-        if(app.productKind_code=="04"){//Drought
+        if(app.productKind_code=="04"||app.productKind_code=="02"){//Drought or Growth
         	var names = [];
     		var datas_Moist = [];
     		var datas_Normal = [];
@@ -1069,11 +1140,16 @@ var sta = {};
 //    		        "destroy": true,
     		        columns: [
     		            { title: "Name" },
-    		            { title: "Moist" },
-    		            { title: "Normal" },
-    		            { title: "Light Drought" },
-    		            { title: "Middling" },
-    		            { title: "Heavy" }
+//    		            { title: "Moist" },
+//    		            { title: "Normal" },
+//    		            { title: "Light Drought" },
+//    		            { title: "Middling" },
+//    		            { title: "Heavy" }
+    		            { title: renderLabel_Drought_Growth[app.productKind_des][0]},
+    		            { title: renderLabel_Drought_Growth[app.productKind_des][1]},
+    		            { title: renderLabel_Drought_Growth[app.productKind_des][2]},
+    		            { title: renderLabel_Drought_Growth[app.productKind_des][3]},
+    		            { title: renderLabel_Drought_Growth[app.productKind_des][4]}
     		        ]
     		    });
     		
@@ -1081,7 +1157,8 @@ var sta = {};
             var option = {
             	color: ['#00FF7F','#98FB98','#FFFF00','#FF8000','#FF0000'],
                 title: {
-                    text: 'TaiLand Drought',
+//                    text: 'TaiLand Drought',
+                	text: 'TaiLand'+app.productKind_des,
                     textStyle:{
                     	color:'#fff'
                     }
@@ -1093,7 +1170,8 @@ var sta = {};
                     }
                 },
                 legend: {
-                    data:['Moist','Normal','LightDrought','Middling','Heavy'],
+//                    data:['Moist','Normal','LightDrought','Middling','Heavy'],
+                	data:renderLabel_Drought_Growth[app.productKind_des],
                     textStyle:{
                     	color:'#fff'
                     }
@@ -1110,7 +1188,8 @@ var sta = {};
                     data: names
                 },
                 yAxis: {
-                	name:"Drought",
+//                	name:"Drought",
+                	name:app.productKind_des,
                 	//nameLocation:'middle',
                 	nameTextStyle:{
                 		color:'#fff'
@@ -1122,31 +1201,31 @@ var sta = {};
                 },
                 series: [
                 	{
-	                    name: 'Moist',
+	                    name: renderLabel_Drought_Growth[app.productKind_des][0],
 	                    type: 'bar',
 	                    stack: 'drought',
 	                    data: datas_Moist
                     },
                     {
-                        name: 'Normal',
+                        name: renderLabel_Drought_Growth[app.productKind_des][1],
                         type: 'bar',
                         stack: 'drought',
                         data: datas_Normal
                     },
                     {
-                        name: 'LightDrought',
+                        name: renderLabel_Drought_Growth[app.productKind_des][2],
                         type: 'bar',
                         stack: 'drought',
                         data: datas_LightDrought
                     },
                     {
-                        name: 'Middling',
+                        name: renderLabel_Drought_Growth[app.productKind_des][3],
                         type: 'bar',
                         stack: 'drought',
                         data: datas_Middling
                     },
                     {
-                        name: 'Heavy',
+                        name: renderLabel_Drought_Growth[app.productKind_des][4],
                         type: 'bar',
                         stack: 'drought',
                         data: datas_Heavy
@@ -1234,6 +1313,7 @@ function printMap()
 //			 console.log(evt);
 //	           
 //	       }); 
+		var tryCount = 5;
 		printTask.execute(params, printResult,errback);
 		
 		function printResult(Result)
@@ -1252,8 +1332,15 @@ function printMap()
 			//getReport();
 		}
 		function errback(err){
-       	 console.log("Couldn't print mapPic. ", err);
-        }
+			tryCount--;
+			if(tryCount>0)
+			{
+				printTask.execute(params, printResult,errback);
+			}
+			else{
+				console.log("Couldn't print mapPic. ", err);
+			}
+       	}
 	});
 }
 //传入图片路径url，返回base64

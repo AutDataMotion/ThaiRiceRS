@@ -106,7 +106,15 @@ public class T13RegionController extends BaseController {
 	public void getChildAreaCodeAndNameByParentAreaCode()
 	{
 		int parentAreaCode = getParaToInt("parentareaCode");
-		List<T13Region> Regions = T13RegionService.service.SelectByparentId(parentAreaCode);		//serial int id
+		List<T13Region> Regions = null;
+		if(String.valueOf(parentAreaCode).length()>4)
+		{
+			Regions = T13RegionService.service.SelectById__Custom(parentAreaCode);		//serial int id
+		}
+		else {
+			Regions = T13RegionService.service.SelectByparentId(parentAreaCode);		//serial int id
+		}
+		
 		boolean flag = false;
 		
 		JSONObject jsonObject = new JSONObject();

@@ -19,6 +19,8 @@ import com.platform.constant.ConstantRender;
 import com.platform.mvc.base.BaseController;
 
 import csuduc.platform.util.ReportUtil;
+import thairice.mvc.t14my_region.t14my_region;
+import thairice.mvc.t14my_region.t14my_regionService;
 import thairice.mvc.t3user.T3user;
 import thairice.mvc.t3user.T3userService;
 
@@ -214,7 +216,10 @@ public class T10pdt_reportController extends BaseController {
 	
 	@Clear
 	public void generateRoprt() {
-		String userID = getPara("userID");
+//		String userID = getPara("userID");
+		T3user user = getSessionAttr("user");
+		String userID= String.valueOf(user.getBigInteger("id"));
+		
 		String ProductKind = getPara("ProductKind");
 		String productDate = getPara("productDate");
 		String areaCode = getPara("areaCode");
@@ -242,9 +247,16 @@ public class T10pdt_reportController extends BaseController {
 		}
 		if(ProductKind.equals("Drought"))
 		{
-			List<ReportUtil.Drought> Droughtlist = new ArrayList<ReportUtil.Drought>();
-			Droughtlist = ReportUtil.getDrought(staData);
+			List<ReportUtil.Drought_Growth> Droughtlist = new ArrayList<ReportUtil.Drought_Growth>();
+			Droughtlist = ReportUtil.getDrought_Growth(staData);
 			dataMap.put("Droughtlist", Droughtlist);
+			
+		}
+		if(ProductKind.equals("Growth"))
+		{
+			List<ReportUtil.Drought_Growth> Growthlist = new ArrayList<ReportUtil.Drought_Growth>();
+			Growthlist = ReportUtil.getDrought_Growth(staData);
+			dataMap.put("Growthlist", Growthlist);
 			
 		}
 		//System.out.println(staData);
@@ -365,10 +377,67 @@ public class T10pdt_reportController extends BaseController {
 	{
 		String productKind = getPara("productKind");
 		String productDate = getPara("productDate");
-		String prov_code = getPara("prov_code");
-		boolean result = ReportUtil.getProductDataAndCopy2Workspace(productKind,productDate,prov_code);
-		setAttr("result",result);
-		renderJson();
+		//String prov_code = getPara("prov_code");areaCode
+		String areaCode = getPara("areaCode");
+		boolean flag = QueryServiceArea(areaCode);
+		if(flag)
+		{
+			String prov_code = areaCode.substring(0, 2);
+			boolean result = ReportUtil.getProductDataAndCopy2Workspace(productKind,productDate,prov_code);
+			setAttr("result",result);
+			renderJson();
+		}
+		else {
+			setAttr("result",false);
+			renderJson();
+		}
+		
 	}
-	
+	@Clear
+	public boolean QueryServiceArea(String areaCode)//检查是否订购了 相应的区域
+	{
+		//t14my_region my_region = null;
+		boolean queryResult = false;
+		
+		T3user user = getSessionAttr("user");
+		BigInteger userId= user.getBigInteger("id");
+		
+        Integer provinceId = 0;
+        Integer cityId = 0;
+        Integer areaId = 0;
+        if(areaCode.length() == 6)//选择的是县
+        {
+        	provinceId = Integer.valueOf(areaCode.substring(0, 2));
+        	cityId = Integer.valueOf(areaCode.substring(0, 4));
+        	areaId = Integer.valueOf(areaCode);
+        	if(t14my_regionService.service.SelectByCodes(userId, provinceId, cityId, areaId)!=null
+        			||t14my_regionService.service.SelectByCodes(userId, provinceId, cityId, 0)!=null
+        			||t14my_regionService.service.SelectByCodes(userId, provinceId, 0, 0)!=null)
+        	{
+        		queryResult  =true;
+        	}
+        }
+        else if(areaCode.length() == 4)//选择的是市
+        {
+        	provinceId = Integer.valueOf(areaCode.substring(0, 2));
+        	cityId = Integer.valueOf(areaCode);
+//        	areaId = 0;
+        	if(t14my_regionService.service.SelectByCodes(userId, provinceId, cityId, 0)!=null
+        			||t14my_regionService.service.SelectByCodes(userId, provinceId, 0, 0)!=null)
+        	{
+        		queryResult  =true;
+        	}
+        }
+        else if(areaCode.length() == 2)//选择的是省
+        {
+        	provinceId = Integer.valueOf(areaCode);
+//        	cityId = 0;
+//        	areaId = 0;
+        	if(t14my_regionService.service.SelectByCodes(userId, provinceId, 0, 0)!=null)
+        	{
+        		queryResult  =true;
+        	}
+        }
+		return queryResult;
+	}
 }

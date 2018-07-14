@@ -4,15 +4,15 @@
 var DEBUG = true;
 
 var app = {};
-var rasterLayerUrl = "http://localhost:6080/arcgis/rest/services/tai_wgs84/MapServer";
-var featureLayerUrl = "http://localhost:6080/arcgis/rest/services/tai_wgs84/MapServer";
+var rasterLayerUrl = hostIP+":6080/arcgis/rest/services/tai_wgs84/MapServer";
+var featureLayerUrl = hostIP+":6080/arcgis/rest/services/tai_wgs84/MapServer";
 var rasterLayerWorkspace = "areatif";
 //var tempProductfileName = "tempProduct.shp";
 var areaworkspaceId = "Area";
-var eraseUrl = "http://localhost:6080/arcgis/rest/services/erase/GPServer/erase";
-var mergeUrl = "http://localhost:6080/arcgis/rest/services/merge/GPServer/merge";
-var arearasterbandsextractUrl = "http://127.0.0.1:6080/arcgis/rest/services/arearasterbandsextract1/GPServer/arearasterbandsextract";
-var areatifsBaseUrl = "http://localhost:8080/areatifs/";
+var eraseUrl = hostIP+":6080/arcgis/rest/services/erase/GPServer/erase";
+var mergeUrl = hostIP+":6080/arcgis/rest/services/merge/GPServer/merge";
+var arearasterbandsextractUrl = hostIP+":6080/arcgis/rest/services/arearasterbandsextract/GPServer/arearasterbandsextract";
+var areatifsBaseUrl = hostIP+":8080/areatifs/";
 //var merge_gpserver_workspace = "C:/arcgisserver/directories/arcgisjobs/merge_gpserver/";
 //var erase_gpserver_workspace = "C:/arcgisserver/directories/arcgisjobs/erase_gpserver/";
 function init_productionConf_Monitoring()
@@ -47,6 +47,10 @@ function init_productionConf_Monitoring()
         "ordering": false,
         "info":     false
     } );
+	$('.editing_list').on( 'click', function () {
+		$('.editing').toggle();
+		$('.samples').toggle();
+    } );
 	$('#addRow').on( 'click', function () {
 		app.undoManager.clearRedo();
 		app.undoManager.clearUndo();
@@ -75,7 +79,8 @@ function init_productionConf_Monitoring()
         "esri/layers/DynamicLayerInfo", "esri/layers/LayerDataSource",
 	      "esri/layers/LayerDrawingOptions","esri/layers/RasterDataSource",
 //        "lyfModules/customoperation",
-        "dojo/_base/connect", "esri/Color", "dojo/parser", "dijit/registry",
+        "dojo/_base/connect", "esri/Color", "dojo/parser", 
+        "esri/urlUtils","esri/config","dijit/registry",
 	    "dojo/dom",
 	    "dojo/on",
 	    "esri/layers/ArcGISDynamicMapServiceLayer",
@@ -84,11 +89,16 @@ function init_productionConf_Monitoring()
 	        Map,Scalebar,UndoManager,Draw, Graphic,
 	        SimpleMarkerSymbol, SimpleLineSymbol,SimpleFillSymbol,GraphicsLayer,RasterDataSource,
 	        DynamicLayerInfo,LayerDataSource,LayerDrawingOptions,
-	        connect, Color, parser, registry,
+	        connect, Color, parser, urlUtils,esriConfig,registry,
 	        dom,on, ArcGISDynamicMapServiceLayer,Extent) {
 	    //var map = new Map("mapDiv");
 		 	parser.parse();
-
+//		 	urlUtils.addProxyRule({
+//		          urlPrefix: hostIP+":6080",
+//		          proxyUrl: hostIP+":8080/Java/proxy.jsp"
+//		        });
+		 	esriConfig.defaults.io.proxyUrl = hostIP+":8080/Java/proxy.jsp";
+			esriConfig.defaults.io.alwaysUseProxy = false;
 	        //specify the number of undo operations allowed using the maxOperations parameter
 	        app.undoManager = new UndoManager();
 	        // hook up undo/redo buttons

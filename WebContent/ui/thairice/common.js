@@ -60,7 +60,7 @@ function sendAjax(url, param, callback) {
         dataType: "json",
         success: callback,
         error: function () {
-            alert("Abnormal service")
+            //alert("Abnormal service")
         }
     });
 }

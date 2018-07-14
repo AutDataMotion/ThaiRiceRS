@@ -2,7 +2,9 @@ package thairice.mvc.t1parameter;
 
 import java.io.File;
 import java.io.FilenameFilter;
+import java.io.IOException;
 import java.math.BigInteger;
+import java.net.URISyntaxException;
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -20,6 +22,7 @@ import com.jfinal.aop.Before;
 import com.jfinal.aop.Clear;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Page;
+import com.jfinal.upload.UploadFile;
 import com.platform.constant.ConstantRender;
 import com.platform.mvc.base.BaseController;
 
@@ -27,6 +30,7 @@ import csuduc.platform.util.ReportUtil;
 import csuduc.platform.util.lyf.lyfGis;
 import thairice.entity.ResultEntity;
 import thairice.interceptor.AdminLoginInterceptor;
+import thairice.mvc.t3user.Result;
 import thairice.mvc.t3user.T3user;
 import thairice.mvc.t7pdt_data.T7pdt_data;
 import thairice.mvc.t9sample_info.T9sample_info;
@@ -89,10 +93,44 @@ public class T1parameterController extends BaseController {
 	/**
 	 * 列表
 	 */
+	@Clear
 	public void queryAllParm() {
 		Page page = T1parameter.dao.paginate(getParaToInt(0, 1), 1000, "select *", "from t1parameter order by id asc");
 		setAttr("blogPage", page);
 		setAttr("queryAllParm", "active");
+		renderWithPath("/adm2018/production_configuration.html");
+	}
+	
+	/**
+	 * Statistic yield file upload 
+	 */
+	@Clear
+	public void riceYieldUpload() {
+		int maxSize = 10 * 1024 * 1024;              //上传文件大小10M
+		// 获取文件路径
+		// 获取工程路径
+		String webContentPath = "";
+		try {
+			String path = Class.class.getResource("/").toURI().getPath();
+			webContentPath = new File(path).getParentFile().getParentFile().getCanonicalPath();
+			LOG.info("webContentPath=" + webContentPath);
+		} catch (URISyntaxException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}		
+		UploadFile  upFile = getFile("file",webContentPath + "\\upload", maxSize, "utf-8");
+		File file=new File(upFile.getSaveDirectory() + "\\" + upFile.getFileName());  
+		System.out.println(upFile.getSaveDirectory() + "\\statistic_yield_file.csv");
+		if(file.exists()){
+			// 删除原来文件
+			File fileOld=new File(upFile.getSaveDirectory() + "\\statistic_yield_file.csv");
+			if(fileOld.exists())
+				fileOld.delete();
+			file.renameTo(new File(upFile.getSaveDirectory() + "\\statistic_yield_file.csv"));			
+		}
 		renderWithPath("/adm2018/production_configuration.html");
 	}
 

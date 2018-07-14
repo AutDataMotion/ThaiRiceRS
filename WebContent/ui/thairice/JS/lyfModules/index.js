@@ -6,8 +6,9 @@ app.legendDiv = "#legendinfo";
 app.staChartDiv = "#stainfo";
 app.userID = '0';
 app.staExcelInit = false;
+app.Thai_shp_url =  hostIP+":6080/arcgis/rest/services/Thailand_shp/MapServer/0"
 $(function(){
-	
+//	alert(hostIP);
 	initapp();
 	
 	$('.list-group-item-text').mouseover(function(e) {
@@ -18,12 +19,34 @@ $(function(){
     });
 	var productKind_code="";
 	$('.list-group-item-text').click(function(e) {
-		
+//		console.log(app.province_code);
+//		console.log(app.city_code);
+//		console.log(app.town_code);
+		if(app.town_code!=0)
+		{
+			app.areaCode = app.town_code;
+			
+		}
+		else if(app.city_code!=0)
+		{
+			app.areaCode = app.city_code;
+			
+		}
+		else if(app.province_code!=0)
+		{
+			app.areaCode = app.province_code;
+			
+		}
+		else{
+			alert("area null");
+		}
+//		console.log(app.areaCode);
 		//whichSelected = $(this).text();
 		productKind_code = $(this).attr("value");
 		app.productKind_code = productKind_code;
 		if(app.areaCode&&app.productDate)
 		{
+			console.log(app.areaCode+","+app.productDate);
 			AssembleProductLayerInfo(app.areaCode,app.productDate,app.productKind_code);
 		}
 		
@@ -75,7 +98,7 @@ $(function(){
 		}
 		if(app.productKind_code=='02')//growth
 		{
-			
+			generateReport("doc",app.legendDiv,app.staChartDiv);
 		}	
 		if(app.productKind_code=='03')//yield
 		{
@@ -97,7 +120,7 @@ $(function(){
 		}
 		if(app.productKind_code=='02')//growth
 		{
-			
+			generateReport("pdf",app.legendDiv,app.staChartDiv);
 		}	
 		if(app.productKind_code=='03')//yield
 		{
@@ -148,18 +171,28 @@ function initapp()
 		"esri/dijit/Scalebar",
 	    "dojo/dom",
 	    "dojo/on",
+	    "dojo/parser",
+	    "esri/urlUtils",
+	    "esri/config",
 	    "esri/layers/ArcGISDynamicMapServiceLayer",
 	    "esri/layers/FeatureLayer",
 	    "esri/symbols/SimpleFillSymbol", "esri/symbols/SimpleLineSymbol","esri/Color", "esri/renderers/SimpleRenderer",
 	    "esri/geometry/Extent",
 	    "dojo/domReady!"], function (
-	        Map,Scalebar,dom,on, ArcGISDynamicMapServiceLayer,FeatureLayer,SimpleFillSymbol, SimpleLineSymbol,Color, SimpleRenderer,Extent) {
+	        Map,Scalebar,dom,on, parser,urlUtils,esriConfig,ArcGISDynamicMapServiceLayer,FeatureLayer,SimpleFillSymbol, SimpleLineSymbol,Color, SimpleRenderer,Extent) {
 	    //var map = new Map("mapDiv");
 	    
 //		var layer1 = new ArcGISDynamicMapServiceLayer("http://localhost:6080/arcgis/rest/services/tai_wgs84/MapServer");
 	    //app.map.addLayer(layer1);
 //	    var initExtent = layer1.fullExtent;
 //	    console.log(layer1.fullExtent);
+		parser.parse();
+//		urlUtils.addProxyRule({
+//	          urlPrefix: hostIP+":6080",
+//	          proxyUrl: hostIP+":8080/Java/proxy.jsp"
+//	        });
+		esriConfig.defaults.io.proxyUrl = hostIP+":8080/Java/proxy.jsp";
+		esriConfig.defaults.io.alwaysUseProxy = false;
 		
 	    app.map = new Map("mapDiv", {
 	    	basemap: "satellite",
@@ -168,7 +201,7 @@ function initapp()
 	      });
 	    
 	    // Carbon storage of trees in Warren Wilson College.
-	    var featureLayer = new FeatureLayer("http://localhost:6080/arcgis/rest/services/Thailand_shp/MapServer/0");
+	    var featureLayer = new FeatureLayer(app.Thai_shp_url);
 		
 	    var symbol = new SimpleFillSymbol()
 	    .setColor(new Color([255,0,0,0]))
