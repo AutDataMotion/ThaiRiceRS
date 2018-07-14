@@ -8,10 +8,13 @@ package thairice.rpcjob;
 import java.util.List;
 import java.util.Objects;
 
+import org.apache.commons.collections.CollectionUtils;
+
 import com.jfinal.log.Logger;
 import com.jfinal.plugin.cron4j.ITask;
 
 import RPCRice.PreProcess;
+import RPCRice.Yield;
 import csuduc.platform.util.ComUtil;
 import thairice.constant.EnumStatus;
 import thairice.mvc.t6org_data.T6org_data;
@@ -26,28 +29,27 @@ public class LandYieldScheduleJob extends AbsScheduleJob implements ITask {
 	
 	public List<T6org_data> loadDataFromDb(){
 		
-		// 拼接查询条件
+		// todo 拼接查询条件, 还未确定, 确定后再做
 		String whereStr = " 1=1";
 		// sql 查询 为了参数有序，需要进行order by
 		return T6org_data.dao.find( String.format(" select * from %s where %s order by row_column  limit 100 ", T6org_data.tableName, whereStr) );
 	}
 	
-	public PreProcess mdlConvert(List<T6org_data> inputs ){
-		if (Objects.isNull(inputs) || inputs.size() < 6) {
-			throw new IllegalArgumentException("PreProcess 参数不全");
+	public Yield mdlConvert(List<T6org_data> inputs ){
+		if (CollectionUtils.isEmpty(inputs)) {
+			throw new IllegalArgumentException(" 参数不全");
 		}
-		PreProcess target = new PreProcess();
+		Yield target = new Yield();
 		// 用该批数据的第一行id作为taskID
 		target.id = inputs.get(0).getId();
-		target.type = "";
-		target.h26v06 = inputs.get(0).getName_();
-		target.h27v06 = inputs.get(1).getName_();
-		target.h27v07 = inputs.get(2).getName_();
-		target.h27v08 = inputs.get(3).getName_();
-		target.h28v07 = inputs.get(4).getName_();
-		target.h28v08 = inputs.get(5).getName_();
-		target.shpfile = "";// 获取样本
-		target.outFile = ""; // 
+		target.fileDate = "20170723";
+		target.pathNdvi = "D:\\Thailand_test\\data\\Clip_N2_2017.tif";
+		target.outCode = "72";
+		target.pathStatistics = "D:\\yield\\yield4\\statistic\\Suphanburd.csv";
+		target.imageLanduse = "D:\\yield\\yield4\\land\\Suphanburd_land_250p_N.tif";
+		target.outPath = "D:\\Thailand_test\\yield";
+		target.shpfilePath = "D:\\Thailand_test\\shp\\Province";
+		target.pathGdalwarpS = "C:\\warmerda\\bld\\bin\\gdalwarp.exe";
 		
 		return target;
 	}
@@ -58,7 +60,7 @@ public class LandYieldScheduleJob extends AbsScheduleJob implements ITask {
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		boolean haveUndoData = true;
+		boolean haveUndoData = false;
 		while(haveUndoData){
 			// 从数据库读取数据
 			List<T6org_data> dbUndoDatas =  loadDataFromDb();
@@ -68,10 +70,10 @@ public class LandYieldScheduleJob extends AbsScheduleJob implements ITask {
 				return ;
 			}
 			// 封装为rpc接口数据
-			 PreProcess rpcTodoData = mdlConvert(dbUndoDatas);
+			Yield rpcTodoData = mdlConvert(dbUndoDatas);
 			 
 			// 调用rpc处理程序
-			 EnumStatus rpcRes = preProcessing(rpcTodoData, null);
+			 EnumStatus rpcRes = landYield(rpcTodoData, null);
 			 
 			// 封装rpc结果数据，入库
 			 if (EnumStatus.Success == rpcRes) {

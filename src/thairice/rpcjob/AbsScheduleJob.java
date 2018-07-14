@@ -82,7 +82,7 @@ public abstract class AbsScheduleJob {
 		return commRpc((a, b) -> getRpcProxy().split(a, b), argClassifyB, mapArgs);
 	}
 	// ==============长势监测
-	public static EnumStatus grouthMonitor(Growth argGrowth, Map<String, String> mapArgs) {
+	public static EnumStatus growthMonitor(Growth argGrowth, Map<String, String> mapArgs) {
 		return commRpc((a, b) -> getRpcProxy().GrowthMonitor(a, b), argGrowth, mapArgs);
 	}
 	// ==============水稻估产
@@ -90,4 +90,7 @@ public abstract class AbsScheduleJob {
 		return commRpc((a, b) -> getRpcProxy().landyield(a, b), argYield, mapArgs);
 	}
 
+	public static String sqlStr_DownLoadStatus(EnumDataStatus type){
+		return  String.format(" status_ ='%s' ", type.getIdStr());
+	}
 }

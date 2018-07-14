@@ -35,6 +35,10 @@ import thairice.config.ConfMain;
 import thairice.config.DBMappingMy;
 import thairice.constant.PropertiesInitMy;
 import thairice.interceptor.AdminLoginInterceptor;
+import thairice.rpcjob.ClassifyScheduleJob;
+import thairice.rpcjob.GrouthMonitorScheduleJob;
+import thairice.rpcjob.LandDroughtScheduleJob;
+import thairice.rpcjob.LandYieldScheduleJob;
 import thairice.rpcjob.PreProcessScheduleJob;
 import zeroc.util.IceClientUtil;
 
@@ -138,6 +142,10 @@ public class JfinalConfig extends JFinalConfig {
 		Cron4jPlugin cp = new Cron4jPlugin();
 		// 测试时间，实际需调整时间
 		  cp.addTask("*/1 * * * *", new PreProcessScheduleJob());
+		  cp.addTask("*/1 * * * *", new ClassifyScheduleJob());
+		  cp.addTask("*/1 * * * *", new GrouthMonitorScheduleJob());
+		  cp.addTask("*/1 * * * *", new LandDroughtScheduleJob());
+		  cp.addTask("*/1 * * * *", new LandYieldScheduleJob());
 		  plugins.add(cp);
 	}
 

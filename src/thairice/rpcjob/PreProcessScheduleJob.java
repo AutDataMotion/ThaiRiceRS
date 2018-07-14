@@ -25,11 +25,10 @@ public class PreProcessScheduleJob extends AbsScheduleJob implements ITask {
 	private static Logger log = Logger.getLogger(PreProcessScheduleJob.class);
 	
 	public List<T6org_data> loadDataFromDb(){
-		
-		// 拼接查询条件
-		String whereStr = " 1=1";
+		// todo 拼接查询条件, 还未确定, 确定后再做
+		String whereStr = sqlStr_DownLoadStatus(EnumDataStatus.DOWNLOAD_SUCCE);
 		// sql 查询 为了参数有序，需要进行order by
-		return T6org_data.dao.find( String.format(" select * from %s where %s order by row_column  limit 100 ", T6org_data.tableName, whereStr) );
+		return T6org_data.dao.find( String.format(" select * from vpreprocess_todo where %s order by collect_time  limit 100 ",  whereStr) );
 	}
 	
 	public PreProcess mdlConvert(List<T6org_data> inputs ){
@@ -39,7 +38,7 @@ public class PreProcessScheduleJob extends AbsScheduleJob implements ITask {
 		PreProcess target = new PreProcess();
 		// 用该批数据的第一行id作为taskID
 		target.id = inputs.get(0).getId();
-		target.type = "";
+		target.type = inputs.get(0).getType_();
 		target.h26v06 = inputs.get(0).getName_();
 		target.h27v06 = inputs.get(1).getName_();
 		target.h27v07 = inputs.get(2).getName_();
@@ -58,14 +57,15 @@ public class PreProcessScheduleJob extends AbsScheduleJob implements ITask {
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		boolean haveUndoData = true;
+		boolean haveUndoData = false;
+		log.info(">>>>job begin");
 		while(haveUndoData){
 			// 从数据库读取数据
 			List<T6org_data> dbUndoDatas =  loadDataFromDb();
 			if (ComUtil.isEmptyList(dbUndoDatas)) {
 				log.info("no predata now");
 				haveUndoData = false;
-				return ;
+				break ;
 			}
 			// 封装为rpc接口数据
 			 PreProcess rpcTodoData = mdlConvert(dbUndoDatas);
@@ -80,7 +80,7 @@ public class PreProcessScheduleJob extends AbsScheduleJob implements ITask {
 				// 修改标志位为失败，等待下次任务继续执行，当失败超过3次则标志位终生失败
 			}
 		}
-		log.info("job all done");
+		log.info("<<<<job end");
 	}
 
 	
