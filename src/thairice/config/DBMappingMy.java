@@ -2,27 +2,21 @@ package thairice.config;
 
 import org.apache.log4j.Logger;
 
-import thairice.autotask.autoInitFtpScan;
-import thairice.constant.ConstantInitMy;
-import thairice.rpcjob.PreProcessScheduleJob;
-import thairice.rpcjob.ProductScheduleJob;
-import thairice.utils.FtpUtils;
-
 import com.alibaba.druid.filter.stat.StatFilter;
 import com.alibaba.druid.wall.WallConfig;
 import com.alibaba.druid.wall.WallFilter;
 import com.jfinal.config.Plugins;
-import com.jfinal.kit.PropKit;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 import com.jfinal.plugin.activerecord.CaseInsensitiveContainerFactory;
 import com.jfinal.plugin.activerecord.dialect.MysqlDialect;
 import com.jfinal.plugin.activerecord.dialect.OracleDialect;
 import com.jfinal.plugin.activerecord.dialect.PostgreSqlDialect;
-import com.jfinal.plugin.cron4j.Cron4jPlugin;
 import com.jfinal.plugin.druid.DruidPlugin;
 import com.platform.config.mapping.BaseMapping;
 import com.platform.constant.ConstantInit;
 import com.platform.plugin.PropertiesPlugin;
+
+import thairice.constant.ConstantInitMy;
 
 /**  
  * 创建时间：2016年6月21日 下午9:00:11  
@@ -117,10 +111,5 @@ public class DBMappingMy extends BaseMapping{
 //		plugins.add(new Cron4jPlugin(PropKit.use("autoRemoteFtpScan.properties")));
 //		// 定时自动扫描待下载文件并启动ftp下载
 //		plugins.add(new Cron4jPlugin(PropKit.use("autoFtpDownload.properties")));
-		
-		Cron4jPlugin cp = new Cron4jPlugin();
-		// 测试时间，实际需调整时间
-		  cp.addTask("*/1 * * * *", new PreProcessScheduleJob());
-		  cp.addTask("*/1 * * * *", new ProductScheduleJob());
 	}
 }

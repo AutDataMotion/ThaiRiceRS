@@ -23,6 +23,7 @@ import com.platform.mvc.base.BaseService;
 
 import csuduc.platform.util.ReflectionUtils;
 import oracle.net.aso.p;
+import thairice.config.ConfMain;
 
 public class T2syslogService extends BaseService {
 
@@ -120,7 +121,7 @@ public class T2syslogService extends BaseService {
 							if(null == sysLog){
 								Thread.sleep(2000);
 							} else {
-								Db.save(T2syslog.tableName, sysLog);// 日志入库
+								ConfMain.db().save(T2syslog.tableName, sysLog);// 日志入库
 								addLogToFile(sysLog);// 日志入文件
 							}
 						} catch (Exception e) {
