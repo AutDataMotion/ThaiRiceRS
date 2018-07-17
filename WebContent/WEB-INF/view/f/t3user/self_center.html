@@ -133,21 +133,21 @@
                     <form id="info" class="form-horizontal tab-form">
                         <p class="text-center form_title"> < User information > </p>
                         <div class="form-group">
-                            <label class="col-md-3 control-label" style="width:120px;">Account</label>
+                            <label class="col-md-3 control-label" style="width:120px;">* Account</label>
                             <div class="col-md-9" style="width:470px;">
                                 <input type="text" class="form-control" readonly value="${user.account}"
                                        placeholder="The Account is made up of 6 to 12 letters and Numbers">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3 control-label" style="width:120px;">Mobile</label>
+                            <label class="col-md-3 control-label" style="width:120px;">* Mobile</label>
                             <div class="col-md-9" style="width:470px;">
                                 <input type="text" class="form-control" name="t3user.phone" value="${user.phone}"
                                        placeholder="The Mobile Phone begins with 0 and the length is 10">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3 control-label" style="width:120px;">Email</label>
+                            <label class="col-md-3 control-label" style="width:120px;">* Email</label>
                             <div class="col-md-9" style="width:470px;">
                                 <input type="email" class="form-control" id="u_email" name="t3user.email"
                                        value="${user.email}"
@@ -155,7 +155,7 @@
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3 control-label" style="width:120px;">Nickname</label>
+                            <label class="col-md-3 control-label" style="width:120px;">* Nickname</label>
                             <div class="col-md-9" style="width:470px;">
                                 <input type="text" class="form-control" name="t3user.name_" value="${user.name_}"
                                        placeholder="Your nickname">
@@ -536,27 +536,27 @@
     })
 
     sendAjax("${cxt!}/jf/thairice/t3user/userCityArea?type=p", {id: 0}, function (res) {
-        var optionstring = "<option value=\"\" >PROV</option>";
+        var optionstring = "<option value=\"\" >Province</option>";
         $.each(res, function (i, item) {
             optionstring += "<option value=\"" + item.id + "\" >" + item.name + "</option>";
         });
         $("#province").html(optionstring);
     });
-    $("#city").html("<option value=\"\" >AMP</option>");
-    $("#area").html("<option value=\"\" >TAM</option>");
+    $("#city").html("<option value=\"\" >District</option>");
+    $("#area").html("<option value=\"\" >Subdistrict</option>");
 
     function initaddCityArea(type) {
         if (type == "city") {
             $("#city").html("");
-            $("#area").html("<option value=\"\" >TAM</option>");
+            $("#area").html("<option value=\"\" >Subdistrict</option>");
             console.log($('#province').val());
             if ($('#province').val() == "") {
-                $("#city").html("<option value=\"\" >AMP</option>");
+                $("#city").html("<option value=\"\" >District</option>");
                 return false;
             }
             sendAjax("${cxt!}/jf/thairice/t3user/userCityArea?type=c", {id: $('#province').val()}, function (res) {
                 var optionstring = "";
-                optionstring += "<option value=\"\" >AMP</option>";
+                optionstring += "<option value=\"\" >District</option>";
                 $.each(res, function (i, item) {
                     optionstring += "<option value=\"" + item.id + "\" >" + item.name + "</option>";
                 });
@@ -564,12 +564,12 @@
             });
         } else if (type == "area") {
             if ($('#city').val() == "") {
-                $("#area").html("<option value=\"\" >TAM</option>");
+                $("#area").html("<option value=\"\" >Subdistrict</option>");
                 return false;
             }
             sendAjax("${cxt!}/jf/thairice/t3user/userCityArea?type=a", {id: $('#city').val()}, function (res) {
                 var optionstring = "";
-                optionstring += "<option value=\"\" >TAM</option>";
+                optionstring += "<option value=\"\" >Subdistrict</option>";
                 $.each(res, function (i, item) {
                     optionstring += "<option value=\"" + item.id + "\" >" + item.name + "</option>";
                 });

@@ -2,8 +2,10 @@ package thairice.config;
 
 import org.apache.log4j.Logger;
 
+import com.jfinal.plugin.activerecord.DbPro;
 import com.platform.config.run.BaseConfMain;
 
+import thairice.constant.ConstantInitMy;
 import thairice.mvc.t2syslog.T2syslogService;
 
 /**  
@@ -37,5 +39,9 @@ public class ConfMain extends BaseConfMain{
 	
 	public static  void stop(){
 		T2syslogService.setThreadRun(false);
+	}
+	
+	public static DbPro db() {
+	    return DbPro.use(ConstantInitMy.db_dataSource_main);
 	}
 }

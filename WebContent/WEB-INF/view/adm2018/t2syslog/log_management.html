@@ -5,8 +5,8 @@
 <div class="user_query">
 	<form role="form" class="form-inline" style="margin: 15px 0 15px 0;">
 		<div class="form-group">
-			<label>UserID</label> <input id="userId" type="text"
-				placeholder="UserID" class="form-control" style="width: 80px;">
+			<label>UserName</label> <input id="userName" type="text"
+				placeholder="UserName" class="form-control" style="width: 80px;">
 		</div>
 		<div class="form-group">
 			<label class="control-label">Time:</label>
@@ -31,18 +31,18 @@
 </div>
 <div class="table-responsive">
 	<table class="table table-bordered data-table" id="dataTable09"
-		width="100%" cellspacing="0" align="center">
+		width="100%" cellspacing="0" align="LEFT">
 		<thead>
 			<tr>
-				<th>id</th>
-				<th>type</th>
-				<th>user</th>
-				<th>action</th>
-				<th>content</th>
-				<th>datetime</th>
+				<th width="6%">Id</th>
+				<th width="10%">Type</th>
+				<th width="10%">User</th>
+				<th width="10%">Action</th>
+				<th>Content</th>
+				<th width="16%">Datetime</th>
 			</tr>
 		</thead>
-		<tfoot>
+		<!-- <tfoot>
 			<tr>
 				<th>id</th>
 				<th>type</th>
@@ -51,7 +51,7 @@
 				<th>content</th>
 				<th>datetime</th>
 			</tr>
-		</tfoot>
+		</tfoot> -->
 	</table>
 </div>
 <% }; %> <% var jsSec={ %>

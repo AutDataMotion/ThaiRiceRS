@@ -54,6 +54,10 @@ public class T3userController extends BaseController {
      * 列表
      */
     public void index() {
+        T3user user = getSessionAttr("user");
+        String PD_TpCd=user.getPD_TpCd();
+        //Rice Acreage Rice Drought Rice Growth Rice Yield
+        setAttr("name",PD_TpCd);
         renderWithPath(pthv + "index.html");
     }
 
@@ -96,11 +100,12 @@ public class T3userController extends BaseController {
         } else {
             res = new Result(0, "Verification code is error, please re-enter");
         }
-    /*	if(res.getCode()==1) {
+    	if(res.getCode()==1) {
             T3user user = getSessionAttr("user");
-		    T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), account, "Log in", res.toString());  
-		}else {
-		    T2syslogService.addLog(EnumT2sysLog.INFO, BigInteger.ONE , account, "Log in", res.toString());  
+		    T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), account, "Login", res.getDesc());
+		}
+    		/*else {
+		    T2syslogService.addLog(EnumT2sysLog.INFO, BigInteger.ONE , account, "Login", res.getDesc());
 		}*/
 
         renderJson(res);
@@ -165,13 +170,16 @@ public class T3userController extends BaseController {
                 boolean success = Mail.sendEmail("Account activation", content, t3user.getEmail().toString(),
                         Mail.MODE_HTML);
                 if (success) {
+                    T2syslogService.addLog(EnumT2sysLog.INFO, new BigInteger(t3user.get("id").toString()), t3user.getAccount(), "Registe", "Registration is successful");
                     renderJson(new Result(1,
                             "Registration is successful, activation email has been sent, please check and activate the account"));
                 } else {
-                    renderJson(new Result(1, "Registration was successful but the mailbox failed to send"));
+                    T2syslogService.addLog(EnumT2sysLog.INFO, new BigInteger(t3user.get("id").toString()), t3user.getAccount(),"Registe", "Registration was successful but the mailbox failed to send");
+                    renderJson(new Result(1, "Successful registration but the mail failed to send"));
                 }
             }
         } else {
+            T2syslogService.addLog(EnumT2sysLog.INFO, new BigInteger(t3user.get("id").toString()), t3user.getAccount(),"Registe", "Registration failed");
             renderJson(new Result(0, "Registration failed"));
         }
     }
@@ -582,8 +590,10 @@ public class T3userController extends BaseController {
         if (row > 0) {
             Db.use(ConstantInitMy.db_dataSource_main).update("DELETE FROM t8message WHERE send_userid=?",
                     user.getBigInteger("id"));
+            T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), user.getAccount(), "Empty_message", "Operation succeeded");
             renderJson(new Result(1, "Operation succeeded"));
         } else {
+            T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), user.getAccount(), "Empty_message", "Operation failed");
             renderJson(new Result(1, "Operation failed"));
         }
     }
@@ -597,8 +607,10 @@ public class T3userController extends BaseController {
                 "DELETE FROM r4message_send WHERE id IN(" + getPara("ids") + ") AND receive_userid=?",
                 user.getBigInteger("id"));
         if (row > 0) {
+            T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), user.getAccount(), "Delete_message", "Operation succeeded");
             renderJson(new Result(1, "Operation succeeded"));
         } else {
+            T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), user.getAccount(), "Delete_message", "Operation failed");
             renderJson(new Result(0, "Operation failed"));
         }
     }
@@ -619,11 +631,14 @@ public class T3userController extends BaseController {
      * 修改用户信息
      */
     public void edit_info() {
+        T3user user = getSessionAttr("user");
         T3user t3user = getModel(T3user.class);
         boolean rlt = t3user.use(ConstantInitMy.db_dataSource_main).update();
         if (rlt) {
+            T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), user.getAccount(), "Modify information", "Operation succeeded");
             renderJson(new Result(1, "Operation succeeded"));
         } else {
+            T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), user.getAccount(), "Modify information", "Operation failed");
             renderJson(new Result(0, "Operation failed"));
         }
     }
@@ -679,6 +694,8 @@ public class T3userController extends BaseController {
     @Before(T3userValidator.class)
     public void rest_pass() {
         Result result = codeService.reset_pass(getPara("code"), getPara("pwd"));
+        T3user user = getSessionAttr("user");
+        T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), user.getAccount(), "Reset password", result.getDesc());
         renderJson(result);
     }
 
@@ -688,6 +705,8 @@ public class T3userController extends BaseController {
     @Before(T3userValidator.class)
     public void edit_pass() {
         Result result = codeService.reset_pass(getPara("code"), HashKit.md5(getPara("pwd")));
+        T3user user = getSessionAttr("user");
+        T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), user.getAccount(), "Modify the password ", result.getDesc());
         renderJson(result);
     }
 
@@ -695,6 +714,8 @@ public class T3userController extends BaseController {
      * 退出登录
      */
     public void exit() {
+        T3user user = getSessionAttr("user");
+        T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), user.getAccount(), "Logout", "Logout succeeeful");
         removeSessionAttr("user");
         redirect("/jf/thairice/t3user/login#page4");
     }

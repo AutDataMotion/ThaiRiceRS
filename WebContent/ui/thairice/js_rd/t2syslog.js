@@ -10,7 +10,7 @@ $(document).ready(function() {
 		}, {
 			data : "type_"
 		}, {
-			data : "userid"
+			data : "userName"
 		}, {
 			data : "action_"
 		}, {
@@ -34,7 +34,7 @@ $(document).ready(function() {
 	};
 	function search(data, callback, settings) {
 		console.log("search");
-		datasrch.userId = $('#userId').val();
+		datasrch.userName = $('#userName').val();
 		datasrch.dateTimeBeg = $('#datetimeBeg').val();
 		datasrch.dateTimeEnd = $('#datetimeEnd').val();
 		datasrch.pageIndex = 0;

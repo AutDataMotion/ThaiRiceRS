@@ -206,7 +206,7 @@
             </div>
             <div class="modal-body">
             <div id="address_data">
-            <span style="width: 170px;display:inline-block;">PROV</span><span style="width: 160px;display:inline-block;">AMP</span><span style="width: 160px;display:inline-block;">TAM</span><br>
+            <span style="width: 170px;display:inline-block;">Province</span><span style="width: 160px;display:inline-block;">District</span><span style="width: 160px;display:inline-block;">Subdistrict</span><br>
             <select class="p" id="p" style="padding: 7px;width: 160px;"  onchange="addCityArea('city')"></select>
             <select class="c" id="c" style="padding: 7px;width: 160px;"  onchange="addCityArea('area')"></select>
             <select class="a" id="a" style="padding: 7px;width: 160px;"></select>&nbsp;&nbsp;&nbsp;
@@ -217,9 +217,9 @@
             <table class="table table-bordered" style="table-layout:fixed">
                 <thead>
                 <tr>
-                    <th>PROV</th>
-                    <th>AMP</th>
-                    <th>TAM</th>
+                    <th>Province</th>
+                    <th>District</th>
+                    <th>Subdistrict</th>
                     <th>Operation</th>
                 </tr>
                 </thead>
@@ -455,15 +455,15 @@
         function initaddCityArea(type) {
             if(type=="city"){
                 $("#city").html("");
-                $("#area").html("<option value=\"\" >TAM</option>");
+                $("#area").html("<option value=\"\" >Subdistrict</option>");
                 console.log($('#province').val());
                 if($('#province').val()==""){
-                    $("#city").html("<option value=\"\" >AMP</option>");
+                    $("#city").html("<option value=\"\" >District</option>");
                     return false;
                 }
                 sendAjax("${cxt!}/jf/thairice/t3user/adminUserCityArea?type=c",{id:$('#province').val(),'userId':userId},function (res) {
                     var optionstring = "";
-                    optionstring += "<option value=\"\" >AMP</option>";
+                    optionstring += "<option value=\"\" >District</option>";
                     $.each(res, function(i,item){
                         optionstring += "<option value=\"" + item.id + "\" >" + item.name + "</option>";
                     });
@@ -471,12 +471,12 @@
                 });
             }else if(type=="area"){
                 if($('#city').val()==""){
-                    $("#area").html("<option value=\"\" >TAM</option>");
+                    $("#area").html("<option value=\"\" >Subdistrict</option>");
                     return false;
                 }
                 sendAjax("${cxt!}/jf/thairice/t3user/adminUserCityArea?type=a",{id:$('#city').val(),'userId':userId},function (res) {
                     var optionstring = "";
-                    optionstring += "<option value=\"\" >TAM</option>";
+                    optionstring += "<option value=\"\" >Subdistrict</option>";
                     $.each(res, function(i,item){
                         optionstring += "<option value=\"" + item.id + "\" >" + item.name + "</option>";
                     });
@@ -530,9 +530,6 @@
         	    if(areaname == null){
                     areaname="ALL";
                 }
-                //var result='<div class="item"><span style="color: #31708f;">'+item.provincename+'
-                // </span>--------<span style="color: #31708f;">'+cityname+'</span>--------<span style="color: #31708f;">'
-                // +areaname+'</span><div class="del" onclick="del(this,'+item.id+')">Delete</div></div>';
                 var result='<tr>'+
                     '<td class="nowrap">'+item.provincename+'</td>'+
                     '<td class="nowrap">'+cityname+'</td>'+
@@ -546,19 +543,19 @@
         $("#city").html("");
         $("#area").html("");
         sendAjax("${cxt!}/jf/thairice/t3user/adminUserCityArea?type=p",{id:0,'userId':userId},function (res) {
-            var optionstring = "<option value=\"\" >PROV</option>";
+            var optionstring = "<option value=\"\" >Province</option>";
             $.each(res, function(i,item){
                 optionstring += "<option value=\"" + item.id + "\" >" + item.name + "</option>";
             });
             $("#province").html(optionstring);
         });
-        $("#city").html("<option value=\"\" >AMP</option>");
-        $("#area").html("<option value=\"\" >TAM</option>");
+        $("#city").html("<option value=\"\" >District</option>");
+        $("#area").html("<option value=\"\" >Subdistrict</option>");
     }
     //添加服务地区
     function add_address(){
         if($("#p").val()==""){
-            layer.msg("Please choose the PROV first ");
+            layer.msg("Please choose the Province first ");
             return;
         }
     	var data={'province':$("#p").val(),'city':$("#c").val(),'area':$("#a").val(),'userId':userId}
