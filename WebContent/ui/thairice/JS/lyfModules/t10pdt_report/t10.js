@@ -14,6 +14,10 @@ productKind_code_2_des = {
 		'03':'Yield',
 		'04':'Drought'
 }
+var renderLabel_Drought_Growth = {
+		"Drought":["Moist","Normal","Light Drought","Middling","Heavy"],
+		"Growth":["Very Bad","Bad","Average","Good","Excellent"],
+};
 /*
  * areaCode:选择的行政区域
  * productDate:选择的产品日期
@@ -21,8 +25,8 @@ productKind_code_2_des = {
  */
 function AssembleProductLayerInfo(areaCode,productDate,productKind_code)
 {
-	productKind_des = productKind_code_2_des[productKind_code];
-	if(areaCode&&productDate&&productKind_des)
+	app.productKind_des = productKind_code_2_des[productKind_code];
+	if(areaCode&&productDate&&app.productKind_des)
 	{
 		$("#mapDiv").busyLoad("show", { text: "LOADING ...",
 		textPosition: "top"
@@ -35,7 +39,7 @@ function AssembleProductLayerInfo(areaCode,productDate,productKind_code)
 		}
 //		var prov_code = areaCode.substring(0,2);
 //		getProductDataAndCopy2Workspace(prov_code,productDate,productKind_des);
-		getProductDataAndCopy2Workspace(areaCode,productDate,productKind_des);
+		getProductDataAndCopy2Workspace(areaCode,productDate,app.productKind_des);
 
 //		
 //		addProductLayer(areaCode,productDate,productKind_des);
@@ -128,7 +132,10 @@ function addProductLayer(prov_code,productDate,productKind_des)
 	{
 		dataSourceName = productDate+'_'+prov_code+'.shp';
 	}
-	
+	if(productKind_des=="Growth")//面积
+	{
+		dataSourceName = productDate+'_'+prov_code+'.shp';
+	}
 	
 	require(["esri/layers/ArcGISDynamicMapServiceLayer","esri/layers/FeatureLayer",
 	      "esri/layers/DynamicLayerInfo", "esri/layers/LayerDataSource",
@@ -202,6 +209,10 @@ function addProductLayer(prov_code,productDate,productKind_des)
     	if(productKind_des=="Drought")
     	{
     		createUniqueValueRenderLayer(app.featureLayer,app.renderLayer,Render_field,5,"Drought");
+    	}
+    	if(productKind_des=="Growth")
+    	{
+    		createUniqueValueRenderLayer(app.featureLayer,app.renderLayer,Render_field,5,"Growth");
     	}
     	if(productKind_des=="Area")
     	{
@@ -357,36 +368,39 @@ function createUniqueValueRenderLayer(featureLayer,renderLayer,field,uniqueKinds
 		
 	    var renderer = new UniqueValueRenderer(null, field);
 	    var renderColor = [[0, 255, 127, 1],[152, 251, 152, 1],[255, 255, 0, 1],[255, 128, 0, 1],[255, 0, 0, 1]];
-	    
+//	    var renderLabel = {
+//	    		"Drought":["Moist","Normal","Light Drought","Middling","Heavy"],
+//	    		"Growth":["Very Bad","Bad","Average","Good","Excellent"],
+//	    };
 	      renderer.addValue({
 	        value: "1",
 	        symbol: new SimpleFillSymbol("solid", null, new Color(renderColor[0])),
-	        label: "Moist",
-	        description: "Moist"
+	        label: renderLabel_Drought_Growth[legendTitle][0],
+	        description: renderLabel_Drought_Growth[legendTitle][0]
 	      });
 	      renderer.addValue({
 	        value: "2",
 	        symbol: new SimpleFillSymbol("solid", null, new Color(renderColor[1])),
-	        label: "Normal",
-	        description: "Normal"  
+	        label: renderLabel_Drought_Growth[legendTitle][1],
+	        description: renderLabel_Drought_Growth[legendTitle][1]
 	      });
 	      renderer.addValue({
 	        value: "3",
 	        symbol: new SimpleFillSymbol("solid", null, new Color(renderColor[2])),
-	        label: "Light Drought",
-	        description: "Light Drought"  
+	        label: renderLabel_Drought_Growth[legendTitle][2],
+	        description: renderLabel_Drought_Growth[legendTitle][2]
 	      });
 	      renderer.addValue({
 	        value: "4",
 	        symbol: new SimpleFillSymbol("solid", null, new Color(renderColor[3])),
-	        label: "Middling",
-	        description: "Middling"  
+	        label: renderLabel_Drought_Growth[legendTitle][3],
+	        description: renderLabel_Drought_Growth[legendTitle][3]
 	      });
 	      renderer.addValue({
 	        value: "5",
 	        symbol: new SimpleFillSymbol("solid", null, new Color(renderColor[4])),
-	        label: "Heavy",
-	        description: "Heavy"  
+	        label: renderLabel_Drought_Growth[legendTitle][4],
+	        description: renderLabel_Drought_Growth[legendTitle][4]
 	      });
 	      
 	      drawingOptions.renderer = renderer;
@@ -647,6 +661,7 @@ var sta = {};
           }
         */
 		var ChildAreaCodeAndName_Array = getChildAreaCodeAndNameByParentAreaCode(areaCode);
+//		console.log(ChildAreaCodeAndName_Array);
 		app.staData = [];
         //console.log("sta",results);
         sta(ChildAreaCodeAndName_Array,featureLayer,field,app.staData);
@@ -766,7 +781,7 @@ var sta = {};
 	    	 data.value = sum.toFixed(2);
 	    	 staData.push(data);
 		}
-		if(app.productKind_code=="04"){//Drought
+		if(app.productKind_code=="04"||app.productKind_code=="02"){//Drought or Growth
 			
 			 var sum = 0; 
 			 var moistNum = 0;
@@ -1091,7 +1106,7 @@ var sta = {};
             app.staChart.clear();
             app.staChart.setOption(option);
 		}
-        if(app.productKind_code=="04"){//Drought
+        if(app.productKind_code=="04"||app.productKind_code=="02"){//Drought or Growth
         	var names = [];
     		var datas_Moist = [];
     		var datas_Normal = [];
@@ -1125,11 +1140,16 @@ var sta = {};
 //    		        "destroy": true,
     		        columns: [
     		            { title: "Name" },
-    		            { title: "Moist" },
-    		            { title: "Normal" },
-    		            { title: "Light Drought" },
-    		            { title: "Middling" },
-    		            { title: "Heavy" }
+//    		            { title: "Moist" },
+//    		            { title: "Normal" },
+//    		            { title: "Light Drought" },
+//    		            { title: "Middling" },
+//    		            { title: "Heavy" }
+    		            { title: renderLabel_Drought_Growth[app.productKind_des][0]},
+    		            { title: renderLabel_Drought_Growth[app.productKind_des][1]},
+    		            { title: renderLabel_Drought_Growth[app.productKind_des][2]},
+    		            { title: renderLabel_Drought_Growth[app.productKind_des][3]},
+    		            { title: renderLabel_Drought_Growth[app.productKind_des][4]}
     		        ]
     		    });
     		
@@ -1137,7 +1157,8 @@ var sta = {};
             var option = {
             	color: ['#00FF7F','#98FB98','#FFFF00','#FF8000','#FF0000'],
                 title: {
-                    text: 'TaiLand Drought',
+//                    text: 'TaiLand Drought',
+                	text: 'TaiLand'+app.productKind_des,
                     textStyle:{
                     	color:'#fff'
                     }
@@ -1149,7 +1170,8 @@ var sta = {};
                     }
                 },
                 legend: {
-                    data:['Moist','Normal','LightDrought','Middling','Heavy'],
+//                    data:['Moist','Normal','LightDrought','Middling','Heavy'],
+                	data:renderLabel_Drought_Growth[app.productKind_des],
                     textStyle:{
                     	color:'#fff'
                     }
@@ -1166,7 +1188,8 @@ var sta = {};
                     data: names
                 },
                 yAxis: {
-                	name:"Drought",
+//                	name:"Drought",
+                	name:app.productKind_des,
                 	//nameLocation:'middle',
                 	nameTextStyle:{
                 		color:'#fff'
@@ -1178,31 +1201,31 @@ var sta = {};
                 },
                 series: [
                 	{
-	                    name: 'Moist',
+	                    name: renderLabel_Drought_Growth[app.productKind_des][0],
 	                    type: 'bar',
 	                    stack: 'drought',
 	                    data: datas_Moist
                     },
                     {
-                        name: 'Normal',
+                        name: renderLabel_Drought_Growth[app.productKind_des][1],
                         type: 'bar',
                         stack: 'drought',
                         data: datas_Normal
                     },
                     {
-                        name: 'LightDrought',
+                        name: renderLabel_Drought_Growth[app.productKind_des][2],
                         type: 'bar',
                         stack: 'drought',
                         data: datas_LightDrought
                     },
                     {
-                        name: 'Middling',
+                        name: renderLabel_Drought_Growth[app.productKind_des][3],
                         type: 'bar',
                         stack: 'drought',
                         data: datas_Middling
                     },
                     {
-                        name: 'Heavy',
+                        name: renderLabel_Drought_Growth[app.productKind_des][4],
                         type: 'bar',
                         stack: 'drought',
                         data: datas_Heavy

@@ -71,6 +71,8 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/cron4j-2.2.5.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/beetl-2.2.6.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/sigar.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/guava-25.1-jre.jar"/>
+	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-collections-3.2.2.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/UtilZW"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/DUCRPC"/>

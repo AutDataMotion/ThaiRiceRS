@@ -70,7 +70,8 @@ public class T3userService extends BaseService {
 			return new Result(0, "Your account has expired!");
 		}
 		if (user.getInt("activation") == 0) {
-			return new Result(0,"Your account has not been activated. Please go to the email and click the link to activate");
+			return new Result(0,
+					"Your account has not been activated. Please go to the email and click the link to activate");
 		}
 		c.setSessionAttr("user", user);
 		return new Result(1, "Login Successful");
@@ -213,7 +214,7 @@ public class T3userService extends BaseService {
 		return T3user.dao.paginate(page, row, "select *", sb.toString());
 	}
 
-	/**
+	/** 
 	 * 删除单个或多个
 	 *
 	 * @param ids
@@ -225,3 +226,4 @@ public class T3userService extends BaseService {
 	}
 
 }
+

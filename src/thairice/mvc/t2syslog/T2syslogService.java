@@ -123,6 +123,7 @@ public class T2syslogService extends BaseService {
 							if(null == sysLog){
 								Thread.sleep(2000);
 							} else {
+
 								ConfMain.db().save(T2syslog.tableName,sysLog);// 日志入库
 								addLogToFile(sysLog);// 日志入文件
 							}

@@ -98,7 +98,7 @@ $(function(){
 		}
 		if(app.productKind_code=='02')//growth
 		{
-			
+			generateReport("doc",app.legendDiv,app.staChartDiv);
 		}	
 		if(app.productKind_code=='03')//yield
 		{
@@ -120,7 +120,7 @@ $(function(){
 		}
 		if(app.productKind_code=='02')//growth
 		{
-			
+			generateReport("pdf",app.legendDiv,app.staChartDiv);
 		}	
 		if(app.productKind_code=='03')//yield
 		{

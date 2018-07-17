@@ -21,6 +21,8 @@ public class T6org_data extends BaseModel<T6org_data> {
 
 	private static Logger log = Logger.getLogger(T6org_data.class);
 	
+	public static final String tableName = "t6org_data";
+	
 	public static final T6org_data dao = new T6org_data();
 	
 	/**
