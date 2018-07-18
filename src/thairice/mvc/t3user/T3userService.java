@@ -214,7 +214,7 @@ public class T3userService extends BaseService {
 		return T3user.dao.paginate(page, row, "select *", sb.toString());
 	}
 
-	/**
+	/** 
 	 * 删除单个或多个
 	 *
 	 * @param ids
@@ -226,3 +226,4 @@ public class T3userService extends BaseService {
 	}
 
 }
+

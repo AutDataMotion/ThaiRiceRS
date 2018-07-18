@@ -4,6 +4,7 @@ import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Collections;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -121,7 +122,8 @@ public class T2syslogService extends BaseService {
 				.set(T2syslog.column_userid, userid)
 				.set(T2syslog.column_username, userName)
 				.set(T2syslog.column_action_, action_)
-				.set(T2syslog.column_content, content);
+				.set(T2syslog.column_content, content)
+				.set(T2syslog.column_add_time, new Date());
 		
 		if (queue.size() > 5000) {
 			// 太大只记录日志文件
@@ -152,12 +154,13 @@ public class T2syslogService extends BaseService {
 				 while (threadRun) {
 						try {
 							// 取队列数据
-							//System.out.println("--syslogService run...");
+							// System.out.println("--syslogService run...");
 							Record sysLog = queue.poll();
 							if(null == sysLog){
 								Thread.sleep(2000);
 							} else {
-								ConfMain.db().save(T2syslog.tableName, sysLog);// 日志入库
+
+								ConfMain.db().save(T2syslog.tableName,sysLog);// 日志入库
 								addLogToFile(sysLog);// 日志入文件
 							}
 						} catch (Exception e) {

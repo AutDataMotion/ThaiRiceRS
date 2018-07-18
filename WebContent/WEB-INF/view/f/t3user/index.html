@@ -252,10 +252,10 @@
     <div class="list-group">
       <div class="list-group-item">
         <h4 class="list-group-item-heading">Product</h4>
-        <p class="list-group-item-text one areaMonitoring" value="01">Rice Acreage</p>
-        <p class="list-group-item-text two droughtMonitoring" value="04">Rice Drought</p>
-        <p class="list-group-item-text three conditionMonitoring" value="02">Rice Growth</p>
-        <p class="list-group-item-text four productionEstimates" value="03">Rice Yield</p>
+        <p class="list-group-item-text one areaMonitoring" value="01" id="product01" style="display: none;">Rice Acreage</p>
+        <p class="list-group-item-text two droughtMonitoring" value="04" id="product04" style="display: none;">Rice Drought</p>
+        <p class="list-group-item-text three conditionMonitoring" value="02" id="product02" style="display: none;">Rice Growth</p>
+        <p class="list-group-item-text four productionEstimates" value="03" id="product03" style="display: none;">Rice Yield</p>
       </div>
     </div>
   </div>
@@ -476,25 +476,28 @@
           })
       }*/
 
+      //初始化服务
+      '${name}'.split(",").forEach(function (item) {
+          $(".list-group-item-text").each(function () {
+              if (item == $(this).attr("value")) {
+                  $("#product"+item).show();
+              }
+          });
+      });
 
       sendAjax("${cxt!}/jf/thairice/t3user/userCityArea?type=p",{id:0},function (res) {
-          var optionstring = "<option value=\"\" >PROV</option>";
+          var optionstring = "<option value=\"\" >Province</option>";
           $.each(res, function(i,item){
               optionstring += "<option value=\"" + item.id + "\" >" + item.name + "</option>";
           });
           $("#province").html(optionstring);
       });
 
-      $("#city").html("<option value=\"\" >AMP</option>");
-      $("#area").html("<option value=\"\" >TAM</option>");
+      $("#city").html("<option value=\"\" >District</option>");
+      $("#area").html("<option value=\"\" >Subdistrict</option>");
 
 
       function initaddCityArea(type) {
-    	  /*
-    	  app.province_code = $('#province option:selected').val();//选中的sheng
-    	  app.city_code = $('#city option:selected').val();//选中的shi
-    	  app.town_code = $('#area option:selected').val();//选中的xian
-    	  */
     	  app.province_code = $('#province').val();//选中的sheng
     	  app.city_code = $('#city').val();//选中的shi
     	  app.town_code = $('#area').val();//选中的xian
@@ -502,16 +505,16 @@
           if(type=="city"){
               $("#city").html("");
 
-              $("#area").html("<option value=\"\" >TAM</option>");
+              $("#area").html("<option value=\"\" >Subdistrict</option>");
               console.log($('#province').val());
               if($('#province').val()==""){
-                  $("#city").html("<option value=\"\" >AMP</option>");
+                  $("#city").html("<option value=\"\" >District</option>");
                   return false;
               }
               sendAjax("${cxt!}/jf/thairice/t3user/userCityArea?type=c",{id:$('#province').val()},function (res) {
                   var optionstring = "";
 
-                  optionstring += "<option value=\"\" >AMP</option>";
+                  optionstring += "<option value=\"\" >District</option>";
                   $.each(res, function(i,item){
                       optionstring += "<option value=\"" + item.id + "\" >" + item.name + "</option>";
                   });
@@ -519,12 +522,12 @@
               });
           }else if(type=="area"){
               if($('#city').val()==""){
-                  $("#area").html("<option value=\"\" >TAM</option>");
+                  $("#area").html("<option value=\"\" >Subdistrict</option>");
                   return false;
               }
               sendAjax("${cxt!}/jf/thairice/t3user/userCityArea?type=a",{id:$('#city').val()},function (res) {
                   var optionstring = "";
-                  optionstring += "<option value=\"\" >TAM</option>";
+                  optionstring += "<option value=\"\" >Subdistrict</option>";
                   $.each(res, function(i,item){
                       optionstring += "<option value=\"" + item.id + "\" >" + item.name + "</option>";
                   });

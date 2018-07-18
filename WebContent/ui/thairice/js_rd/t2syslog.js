@@ -2,7 +2,6 @@
 $(document).ready(function() {
 
 	// 获取查询参数
-	// 获取查询参数
 	var datasrch = {
 		id : '',
 		name1 : '',//
@@ -71,5 +70,4 @@ $(document).ready(function() {
 		// 重新加载table数据
 		myTable.ajax.reload();
 	});
-
 });

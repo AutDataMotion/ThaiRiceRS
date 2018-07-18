@@ -42,6 +42,7 @@ public class ConfMain extends BaseConfMain{
 	}
 	
 	public static DbPro db() {
-		return DbPro.use(ConstantInitMy.db_dataSource_main);
+
+	    return DbPro.use(ConstantInitMy.db_dataSource_main);
 	}
 }
