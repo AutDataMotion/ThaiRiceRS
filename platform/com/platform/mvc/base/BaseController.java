@@ -24,6 +24,12 @@ import com.platform.plugin.PropertiesPlugin;
 import com.platform.tools.ToolModelInjector;
 import com.platform.tools.ToolWeb;
 
+import csuduc.platform.util.JsonUtils;
+import thairice.constant.EnumStatus;
+import thairice.mvc.comm.ParamComm;
+import thairice.mvc.comm.ResListPageComm;
+import thairice.mvc.comm.ResRowMdl;
+
 /**
  * 公共Controller
  * @author DHJ
@@ -158,6 +164,24 @@ public abstract class BaseController extends Controller {
 		}else{
 			super.renderJson(object);
 		}
+	}
+	
+	public void renderJsonForRow(Object object) {
+		renderJson(new ResRowMdl(object));
+	}
+
+	/**
+	 * 为前台使用DataTable返回Json数据
+	 * @param object
+	 */
+	@SuppressWarnings("rawtypes")
+	public <T> void renderJsonForTable(List<T> tableList){
+		ResListPageComm<T>  resListPageComm = new ResListPageComm<T>(tableList);
+		// 修改draw值
+		ParamComm paramComm = getAttr(ConstantWebContext.table_paraComm);
+		resListPageComm.setDraw(paramComm.getDraw()+1);
+		resListPageComm.setRecordsTotal(String.valueOf(paramComm.getTotal()));
+		renderJson(resListPageComm);
 	}
 	
 	/**
@@ -422,6 +446,74 @@ public abstract class BaseController extends Controller {
 		this.splitPage = splitPage;
 	}
 	
+
+	public ParamComm getParamWithServerPage(){
+		ParamComm paramComm = getParamCommDef();
+		if (null == paramComm) {
+			return null;
+		}
+		paramComm.setPageIndex(getParaToInt(ConstantWebContext.paraComm_start, 0));
+		paramComm.setPageSize(getParaToInt(ConstantWebContext.paraComm_length, 10));
+		paramComm.setDraw(getParaToInt(ConstantWebContext.paraComm_draw, 1));
+		
+		setAttr(ConstantWebContext.table_paraComm, paramComm);
+		return paramComm;
+	}
+	
+	public <T> T getParamWithClass(Class<? extends T> aClass){
+		return getParamWithClass(aClass, "v");
+	}
+	
+	public <T> T getParamWithClass(Class<? extends T> aClass, String paramKey){
+		String strvalue = getPara(paramKey);
+		if (null == strvalue || strvalue.isEmpty()) {
+			renderText("-1");
+			return null;
+		}
+		log.debug(strvalue);
+		// 转化为Model
+		T paramMdl = null;
+		try {
+			paramMdl = JsonUtils.deserialize(strvalue, aClass);
+			if (null == paramMdl) {
+				renderText(EnumStatus.Failed.getIdText());// 错误
+				return null;
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			renderText(EnumStatus.Failed.getIdText());// 错误
+			return null;
+		}
+		return paramMdl;
+	}
+	
+	public ParamComm getParamCommDef(){
+		return getParamWithClass(ParamComm.class);
+	}
+	public ParamComm getParamComm(){
+		String strvalue = getPara("v");
+		if (null == strvalue || strvalue.isEmpty()) {
+			renderText("-1");
+			return null;
+		}
+		log.debug(strvalue);
+		// 转化为Model
+		ParamComm paramMdl = null;
+		try {
+			paramMdl = JsonUtils.deserialize(strvalue, ParamComm.class);
+			if (null == paramMdl) {
+				renderText(EnumStatus.Failed.getIdText());// 错误
+				return null;
+			}
+		} catch (Exception e) {
+			// TODO: handle exception
+			e.printStackTrace();
+			renderText(EnumStatus.Failed.getIdText());// 错误
+			return null;
+		}
+		return paramMdl;
+	}
 	
 
 }
