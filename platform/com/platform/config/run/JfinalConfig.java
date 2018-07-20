@@ -34,13 +34,9 @@ import com.platform.tools.ToolString;
 import thairice.config.ConfMain;
 import thairice.config.DBMappingMy;
 import thairice.constant.PropertiesInitMy;
-import thairice.interceptor.AdminLoginInterceptor;
-import thairice.rpcjob.ClassifyScheduleJob;
-import thairice.rpcjob.GrouthMonitorScheduleJob;
-import thairice.rpcjob.LandDroughtScheduleJob;
-import thairice.rpcjob.LandYieldScheduleJob;
-import thairice.rpcjob.PreProcessScheduleJob;
+
 import zeroc.util.IceClientUtil;
+import thairice.interceptor.AdminLoginInterceptor;
 
 
 /**
@@ -208,7 +204,7 @@ public class JfinalConfig extends JFinalConfig {
 	public void beforeJFinalStop() {
 
 		// Zeroc Ice Util 销毁
-		 IceClientUtil.closeCommunicator(true);
+		// IceClientUtil.closeCommunicator(true);
 		
 		// log.info("beforeJFinalStop 释放日志入库线程");
 		// ThreadSysLog.setThreadRun(false);

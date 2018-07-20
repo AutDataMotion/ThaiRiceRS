@@ -17,8 +17,8 @@
         	from 
         		t2syslog l
 			where 1=1 
-			<% if(!isEmpty(userId)){ %>
-					and l.userid = #$userId$#
+			<% if(!isEmpty(userName)){ %>
+					and l.username = #'$userName$'#
 			<% } %>
 			<% if(!isEmpty(dateTimeBeg)){ %>
 					and l.add_time >= #'$dateTimeBeg$'#

@@ -47,30 +47,8 @@ public class T2syslogController extends BaseController {
 
 	// 查询
 	public void search() {
-		// 获取检索条件
-		String strvalue = getPara("v");
-		if (null == strvalue || strvalue.isEmpty()) {
-			renderText("-1");
-			return;
-		}
-		log.debug(strvalue);
-		// 转化为Model
-		ParamT2syslogSearch paramMdl = null;
-		try {
-			paramMdl = JsonUtils.deserialize(strvalue, ParamT2syslogSearch.class);
-			if (null == paramMdl) {
-				renderText("-1");
-				return;
-			}
-		} catch (Exception e) {
-			// TODO: handle exception
-			e.printStackTrace();
-			renderText("-1");// 错误
-			return;
-		}
 		// 查询数据
-		List<ResT2syslogSearch> listSysLog = T2syslogService.service.SearchPage(paramMdl);
-		renderJson(listSysLog);
+		renderJsonForTable(T2syslogService.service.SearchPage(getParamWithServerPage()));
 	}
 
 	/**
