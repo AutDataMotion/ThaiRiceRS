@@ -182,7 +182,7 @@
         var ob = document.getElementById('skin');
         ob.href='${cxt!}/CSS/skin/color_three.css';
     }
-
+	
 
 </script>
 </head>
@@ -224,11 +224,24 @@
 <div class="BbAreaSelect" style="z-index: 9;position: fixed;">
   <form class="form-inline">
     <div class="form-group">
-            <div id="custom_data">
+            <!--div id="custom_data">
+	            <div class="form-group">
+	            	 <select class="province" id="province"  style="padding: 13px;border: 0px;width: 200px;" onchange="initaddCityArea('city')"></select>
+	            </div>
+	           <div class="form-group">
+	           		<select class="city" id="city" style="padding: 13px;border: 0px;width: 200px;" onchange="initaddCityArea('area')"></select>
+	           </div>
+	            <div class="form-group">
+	            	<select class="area" id="area" style="padding: 13px;border: 0px;width: 200px;" onchange="initaddCityArea('town')"></select>
+	            </div>
+            </div-->
             <select class="province" id="province"  style="padding: 13px;border: 0px;width: 200px;" onchange="initaddCityArea('city')"></select>
-            <select class="city" id="city" style="padding: 13px;border: 0px;width: 200px;" onchange="initaddCityArea('area')"></select>
-            <select class="area" id="area" style="padding: 13px;border: 0px;width: 200px;" onchange="initaddCityArea('town')"></select>
-            </div>
+	</div>
+	<div class="form-group">
+    		<select class="city" id="city" style="padding: 13px;border: 0px;width: 200px;" onchange="initaddCityArea('area')"></select>
+    </div>
+    <div class="form-group">
+    	<select class="area" id="area" style="padding: 13px;border: 0px;width: 200px;" onchange="initaddCityArea('town')"></select>
     </div>
     <div class="form-group">
       <label for="dateChoosed" style="line-height:50px; padding:0 5px; font-weight:normal;">Time：</label>
@@ -237,7 +250,7 @@
 	        <span class="input-group-addon"> <i class="glyphicon glyphicon-calendar"></i> </span> 
 	        </div-->
 	        <div class="input-group date form_date" id='date_choose' data-date="" data-date-format="yyyy-mm-dd" data-link-field="dateChoosed" data-link-format="yyyy-mm-dd">
-                    <input class="form-control" size="16" type="text" value="" readonly>
+                    <input class="form-control" size="16" type="text" value="" readonly style="width:150px; float:left;">
                     
 					<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
             </div>
