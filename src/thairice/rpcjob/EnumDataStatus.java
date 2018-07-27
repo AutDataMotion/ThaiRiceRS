@@ -14,10 +14,14 @@ public enum EnumDataStatus {
 	DOWNLOAD_SUCCE(1, "01","Download success"),
 	DOWNLOAD_FAIL(2, "02","Download failed"),
 	DOWNLOAD_ING(3, "03","Downloading"),
-	PROCESS_SUCCE(4, "04","Process success"),
-	PROCESS_FAIL(5, "05","Process failed"),
-	PROCESS_ING(6, "06","Processing"),
-	NOT_DOWNLOAD(7, "07","Not download"),
+	DOWNLOAD_NOT(7, "07","Not download"),
+	
+	PROCESS_UN(11, "11","Un Process"),
+	PROCESS_SUCCE(12, "12","Process success"),
+	PROCESS_FAIL(13, "13","Process failed"),
+	PROCESS_ING(14, "14","Processing"),
+	
+	
 	
 	DATA_TYPE_NDVI_1(1, "01","NDVI_1"),
 	DATA_TYPE_NDVI_02(2, "02","NDVI_02"),
