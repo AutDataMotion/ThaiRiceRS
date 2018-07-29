@@ -26,14 +26,20 @@ import com.jfinal.upload.UploadFile;
 import com.platform.constant.ConstantRender;
 import com.platform.mvc.base.BaseController;
 
+import RPCRice.ClassifyA;
+import RPCRice.ClassifyB;
 import csuduc.platform.util.ReportUtil;
 import csuduc.platform.util.lyf.lyfGis;
+import thairice.constant.EnumStatus;
 import thairice.entity.ResultEntity;
 import thairice.interceptor.AdminLoginInterceptor;
+import thairice.mvc.t2syslog.EnumT2sysLog;
+import thairice.mvc.t2syslog.T2syslogService;
 import thairice.mvc.t3user.Result;
 import thairice.mvc.t3user.T3user;
 import thairice.mvc.t7pdt_data.T7pdt_data;
 import thairice.mvc.t9sample_info.T9sample_info;
+import thairice.rpcjob.AbsScheduleJob;
 import thairice.utils.ParamUtils;
 
 
@@ -75,6 +81,9 @@ public class T1parameterController extends BaseController {
 	public static final String models_workspace_tempFilePreName = "waitingformodify";
 	//2018-05-11_72.tif--->arearaster.tif 以备改变波段显示
 	public static final String models_workspace_tempAreaTifFilePreName = "arearaster";
+	//ClassifyA para
+	public static final String ClassifyA_shpfilePath = "D:/Thailand_test/shp/";//
+	public static final String ClassifyA_pathGdalwarpS = "C:/warmerda/bld/bin/gdalwarp.exe";
 	/**
 	 * 列表
 	 */
@@ -400,10 +409,13 @@ public class T1parameterController extends BaseController {
 					for(File tifFile:tifFiles)
 					{
 						///2018-05-11_72.tif
+						String tifFileName  =tifFile.getName();
+						String sample_path= areaSampleAndTempProductPath+tifFileName.substring(0, tifFileName.lastIndexOf("."))+"/sample/";
 						JSONObject file = new JSONObject();
-						file.put("name", tifFile.getName());
-						file.put("date", tifFile.getName().split("_")[0]);
-						String temp = tifFile.getName().split("_")[1];
+						file.put("name", tifFileName);
+						file.put("sample_path", sample_path);
+						file.put("date", tifFileName.split("_")[0]);
+						String temp = tifFileName.split("_")[1];
 						file.put("district", temp.substring(0, temp.lastIndexOf('.')));
 						files.add(file);
 						saveTifFilesInfo2Database(file);
@@ -433,6 +445,7 @@ public class T1parameterController extends BaseController {
 				T7pdt_data t7pdt_data = getModel(T7pdt_data.class);
 				t7pdt_data.setType_("01");//面积
 				t7pdt_data.setSource_file_list(fileName);//源文件列表
+				t7pdt_data.setSample_path(file.getString("sample_path"));
 				t7pdt_data.setCollect_time(Timestamp.valueOf(file.getString("date")+" 00:00:00"));//数据采集时间
 				t7pdt_data.setZone_code(file.getString("district"));
 				boolean result = t7pdt_data.saveGenIntId();
@@ -490,6 +503,44 @@ public class T1parameterController extends BaseController {
 			e.printStackTrace();
 		}
 		
+	}
+	public void copyTempShpFile2gpWorkspace()
+	{
+		try {
+			JSONObject msg = new JSONObject();
+			
+			String tifFileName = getPara("tifFileName");//2018-05-11_72.tif
+			String tifFileNamePrefix = tifFileName.substring(0, tifFileName.lastIndexOf("."));//2018-05-11_72
+			String tempProductPath = areaSampleAndTempProductPath+tifFileNamePrefix+"/tempProduct/";
+			File tempProductPathDir = new File(tempProductPath);
+			if(tempProductPathDir.exists())
+			{
+				String tempProductFileName = tifFileNamePrefix+"_temp.shp";
+				String tempProductFileNamePrefix = tifFileNamePrefix+"_temp";
+				
+				
+				File[] tempProductFiles = ReportUtil.fileFilter(tempProductPath, tempProductFileNamePrefix, null);
+				for(File file:tempProductFiles)
+				{
+					//copy temp product file to gpmodels workspace to prepare edit
+					//E:\areaSampleAndTempProduct\2018-05-11_72\tempProduct\2018-05-11_72_temp.shp
+					//-->
+					//E:\gpmodels\waitingformodify.shp
+					String resultFileName = file.getName();
+					///example result.shp-->.shp
+					String resultFileSuffix = resultFileName.substring(resultFileName.lastIndexOf('.'));
+					///waitingformodify+.shp--->waitingformodify.shp
+					String copyTo1 = models_workspace+models_workspace_tempFilePreName+resultFileSuffix;
+					File newfile1 = new File(copyTo1);
+					ReportUtil.fileCopy(file,newfile1);
+					
+				}
+			}
+			
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
 	}
 	public void copyResult2Modelspace()
 	{
@@ -570,6 +621,8 @@ public class T1parameterController extends BaseController {
 	{
 		Map<String,String> map = new HashMap<String,String>();  
 		try {
+			T3user user = getSessionAttr("admin");
+			
 			String drawSample = getPara("drawSample");
 			if(drawSample.equals("true"))//保存样本
 			{
@@ -609,14 +662,20 @@ public class T1parameterController extends BaseController {
 					boolean result = t9sample_info.saveGenIntId();
 					if(result)
 					{
+						T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), user.getAccount(), "generateShpfileByGeoJson", "generateShpfileByGeoJson successful");
+			            
 						renderJson(map);
 					}
 					else {
+						T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), user.getAccount(), "generateShpfileByGeoJson", "generateShpfileByGeoJson failure");
+			            
 						map.put("status", "failure");
 						renderJson(map);
 					}
 				}
 				else {
+					T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), user.getAccount(), "generateShpfileByGeoJson", "generateShpfileByGeoJson failure");
+		            
 					renderJson(map);
 				}
 				
@@ -637,16 +696,26 @@ public class T1parameterController extends BaseController {
 	{
 		JSONObject msg = new JSONObject();
 		try{
+			T3user user = getSessionAttr("admin");
+			
 			String tifFileName = getPara("tifFileName");
 			T7pdt_data item = T7pdt_data.dao.findFirst("select * from t7pdt_data where source_file_list=?", tifFileName);
-			BigInteger identifier = item.getBigInteger("id");//源文件编号
+			Integer identifier = item.getBigInteger("id").intValue();//源文件编号---int id;
+			
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+			String collect_time =sdf.format(item.getCollect_time());/// String fileDate
+			String source_file_list = areaTifPath+item.getSource_file_list();////源文件列表imagePath;//
+			String zone_code = item.getZone_code();////行政区域代码outCode;//
+//			String shpfilePath = "D:/Thailand_test/shp/";//
+			String sample_path = item.getSample_path();//'样本路径 文件夹 lablePath;//'
+			
 			//根据文件编号 获取和此文件编号关联的所有样本信息
-			List<T9sample_info> t9sample_infos = T9sample_info.dao.find("select path_,type_content from t9sample_info where identifier=? group by type_content", identifier);
-			for(T9sample_info t9sample_info:t9sample_infos)
-			{
-				String type_content = t9sample_info.getType_content();//样本类型内容
-				String path_ = t9sample_info.getPath_();//样本路径
-			}
+//			List<T9sample_info> t9sample_infos = T9sample_info.dao.find("select path_,type_content from t9sample_info where identifier=? group by type_content", identifier);
+//			for(T9sample_info t9sample_info:t9sample_infos)
+//			{
+//				String type_content = t9sample_info.getType_content();//样本类型内容
+//				String path_ = t9sample_info.getPath_();//样本路径
+//			}
 			/*to do sth
 			 * 
 			*/
@@ -654,94 +723,142 @@ public class T1parameterController extends BaseController {
 			
 			//filePath = E:/areaSampleAndTempProduct/2018-05-11_72/tempProduct/2018-05-11_72_temp.shp
 			//filename = 2018-05-11_72_temp.shp
+			///新建中间结果文件夹E:/areaSampleAndTempProduct/2018-05-11_72/tempProduct/
 			String tifFileNamePrefix = tifFileName.substring(0, tifFileName.lastIndexOf("."));//2018-05-11_72
 			String tempProductPath = areaSampleAndTempProductPath+tifFileNamePrefix+"/tempProduct/";
+			File tempProductPathDir = new File(tempProductPath);
+			if(!tempProductPathDir.exists())
+			{
+				tempProductPathDir.mkdirs();
+			}
 			String tempProductFileName = tifFileNamePrefix+"_temp.shp";
 			String tempProductFileNamePrefix = tifFileNamePrefix+"_temp";
 			
-			File[] tempProductFiles = ReportUtil.fileFilter(tempProductPath, tempProductFileNamePrefix, null);
-			for(File file:tempProductFiles)
+//			String outprePath = tempProductPath+tempProductFileName;//outprePath;//中间结果shp---文件路径--temp.shp
+//			String pathGdalwarpS = "C:/warmerda/bld/bin/gdalwarp.exe";//
+			//执行ClassifyA
+			ClassifyA argClassifyA = new ClassifyA(identifier,collect_time,source_file_list,zone_code,
+					ClassifyA_shpfilePath,sample_path,tempProductPath,ClassifyA_pathGdalwarpS);
+			EnumStatus result = AbsScheduleJob.classifyA(argClassifyA, null);
+			if(result.getId() == 1)
 			{
-//				System.out.println(path.getName());
-				//copy temp product file to arcgis server workspace to show on map
-				//E:\areaSampleAndTempProduct\2018-05-11_72\tempProduct\2018-05-11_72_temp.shp
-				//-->
-				//E:\arcgisserver_shp_workspace\Area\2018-05-11_72_temp.shp
-				String copyTo = arcgisserver_shp_workspacePath+"Area/"+file.getName();
-				File newfile = new File(copyTo);
-				ReportUtil.fileCopy(file,newfile);
+				T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), user.getAccount(), "generateTempProduct", "generateTempProduct successful");
 				
-				//copy temp product file to gpmodels workspace to prepare edit
-				//E:\areaSampleAndTempProduct\2018-05-11_72\tempProduct\2018-05-11_72_temp.shp
-				//-->
-				//E:\gpmodels\waitingformodify.shp
-				String resultFileName = file.getName();
-				///example result.shp-->.shp
-				String resultFileSuffix = resultFileName.substring(resultFileName.lastIndexOf('.'));
-				///waitingformodify+.shp--->waitingformodify.shp
-				String copyTo1 = models_workspace+models_workspace_tempFilePreName+resultFileSuffix;
-				File newfile1 = new File(copyTo1);
-				ReportUtil.fileCopy(file,newfile1);
+				File[] tempProductFiles = ReportUtil.fileFilter(tempProductPath, tempProductFileNamePrefix, null);
+				for(File file:tempProductFiles)
+				{
+//					System.out.println(path.getName());
+					//copy temp product file to arcgis server workspace to show on map
+					//E:\areaSampleAndTempProduct\2018-05-11_72\tempProduct\2018-05-11_72_temp.shp
+					//-->
+					//E:\arcgisserver_shp_workspace\Area\2018-05-11_72_temp.shp
+					String copyTo = arcgisserver_shp_workspacePath+"Area/"+file.getName();
+					File newfile = new File(copyTo);
+					ReportUtil.fileCopy(file,newfile);
+					
+					//copy temp product file to gpmodels workspace to prepare edit
+					//E:\areaSampleAndTempProduct\2018-05-11_72\tempProduct\2018-05-11_72_temp.shp
+					//-->
+					//E:\gpmodels\waitingformodify.shp
+					String resultFileName = file.getName();
+					///example result.shp-->.shp
+					String resultFileSuffix = resultFileName.substring(resultFileName.lastIndexOf('.'));
+					///waitingformodify+.shp--->waitingformodify.shp
+					String copyTo1 = models_workspace+models_workspace_tempFilePreName+resultFileSuffix;
+					File newfile1 = new File(copyTo1);
+					ReportUtil.fileCopy(file,newfile1);
+					
+				}
 				
+				msg.put("status", "success");
+				msg.put("filename", tempProductFileName);
+			}
+			else {
+				T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), user.getAccount(), "generateTempProduct", "generateTempProduct failure");
+				
+				msg.put("status", "failure");
 			}
 			
-			msg.put("status", "success");
-			msg.put("filename", tempProductFileName);
 		}catch(Exception e)
 		{
 			e.printStackTrace();
+			
 			msg.put("status", "failure");
 		}
 		renderJson(msg);
 		
 	}
+	@Clear
 	public void SaveAreaEditedProduct()
 	{
 		boolean flag = false;
 		JSONObject msg =  new JSONObject();
 		try {
+			T3user user = getSessionAttr("admin");
 			//fileinfo = 2018-05-11_72
 			String fileinfo = getPara("fileinfo");
 			String fileDate = fileinfo.split("_")[0];//2018-05-11
 			String fileDistrict = fileinfo.split("_")[1];//72
-			String fileSavePath = thairiceproduct_path+"Area/"+fileDate+"/";
+			String fileName = fileDistrict+"_editing";//72_editing
+			String fileSavePath = thairiceproduct_path+"Area/"+fileDate;
 			File parentFile = new File(fileSavePath);
 			if(!parentFile.exists())
 			{
-				parentFile.mkdirs();
+				parentFile.mkdirs(); 
 			}
-			
+			/*
 			File[] tempProductFiles = ReportUtil.fileFilter(models_workspace, models_workspace_tempFilePreName, null);
 			for(File file:tempProductFiles)
 			{
 				//E:\gpmodels\waitingformodify.shp
 				//-->
-				//E:\thairiceproduct\Area\2018-05-05\72.shp
+				//E:\thairiceproduct\Area\2018-05-05\72_editing.shp
 				String tempFileName = file.getName();
 				///example waitingformodify.shp-->.shp
 				String tempFileNameSuffix = tempFileName.substring(tempFileName.lastIndexOf('.'));
-				///waitingformodify+.shp--->waitingformodify.shp
-				String copyTo = fileSavePath+fileDistrict+tempFileNameSuffix;
+				///waitingformodify.shp--->72.shp
+				String copyTo = fileSavePath+fileName+tempFileNameSuffix;
 				File newfile = new File(copyTo);
 				ReportUtil.fileCopy(file,newfile);
 			}
+			 */
+			///do ClassifyB
+//			String modClassShp = fileSavePath+fileName+".shp";//中间结果编辑之后的结果--E:\thairiceproduct\Area\2018-05-05\72_editing.shp
+			String modClassShp = models_workspace+models_workspace_tempFilePreName+".shp";
+			ClassifyB argClassifyB = new ClassifyB(999,fileDate,fileDistrict,modClassShp.replaceAll("/", "\\\\\\\\"),ClassifyA_shpfilePath.replaceAll("/", "\\\\\\\\"),fileSavePath.replaceAll("/", "\\\\\\\\"));
+			//ClassifyB argClassifyB = new ClassifyB(999,fileDate,fileDistrict,"E:\\\\gpmodels\\\\waitingformodify.shp","D:\\\\Thailand_test\\\\shp","E:\\\\thairiceproduct\\\\Area\\\\2018-05-11");
 			
-			//save result info to database
-			String source_file = fileinfo+".tif";//2018-05-05_72.tif
-			String product_path = fileSavePath+fileDistrict+".shp";//E:\thairiceproduct\Area\2018-05-05\72.shp
+			EnumStatus result = AbsScheduleJob.classifyB(argClassifyB, null);
+			if(result.getId() == 1)
+			{
+				T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), user.getAccount(), "SaveAreaEditedProduct", "SaveAreaEditedProduct successful");
+				
+				//save result info to database
+				String source_file = fileinfo+".tif";//2018-05-05_72.tif
+				String product_path = fileSavePath+fileDistrict+".shp";//E:\thairiceproduct\Area\2018-05-05\72.shp
+				
+				Date day = new Date();
+				SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+				String generate_time = sf.format(day);//样本时间
+				
+				int res = Db.update("update thairice.t7pdt_data set product_path=?,generate_time=? where source_file_list=?",product_path,Timestamp.valueOf(generate_time),source_file);
+	            if(res>0)
+	            {
+	            	flag = true; 
+	            }
+				
+				msg.put("flag", flag);
+				renderJson(msg);
+			}
+			else {
+				T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), user.getAccount(), "SaveAreaEditedProduct", "SaveAreaEditedProduct failure");
+				
+				flag = false;
+				msg.put("flag", flag);
+				renderJson(msg);
+			}
+			/////////////////////////////
 			
-			Date day = new Date();
-			SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
-			String generate_time = sf.format(day);//样本时间
-			
-			int res = Db.update("update thairice.t7pdt_data set product_path=?,generate_time=? where source_file_list=?",product_path,Timestamp.valueOf(generate_time),source_file);
-            if(res>0)
-            {
-            	flag = true; 
-            }
-			
-			msg.put("flag", flag);
-			renderJson(msg);
 		}catch(Exception e)
 		{
 			e.printStackTrace();

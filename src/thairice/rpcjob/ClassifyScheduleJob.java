@@ -5,23 +5,18 @@
  */
 package thairice.rpcjob;
 
-import java.util.Collections;
 import java.util.List;
-import java.util.Objects;
 
-import org.apache.commons.collections.CollectionUtils;
+import org.apache.commons.collections4.CollectionUtils;
 
-import com.google.common.collect.Collections2;
 import com.jfinal.log.Logger;
 import com.jfinal.plugin.cron4j.ITask;
 
 import RPCRice.ClassifyA;
 import RPCRice.ClassifyB;
-import RPCRice.PreProcess;
 import csuduc.platform.util.ComUtil;
 import thairice.constant.EnumStatus;
 import thairice.mvc.t12preprocessinf.T12PreProcessInf;
-import thairice.mvc.t6org_data.T6org_data;
 
 /**
  * @author zw

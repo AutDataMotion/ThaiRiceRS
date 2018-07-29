@@ -110,5 +110,9 @@ public interface ConstantWebContext {
 	 */
 	public static final String renderTimeKey = "renderTime";
 	
+	public static final String table_paraComm = "table_paraComm";	
+	public static final String paraComm_start = "start";	
+	public static final String paraComm_length = "length";	
+	public static final String paraComm_draw = "draw";	
 	
 }

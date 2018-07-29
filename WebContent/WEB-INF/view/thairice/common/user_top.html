@@ -1,6 +1,31 @@
 	<head>
 	<meta charset="UTF-8" />
 	</head>
+	<script>
+	$(window).resize(function(){ 
+		if(document.body.clientWidth<1020){
+			$('.nav-title').text('');
+			$('.BbProductMenu').hide();
+			$('.BbProductabs').show();
+			$("#date_choose").siblings('label').hide();
+			$('.skin').addClass('skin_mini');
+			$('.skin li').click(function(){
+				$('.navbar-right').hide();
+			})
+			$('.BbReportWrap').css('margin-left','-350px');
+			$('.list-group-item-text').click(function(){
+				$('.BbAreaSelect').hide();
+			})
+		}else{
+			$('.nav-title').text('Thai agricultural remote sensing monitoring platform ');
+			$('.BbProductMenu').show();
+			$('.BbProductabs').hide();
+			$("#date_choose").siblings('label').show();
+			$('.skin').removeClass('skin_mini');
+		}
+		
+	})
+	</script>
 	<nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
 		<div class="container-fluid" style="padding-right:0;">
 			<div class="navbar-header" style="padding-left:15px;">

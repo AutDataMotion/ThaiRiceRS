@@ -551,6 +551,7 @@ public abstract class Model<M extends Model> implements Serializable {
 	public <T> List<T> query(String sqlId, Map<String, Object> param){
 		LinkedList<Object> paramValue = new LinkedList<Object>();
 		String sql = getSqlByBeetl(sqlId, param, paramValue);
+		System.out.println(sql);
 		return (List<T>) find(sql, paramValue.toArray());
 	}
 

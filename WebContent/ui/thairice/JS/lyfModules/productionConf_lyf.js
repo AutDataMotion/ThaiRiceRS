@@ -282,11 +282,14 @@ function generateTempProduct()
 		    data:{
 		    	tifFileName:app.tifFileName,
 		    },
-		    timeout:5000,    //超时时间
+//		    timeout:5000,    //超时时间
 		    dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
 		    beforeSend:function(xhr){
 		        //console.log(xhr)
-		        console.log('发送前')
+		        console.log('发送前');
+		        $("#mapDiv_productionConf").busyLoad("show", { text: "LOADING ...",
+		    		textPosition: "top"
+		    	});
 		    },
 		    success:function(data,textStatus,jqXHR){
 		    	console.log(data);
@@ -309,9 +312,15 @@ function generateTempProduct()
 		        console.log(textStatus)
 		    },
 		    complete:function(){
-		        console.log('结束')
+		        console.log('结束');
+		        $("#mapDiv_productionConf").busyLoad("hide");
 		    }
 		})
+	}
+	else{
+		$("#hintContent").text("file missing!");
+		
+		$("#hintModal").modal('show');
 	}
 	
 }
@@ -477,6 +486,8 @@ function initFilesTable()
 //		    			console.log(app.files_excel.row('.selected').data());
 		    			//加载遥感影像的同时加载与影像关联的临时中间产品数据
 		    			app.tifFileName = app.files_excel.row('.selected').data()[0];
+		    			//将选中的tif文件关联的temp shp文件copy to gpmodels ，备editing
+		    			copyTempShpFile2gpWorkspace(app.tifFileName);
 		    			//将选中的tif文件copy to gpmodels ，备改变波段显示
 //		    			copyAreaTifFile2gpWorkspace(app.tifFileName);
 		    			
@@ -547,53 +558,103 @@ function copyAreaTifFile2gpWorkspace(tifFileName){
 	    }
 	})
 }
+function copyTempShpFile2gpWorkspace(tifFileName){
+	console.log("copyAreaTifFile2gpWorkspace---begin--"+tifFileName);
+	$.ajax({
+	    url:'/jf/thairice/t1parameter/copyTempShpFile2gpWorkspace',//获取面积相关的遥感影像 文件列表
+	    type:'POST', //GET
+	    async:true,    //或false,是否异步
+	    data:{
+	    	tifFileName:tifFileName
+	    },
+	    timeout:5000,    //超时时间
+	    dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+	    beforeSend:function(xhr){
+	        //console.log(xhr)
+	        console.log('发送前')
+	    },
+	    success:function(data,textStatus,jqXHR){
+	    	if(data.flag) {  
+	    		console.log("copyTempShpFile2gpWorkspace---success");
+	    	}  
+            
+	    },
+	    error:function(xhr,textStatus){
+	    	console.log("copyTempShpFile2gpWorkspace---错误");
+	        console.log(xhr)
+	        console.log(textStatus)
+	    },
+	    complete:function(){
+	    	console.log("copyTempShpFile2gpWorkspace---结束");
+	    }
+	})
+}
 function addRasterLayer(fileName)
 {
-	console.log("addRasterLayer---"+fileName);
-	/************************/
-	if (app.hasOwnProperty("renderLayer") ) {//删除之前的图层
-		 
-		 app.map.removeLayer(app.renderLayer);
-		 
-	}
+	require(["esri/layers/FeatureLayer","esri/layers/ArcGISDynamicMapServiceLayer",
+		"esri/layers/DynamicLayerInfo","esri/layers/LayerDataSource",
+	      "esri/layers/LayerDrawingOptions","esri/symbols/SimpleFillSymbol", 
+	      "esri/renderers/SimpleRenderer","esri/Color",
+	      	"dojo/parser",
+		    "esri/urlUtils",
+		    "esri/config",
+		    "dojo/domReady!"], function(FeatureLayer,ArcGISDynamicMapServiceLayer,
+	    	DynamicLayerInfo,LayerDataSource,LayerDrawingOptions,SimpleFillSymbol,SimpleRenderer,Color,
+	    	parser,urlUtils,esriConfig) { 
+		
+		parser.parse();
+
+		esriConfig.defaults.io.proxyUrl = hostIP+":8080/Java/proxy.jsp";
+		esriConfig.defaults.io.alwaysUseProxy = false;
+		
+		console.log("addRasterLayer---"+fileName);
+		/************************/
+		if (app.hasOwnProperty("renderLayer") ) {//删除之前的图层
+			 
+			 app.map.removeLayer(app.renderLayer);
+			 
+		}
+		
+	    var dynamicLayerInfos=[];
+	    var dataSource = new esri.layers.RasterDataSource();
+		dataSource.workspaceId = rasterLayerWorkspace;
+		dataSource.dataSourceName = fileName;
+		
+		var layerSource = new esri.layers.LayerDataSource();
+		layerSource.dataSource = dataSource;
+		//动态图层 供渲染使用
+	    app.renderLayer = new esri.layers.ArcGISDynamicMapServiceLayer(rasterLayerUrl, {
+	        //"id": "yield"
+	    	"id": "test"
+	     });
+	    //
+	 // create a new dynamic layer info object for the lakes layer
+	    var dynamicLayerInfo = new esri.layers.DynamicLayerInfo();
+	    dynamicLayerInfo.id = 0;
+	    //dynamicLayerInfo.name = "72_Yield_2017_193.shp";
+	    dynamicLayerInfo.name = fileName;
+	    
+	    dynamicLayerInfo.source = layerSource;
+	    dynamicLayerInfos.push(dynamicLayerInfo);
+	    
+	    app.renderLayer.setDynamicLayerInfos(dynamicLayerInfos, true);
+	    app.map.addLayer(app.renderLayer,1);
+	    
+	    app.renderLayer.on("load",function(res){
+//	    	alert("ooook");
+	    	require(["esri/geometry/Extent","esri/map"], function(Extent,Map) { 
+	    		var layerExt = app.renderLayer.fullExtent;
+//	        	console.log(layerExt.getCenter());
+//	         	app.map.setExtent(layerExt.expand(1));
+//	        	getHeight()getWidth()
+	    		app.map.centerAt(layerExt.getCenter());
+//	    		$("#mapDiv_productionConf").busyLoad("hide");
+	    	});
+	    	
+	    });
+	});
 	
-    var dynamicLayerInfos=[];
-    var dataSource = new esri.layers.RasterDataSource();
-	dataSource.workspaceId = rasterLayerWorkspace;
-	dataSource.dataSourceName = fileName;
 	
-	var layerSource = new esri.layers.LayerDataSource();
-	layerSource.dataSource = dataSource;
-	//动态图层 供渲染使用
-    app.renderLayer = new esri.layers.ArcGISDynamicMapServiceLayer(rasterLayerUrl, {
-        //"id": "yield"
-    	"id": "test"
-     });
-    //
- // create a new dynamic layer info object for the lakes layer
-    var dynamicLayerInfo = new esri.layers.DynamicLayerInfo();
-    dynamicLayerInfo.id = 0;
-    //dynamicLayerInfo.name = "72_Yield_2017_193.shp";
-    dynamicLayerInfo.name = fileName;
-    
-    dynamicLayerInfo.source = layerSource;
-    dynamicLayerInfos.push(dynamicLayerInfo);
-    
-    app.renderLayer.setDynamicLayerInfos(dynamicLayerInfos, true);
-    app.map.addLayer(app.renderLayer,1);
-    
-    app.renderLayer.on("load",function(res){
-//    	alert("ooook");
-    	require(["esri/geometry/Extent","esri/map"], function(Extent,Map) { 
-    		var layerExt = app.renderLayer.fullExtent;
-//        	console.log(layerExt.getCenter());
-//         	app.map.setExtent(layerExt.expand(1));
-//        	getHeight()getWidth()
-    		app.map.centerAt(layerExt.getCenter());
-//    		$("#mapDiv_productionConf").busyLoad("hide");
-    	});
-    	
-    });
    
     /**************************** */
 }
@@ -611,8 +672,19 @@ function addProductFeatureLayer(workspaceId,fileName)
 	require(["esri/layers/FeatureLayer","esri/layers/ArcGISDynamicMapServiceLayer",
 		"esri/layers/DynamicLayerInfo","esri/layers/LayerDataSource",
 	      "esri/layers/LayerDrawingOptions","esri/symbols/SimpleFillSymbol", 
-	      "esri/renderers/SimpleRenderer","esri/Color"], function(FeatureLayer,ArcGISDynamicMapServiceLayer,
-	    	DynamicLayerInfo,LayerDataSource,LayerDrawingOptions,SimpleFillSymbol,SimpleRenderer,Color) { 
+	      "esri/renderers/SimpleRenderer","esri/Color",
+	      "dojo/parser",
+		    "esri/urlUtils",
+		    "esri/config",
+		    "dojo/domReady!"], function(FeatureLayer,ArcGISDynamicMapServiceLayer,
+	    	DynamicLayerInfo,LayerDataSource,LayerDrawingOptions,SimpleFillSymbol,SimpleRenderer,Color,
+	    	parser,urlUtils,esriConfig) {
+		
+		parser.parse();
+
+		esriConfig.defaults.io.proxyUrl = hostIP+":8080/Java/proxy.jsp";
+		esriConfig.defaults.io.alwaysUseProxy = false;
+		
 		//var layerSource = getLayerSource("yield","72_Yield_2017_193.shp");
 		var layerSource = getLayerSource(workspaceId,fileName);
 		/*
@@ -720,7 +792,7 @@ function Edit_Save()
 		    data:{
 		    	fileinfo:fileinfo
 		    },
-		    timeout:5000,    //超时时间
+//		    timeout:5000,    //超时时间
 		    dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
 		    beforeSend:function(xhr){
 		        //console.log(xhr)
@@ -749,6 +821,11 @@ function Edit_Save()
 		    }
 		})
 	}
+	else{
+		$("#hintContent").text("file missing!");
+		
+		$("#hintModal").modal('show');
+	}
 	
 }
 function doGeoprocessor(){
@@ -774,6 +851,7 @@ function doGeoprocessor(){
 					  if (webMercatorUtils.canProject(graphic.geometry, outSpatialReference)) {
 						  var result = webMercatorUtils.project(graphic.geometry, outSpatialReference);
 						  var graphic = new esri.Graphic(result, null);
+						  graphic.setAttributes({"value":5});
 						  features.push(graphic);
 						}
 					  
