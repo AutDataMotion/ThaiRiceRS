@@ -621,7 +621,7 @@ public class T1parameterController extends BaseController {
 	{
 		Map<String,String> map = new HashMap<String,String>();  
 		try {
-			T3user user = getSessionAttr("user");
+			T3user user = getSessionAttr("admin");
 			
 			String drawSample = getPara("drawSample");
 			if(drawSample.equals("true"))//保存样本
@@ -696,7 +696,7 @@ public class T1parameterController extends BaseController {
 	{
 		JSONObject msg = new JSONObject();
 		try{
-			T3user user = getSessionAttr("user");
+			T3user user = getSessionAttr("admin");
 			
 			String tifFileName = getPara("tifFileName");
 			T7pdt_data item = T7pdt_data.dao.findFirst("select * from t7pdt_data where source_file_list=?", tifFileName);
@@ -794,7 +794,7 @@ public class T1parameterController extends BaseController {
 		boolean flag = false;
 		JSONObject msg =  new JSONObject();
 		try {
-			T3user user = getSessionAttr("user");
+			T3user user = getSessionAttr("admin");
 			//fileinfo = 2018-05-11_72
 			String fileinfo = getPara("fileinfo");
 			String fileDate = fileinfo.split("_")[0];//2018-05-11
