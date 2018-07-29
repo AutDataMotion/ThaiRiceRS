@@ -21,6 +21,8 @@ import com.platform.mvc.base.BaseController;
 import csuduc.platform.util.ReportUtil;
 import thairice.mvc.t14my_region.t14my_region;
 import thairice.mvc.t14my_region.t14my_regionService;
+import thairice.mvc.t2syslog.EnumT2sysLog;
+import thairice.mvc.t2syslog.T2syslogService;
 import thairice.mvc.t3user.T3user;
 import thairice.mvc.t3user.T3userService;
 
@@ -340,6 +342,7 @@ public class T10pdt_reportController extends BaseController {
 			
 			if(saveReport2Database(t10pdt_report))//保存到数据库
 			{
+				T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), user.getAccount(), "generateRoprt", "generateRoprt successful");
 				setAttr("reportUrl", reportUrl);
 				renderJson();
 			}
@@ -349,6 +352,8 @@ public class T10pdt_reportController extends BaseController {
 		}
 		else
 		{
+			T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), user.getAccount(), "generateRoprt", "generateRoprt failure");
+			
 			redirect(getCxt()+"/view/common/404.html");
 		}
 		
