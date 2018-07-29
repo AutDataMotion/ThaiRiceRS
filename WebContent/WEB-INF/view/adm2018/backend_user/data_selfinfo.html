@@ -9,7 +9,7 @@
 }
 
 .r {
-	height: 500px;
+	height: 400px;
 	text-align: center;
 	overflow: hidden;
 }
@@ -54,14 +54,13 @@
 				</dt>
 				<dd class="self_dd">
 					<p class="name" style="font-size: 16px;">${admin.name_}</p>
-					<!-- <p>928078226</p> -->
 				</dd>
 			</dl>
 			<button type="button"
 				class="btn btn-primary btn-lg btn-block reset_btn"
 				data-toggle="modal" data-target="#passwordModal">Reset
 				Password</button>
-			<a href="${cxt!}/jf/thairice/admin/user/exit" type="button"
+			<a href="#" data-toggle="modal" data-target="#exampleModal" type="button"
 				class="btn btn-primary btn-lg btn-block logout_btn" role="button">Log
 				Out</a>
 		</div>
@@ -84,7 +83,7 @@
 				<label class="col-md-3 control-label" style="width: 120px;">* Mobile</label>
 				<div class="col-md-9" style="width: 470px;">
 					<input type="text" class="form-control" name="t3user.phone"
-						value="${admin.phone}" placeholder="+66 0808899999">
+						value="${admin.phone}" placeholder="The Mobile Phone begins with 0 and the length is 10">
 				</div>
 			</div>
 			<div class="form-group">
@@ -92,14 +91,14 @@
 				<div class="col-md-9" style="width: 470px;">
 					<input type="email" class="form-control" id="u_email"
 						name="t3user.email" value="${admin.email}"
-						placeholder="jone@example.com">
+						placeholder="Your Email like someone@exmaple.com">
 				</div>
 			</div>
 			<div class="form-group">
 				<label class="col-md-3 control-label" style="width: 120px;">* Nickname</label>
 				<div class="col-md-9" style="width: 470px;">
 					<input type="text" class="form-control" name="t3user.name_"
-						value="${admin.name_}" placeholder="Yingluck Chinnawat">
+						value="${admin.name_}" placeholder="Your nickname">
 				</div>
 			</div>
 			<div class="form-group">
@@ -208,13 +207,13 @@
 						<label class="col-sm-3 control-label">New password</label>
 						<div class="col-sm-9">
 							<input type="password" name="pwd" class="form-control"
-								placeholder="Password contains at least 2 kinds of letters, numbers and symbols">
+								placeholder="It contains at least 2 kinds of letters, numbers and symbols">
 						</div>
 					</div>
 					<div class="form-group">
 						<label class="col-sm-3 control-label">Re-enter password</label>
 						<div class="col-sm-9">
-							<input type="password" class="form-control" name="again"
+							<input type="password" class="form-control" id="again" name="again"
 								placeholder="Re-enter new password">
 						</div>
 					</div>
@@ -224,7 +223,7 @@
 						<div class="col-sm-9">
 							<div class="input-group">
 								<input type="email" class="form-control"
-									placeholder="your E-mai like someone@exmaple.com" name="email"
+									placeholder="your E-mail like someone@exmaple.com" name="email"
 									id="email" value="${admin.email}" readonly> <span
 									class="input-group-addon" id="send_email"
 									style="background-color: #5cb85c; color: #fff; background-color: #5cb85c; cursor: pointer;">Send
@@ -243,9 +242,9 @@
 				</form>
 			</div>
 			<div class="modal-footer">
+				<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
 				<button class="btn btn-primary system_btn" id="pass_btn"
 					type="button">Submit</button>
-				<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
 			</div>
 		</div>
 	</div>
@@ -257,6 +256,9 @@
 <script type="text/javascript" src="${cxt!}/ui/thairice/JS/layer/layer.js"></script>
 <script src="${cxt!}/ui/thairice/common.js"></script>
 <script>
+     var time = 60; //1分钟倒计时
+     var flage=true;//倒计时标识
+     var countdown;//倒计时对象
 	//修改个人信息
 	$('#modify_btn').click(
 			function() {
@@ -273,14 +275,36 @@
 			})
 	//发送邮箱授权码
 	$('#send_email').click(function() {
+		if(flage){
 		    sendAjax("${cxt!}/jf/thairice/t3user/send_code", {email : $("#email").val()}, function(res) {
 			showMessage(res.desc);
-		}); 
+				//一分钟倒计时
+				countdown = setInterval(function() {
+					time--;
+					if(time == 0) {
+						flage=true;
+						$('#send_email').text("Send verification code");
+						time=60;
+						clearInterval(countdown);
+					} else {
+						flage=false;
+						$('#send_email').text('Resend verification code(' + time + ')');
+					}
+				}, 1000)	
+		 }); 
+		}
 	})
+	//恢复默认值
+	$(function () { $('#passwordModal').on('hide.bs.modal', function () {
+		 $("#edit_pass").bootstrapValidator('resetForm');
+		 clearInterval(countdown);
+		 flage=true;
+		 $('#send_email').text("Send verification code");
+		 time=60;
+       })
+     });
 	//修改密码
-	$('#pass_btn')
-			.click(
-					function() {
+	$('#pass_btn').click(function() {
 						$("#edit_pass").bootstrapValidator('validate');
 						if (!$("#edit_pass").data('bootstrapValidator')
 								.isValid()) {
@@ -298,7 +322,7 @@
 												function() {
 													window.location.href = "${cxt!}/jf/thairice/admin/user/exit"
 												}, 5000);
-									}
+											}
 								});
 					})
 	//上传头像
@@ -332,8 +356,7 @@
 				}
 			});
 	//修改密码参数校验 
-	$("#edit_pass")
-			.bootstrapValidator(
+	$("#edit_pass").bootstrapValidator(
 					{
 						message : 'This value is not valid',
 						feedbackIcons : {
@@ -351,31 +374,59 @@
 									regexp : {
 										regexp : /^(?![\d]+$)(?![a-zA-Z]+$)(?![^\da-zA-Z]+$).{6,20}$/,
 										message : 'The passwords must contain at least 2 kinds of letters, numbers and symbols and the length is 6-20 characters'
-									}
+									},
+				                    identical: {//相同
+				                        field: 'again',
+				                        message: 'Two input password must be consistent'
+				                    }
 								}
 							},
 							'again' : {
-								message : 'Password is invalid',
+								message : 'The password is invalid',
 								validators : {
 									notEmpty : {
-										message : 'Password is  required and can\'t be empty'
+										message : 'The password is required and can\'t be empty'
 									},
 									identical : {//相同
 										field : 'pwd',
-										message : ' Two input password must be consistent'
+										message : 'Two input password must be consistent'
 									}
 								}
 							},
 							'code' : {
-								message : 'Password is invalid',
+								message : 'The verification code is invalid',
 								validators : {
 									notEmpty : {
-										message : 'Verification code is  required and can\'t be empty'
+										message : 'The verification code is required and can\'t be empty'
 									}
 								}
 							}
 						}
-					});
+					})/* .on('error.validator.bv', function (e, data) {//这个方法是让错误信息只显示最新的一个（有时会出现多个错误信息同时显示用这个方法解决）
+					    data.element
+					    .data('bv.messages')
+					    // Hide all the messages
+					    .find('.help-block[data-bv-for="' + data.field + '"]').hide()
+					    // Show only message associated with current validator
+					    .filter('[data-bv-validator="' + data.validator + '"]').show();
+						}) */
+				  	.on('error.field.bv', function (e, data) {//‘用户确认密码’ 没输入的时候，‘用户新密码’不提示‘用户新密码与确认密码不一致’
+						// $(e.target)  --> The field element
+						// data.bv      --> The BootstrapValidator instance
+						// data.field   --> The field name
+						// data.element --> The field element
+						if (data.field == 'pwd') {
+						  var len1 = data.element.val().length;
+						  var len2 = $('#again').val().length;
+						  var k = data.element.val().indexOf(" ");
+						  if (len1 > 5 && len2 < 6 && k < 0) {
+						    var $parent = data.element.parents('.form-group');
+						    $parent.removeClass('has-error');
+						    $parent.find('.form-control-feedback[data-bv-icon-for="' + data.field + '"]').hide();
+						    data.element.siblings('[data-bv-validator="identical"]').hide();
+						  }
+					}
+				});
 	//修改个人信息参数校验 
 	$("#info").bootstrapValidator({
 		message : 'This value is not valid',
@@ -389,20 +440,54 @@
 			't3user.phone' : {
 				validators : {
 					notEmpty : {
-						message : 'Mobile is required and can\'t be empty'
+						message : 'The mobile is required and can\'t be empty'
 					},
-					stringLength : {
-						/*长度提示*/
-						min : 6,
+/* 					stringLength : {
+						长度提示
+						min : 6, 
 						max : 11,
-						message : 'Mobile length is 10'
-					},
+						message : 'The mobile length is 10'
+					}, */
 					regexp : {
 						regexp : /^0\d{9}$/,
-						message : 'Mobile number is not correct '
+						message : 'The mobile number is invalid'
 					}
 				}
-			}
+			},
+            't3user.email': {
+                validators: {
+                    notEmpty: {
+                        message: 'The email address is required and can\'t be empty'
+                    },
+                    emailAddress: {
+                        message: 'The input is not a valid email address'
+                    }/* ,
+                    remote: {//ajax验证。server result:{"valid",true or false}
+                        url: '/jf/thairice/t3user/valiMailBox',
+                        message: 'The email address has already exist',
+                        delay: 2000,
+                        type: 'POST',
+                        //自定义参数
+                        data: {
+                            mailBox: function () {
+                                return $('input[name="t3user.email"]').val();
+                            }
+                        }
+                    } */
+                }
+            },
+            't3user.name_': {
+                validators: {
+                    notEmpty: {
+                        message: 'The nickname is required and can\'t be empty'
+                    },
+    	            stringLength: {
+    	                min: 1,
+    	                max: 180,
+    	                message: 'The nickname cannot exceed 180 characters'
+    	            }
+                }
+            }
 		}
 	});
 </script>

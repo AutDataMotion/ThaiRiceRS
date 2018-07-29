@@ -196,12 +196,14 @@ public class T3userService extends BaseService {
 			sb.append(" AND id=" + userId);
 		}
 		if (StrKit.notBlank(name)) {
-			sb.append(" AND CONCAT(IFNULL(name_,''),IFNULL(phone,''),IFNULL(email,''))  LIKE '%"
+			sb.append(" AND CONCAT(IFNULL(account,''),IFNULL(name_,''),IFNULL(phone,''),IFNULL(email,''))  LIKE '%"
 					+ name.trim().toLowerCase() + "%'");
 		}
-		if (StrKit.notBlank(min)) {
+		if (StrKit.notBlank(min)||StrKit.notBlank(max)) {
 			max = StrKit.isBlank(max) ? TimeUtil.getNow() : max;
-			sb.append(" AND  create_time BETWEEN '" + min + "'" + " AND DATE_ADD('" + max + "',interval 1 day)");
+			//AND critime>'2014-03-30' AND critime<'2014-05-31' PD_ExDat
+			sb.append(" AND  Prdt_EfDt >'" + min + "'" + " AND PD_ExDat< DATE_ADD('" + max + "',interval 1 day)");
+			//sb.append(" AND  Prdt_EfDt <'" + min + "'" + " AND DATE_ADD('" + max + "',interval 1 day)");
 		}
 		if (StrKit.notBlank(audit)) {
 			sb.append(" AND status_='" + audit + "'");

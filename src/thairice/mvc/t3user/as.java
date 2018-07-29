@@ -10,8 +10,13 @@ public class as {
 		// System.out.println(TimeUtil.getHour());
 		// test by zw
                       //System.out.println(TimeUtil.isLaterThanNow("2018-04-16 00:00:00"));
-	    long day = TimeUtil.dateDiff(TimeUtil.getNow(),"2018-06-07 00:00:00", "yyyy-MM-dd HH:mm:ss", "d");
-		System.out.println(day);
+	    long day = TimeUtil.dateDiff(TimeUtil.getNow(),"2018-08-07 00:00:00", "yyyy-MM-dd HH:mm:ss", "d");
+		if(day<0) {
+		    System.out.println("g");
+		}else {
+		    System.out.println("y");
+		}
+	    
 	}
 
 	// --test

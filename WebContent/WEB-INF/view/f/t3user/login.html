@@ -7,6 +7,15 @@
     <link type="text/css" rel="stylesheet" href="${cxt!}/ui/thairice/CSS/jquery.fullPage-2.1.9.css"/>
     <link type="text/css" rel="stylesheet" href="${cxt!}/ui/thairice/bootstrap-3.3.7-dist/css/bootstrap.min.css">
     <link type="text/css" rel="stylesheet" href="${cxt!}/ui/thairice/CSS/welcome.css">
+    <style type="text/css">
+    .checkcode_text{ 
+    margin-left: 16px;
+    background-color: #337ab7;
+    color: white;
+    padding: 9px;
+    font-size: 11px;
+    text-decoration: none;}
+    </style>
 </head>
 <body>
 <ul id="fullpageMenu">
@@ -159,7 +168,7 @@
             <input type="text" class="form-control" placeholder="Your account"  id="account" name="account">
             <input type="password" class="form-control" placeholder="Password" id="password" name="password">
             <div class="form-group" style="margin-left:0;">
-            	<input type="text"  id="authCode"  name="authCode" class="form-control" style="width:400px; float:left; margin-top:0;" placeholder="Verification code"> <img id="autoCode" onclick="refresh()" style="width: 75px;border-radius: 3px;height: 32px;margin-left: 10px;cursor: pointer;" src="${cxt!}/jf/platform/authImg"/></span><span class="checkcode_text"  style="margin-left: 10px;" onclick="refresh()">Refresh</span>
+            	<input type="text"  id="authCode"  name="authCode" class="form-control" style="width:390px; float:left; margin-top:0;" placeholder="Verification code"> <img id="autoCode" onclick="refresh()" style="width: 75px;border-radius: 3px;height: 32px;margin-left: 10px;cursor: pointer;" src="${cxt!}/jf/platform/authImg"/><span class="checkcode_text"  style="margin-left: 10px;" onclick="refresh()">Refresh</span>
             </div>
           </div>
           <div class="form-group">
@@ -173,7 +182,7 @@
           </div>
           <div class="form-group">
             <a class="forget_password" href="${cxt!}/jf/thairice/t3user/forget_pass">Forget password</a>
-          </div>
+          </div> 
         </form>
     </div>
   </div>

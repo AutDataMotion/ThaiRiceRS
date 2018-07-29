@@ -133,8 +133,10 @@ public class JfinalConfig extends JFinalConfig {
 		log.info("afterJFinalStart 配置文件上传命名策略插件");
 		plugins.add(new FileRenamePlugin());
 		// 配置定时任务插件
-		Cron4jPlugin cron4 = new Cron4jPlugin("overdueRemind.properties");
-		plugins.add(cron4);
+		log.info("afterJFinalStart 配置定时任务插件");
+		plugins.add(new Cron4jPlugin("overdueRemind.properties"));
+		/*Cron4jPlugin cron4 = new Cron4jPlugin("overdueRemind.properties");
+		plugins.add(cron4);*/
 	}
 
 	/**
