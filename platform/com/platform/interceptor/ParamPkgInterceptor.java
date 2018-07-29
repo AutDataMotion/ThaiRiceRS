@@ -43,7 +43,7 @@ public class ParamPkgInterceptor implements Interceptor {
 		log.debug("********* 封装参数值到 controller 全局变量  start *********");
 		
 		 // 是否需要分页
-		 //strat这里会出现空指针，暂时先捕获(杨涛)
+		 //start这里会出现空指针，暂时先捕获(杨涛)
 		String splitpage ="1";
 		try {
 		    Syslog reqSysLog = controller.getReqSysLog();

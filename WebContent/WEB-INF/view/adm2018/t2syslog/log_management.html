@@ -5,53 +5,48 @@
 <div class="user_query">
 	<form role="form" class="form-inline" style="margin: 15px 0 15px 0;">
 		<div class="form-group">
-			<label>UserID</label> <input id="userId" type="text"
-				placeholder="UserID" class="form-control" style="width: 80px;">
+			<label>Type</label> <input id="Type" type="text"
+				placeholder="Type" class="form-control" style="width: 60px;">
+		</div>
+		<div class="form-group">
+			<label>UserName</label> <input id="userName" type="text"
+				placeholder="userName" class="form-control" style="width: 80px;">
+		</div>
+		<div class="form-group">
+			<label>Action</label> <input id="Action" type="text"
+				placeholder="Action" class="form-control" style="width: 80px;">
 		</div>
 		<div class="form-group">
 			<label class="control-label">Time:</label>
 			<div class="input-group" id="starttime8">
 				<input id="datetimeBeg" type="text" class="form-control"> <span
-					class="input-group-addon" readonly><i class="glyphicon glyphicon-calendar"></i></span>
+					class="input-group-addon" readonly></span>
 			</div>
 			<label class="control-label">to</label>
 			<div class="input-group" id="endtime8">
 				<input id="datetimeEnd" type="text" class="form-control"> <span
-					class="input-group-addon" readonly><i class="glyphicon glyphicon-calendar"></i></span>
+					class="input-group-addon" readonly></span>
 			</div>
 		</div>
 		<div class="form-group">
 			<button id="btnSearch" type="button" class="btn btn-primary">search</button>
 		</div>
-		<div class="form-group" style="float: right;">
-			<button type="button" class="btn btn-primary">
-				<i class="glyphicon glyphicon-level-up" style="margin-right: 3px;"></i>Exported</button>
-		</div>
 	</form>
 </div>
 <div class="table-responsive">
 	<table class="table table-bordered data-table" id="dataTable09"
-		width="100%" cellspacing="0" align="center">
+		width="100%" cellspacing="0" align="LEFT">
 		<thead>
 			<tr>
+
 				<th>id</th>
 				<th>type</th>
-				<th>user</th>
+				<th>userName</th>
 				<th>action</th>
 				<th>content</th>
 				<th>datetime</th>
 			</tr>
 		</thead>
-		<tfoot>
-			<tr>
-				<th>id</th>
-				<th>type</th>
-				<th>user</th>
-				<th>action</th>
-				<th>content</th>
-				<th>datetime</th>
-			</tr>
-		</tfoot>
 	</table>
 </div>
 <% }; %> <% var jsSec={ %>

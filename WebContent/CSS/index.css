@@ -320,3 +320,11 @@ body {
 	border-top:none;
 	line-height:34px;
 }
+@media only screen and (max-width: 1020px) {
+	.BbAreaSelect{
+		width:100px;
+	}
+	.BbAreaSelect .form-group{
+		margin-bottom: 15px;
+	}
+}

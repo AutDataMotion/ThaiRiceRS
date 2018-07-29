@@ -142,9 +142,9 @@
 								<table class="table table-bordered" style="table-layout:fixed">
 									<thead>
 									<tr>
-										<th>PROV</th>
-										<th>AMP</th>
-										<th>TAM</th>
+										<th>Province</th>
+										<th>District</th>
+										<th>Subdistrict</th>
 										<th style="width:80px">Operation</th>
 									</tr>
 									</thead>
@@ -222,7 +222,7 @@
             </div>
             <div class="modal-body">
             <div id="custom_data">
-				<span style="width: 230px;display:inline-block;">PROV</span><span style="width: 230px;display:inline-block;">AMP</span><span style="width: 220px;display:inline-block;">TAM</span><br>
+				<span style="width: 230px;display:inline-block;">Province</span><span style="width: 230px;display:inline-block;">District</span><span style="width: 220px;display:inline-block;">Subdistrict</span><br>
 				<select class="province" id="province" style="padding: 7px;width: 220px;" onchange="addCityArea('city')"></select>
 				<select class="city" id="city" style="padding: 7px;width: 220px;" onchange="addCityArea('area')"></select>
 				<select class="area" id="area" style="padding: 7px;width: 220px;"></select>
@@ -305,7 +305,7 @@
 	   $("#add").click(function(){
 		   var province=$('#province').val();
 		   if(province==""){
-			   layer.msg("Please choose the PROV first ");
+			   layer.msg("Please choose the Province first ");
 			   return false;
 		   }
 		   var province=$('#province').val();

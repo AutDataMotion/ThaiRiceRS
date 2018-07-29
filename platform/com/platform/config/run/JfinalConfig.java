@@ -204,7 +204,7 @@ public class JfinalConfig extends JFinalConfig {
 	public void beforeJFinalStop() {
 
 		// Zeroc Ice Util 销毁
-		 IceClientUtil.closeCommunicator(true);
+		// IceClientUtil.closeCommunicator(true);
 		
 		// log.info("beforeJFinalStop 释放日志入库线程");
 		// ThreadSysLog.setThreadRun(false);

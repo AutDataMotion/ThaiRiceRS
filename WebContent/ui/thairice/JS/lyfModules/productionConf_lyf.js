@@ -273,7 +273,7 @@ function generateTempProduct()
 		$.ajax({
 		    url:'/jf/thairice/t1parameter/generateTempProduct',
 		    type:'POST', //GET
-		    async:true,    //或false,是否异步
+		    async:false,    //或false,是否异步
 //		    data:{
 //		    	fileName:fileName,
 //		    	filePath:filePath,
@@ -286,7 +286,10 @@ function generateTempProduct()
 		    dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
 		    beforeSend:function(xhr){
 		        //console.log(xhr)
-		        console.log('发送前')
+		        console.log('发送前');
+		        $("#mapDiv_productionConf").busyLoad("show", { text: "LOADING ...",
+		    		textPosition: "top"
+		    	});
 		    },
 		    success:function(data,textStatus,jqXHR){
 		    	console.log(data);
@@ -309,9 +312,15 @@ function generateTempProduct()
 		        console.log(textStatus)
 		    },
 		    complete:function(){
-		        console.log('结束')
+		        console.log('结束');
+		        $("#mapDiv_productionConf").busyLoad("hide");
 		    }
 		})
+	}
+	else{
+		$("#hintContent").text("file missing!");
+		
+		$("#hintModal").modal('show');
 	}
 	
 }
@@ -477,6 +486,8 @@ function initFilesTable()
 //		    			console.log(app.files_excel.row('.selected').data());
 		    			//加载遥感影像的同时加载与影像关联的临时中间产品数据
 		    			app.tifFileName = app.files_excel.row('.selected').data()[0];
+		    			//将选中的tif文件关联的temp shp文件copy to gpmodels ，备editing
+		    			copyTempShpFile2gpWorkspace(app.tifFileName);
 		    			//将选中的tif文件copy to gpmodels ，备改变波段显示
 //		    			copyAreaTifFile2gpWorkspace(app.tifFileName);
 		    			
@@ -544,6 +555,37 @@ function copyAreaTifFile2gpWorkspace(tifFileName){
 	    },
 	    complete:function(){
 	    	console.log("copyAreaTifFile2gpWorkspace---结束");
+	    }
+	})
+}
+function copyTempShpFile2gpWorkspace(tifFileName){
+	console.log("copyAreaTifFile2gpWorkspace---begin--"+tifFileName);
+	$.ajax({
+	    url:'/jf/thairice/t1parameter/copyTempShpFile2gpWorkspace',//获取面积相关的遥感影像 文件列表
+	    type:'POST', //GET
+	    async:true,    //或false,是否异步
+	    data:{
+	    	tifFileName:tifFileName
+	    },
+	    timeout:5000,    //超时时间
+	    dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+	    beforeSend:function(xhr){
+	        //console.log(xhr)
+	        console.log('发送前')
+	    },
+	    success:function(data,textStatus,jqXHR){
+	    	if(data.flag) {  
+	    		console.log("copyTempShpFile2gpWorkspace---success");
+	    	}  
+            
+	    },
+	    error:function(xhr,textStatus){
+	    	console.log("copyTempShpFile2gpWorkspace---错误");
+	        console.log(xhr)
+	        console.log(textStatus)
+	    },
+	    complete:function(){
+	    	console.log("copyTempShpFile2gpWorkspace---结束");
 	    }
 	})
 }
@@ -749,6 +791,11 @@ function Edit_Save()
 		    }
 		})
 	}
+	else{
+		$("#hintContent").text("file missing!");
+		
+		$("#hintModal").modal('show');
+	}
 	
 }
 function doGeoprocessor(){
@@ -774,6 +821,7 @@ function doGeoprocessor(){
 					  if (webMercatorUtils.canProject(graphic.geometry, outSpatialReference)) {
 						  var result = webMercatorUtils.project(graphic.geometry, outSpatialReference);
 						  var graphic = new esri.Graphic(result, null);
+						  graphic.setAttributes({"value":5});
 						  features.push(graphic);
 						}
 					  
