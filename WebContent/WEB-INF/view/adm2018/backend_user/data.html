@@ -262,8 +262,9 @@ table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td
                 },
                 emailAddress: {
                     message: 'The input is not a valid email address'
-                },
-                remote: {//ajax验证。server result:{"valid",true or false}
+                }
+                /*  ,
+                    remote: {//ajax验证。server result:{"valid",true or false}
                     url: '/jf/thairice/t3user/valiMailBox',
                     message: 'The email address has already exist',
                     delay: 2000,
@@ -274,7 +275,7 @@ table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td
                             return $('input[name="t3user.email"]').val();
                         }
                     }
-                }
+                } */
             }
         },
         't3user.name_': {
