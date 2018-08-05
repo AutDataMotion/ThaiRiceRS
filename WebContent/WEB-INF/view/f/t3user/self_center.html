@@ -275,10 +275,10 @@
                         <table class="table table-bordered table-condensed"
                                align="center" cellpadding="0" cellspacing="0">
                             <thead>
-                            <tr>
-<!--                                 <th style="border-bottom: none;"><input type="checkbox"
+<!--                             <tr>
+                                 <th style="border-bottom: none;"><input type="checkbox"
                                                                         align="center">Select
-                                </th> -->
+                                </th>  -->
                                 <th style="border-bottom: none;">Start date</th>
                                 <th style="border-bottom: none;">End date</th>
                                 <th style="border-bottom: none;">Zone code</th>
@@ -289,9 +289,9 @@
                             </thead>
                             <tbody>
                             <%for(x in blogPage.list){ %>
-                            <tr>
+<!--                             <tr>
                                 <td style="text-align: center;"><input type="checkbox" class="reportDownloadCheckbox"
-                                                                       name="${x.id}" value="${x.download_path}"></td>
+                                                                       name="${x.id}" value="${x.download_path}"></td> -->
                                 <td style="text-align: center;">${x.start_time}</td>
                                 <td style="text-align: center;">${x.end_time}</td>
                                 <td style="text-align: center;">${x.zone_code}</td>
@@ -350,7 +350,7 @@
                 </div>
             </div>
             <div class="modal-footer" style="text-align:center;">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">Close</button>
+                <button class="btn btn-secondary" style="background-color: #0c7897;color: white;" type="button" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
