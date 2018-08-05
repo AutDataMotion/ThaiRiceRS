@@ -273,7 +273,7 @@ function generateTempProduct()
 		$.ajax({
 		    url:'/jf/thairice/t1parameter/generateTempProduct',
 		    type:'POST', //GET
-		    async:false,    //或false,是否异步
+		    async:true,    //或false,是否异步
 //		    data:{
 //		    	fileName:fileName,
 //		    	filePath:filePath,
@@ -282,7 +282,7 @@ function generateTempProduct()
 		    data:{
 		    	tifFileName:app.tifFileName,
 		    },
-		    timeout:5000,    //超时时间
+//		    timeout:5000,    //超时时间
 		    dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
 		    beforeSend:function(xhr){
 		        //console.log(xhr)
@@ -591,51 +591,70 @@ function copyTempShpFile2gpWorkspace(tifFileName){
 }
 function addRasterLayer(fileName)
 {
-	console.log("addRasterLayer---"+fileName);
-	/************************/
-	if (app.hasOwnProperty("renderLayer") ) {//删除之前的图层
-		 
-		 app.map.removeLayer(app.renderLayer);
-		 
-	}
+	require(["esri/layers/FeatureLayer","esri/layers/ArcGISDynamicMapServiceLayer",
+		"esri/layers/DynamicLayerInfo","esri/layers/LayerDataSource",
+	      "esri/layers/LayerDrawingOptions","esri/symbols/SimpleFillSymbol", 
+	      "esri/renderers/SimpleRenderer","esri/Color",
+	      	"dojo/parser",
+		    "esri/urlUtils",
+		    "esri/config",
+		    "dojo/domReady!"], function(FeatureLayer,ArcGISDynamicMapServiceLayer,
+	    	DynamicLayerInfo,LayerDataSource,LayerDrawingOptions,SimpleFillSymbol,SimpleRenderer,Color,
+	    	parser,urlUtils,esriConfig) { 
+		
+		parser.parse();
+
+		esriConfig.defaults.io.proxyUrl = hostIP+":8080/Java/proxy.jsp";
+		esriConfig.defaults.io.alwaysUseProxy = false;
+		
+		console.log("addRasterLayer---"+fileName);
+		/************************/
+		if (app.hasOwnProperty("renderLayer") ) {//删除之前的图层
+			 
+			 app.map.removeLayer(app.renderLayer);
+			 
+		}
+		
+	    var dynamicLayerInfos=[];
+	    var dataSource = new esri.layers.RasterDataSource();
+		dataSource.workspaceId = rasterLayerWorkspace;
+		dataSource.dataSourceName = fileName;
+		
+		var layerSource = new esri.layers.LayerDataSource();
+		layerSource.dataSource = dataSource;
+		//动态图层 供渲染使用
+	    app.renderLayer = new esri.layers.ArcGISDynamicMapServiceLayer(rasterLayerUrl, {
+	        //"id": "yield"
+	    	"id": "test"
+	     });
+	    //
+	 // create a new dynamic layer info object for the lakes layer
+	    var dynamicLayerInfo = new esri.layers.DynamicLayerInfo();
+	    dynamicLayerInfo.id = 0;
+	    //dynamicLayerInfo.name = "72_Yield_2017_193.shp";
+	    dynamicLayerInfo.name = fileName;
+	    
+	    dynamicLayerInfo.source = layerSource;
+	    dynamicLayerInfos.push(dynamicLayerInfo);
+	    
+	    app.renderLayer.setDynamicLayerInfos(dynamicLayerInfos, true);
+	    app.map.addLayer(app.renderLayer,1);
+	    
+	    app.renderLayer.on("load",function(res){
+//	    	alert("ooook");
+	    	require(["esri/geometry/Extent","esri/map"], function(Extent,Map) { 
+	    		var layerExt = app.renderLayer.fullExtent;
+//	        	console.log(layerExt.getCenter());
+//	         	app.map.setExtent(layerExt.expand(1));
+//	        	getHeight()getWidth()
+	    		app.map.centerAt(layerExt.getCenter());
+//	    		$("#mapDiv_productionConf").busyLoad("hide");
+	    	});
+	    	
+	    });
+	});
 	
-    var dynamicLayerInfos=[];
-    var dataSource = new esri.layers.RasterDataSource();
-	dataSource.workspaceId = rasterLayerWorkspace;
-	dataSource.dataSourceName = fileName;
 	
-	var layerSource = new esri.layers.LayerDataSource();
-	layerSource.dataSource = dataSource;
-	//动态图层 供渲染使用
-    app.renderLayer = new esri.layers.ArcGISDynamicMapServiceLayer(rasterLayerUrl, {
-        //"id": "yield"
-    	"id": "test"
-     });
-    //
- // create a new dynamic layer info object for the lakes layer
-    var dynamicLayerInfo = new esri.layers.DynamicLayerInfo();
-    dynamicLayerInfo.id = 0;
-    //dynamicLayerInfo.name = "72_Yield_2017_193.shp";
-    dynamicLayerInfo.name = fileName;
-    
-    dynamicLayerInfo.source = layerSource;
-    dynamicLayerInfos.push(dynamicLayerInfo);
-    
-    app.renderLayer.setDynamicLayerInfos(dynamicLayerInfos, true);
-    app.map.addLayer(app.renderLayer,1);
-    
-    app.renderLayer.on("load",function(res){
-//    	alert("ooook");
-    	require(["esri/geometry/Extent","esri/map"], function(Extent,Map) { 
-    		var layerExt = app.renderLayer.fullExtent;
-//        	console.log(layerExt.getCenter());
-//         	app.map.setExtent(layerExt.expand(1));
-//        	getHeight()getWidth()
-    		app.map.centerAt(layerExt.getCenter());
-//    		$("#mapDiv_productionConf").busyLoad("hide");
-    	});
-    	
-    });
    
     /**************************** */
 }
@@ -653,8 +672,19 @@ function addProductFeatureLayer(workspaceId,fileName)
 	require(["esri/layers/FeatureLayer","esri/layers/ArcGISDynamicMapServiceLayer",
 		"esri/layers/DynamicLayerInfo","esri/layers/LayerDataSource",
 	      "esri/layers/LayerDrawingOptions","esri/symbols/SimpleFillSymbol", 
-	      "esri/renderers/SimpleRenderer","esri/Color"], function(FeatureLayer,ArcGISDynamicMapServiceLayer,
-	    	DynamicLayerInfo,LayerDataSource,LayerDrawingOptions,SimpleFillSymbol,SimpleRenderer,Color) { 
+	      "esri/renderers/SimpleRenderer","esri/Color",
+	      "dojo/parser",
+		    "esri/urlUtils",
+		    "esri/config",
+		    "dojo/domReady!"], function(FeatureLayer,ArcGISDynamicMapServiceLayer,
+	    	DynamicLayerInfo,LayerDataSource,LayerDrawingOptions,SimpleFillSymbol,SimpleRenderer,Color,
+	    	parser,urlUtils,esriConfig) {
+		
+		parser.parse();
+
+		esriConfig.defaults.io.proxyUrl = hostIP+":8080/Java/proxy.jsp";
+		esriConfig.defaults.io.alwaysUseProxy = false;
+		
 		//var layerSource = getLayerSource("yield","72_Yield_2017_193.shp");
 		var layerSource = getLayerSource(workspaceId,fileName);
 		/*
@@ -762,7 +792,7 @@ function Edit_Save()
 		    data:{
 		    	fileinfo:fileinfo
 		    },
-		    timeout:5000,    //超时时间
+//		    timeout:5000,    //超时时间
 		    dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
 		    beforeSend:function(xhr){
 		        //console.log(xhr)

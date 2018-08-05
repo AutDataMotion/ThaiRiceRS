@@ -61,8 +61,8 @@ public class T7pdt_dataController extends BaseController {
 				flag = "2";
 			// 返回页面上次查询的条件参数
 			setAttr("flag", flag);
-			setAttr("starttime", collectTimeSt);
-			setAttr("endtime", collectTimeEd);
+			setAttr("starttime2", collectTimeSt);
+			setAttr("endtime2", collectTimeEd);
 			setAttr("datatype_eng", DataConstants.PDT_DATA_TYPE.get(datatype));
 			setAttr("datatype", datatype);
 			// 返回翻页查询条件参数
@@ -70,8 +70,9 @@ public class T7pdt_dataController extends BaseController {
 			setAttr("urlParas", urlParas);
 			// 拼接动态sql语句
 			String sql = "from t7pdt_data t where 1=1 ";
-			if (!StringUtils.isBlank(status)) {
+			if (!StringUtils.isBlank(datatype) && (!"00".equals(datatype))) {
 				sql += (" and t.type_ = '" + datatype + "'");
+				setAttr("selected2" + datatype, "selected='selected'");
 			}
 			if (!StringUtils.isBlank(collectTimeSt)) {
 				sql += (" and date_format(t.collect_time ,'%Y-%m-%d' ) >= '" + collectTimeSt + "'");
@@ -104,6 +105,10 @@ public class T7pdt_dataController extends BaseController {
 			 * res = new ResultEntity("0001"); LOG.debug(res.getDesc()); renderJson(res);
 			 */
 			setAttr("page_head", "Data management");
+			setAttr("tab01_active", "");
+			setAttr("tab02_active", "active");
+			setAttr("data01_content_fade", "tab-pane fade");
+			setAttr("data02_content_fade", "tab-pane fade in active");
 			renderWithPath("/adm2018/data_management.html");
 		} catch (Exception e) {
 			setAttr("flag", "9");

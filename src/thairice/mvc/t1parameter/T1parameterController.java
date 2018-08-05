@@ -33,6 +33,8 @@ import csuduc.platform.util.lyf.lyfGis;
 import thairice.constant.EnumStatus;
 import thairice.entity.ResultEntity;
 import thairice.interceptor.AdminLoginInterceptor;
+import thairice.mvc.t2syslog.EnumT2sysLog;
+import thairice.mvc.t2syslog.T2syslogService;
 import thairice.mvc.t3user.Result;
 import thairice.mvc.t3user.T3user;
 import thairice.mvc.t7pdt_data.T7pdt_data;
@@ -619,6 +621,8 @@ public class T1parameterController extends BaseController {
 	{
 		Map<String,String> map = new HashMap<String,String>();  
 		try {
+			T3user user = getSessionAttr("admin");
+			
 			String drawSample = getPara("drawSample");
 			if(drawSample.equals("true"))//保存样本
 			{
@@ -658,14 +662,20 @@ public class T1parameterController extends BaseController {
 					boolean result = t9sample_info.saveGenIntId();
 					if(result)
 					{
+						T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), user.getAccount(), "generateShpfileByGeoJson", "generateShpfileByGeoJson successful");
+			            
 						renderJson(map);
 					}
 					else {
+						T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), user.getAccount(), "generateShpfileByGeoJson", "generateShpfileByGeoJson failure");
+			            
 						map.put("status", "failure");
 						renderJson(map);
 					}
 				}
 				else {
+					T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), user.getAccount(), "generateShpfileByGeoJson", "generateShpfileByGeoJson failure");
+		            
 					renderJson(map);
 				}
 				
@@ -686,6 +696,8 @@ public class T1parameterController extends BaseController {
 	{
 		JSONObject msg = new JSONObject();
 		try{
+			T3user user = getSessionAttr("admin");
+			
 			String tifFileName = getPara("tifFileName");
 			T7pdt_data item = T7pdt_data.dao.findFirst("select * from t7pdt_data where source_file_list=?", tifFileName);
 			Integer identifier = item.getBigInteger("id").intValue();//源文件编号---int id;
@@ -730,6 +742,8 @@ public class T1parameterController extends BaseController {
 			EnumStatus result = AbsScheduleJob.classifyA(argClassifyA, null);
 			if(result.getId() == 1)
 			{
+				T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), user.getAccount(), "generateTempProduct", "generateTempProduct successful");
+				
 				File[] tempProductFiles = ReportUtil.fileFilter(tempProductPath, tempProductFileNamePrefix, null);
 				for(File file:tempProductFiles)
 				{
@@ -760,12 +774,15 @@ public class T1parameterController extends BaseController {
 				msg.put("filename", tempProductFileName);
 			}
 			else {
+				T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), user.getAccount(), "generateTempProduct", "generateTempProduct failure");
+				
 				msg.put("status", "failure");
 			}
 			
 		}catch(Exception e)
 		{
 			e.printStackTrace();
+			
 			msg.put("status", "failure");
 		}
 		renderJson(msg);
@@ -777,6 +794,7 @@ public class T1parameterController extends BaseController {
 		boolean flag = false;
 		JSONObject msg =  new JSONObject();
 		try {
+			T3user user = getSessionAttr("admin");
 			//fileinfo = 2018-05-11_72
 			String fileinfo = getPara("fileinfo");
 			String fileDate = fileinfo.split("_")[0];//2018-05-11
@@ -813,6 +831,8 @@ public class T1parameterController extends BaseController {
 			EnumStatus result = AbsScheduleJob.classifyB(argClassifyB, null);
 			if(result.getId() == 1)
 			{
+				T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), user.getAccount(), "SaveAreaEditedProduct", "SaveAreaEditedProduct successful");
+				
 				//save result info to database
 				String source_file = fileinfo+".tif";//2018-05-05_72.tif
 				String product_path = fileSavePath+fileDistrict+".shp";//E:\thairiceproduct\Area\2018-05-05\72.shp
@@ -831,6 +851,8 @@ public class T1parameterController extends BaseController {
 				renderJson(msg);
 			}
 			else {
+				T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), user.getAccount(), "SaveAreaEditedProduct", "SaveAreaEditedProduct failure");
+				
 				flag = false;
 				msg.put("flag", flag);
 				renderJson(msg);

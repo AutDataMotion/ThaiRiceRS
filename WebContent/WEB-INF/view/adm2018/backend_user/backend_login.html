@@ -5,9 +5,18 @@
 <meta http-equiv="X-UA-Compatible" content="IE=edge">
 <meta name="viewport" content="width=device-width,initial-scale-1">
 <title>后台登录</title>
-<link type="text/css" rel="stylesheet" href="${cxt!}/ui/thairice/CSS/base.css">
-<link type="text/css" rel="stylesheet" href="${cxt!}/ui/thairice/bootstrap-3.3.7-dist/css/bootstrap.min.css">
-<link type="text/css" rel="stylesheet" href="${cxt!}/ui/thairice/CSS/backend_login.css">
+	<link type="text/css" rel="stylesheet" href="${cxt!}/ui/thairice/CSS/base.css">
+	<link type="text/css" rel="stylesheet" href="${cxt!}/ui/thairice/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+	<link type="text/css" rel="stylesheet" href="${cxt!}/ui/thairice/CSS/backend_login.css">
+	<style type="text/css">
+	.checkcode_text{ 
+	margin-left: 16px;
+	background-color: #337ab7;
+	color: white;
+	padding: 9px;
+	font-size: 11px;
+	text-decoration: none;}
+	</style>
 </head>
 <body style="background:url(${cxt!}/ui/thairice/Images/backend_login/big_bg.jpg) no-repeat; background-size:100%;">
     <div class="BbBackendloginWrap">
@@ -18,7 +27,7 @@
                     <input type="text" class="form-control" placeholder="Your account" id="account" name="account">
                     <input type="password" class="form-control" placeholder="Password"  id="pass">
                     <div class="form-group" style="margin-left:0;">
-                    <input type="text" id="authCode"  name="authCode"  class="form-control" style="width:200px; float:left; margin-top:0;" placeholder="Verification code"><img id="autoCode" onclick="refresh()" style="width: 75px;border-radius: 3px;height: 32px;margin-left: 10px;cursor: pointer;" src="${cxt!}/jf/platform/authImg"/></span><span class="checkcode_text"  style="margin-left: 10px;" onclick="refresh()">Refresh</span>
+                    <input type="text" id="authCode"  name="authCode"  class="form-control" style="width:200px; float:left; margin-top:0;" placeholder="Verification code"><img id="autoCode" onclick="refresh()" style="width: 75px;border-radius: 3px;height: 32px;margin-left: 10px;cursor: pointer;" src="${cxt!}/jf/platform/authImg"/><span class="checkcode_text"  style="margin-left: 10px;" onclick="refresh()">Refresh</span>
                     </div>
                 </div>
                 <div class="form-group">

@@ -60,8 +60,6 @@ public class T3userValidator extends Validator {
     		addError("desc", "Please enter verification code");
     	}
     }
-        
-        
         //用户注册
         if (actionKey.equals(T3userController.pthc + "doReg")) {
         	if(TimeUtil.dateDiff(c.getPara("Prdt_EfDt",TimeUtil.getNow()), c.getPara("PD_ExDat"), "yyyy-MM-dd", "d")<=0){

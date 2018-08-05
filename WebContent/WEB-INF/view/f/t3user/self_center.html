@@ -25,7 +25,7 @@
         }
 
         .r {
-            height: 500px;
+            height: 400px;
             text-align: center;
             overflow: hidden;
         }
@@ -101,8 +101,7 @@
                                      style="width: 100px;height: 100px; border:none; padding:0;"></div>
                                 <div style="cursor:pointer;">
                             <span class="btn-file" style="cursor: pointer;background-color: rgba(240, 248, 255, 0);">
-                            <!-- <span class="fileinput-new">Change picture</span> -->
-                           <span class="fileinput-exists">Change picture</span> 
+                            <span class="fileinput-exists">Change picture</span> 
                             </span>
                                 </div>
                             </div>
@@ -214,24 +213,20 @@
                                     <div class="checkbox">
                                         <label><input type="checkbox" name="PD_TpCd" value="01" disabled>Rice
                                             acreage</label>
-                                        <!-- </div>
-                                        <div class="checkbox"> -->
                                         &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
                                         &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
                                         &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                                        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                        &nbsp&nbsp&nbsp&nbsp&nbsp
                                         <label><input type="checkbox" name="PD_TpCd" value="02" disabled>Rice
                                             growth</label>
                                     </div>
                                     <div class="checkbox">
                                         <label><input type="checkbox" name="PD_TpCd" value="03" disabled>Rice
                                             yield</label>
-                                        <!-- </div>
-                                        <div class="checkbox"> -->
                                         &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
                                         &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
                                         &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
-                                        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
+                                        &nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp&nbsp
                                         <label><input type="checkbox" name="PD_TpCd" value="04" disabled>Rice
                                             drought</label>
                                     </div>
@@ -280,10 +275,10 @@
                         <table class="table table-bordered table-condensed"
                                align="center" cellpadding="0" cellspacing="0">
                             <thead>
-                            <tr>
-                                <th style="border-bottom: none;"><input type="checkbox"
+<!--                             <tr>
+                                 <th style="border-bottom: none;"><input type="checkbox"
                                                                         align="center">Select
-                                </th>
+                                </th>  -->
                                 <th style="border-bottom: none;">Start date</th>
                                 <th style="border-bottom: none;">End date</th>
                                 <th style="border-bottom: none;">Zone code</th>
@@ -295,15 +290,15 @@
                             <tbody>
                             <%for(x in blogPage.list){ %>
                             <tr>
-                                <td style="text-align: center;"><input type="checkbox" class="reportDownloadCheckbox"
-                                                                       name="${x.id}" value="${x.download_path}"></td>
+ <!--                                <td style="text-align: center;"><input type="checkbox" class="reportDownloadCheckbox"
+                                                                       name="${x.id}" value="${x.download_path}"></td> -->
                                 <td style="text-align: center;">${x.start_time}</td>
                                 <td style="text-align: center;">${x.end_time}</td>
                                 <td style="text-align: center;">${x.zone_code}</td>
                                 <td style="text-align: center;">${x.pdt_type}</td>
                                 <td style="text-align: center;">${x.suffix}</td>
                                 <td style="text-align: center;">
-                                    <a href="/jf/thairice/t10pdt_report/delete/?id=${x.id}&filepath=${x.download_path}">delete</a>
+                                    <a onclick = "batchDelete(${x.id},  ${blogPage.pageNumber})" >delete </a>
                                     <a href="${x.download_path}" target="_blank">download</a>
                                 </td>
                             </tr>
@@ -355,7 +350,7 @@
                 </div>
             </div>
             <div class="modal-footer" style="text-align:center;">
-                <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <button class="btn btn-secondary" style="background-color: #0c7897;color: white;" type="button" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -376,13 +371,13 @@
                         <label class="col-sm-3 control-label">New password</label>
                         <div class="col-sm-9">
                             <input type="password" name="pwd" class="form-control"
-                                   placeholder="The passwords must be at least 2 kinds of letters, numbers and symbols">
+                                   placeholder="It contains at least 2 kinds of letters, numbers and symbols">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3 control-label">Re-enter password</label>
                         <div class="col-sm-9">
-                            <input type="password" class="form-control" name="again"
+                            <input type="password" class="form-control" id="again" name="again"
                                    placeholder="Re-enter new password">
                         </div>
                     </div>
@@ -392,7 +387,7 @@
                         <div class="col-sm-9">
                             <div class="input-group">
                                 <input type="email" class="form-control"
-                                       placeholder="your E-mai like someone@exmaple.com" name="email" id="email"
+                                       placeholder="Your E-mai like someone@exmaple.com" id="email" name="email" 
                                        value="${user.email}" readonly>
                                 <span class="input-group-addon" id="send_email"
                                       style="background-color:#5cb85c;color: #fff;background-color: #5cb85c;cursor: pointer;">Send authorization code</span>
@@ -409,8 +404,8 @@
                 </form>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-primary system_btn" id="pass_btn" type="button">Submit</button>
                 <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+                <button class="btn btn-primary system_btn" id="pass_btn" type="button">Submit</button>
             </div>
         </div>
     </div>
@@ -427,7 +422,9 @@
 <script src="${cxt!}/ui/thairice/JS/bootstrapValidator.js"></script>
 <script type="text/javascript" src="${cxt!}/ui/thairice/common.js"></script>
 <script>
-
+	var time = 60; //1分钟倒计时
+	var flage=true;//倒计时标识
+	var countdown;//倒计时对象
     $("#navbar_user").addClass("active");
     if ('${PersonInfoOrMyreport!}' == 1) {
         $("#personInfotab").removeClass("active");
@@ -459,10 +456,34 @@
     })
     //发送邮箱授权码
     $('#send_email').click(function () {
-        sendAjax("${cxt!}/jf/thairice/t3user/send_code", {email: $("#email").val()}, function (res) {
-            showMessage(res.desc);
-        });
-    })
+		if(flage){
+	        sendAjax("${cxt!}/jf/thairice/t3user/send_code", {email: $("#email").val()}, function (res) {
+	        showMessage(res.desc);
+			//一分钟倒计时
+			countdown = setInterval(function() {
+				time--;
+				if(time == 0) {
+					flage=true;
+					$('#send_email').text("Send verification code");
+					time=60;
+					clearInterval(countdown);
+				} else {
+					flage=false;
+					$('#send_email').text('Resend verification code(' + time + ')');
+				}
+			}, 1000)	
+	 	}); 
+	  }
+   })	
+    //恢复默认值
+     $(function () { $('#passwordModal').on('hide.bs.modal', function () {
+   		 $("#edit_pass").bootstrapValidator('resetForm');
+   		 clearInterval(countdown);
+   		 flage=true;
+   		 $('#send_email').text("Send verification code");
+   		 time=60;
+          })
+       }); 
     //修改密码
     $('#pass_btn').click(function () {
         $("#edit_pass").bootstrapValidator('validate');
@@ -578,8 +599,7 @@
                 $("#area").html(optionstring);
             });
         }
-    }
-
+    };
     //修改密码参数校验 
     $("#edit_pass").bootstrapValidator({
         message: 'This value is not valid',
@@ -597,32 +617,60 @@
                     },
                     regexp: {
                         regexp: /^(?![\d]+$)(?![a-zA-Z]+$)(?![^\da-zA-Z]+$).{6,20}$/,
-                        message: 'The passwords must contain at least 2 kinds of letters, numbers and symbols and the length is 6-20 characters'
+                        message: 'It contain at least 2 kinds of letters, numbers and symbols and the length is 6-20 characters'
+                    },
+                    identical: {//相同
+                        field: 'again',
+                        message: 'Two input password must be consistent'
                     }
-                }
-            },
+				 }
+      		},
             'again': {
-                message: 'Password is invalid',
+                message: 'The password is invalid',
                 validators: {
                     notEmpty: {
                         message: 'The password is required and can\'t be empty'
                     },
                     identical: {//相同
                         field: 'pwd',
-                        message: ' Two input password must be consistent'
+                        message: 'Two input password must be consistent'
                     }
                 }
             },
             'code': {
-                message: 'Password is invalid',
+                message: 'The verification code is invalid',
                 validators: {
                     notEmpty: {
-                        message: 'Verification code is required and can\'t be empty'
+                        message: 'The verification code is required and can\'t be empty'
                     }
                 }
             }
         }
-    });
+    })/* .on('error.validator.bv', function (e, data) {//这个方法是让错误信息只显示最新的一个（有时会出现多个错误信息同时显示用这个方法解决）
+		    data.element
+		    .data('bv.messages')
+		    // Hide all the messages
+		    .find('.help-block[data-bv-for="' + data.field + '"]').hide()
+		    // Show only message associated with current validator
+		    .filter('[data-bv-validator="' + data.validator + '"]').show();
+		}) */
+  	.on('error.field.bv', function (e, data) {//‘用户确认密码’ 没输入的时候，‘用户新密码’不提示‘用户新密码与确认密码不一致’
+		// $(e.target)  --> The field element
+		// data.bv      --> The BootstrapValidator instance
+		// data.field   --> The field name
+		// data.element --> The field element
+		if (data.field == 'pwd') {
+		  var len1 = data.element.val().length;
+		  var len2 = $('#again').val().length;
+		  var k = data.element.val().indexOf(" ");
+		  if (len1 > 5 && len2 < 6 && k < 0) {
+		    var $parent = data.element.parents('.form-group');
+		    $parent.removeClass('has-error');
+		    $parent.find('.form-control-feedback[data-bv-icon-for="' + data.field + '"]').hide();
+		    data.element.siblings('[data-bv-validator="identical"]').hide();
+		  }
+		}
+	});
     //修改个人信息参数校验 
     $("#info").bootstrapValidator({
         message: 'This value is not valid',
@@ -636,20 +684,86 @@
             't3user.phone': {
                 validators: {
                     notEmpty: {
-                        message: 'Phone is required and can\'t be empty'
+                        message: 'The mobile is required and can\'t be empty'
                     },
-                    stringLength: {
-                        /*长度提示*/
-                        min: 6,
-                        max: 12,
-                        message: 'Mobile  length is 10'
-                    },
+/*                     stringLength: {
+                                                                       长度提示
+						min : 1,
+						max : 11,
+						message : 'The mobile length is 10'
+                    }, */
                     regexp: {
                         regexp: /^0\d{9}$/,
-                        message: 'Mobile number is not correct '
+                        message: 'The mobile is invalid'
                     }
+                }
+            },
+            't3user.email': {
+                validators: {
+                    notEmpty: {
+                        message: 'The email address is required and can\'t be empty'
+                    },
+                    emailAddress: {
+                        message: 'The input is not a valid email address'
+                    }/* ,
+                    remote: {//ajax验证。server result:{"valid",true or false}
+                        url: '/jf/thairice/t3user/valiMailBox',
+                        message: 'The email address has already exist',
+                        delay: 2000,
+                        type: 'POST',
+                        //自定义参数
+                        data: {
+                            mailBox: function () {
+                                return $('input[name="t3user.email"]').val();
+                            }
+                        }
+                    } */
+                }
+            },
+            't3user.name_': {
+                validators: {
+                    notEmpty: {
+                        message: 'The nickname is required and can\'t be empty'
+                    },
+    	            stringLength: {
+    	                min: 1,
+    	                max: 180,
+    	                message: 'The nickname cannot exceed 180 characters'
+    	            }
                 }
             }
         }
     });
+    //批量删除
+    function batchDelete(id, pageNum)
+    {
+    	var url = '/jf/thairice/t10pdt_report/delete';  	  
+    	$.ajax({
+    		  type: 'POST',
+    		  url: url,
+    	      dataType: "json",
+    	      traditional: true,
+    		  data: {id:id},
+    		  success: function(res){
+    			if(res.code == "0000"){
+    				alert(res.desc);
+    				window.location.href="/jf/thairice/t10pdt_report/" + pageNum;
+    			} else {
+    				alert(res.desc);
+    			}
+    		  },
+    		  dataType: "json"
+    		});
+    }
 </script>
+<!-- <script>
+//更新最新消息
+setInterval("lx()",2000);
+function lx(){
+	sendAjax("${cxt!}/jf/thairice/t3user/refresh",null,function(res){
+  		 $('#count').html(res.count);
+  		_table.draw();
+  	 });
+}
+</script>  -->
+

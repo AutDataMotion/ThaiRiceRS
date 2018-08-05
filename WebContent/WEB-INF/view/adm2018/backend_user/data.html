@@ -1,7 +1,7 @@
 <% var cssSec={ %>
 <style>
 .input-group{width: 250px;float: right;}
-table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td{vertical-align: middle;text-align: center;}
+table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td{vertical-align: middle;text-align: left;}
 .even{background-color: rgb(219, 239, 246)!important;}
 </style>
 <% }; %>
@@ -11,7 +11,7 @@ table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td
             <div class="data-btns" style="margin-top: -50px;">
                 <button type="button" class="btn btn-success btn-sm" onclick="op('add')"><i class="glyphicon glyphicon-plus"></i>Add</button>
                 <button type="button" class="btn btn-warning btn-sm" onclick="op('edit')"><i class="glyphicon glyphicon-edit"></i>Edit</button>
-                <button type="button" class="btn btn-info btn-sm"   onclick="op('export')" style="width: auto;float: right;"><i class="glyphicon glyphicon-log-in"></i>Export to Excel</button>
+                <button type="button" class="btn btn-info btn-sm"   onclick="op('export')" style="width: auto;float: right;background-color: #337ab7;"><i class="glyphicon glyphicon-download-alt"></i>Export to Excel</button>
                 <button type="button" class="btn btn-danger btn-sm" id="btn-del"><i class="glyphicon glyphicon-trash"></i>Delete</button>
                 <button type="button" class="btn btn-primary btn-sm" onclick="javascript:location.replace(location.href);"><i class="glyphicon glyphicon-refresh"></i>Refresh</button>
             </div>
@@ -19,7 +19,7 @@ table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td
                 <!--搜索-->
                 <div class="input-group">
                     <input type="text" id="search" class="form-control" placeholder="Content">
-                    <span class="input-group-btn"><button id="btn_search" class="btn btn-primary" type="button">Search</button></span>
+                    <span class="input-group-btn"><button id="btn_search" class="btn btn-primary" type="button"><i class="glyphicon glyphicon-search"></i>Search</button></span>
                 </div>
                 <table class="table table-bordered data-table" id="dataTable01" width="100%" cellspacing="0"
                        align="center">
@@ -46,7 +46,7 @@ table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td
             <div class="modal-body">
                 <form class="form-horizontal" id="addForm">
                     <div class="alert alert-success">
-             All operator initial passwords are:123456
+             All operator initial passwords are:123456opr
                     </div>
                     <div class="form-group">
                         <label class="col-md-3 control-label" style="width:120px;">* Account</label>
@@ -63,13 +63,13 @@ table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td
                     <div class="form-group">
                         <label class="col-md-3 control-label" style="width:120px;">* Email</label>
                         <div class="col-md-9" style="width:470px;">
-                            <input type="email" class="form-control" placeholder="jone@example.com" id="email" name="t3user.email">
+                            <input type="email" class="form-control" placeholder="Your Email like someone@exmaple.com" id="email" name="t3user.email">
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-md-3 control-label" style="width:120px;">* Nickname</label>
                         <div class="col-md-9" style="width:470px;">
-                            <input type="text" class="form-control" placeholder="Yingluck Chinnawat" id="name_" name="t3user.name_">
+                            <input type="text" class="form-control" placeholder="Your nickname" id="name_" name="t3user.name_">
                         </div>
                     </div>
                     <div class="form-group">
@@ -81,23 +81,15 @@ table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td
                     <div class="form-group">
                         <label class="col-md-3 control-label" style="width:120px;">Address</label>
                         <div class="col-md-9" style="width:470px;">
-                            <input type="text" class="form-control" placeholder="Address" id="address" name="t3user.address" >
+                            <input type="text" class="form-control" placeholder="Your address" id="address" name="t3user.address" >
                         </div>
                     </div>
-               <!--      <div class="form-group">
-                        <label class="col-md-3 control-label" style="width:120px;">Industry</label>
-                        <div class="col-md-9" style="width:470px;">
-                            <select class="form-control" name="t3user.industry" id="industry">
-                                <option value="agricultural">Agricultural</option>
-                            </select>
-                        </div>
-                    </div> -->
                     <input type="hidden" id="userid" name="t3user.id">
                 </form>
             </div>
             <div class="modal-footer">
+            	<button class="btn btn-default" type="button" data-dismiss="modal">Cancel</button>
                 <button class="btn btn-primary" type="button"  onclick="save()">Ok</button>
-                <button class="btn btn-default" type="button" data-dismiss="modal">Cancel</button>
             </div>
         </div>
     </div>
@@ -118,10 +110,10 @@ table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td
     var columns = [
         CONSTANT.DATA_TABLES.COLUMN.CHECKBOX,
         {"data": "account", orderable: false},
-        {"data": "phone"},
+        {"data": "phone", orderable: false},
         {"data": "email", orderable: false},
         {"data": "name_", orderable: false},
-        {"data": "create_time", orderable: false},
+        {"data": "create_time"},
         ]
     //初始化表格
     var _table = table.initTable($wrapper, $table, '${cxt!}/jf/thairice/admin/user/operator_list', columns);
@@ -168,7 +160,7 @@ table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td
         		window.location.href="${cxt!}/jf/thairice/admin/user/export_operator?select=all";
         	}else{
         		if(ids.length==0){
-        			layer.msg("Please choose at least one record", {icon: 2});
+        			layer.msg("Please choose at least one record", {icon:7});
         			return;
         		 }
         		window.location.href="${cxt!}/jf/thairice/admin/user/export_operator?select=zd&ids="+ids;
@@ -231,15 +223,16 @@ table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td
             't3user.account': {
                 validators: {
                     notEmpty: {
-                        message: 'The account is  required and can\'t be empty '
+                        message: 'The account is required and can\'t be empty'
                     },
                     regexp: {
                    	 regexp: /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,12}$/,
                        message: 'The account is made up of 6 to 12 letters and Numbers'
                    },
+                   //threshold :  6 , 
                     remote: {//ajax验证。server result:{"valid",true or false}
                         url: '${cxt!}/jf/thairice/t3user/valiUserName',
-                        message: 'The user has already exist!',
+                        message: 'The account has already exist',
                         delay: 2000,
                         type: 'POST',
                         //自定义参数
@@ -247,7 +240,7 @@ table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td
                             userName: function () {
                                 return $('input[name="t3user.account"]').val();
                             }
-                        }
+                       	}
                     }
                 }
             },
@@ -258,7 +251,7 @@ table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td
                 },
                 regexp: {
                     regexp: /^0\d{9}$/,
-                    message: 'The mobile format is not correct'
+                    message: 'The mobile format is invalid'
                 }
             }
         },
@@ -270,13 +263,31 @@ table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td
                 emailAddress: {
                     message: 'The input is not a valid email address'
                 }
+                /*  ,
+                    remote: {//ajax验证。server result:{"valid",true or false}
+                    url: '/jf/thairice/t3user/valiMailBox',
+                    message: 'The email address has already exist',
+                    delay: 2000,
+                    type: 'POST',
+                    //自定义参数
+                    data: {
+                        mailBox: function () {
+                            return $('input[name="t3user.email"]').val();
+                        }
+                    }
+                } */
             }
         },
         't3user.name_': {
             validators: {
                 notEmpty: {
-                    message: 'The nickname is  required and can\'t be empty'
-                }
+                    message: 'The nickname is required and can\'t be empty'
+                },
+	            stringLength: {
+	                min: 1,
+	                max: 180,
+	                message: 'The nickname cannot exceed 180 characters'
+	            }
             }
         }
       }

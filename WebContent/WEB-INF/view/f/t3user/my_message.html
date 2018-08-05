@@ -37,17 +37,17 @@
              <!--搜索-->
                 <div class="input-group">
                     <input type="text" id="search" class="form-control" placeholder="Content">
-                    <span class="input-group-btn"><button id="btn_search" class="btn btn-primary" type="button">Search</button></span>
+                    <span class="input-group-btn"><button id="btn_search" class="btn btn-primary" type="button"><i class="glyphicon glyphicon-search"></i>Search</button></span>
                 </div>
-            <table class="table table-bordered data-table" id="dataTable01" align="center" cellpadding="0" cellspacing="0">
+            <table class="table table-bordered data-table" id="dataTable01" style="word-wrap:break-word;word-break:break-all;" align="center" cellpadding="0" cellspacing="0">
                 <thead>
                 <tr>
                     <th width="4%" style="border-bottom:none;text-align:center;"><input type="checkbox" name="cb-check-all">  All</th>
-                    <th width="8%" style="border-bottom:none;text-align:center;">Type</th>
-                    <th style="border-bottom:none;text-align:center;">Content</th>
-                    <th width="4%" style="border-bottom:none;text-align:center;">Status</th>
+                    <th width="10%" style="border-bottom:none;text-align:center;">Type</th>
+                    <th width="62%"style="border-bottom:none;text-align:center;">Content</th>
+                    <th width="5%" style="border-bottom:none;text-align:center;">Status</th>
                     <th width="12%" style="border-bottom:none;text-align:center;">Received time</th>
-                    <th width="6%" style="border-bottom:none;text-align:center;">View</th>
+                    <th width="7%" style="border-bottom:none;text-align:center;">View</th>
                 </tr>
                 </thead>
             </table>
@@ -75,12 +75,12 @@
                     <input type="hidden" id="status_" name="r4message_send.status_">
                     <div class="form-group">
                         <label>Details</label>
-                        <textarea class="form-control" readonly id="content" rows="7" placeholder="0/400" style="resize:none;"></textarea>
+                        <textarea class="form-control" readonly id="content" rows="7" placeholder="0/65536" style="resize:none;"></textarea>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-default" type="button" data-dismiss="modal">Close</button>
+                <button class="btn btn-primary" type="button" data-dismiss="modal">Close</button>
             </div>
         </div>
     </div>
@@ -98,7 +98,7 @@ $("#navbar_user").addClass("active");
     var $table = $('#dataTable01');
     var columns = [
         CONSTANT.DATA_TABLES.COLUMN.CHECKBOX,
-     	 { "data": null,render: function (data, type, row, meta) {
+     	 { "data": null,orderable: false,render: function (data, type, row, meta) {
     	  if(data.type_=='01'){
     		  return 'Notice';
     	  }else if (data.type_=='02'){
@@ -108,17 +108,17 @@ $("#navbar_user").addClass("active");
     	  }
      	}},
         {"data": "content", orderable: false},
-        { "data": null,render: function (data, type, row, meta) {
+        { "data": null,orderable: false,render: function (data, type, row, meta) {
         	  if(data.status_=='01'){
         		  return '<span style="color:red;">Unread</span>'
         	  }else{
         		  return '<span style="color:blue;">Read</span>'
         	  }
         }},
-        {"data": "add_time", orderable: false},
-        {"data": null, width: 50,
+        {"data": "add_time"},
+        {"data": null, orderable: false, width: 50,
             render: function (data, type, row, meta) {
-                return '<button type="button" class="btn btn-success view">view</button>'
+                return '<button type="button" class="btn btn-success view"><i class="glyphicon glyphicon-eye-open"></i>View</button>'
             }
         }
     ];
@@ -133,9 +133,10 @@ $("#navbar_user").addClass("active");
     $("#btn_search").click(function () {
         _table.draw();
     });
+    
   //设置全部已读
     $("#all_read").click(function () {
-        layer.confirm('Make sure to mark all messages as read', {icon: 3,title:'Tips',btn: ['Ok','Cancel']}, function (index) {
+        layer.confirm('Make sure to mark all messages as read', {icon: 3,title:'Tips',btn: ['OK','Cancel']}, function (index) {
             sendAjax("${cxt!}/jf/thairice/t3user/all_read",null,function(res){
                 showMessage(res.desc);
                 if(res.code==1){
@@ -150,7 +151,7 @@ $("#navbar_user").addClass("active");
     });
     //清空全部消息
     $("#empty").click(function () {
-        layer.confirm('Make sure to clear all messages?', {icon: 2,title:'prompt',btn: ['confirm','cancel']}, function (index) {
+        layer.confirm('Make sure to clear all messages', {icon: 2,title:'prompt',btn: ['Cancel','Confirm']}, function (index) {
             sendAjax("${cxt!}/jf/thairice/t3user/empty_message",null,function(res){
                 showMessage(res.desc);
                 if(res.code==1){

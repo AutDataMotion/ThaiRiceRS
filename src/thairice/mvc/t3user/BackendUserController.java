@@ -65,8 +65,7 @@ public class BackendUserController extends BaseController {
             setSessionAttr("admin", user);
             T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), account, "Login", "Login successful");
             renderJson(new Result(1, "Login successful"));
-        } else {
-            T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), account, "Login", "Invalid password. Please try again");
+        }else {
             renderJson(new Result(0, "Invalid password. Please try again"));
         }
     }
@@ -138,13 +137,22 @@ public class BackendUserController extends BaseController {
      * 导出用户
      */
     public void export() {
+	List<ExcelExportUtil.Pair> titles = new ArrayList<ExcelExportUtil.Pair>();
+	titles.add(new ExcelExportUtil.Pair("account", "Account"));
+	titles.add(new ExcelExportUtil.Pair("phone", "Mobile"));
+	titles.add(new ExcelExportUtil.Pair("email", "Email"));
+	titles.add(new ExcelExportUtil.Pair("name_", "Nickname"));
+	titles.add(new ExcelExportUtil.Pair("Prdt_EfDt", "Prdt_EfDt"));
+	titles.add(new ExcelExportUtil.Pair("PD_ExDat", "PD_ExDat"));
+	titles.add(new ExcelExportUtil.Pair("PD_TpCd", "PD_TpCd"));
+	
         // 全部导出
         if (getPara("select").equals("all")) {
             List<T3user> rates = service.selectUsers();
-            ExportService.service.export("Export user data", "thairice.t3user", getResponse(), getRequest(), rates);
+            ExportService.service.exportDiy(titles,"Export user data", "thairice.t3user", getResponse(), getRequest(), rates);
         } else {
             List<T3user> rates = service.selectUsersByChoose(getPara("ids"));
-            ExportService.service.export("Export user data", "thairice.t3user", getResponse(), getRequest(), rates);
+            ExportService.service.exportDiy(titles,"Export user data", "thairice.t3user", getResponse(), getRequest(), rates);
         }
         renderNull();
     }
@@ -153,13 +161,19 @@ public class BackendUserController extends BaseController {
      * 导出操作员
      */
     public void export_operator() {
+	List<ExcelExportUtil.Pair> titles = new ArrayList<ExcelExportUtil.Pair>();
+	titles.add(new ExcelExportUtil.Pair("account", "Account"));
+	titles.add(new ExcelExportUtil.Pair("phone", "Mobile"));
+	titles.add(new ExcelExportUtil.Pair("email", "Email"));
+	titles.add(new ExcelExportUtil.Pair("name_", "Nickname"));
+	titles.add(new ExcelExportUtil.Pair("create_time", "Create time"));
         // 全部导出
         if (getPara("select").equals("all")) {
             List<T3user> rates = service.selectOperators();
-            ExportService.service.export("Export operator data", "thairice.t3user", getResponse(), getRequest(), rates);
+            ExportService.service.exportDiy(titles,"Export operator data", "thairice.t3user", getResponse(), getRequest(), rates);
         } else {
             List<T3user> rates = service.selectOperatorsByChoose(getPara("ids"));
-            ExportService.service.export("Export operator data", "thairice.t3user", getResponse(), getRequest(), rates);
+            ExportService.service.exportDiy(titles,"Export operator data", "thairice.t3user", getResponse(), getRequest(), rates);
         }
         renderNull();
     }
@@ -183,8 +197,8 @@ public class BackendUserController extends BaseController {
         try {
             if (user.getId() == null) {
                 user.setCreate_time(new Timestamp(new Date().getTime()));
-                // 初始密码为123456,后期系统操作员自行修改
-                user.setPwd(HashKit.md5("123456"));
+                // 初始密码为123456opr,后期系统操作员自行修改
+                user.setPwd(HashKit.md5("123456opr"));
                 user.setType_("02");
                 user.setStatus_("02");
                 user.setZip_encode("00000");
@@ -257,6 +271,13 @@ public class BackendUserController extends BaseController {
         T3user user = getModel(T3user.class);
         user.set("Prdt_EfDt", getPara("Prdt_EfDt"));
         user.set("PD_ExDat", getPara("PD_ExDat"));
+        long day = TimeUtil.dateDiff(TimeUtil.getNow(),getPara("PD_ExDat"), "yyyy-MM-dd", "d");
+        System.out.println(day);
+        if(day<0) {
+            user.setStatus_("04");
+        }else {
+            user.setStatus_("02");
+        }
         String cd[] = getParas("PD_TpCd");
         String l = "";
         for (String str : cd) {
@@ -264,7 +285,9 @@ public class BackendUserController extends BaseController {
         }
         user.set("PD_TpCd", l);
         user.set("area", getPara("province") + " " + getPara("city") + " " + getPara("area"));
+        
         user.use(ConstantInitMy.db_dataSource_main).update();
+       
         T3user admin = getSessionAttr("admin");
         T2syslogService.addLog(EnumT2sysLog.INFO, admin.getId(), admin.getAccount(), "audit", "Operation succeeded");
         renderJson(new Result(1, "Operation succeeded"));

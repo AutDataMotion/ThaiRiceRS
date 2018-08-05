@@ -10,6 +10,7 @@ import java.util.List;
 import java.util.Map;
 
 import org.apache.log4j.Logger;
+import org.eclipse.jetty.util.log.Log;
 
 import com.jfinal.aop.Before;
 import com.jfinal.aop.Clear;
@@ -19,10 +20,12 @@ import com.platform.constant.ConstantRender;
 import com.platform.mvc.base.BaseController;
 
 import csuduc.platform.util.ReportUtil;
+import thairice.entity.ResultEntity;
 import thairice.mvc.t14my_region.t14my_region;
 import thairice.mvc.t14my_region.t14my_regionService;
 import thairice.mvc.t3user.T3user;
 import thairice.mvc.t3user.T3userService;
+import thairice.mvc.t6org_data.T6org_data;
 
 
 /**
@@ -114,13 +117,13 @@ public class T10pdt_reportController extends BaseController {
 			setAttr("user", srv.SelectById(user.getBigInteger("id")));
 			setAttr("count", srv.getCount(user.getBigInteger("id")));
 		}
-		Page page  = T10pdt_report.dao.paginate(getParaToInt(0, 1), 10, "select t.start_time, t.end_time, t.zone_code,(case t.pdt_type \r\n" + 
+		Page page  = T10pdt_report.dao.paginate(getParaToInt(0, 1), 10, "select t.id, t.start_time, t.end_time, t.zone_code,(case t.pdt_type \r\n" + 
 				"when '01' then 'Area monitoring' \r\n" + 
 				"when '02' then 'Growth monitoring'\r\n" + 
 				"when '03' then 'Estimated production'\r\n" + 
 				"when '04' then 'Drought monitoring'\r\n" + 
 				"else ''\r\n" + 
-				"end) as pdt_type, t.suffix", "from T10pdt_report order by id asc");
+				"end) as pdt_type, (case t.suffix when '01' then 'WORD' when '02' then 'PDF' else '' end) as suffix", "from T10pdt_report t order by id asc");
 		setAttr("blogPage",page );
 		setAttr("PersonInfoOrMyreport", 1);
 		setAttr("queryAllParm", "active");
@@ -195,13 +198,30 @@ public class T10pdt_reportController extends BaseController {
 //		T10pdt_reportService.service.deleteById("t10pdt_report", getPara() == null ? ids : getPara());	//serial int id
 //		redirect(pthc);
 		String id = getPara("id");
-		if(ReportUtil.deleteReportFileByFileUrl(getCxt(),getPara("filepath")))//删除文件
-		{
-			if(T10pdt_report.dao.deleteById(getPara("id") == null ? ids : id))//删除数据库记录
-			{
-				redirect(pthc);
-			}
+		// 处理结果
+		ResultEntity res = null;
+		try {
+			T10pdt_report.dao.deleteById(id);
+			res = new ResultEntity("0000");
+			renderJson(res);
+		} catch (Exception e) {
+			res = new ResultEntity("0014");
+			renderJson(res);
 		}
+		
+/*		String id = getPara("id");
+		if(T10pdt_report.dao.deleteById(getPara("id") == null ? ids : id))//删除数据库记录
+		{
+			renderJson("success");
+		}*/
+		
+//		if(ReportUtil.deleteReportFileByFileUrl(getCxt(),getPara("filepath")))//删除文件
+//		{
+//			if(T10pdt_report.dao.deleteById(getPara("id") == null ? ids : id))//删除数据库记录
+//			{
+//				redirect(pthc);
+//			}
+//		}
 //		if(T10pdt_report.dao.deleteById(getPara() == null ? ids : getPara()))
 //		{
 //			String filepath = getPara("filepath");
