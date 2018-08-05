@@ -5,7 +5,7 @@
  */
 package thairice.rpcjob;
 
-import java.util.Collections;
+import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -15,20 +15,16 @@ import org.apache.commons.collections4.CollectionUtils;
 
 import com.google.common.base.Joiner;
 import com.google.common.collect.Lists;
-import com.google.common.collect.Maps;
-import com.google.common.eventbus.SubscriberExceptionContext;
 import com.jfinal.log.Logger;
-import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Record;
 import com.jfinal.plugin.cron4j.ITask;
-import com.mysql.fabric.xmlrpc.base.Data;
-import com.sun.org.apache.bcel.internal.generic.NEW;
 
 import RPCRice.PreProcess;
 import csuduc.platform.util.ComUtil;
 import csuduc.platform.util.timeUtils.GenerTimeStamp;
+import csuduc.platform.util.tuple.Tuple2;
+import csuduc.platform.util.tuple.TupleUtil;
 import thairice.config.ConfMain;
-import thairice.config.MyConfig;
 import thairice.constant.EnumStatus;
 import thairice.mvc.t12preprocessinf.T12PreProcessInf;
 import thairice.mvc.t6org_data.T6org_data;

@@ -5,6 +5,7 @@
  */
 package thairice.rpcjob;
 
+import java.math.BigInteger;
 import java.util.List;
 
 import org.apache.commons.collections4.CollectionUtils;
@@ -15,6 +16,8 @@ import com.jfinal.plugin.cron4j.ITask;
 import RPCRice.ClassifyA;
 import RPCRice.ClassifyB;
 import csuduc.platform.util.ComUtil;
+import csuduc.platform.util.tuple.Tuple2;
+import csuduc.platform.util.tuple.TupleUtil;
 import thairice.constant.EnumStatus;
 import thairice.mvc.t12preprocessinf.T12PreProcessInf;
 

@@ -33,4 +33,14 @@ public class ExportService{
 		}
 		ExcelExportUtil.exportByRecord(response, request, name, titles , records);
 	}
+	/**
+	 * 自定义导出数据
+	 * @param response
+	 * @param request
+	 * @param records
+	 */
+	public <M extends Model<M>> void exportDiy(List<ExcelExportUtil.Pair> titles,String name, String tb,HttpServletResponse response, HttpServletRequest request,  List<M> records) {
+	
+		ExcelExportUtil.exportByRecord(response, request, name, titles , records);
+	}
 }

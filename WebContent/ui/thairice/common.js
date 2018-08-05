@@ -72,7 +72,7 @@ function sendAjax(url, param, callback) {
 function deleteRows(url, $table, _table) {
     var ids = $("tbody :checkbox:checked", $table).size();
     if (ids > 0) {
-        layer.confirm('Please confirm whether the record is deleted', {icon: 3,title:'Tips',btn: ['Ok','Cancel']}, function (index) {
+        layer.confirm('Please confirm whether the record is deleted', {icon: 3,title:'Tips',btn: ['OK','Cancel']}, function (index) {
             var list = [];
             $("tbody :checkbox:checked", $table).each(function (i) {
                 var item = _table.row($(this).closest('tr')).data();

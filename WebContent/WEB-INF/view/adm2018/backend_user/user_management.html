@@ -1,19 +1,18 @@
 <% var cssSec={ %>
 <style>
- .mm{margin-left: 215px;position: absolute;z-index: 1;}
  .error {color: red;font-weight: bold;}
  .success {color: #5bb85d;font-weight:bold;}
  .expired {color: #337ab7;font-weight: bold;}
  .head{width: 40px;height: 40px;border-radius: 50%;}
  .bc{width: 70px;height:35px;}
- table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td{vertical-align: middle;text-align: center;}
+ table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td{vertical-align: middle;text-align: left;}
 .even{background-color: rgb(219, 239, 246)!important;}
 
         .list{padding: 10px;margin-top: -16px;}
 	    .list .item{border-bottom: 1px dashed darkgray;padding: 10px;}
 	    .del{float: right;color: red;cursor: pointer;}
         .del1{color: red;}
-	    .btn-group-lg>.btn, .btn-lg{padding: 6px 16px;font-size: 12px;margin-top: -35px;float: right;margin-right:-10px;}
+	    .btn-group-lg>.btn, .btn-lg{padding: 7px 19px;font-size: 14px;margin-top: -34px;float: right;margin-right:-50px;}
 	    .pp{padding:10px;border-bottom: 1px solid #d1d1d1;}
  .nowrap {
      text-overflow: ellipsis; /* for IE */
@@ -27,36 +26,51 @@
     overflow: visible;
     white-space: normal;
 }
+.f{display: flex;text-align:left;}
+.f .c{flex: 1;text-align:left;width: 96px;}
  
 </style>
 <% }; %>
-
+<link type="text/css" rel="stylesheet" href="${cxt!}/ui/thairice/CSS/bootstrapValidator.css">
 <% var contSec={ %>
   <!-- ----------------------------------------------------------------------- -->
             <div class="user_query" style="margin-top: -53px;">
-                <form id="form" class="form-inline" style="margin:15px 0 15px 0;">
+                <form id="form" class="form-inline" style="margin:4px 0 -8px 0;">
                     <div class="form-group">
                         <input type="text" id="username" placeholder="Account" class="form-control">
                     </div>
                     <div class="form-group">
-                        <label class="control-label">From</label>
+                        <label class="control-label" style="margin-right: 19px;">From</label>
                         <div class="input-group" style="width: 160px;" id="start">
                             <input type="text" id="min" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                         </div>
-                        <label class="control-label">To</label>
+                        <label class="control-label" style="margin-left: 13px;margin-right: 13px;">To</label>
                         <div class="input-group" style="width: 160px;" id="start2">
                             <input type="text" id="max" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                         </div>
                     </div>
-<!--                     <div class="form-group" style="margin-right:20px;">
+                    <div class="form-group">
+                        <button type="button" id="btn_search" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i>Search</button>
+                        <button type="button" class="btn btn-primary" style="margin-left:8px;" onclick="open_message(0,2)">
+                            <i class="glyphicon glyphicon-envelope"></i>Broadcast messages
+                        </button>
+                        <button type="button"  class="btn btn-primary"  style="margin-left:8px;" onclick="exp()"><i class="glyphicon glyphicon-download-alt"></i>Export to Excel</button>
+                    </div>
+<!--                <div class="form-group" style="margin-right:20px;">
                         <label>Area</label>
                         <select class="form-control" id="region">
                             <option value="ALL">ALL</option>
                         </select>
                     </div> -->
-                    <div class="form-group">
+                </form>
+            </div>
+            <div class="table-responsive">
+<!--            <div class="mm">
+                <button type="button" class="btn btn-danger btn-sm" id="btn-del"><i class="glyphicon glyphicon-trash"></i>Delete</button>
+                </div> -->
+                   <div class="form-group" style="margin-top: 3px;float: left;">
                         <label>Authorization</label>
-                        <select class="form-control" id="audit">
+                        <select class="form-control" id="audit" style="width: 108px;display: initial;">
                             <option value="">ALL</option>
                             <option value="02">Approved</option>
                             <option value="01">Unauthorized</option>
@@ -64,9 +78,9 @@
                             <option value="04">Expired</option>
                         </select>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" style="margin-top: 3px;float: left;margin-left: 10px;">
                         <label>Products</label>
-                        <select class="form-control" id="type">
+                        <select class="form-control" id="type" style="width: 160px;display: initial;margin-right: 11px;">
                             <option value="">ALL</option>
                             <option value="01">Rice acreage</option>
                             <option value="02">Rice growth</option>
@@ -74,30 +88,17 @@
                             <option value="04">Rice yield</option>
                         </select>
                     </div> 
-                    <div class="form-group">
-                        <button type="button" id="btn_search" class="btn btn-primary">Search</button>
-                        <button type="button" class="btn btn-primary" style="margin-left:15px;" onclick="open_message(0,2)">
-                            Broadcast messages
-                        </button>
-                        <button type="button"  class="btn btn-primary"  style="margin-left:15px;" onclick="exp()">Export to Excel</button>
-                    </div>
-                </form>
-            </div>
-            <div class="table-responsive">
-                <div class="mm">
-<!--                 <button type="button" class="btn btn-danger btn-sm" id="btn-del"><i class="glyphicon glyphicon-trash"></i>Delete</button> -->
-                </div>
                 <table class="table table-bordered data-table" id="dataTable01" width="100%" cellspacing="0">
                     <thead>
                     <tr>
-                        <th width="6%"><input type="checkbox" name="cb-check-all">All</th>
+                        <th width="6%"><input type="checkbox" id="cb-check-all" name="cb-check-all">All</th>
                         <th>Account</th>
                         <th>Mobile</th>
                         <th>Email</th>
                         <th>Service term</th>
                         <th>Products</th>
                         <th>Authorization</th>
-                        <th width="6%">Send a message</th>
+                        <th width="6%">Send</th>
                     </tr>
                     </thead>
                 </table>
@@ -105,7 +106,7 @@
 <!-- approved Modal-->
 <div class="modal fade" id="approved_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog" style="width: 656px;" role="document">
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title" id="modal-title">user service information</h5>
@@ -117,44 +118,44 @@
                 <form id="info" role="form" class="form-horizontal user_form" id="approved_form">
                     <div class="form-group">
                         <label class="col-sm-3">Service area</label>
-                        <div class="col-sm-9">
+                        <div class="col-sm-9" style="margin-left: -49px;">
                                         <div id="custom_data">
-                                         <select class="province" id="province" style="padding: 7px;width: 120px;"  onchange="initaddCityArea('city')"></select>
-                                         <select class="city" id="city" style="padding: 7px;width: 120px;"  onchange="initaddCityArea('area')"></select>
-                                         <select class="area" id="area" style="padding: 7px;width: 120px;"></select>  
+                                         <select class="province" id="province" style="padding: 7px;width: 144px;"  onchange="initaddCityArea('city')"></select>
+                                         <select class="city" id="city" style="padding: 7px;width: 144px;"  onchange="initaddCityArea('area')"></select>
+                                         <select class="area" id="area" style="padding: 7px;width: 144px;"></select>  
                                          </div>
-                                         <button type="button" class="btn btn-primary btn-lg" data-toggle="modal"   data-target="#address">Edit</button>   
+                                         <button type="button" class="btn btn-primary btn-lg" data-toggle="modal"  data-target="#address">Edit</button>   
                         </div>
                     </div>
-                    <div class="form-group">
+                    <div class="form-group" >
                         <label class="col-sm-3">Service term</label>
-                        <label style="margin:0 8px; float:left;">From</label>
+                        <label style="margin:0 9px; float:left; margin-left: -35px; margin-right: 34px;">From</label>
                         <div class="input-group" style="padding-left:1px; width:120px;" id="p1">
                             <input type="text" name="Prdt_EfDt" id="Prdt_EfDt" class="form-control" style="width:100px; margin-right:0;"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                         </div>
-                        <label style="margin:0 7px; float:left;">To</label>
+                        <label style="margin:0 7px; float:left;margin-left: 34px;margin-right: 34px;">To</label>
                         <div class="input-group" style="width:120px;" id="p2">
                             <input type="text" name="PD_ExDat" id="PD_ExDat" class="form-control" style="width:100px; margin-right:0;"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
                         </div>
                     </div>
                     <div class="form-group">
                         <label class="col-sm-3">Products</label>
-                        <div class="col-sm-5">
-                            <label><input type="checkbox" value="01" name="PD_TpCd"> Rice acreage</label><br>
-                            <label><input type="checkbox" value="02" name="PD_TpCd"> Rice growth</label>
+                         <div class="col-sm-9" style="margin-left: -49px;">
+                            <div class="f">
+							<div class="c"><label><input type="checkbox" value="01" name="PD_TpCd">Rice acreage</label></div>
+							<div class="c"><label><input type="checkbox" value="02" name="PD_TpCd">Rice growth</label></div>
+							<div class="c"><label><input type="checkbox" value="03" name="PD_TpCd">Rice yield</label></div>
+							<div class="c"><label><input type="checkbox" value="04" name="PD_TpCd">Rice drought</label></div>
                         </div>
-                        <div class="col-sm-3">
-                            <label><input type="checkbox" value="03" name="PD_TpCd"> Rice yield</label><br>
-                            <label><input type="checkbox" value="04" name="PD_TpCd"> Rice drought</label>
-                        </div>
+                    </div>
                     </div>
                     <input type="hidden" id="userid" name="t3user.id">
                     <input type="hidden" id="status_" name="t3user.status_">
                 </form>
             </div>
             <div class="modal-footer">
+            	<button class="btn btn-default" type="button" data-dismiss="modal">Cancel</button>
                 <button class="btn btn-primary" id="app_btn" type="button" data-dismiss="modal" onclick="edit_info()">Ok</button>
-                <button class="btn btn-default" type="button" data-dismiss="modal">Cancel</button>
             </div>
         </div>
     </div>
@@ -162,7 +163,7 @@
 <!-- message Modal-->
 <div class="modal fade" id="message_modal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
      aria-hidden="true">
-    <div class="modal-dialog" role="document">
+    <div class="modal-dialog" role="document"  >
         <div class="modal-content">
             <div class="modal-header">
                 <h5 class="modal-title">Modify the user service</h5>
@@ -184,13 +185,13 @@
                     <input type="hidden" id="flag" name="t8message.flag" value="1">
                     <div class="form-group">
                         <label>Details</label>
-                        <textarea class="form-control" id="content" name="t8message.content" rows="7" placeholder="0/400" style="resize:none;"></textarea>
+                        <textarea class="form-control" id="content" name="t8message.content" rows="7" placeholder="0/65535" style="resize:none;"></textarea>
                     </div>
                 </form>
             </div>
             <div class="modal-footer">
-                <button class="btn btn-primary" type="button" data-dismiss="modal" onclick="send_message(1)">send</button>
-                <button class="btn btn-default" type="button" data-dismiss="modal">cancel</button>
+                <button class="btn btn-default" type="button" data-dismiss="modal">Cancel</button>
+                <button class="btn btn-primary" type="button" data-dismiss="modal" onclick="send_message(1)">Send</button>
             </div>
         </div>
     </div>
@@ -201,16 +202,16 @@
     <div class="modal-dialog" role="document">
         <div class="modal-content">
             <div class="modal-header">
-                <h5 class="modal-title">Service area</h5>
+                <h5 class="modal-titles" style="margin-top:-1px;line-height: 60px;font-size: 16px;float: left;color: #00aace;">Service area</h5>
                 <button class="close" type="button"  data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
             </div>
             <div class="modal-body">
             <div id="address_data">
             <span style="width: 170px;display:inline-block;">Province</span><span style="width: 160px;display:inline-block;">District</span><span style="width: 160px;display:inline-block;">Subdistrict</span><br>
-            <select class="p" id="p" style="padding: 7px;width: 160px;"  onchange="addCityArea('city')"></select>
-            <select class="c" id="c" style="padding: 7px;width: 160px;"  onchange="addCityArea('area')"></select>
-            <select class="a" id="a" style="padding: 7px;width: 160px;"></select>&nbsp;&nbsp;&nbsp;
-            <a class="btn btn-primary go_btn"  type="button"  onclick="add_address()">Add</a>
+            <select class="p" id="p" style="padding: 7px;width: 162px;"  onchange="addCityArea('city')"></select>
+            <select class="c" id="c" style="padding: 7px;width: 162px;"  onchange="addCityArea('area')"></select>
+            <select class="a" id="a" style="padding: 7px;width: 162px;"></select>
+            <a class="btn btn-primary go_btn"  style="padding: 6px 21px;margin-top: -3px;" type="button"  onclick="add_address()">Add</a>
             </div>
             <!--  <p class="pp">Selected:</p> -->
             <div class="form-group" style="margin-top: 10px;">
@@ -220,7 +221,7 @@
                     <th>Province</th>
                     <th>District</th>
                     <th>Subdistrict</th>
-                    <th>Operation</th>
+                    <th style="width: 15%;">Operation</th>
                 </tr>
                 </thead>
                 <tbody class="list">
@@ -241,6 +242,7 @@
 <script type="text/javascript" src="${cxt!}/ui/thairice/JS/layer/layer.js"></script>
 <script src="${cxt!}/ui/thairice/common.js"></script>
 <script src="${cxt!}/ui/thairice/area/jquery.cxselect.js"></script>
+<script src="${cxt!}/ui/thairice/JS/bootstrapValidator.js"></script>
 <script>
         var userId=0;
    /*      $("#distpicker").distpicker('destroy');
@@ -256,15 +258,15 @@
     var columns = [
         CONSTANT.DATA_TABLES.COLUMN.CHECKBOX,
         {"data": "account", orderable: false},
-        {"data": "phone"},
+        {"data": "phone", orderable: false},
         {"data": "email", orderable: false},
-        {"data": null,render: function (data, type, row, meta) {
+        {"data": null,orderable: false,render: function (data, type, row, meta) {
             return ''+data.prdt_efdt.substring(0,11)+'~~~'+data.pd_exdat.substring(0,11);
         }},
-        {"data": null,render: function (data, type, row, meta) {
+        {"data": null,orderable: false,render: function (data, type, row, meta) {
             return ''+change(data.pd_tpcd);
         }},
-        {"data": null, render: function (data, type, row, meta) {
+        {"data": null,orderable: false,render: function (data, type, row, meta) {
                 if (data.status_ == '01') {
                     return '<button type="button" class="btn btn-success btn-sm audit bc">Approve</button>&nbsp'
                          + '<button type="button" class="btn btn-danger btn-sm bc" onclick="open_message(' + data.id + ',' + 3 + ')">Refuse</button>';
@@ -407,15 +409,12 @@
     		window.location.href="${cxt!}/jf/thairice/admin/user/export?select=all";
     	}else{
     		if(ids.length==0){
-    			layer.msg("Please choose at least one record", {icon: 2});
+    			layer.msg("Please choose at least one record", {icon: 7});
     			return;
     		 }
     		window.location.href="${cxt!}/jf/thairice/admin/user/export?select=zd&ids="+ids;
     	}
     }
-	
-	
-	
 	//初始化服务地区
     function initAddress(){
     	/*sendAjax("${cxt!}/jf/thairice/t3user/region_list",null,function (res) {
@@ -534,7 +533,7 @@
                     '<td class="nowrap">'+item.provincename+'</td>'+
                     '<td class="nowrap">'+cityname+'</td>'+
                     '<td class="nowrap">'+areaname+'</td>'+
-                    '<td class="del1" onclick="del(this,'+item.id+')">Delete</td>'+
+                    '<td class="del1" style="cursor:pointer" onclick="del(this,'+item.id+')">Delete</td>'+
                     '</tr>';
                 $('.list').append(result);
            	  });
@@ -571,8 +570,8 @@
     //删除服务地区
     function del(obj,a1){
     	//询问框
-    	layer.confirm('Please confirm whether you want to delete this record?', {
-    		title: ['Tips'],btn: ['Confirm','Cancel'] //按钮
+    	layer.confirm('Please confirm whether the record is deleted', {
+    		icon: 3,title: ['Tips'],btn: ['OK','Cancel'] //按钮
     	}, function(){
           	$(obj).parent().remove();
           	var ids=a1;
@@ -583,9 +582,6 @@
     	}, function(){
     	});
     }
-	
-	
-	
 	
     //拼装查询条件
     function getQueryCondition(data) {
@@ -622,6 +618,10 @@
     $("#audit").change(function () {
         _table.draw();
     });
+    //选择产品
+    $("#type").change(function () {
+        _table.draw();
+    });
     //日期选择插件
     $('#start').datetimepicker({
         format: 'YYYY-MM-DD',
@@ -639,6 +639,26 @@
         format: 'YYYY-MM-DD',
         locale: moment.locale('zh-cn')
     });
+    
+  //参数校验 
+    $("#info").bootstrapValidator({
+       message: 'This value is invalid',
+       feedbackIcons: {
+           /*输入框不同状态，显示图片的样式*/
+           valid: 'glyphicon glyphicon-ok',
+           validating: 'glyphicon glyphicon-refresh'
+       },
+       fields: {
+           /*验证*/
+            'PD_TpCd': {
+                validators: {
+                    notEmpty: {
+                        message: 'Please choose one product at least'
+                    }
+                }
+            }
+     }
+ });
 </script>
   <% }; %> <%
   include("../layout.html",{cssSec:cssSec,contSec:contSec,jsSec:jsSec}){}

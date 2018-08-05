@@ -76,3 +76,12 @@
 			</div>
 		</div>
 	</div>
+<script>
+//更新最新消息
+setInterval("lx()",2000);
+function lx(){
+	sendAjax("${cxt!}/jf/thairice/t3user/refresh",null,function(res){
+  		 $('#count').html(res.count);
+  	 });
+}
+</script> 

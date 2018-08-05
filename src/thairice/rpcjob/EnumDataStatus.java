@@ -14,7 +14,7 @@ public enum EnumDataStatus {
 	DOWNLOAD_SUCCE(1, "01","Download success"),
 	DOWNLOAD_FAIL(2, "02","Download failed"),
 	DOWNLOAD_ING(3, "03","Downloading"),
-	DOWNLOAD_NOT(7, "07","Not download"),
+	DOWNLOAD_NOT(7, "07","Un download"),
 	
 	PROCESS_UN(11, "11","Un Process"),
 	PROCESS_SUCCE(12, "12","Process success"),

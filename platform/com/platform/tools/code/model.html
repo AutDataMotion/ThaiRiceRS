@@ -22,6 +22,8 @@ public class ${className} extends BaseModel<${className}> {
 
 	private static Logger log = Logger.getLogger(${className}.class);
 	
+	public static final String  tableName = "${tableName}";
+	
 	public static final ${className} dao = new ${className}();
 	
 	<% for(colunm in colunmList){ %>

@@ -132,6 +132,18 @@ public class T2syslogService extends BaseService {
 			queue.offer(record ); // 将指定元素插入此队列的尾部
 		}
 	}
+	public static void info(BigInteger userid, String userName, String action_, String content){
+		addLog(EnumT2sysLog.INFO, userid, userName, action_, content);
+	}
+	public static void warn(BigInteger userid, String userName, String action_, String content){
+		addLog(EnumT2sysLog.WARN, userid, userName, action_, content);
+	}
+	public static void error(BigInteger userid, String userName, String action_, String content){
+		addLog(EnumT2sysLog.ERROR_N, userid, userName, action_, content);
+	}
+	public static void disaster(BigInteger userid, String userName, String action_, String content){
+		addLog(EnumT2sysLog.ERROR_S, userid, userName, action_, content);
+	}
 	public static void addLogToFile(Record record ){
 		EnumT2sysLog type = record.get(T2syslog.column_type_);
 		switch (type) {

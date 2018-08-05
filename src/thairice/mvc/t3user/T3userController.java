@@ -102,8 +102,8 @@ public class T3userController extends BaseController {
         }
     	if(res.getCode()==1) {
             T3user user = getSessionAttr("user");
-		    T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), account, "Login", res.getDesc());
-		}
+            T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), account, "Login", res.getDesc());
+    	 }
         renderJson(res);
     }
 
@@ -166,16 +166,15 @@ public class T3userController extends BaseController {
                 boolean success = Mail.sendEmail("Account activation", content, t3user.getEmail().toString(),
                         Mail.MODE_HTML);
                 if (success) {
-                    T2syslogService.addLog(EnumT2sysLog.INFO, new BigInteger(t3user.get("id").toString()), t3user.getAccount(), "doReg", "Registration is successful");
-                    renderJson(new Result(1,
-                            "Registration is successful, activation email has been sent, please check and activate the account"));
+                    T2syslogService.addLog(EnumT2sysLog.INFO, new BigInteger(t3user.get("id").toString()), t3user.getAccount(), "Register", "Registration is successful");
+                    renderJson(new Result(1,"Registration is successful, activation email has been sent, please check and activate the account"));
                 } else {
-                    T2syslogService.addLog(EnumT2sysLog.INFO, new BigInteger(t3user.get("id").toString()), t3user.getAccount(),"doReg", "Registration was successful but the mailbox failed to send");
-                    renderJson(new Result(1, "Registration was successful but the mailbox failed to send"));
+                    T2syslogService.addLog(EnumT2sysLog.INFO, new BigInteger(t3user.get("id").toString()), t3user.getAccount(),"Register", "Registration was successful but the mailbox failed to send");
+                    renderJson(new Result(1,"Registration was successful but the mailbox failed to send"));
                 }
             }
         } else {
-            T2syslogService.addLog(EnumT2sysLog.INFO, BigInteger.ONE, t3user.getAccount(),"doReg", "Registration failed");
+            T2syslogService.addLog(EnumT2sysLog.INFO, BigInteger.ONE, t3user.getAccount(),"Register", "Registration failed");
             renderJson(new Result(0, "Registration failed"));
         }
     }
@@ -489,7 +488,7 @@ public class T3userController extends BaseController {
     }
 
     /**
-     * 验证邮箱是否可用(用于邮箱注册)
+     * 验证邮箱是否可用(用于邮箱注册，不检查过期用户和审核未通过用户)
      */
     @Clear
     public void valiMailBox2() {
@@ -586,10 +585,10 @@ public class T3userController extends BaseController {
         if (row > 0) {
             Db.use(ConstantInitMy.db_dataSource_main).update("DELETE FROM t8message WHERE send_userid=?",
                     user.getBigInteger("id"));
-            T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), user.getAccount(), "empty_message", "Operation succeeded");
+            T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), user.getAccount(), "Empty_message", "Operation succeeded");
             renderJson(new Result(1, "Operation succeeded"));
         } else {
-            T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), user.getAccount(), "empty_message", "Operation failed");
+            T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), user.getAccount(), "Empty_message", "Operation failed");
             renderJson(new Result(1, "Operation failed"));
         }
     }
@@ -603,10 +602,10 @@ public class T3userController extends BaseController {
                 "DELETE FROM r4message_send WHERE id IN(" + getPara("ids") + ") AND receive_userid=?",
                 user.getBigInteger("id"));
         if (row > 0) {
-            T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), user.getAccount(), "delete_message", "Operation succeeded");
+            T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), user.getAccount(), "Delete_message", "Operation succeeded");
             renderJson(new Result(1, "Operation succeeded"));
         } else {
-            T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), user.getAccount(), "delete_message", "Operation failed");
+            T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), user.getAccount(), "Delete_message", "Operation failed");
             renderJson(new Result(0, "Operation failed"));
         }
     }
@@ -631,10 +630,10 @@ public class T3userController extends BaseController {
         T3user t3user = getModel(T3user.class);
         boolean rlt = t3user.use(ConstantInitMy.db_dataSource_main).update();
         if (rlt) {
-            T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), user.getAccount(), "edit_info", "Operation succeeded");
+            T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), user.getAccount(), "Modify personal information", "Operation succeeded");
             renderJson(new Result(1, "Operation succeeded"));
         } else {
-            T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), user.getAccount(), "edit_info", "Operation failed");
+            T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), user.getAccount(), "Modify personal information", "Operation failed");
             renderJson(new Result(0, "Operation failed"));
         }
     }
@@ -672,8 +671,8 @@ public class T3userController extends BaseController {
         // 创建授权码
         String authCode = codeService.createAuthCode(t3user.getBigInteger("id"), 0, 3600);
         boolean success = Mail.sendEmail(getParaToInt("type", 0) == 0 ? "Thailand agricultural remote sensing monitoring platform password assistance" : "change Password",
-                "Hi,\n\nAre you trying to sign in?\nIf so, use this code to finish signing in.\n" + authCode +
-                        "\n\nDidn't sign in recently?\r\n" +
+                "Hi,\n\nAre you trying to reset password?\nIf so, use this code to finish reseting password:\n" + authCode +
+                        //"\n\nDidn't sign in recently?\r\n" +
                         "\r\n" +
                         "If this wasn't you, someone entered your email address by mistake so you can disregard this email.\n\n\nThanks.", getPara("email"), Mail.MODE_TEXT);
         if (success) {
@@ -691,7 +690,7 @@ public class T3userController extends BaseController {
     public void rest_pass() {
         Result result = codeService.reset_pass(getPara("code"), getPara("pwd"));
         T3user user = getSessionAttr("user");
-        T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), user.getAccount(), "edit_pass", result.getDesc());
+        T2syslogService.addLog(EnumT2sysLog.INFO, BigInteger.ONE, "User", "edit_pass", result.getDesc());
         renderJson(result);
     }
 
