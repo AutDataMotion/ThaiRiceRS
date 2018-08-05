@@ -65,7 +65,9 @@ public class BackendUserController extends BaseController {
             setSessionAttr("admin", user);
             T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), account, "Login", "Login successful");
             renderJson(new Result(1, "Login successful"));
-        } 
+        }else {
+            renderJson(new Result(0, "Invalid password. Please try again"));
+        }
     }
 
     // 管理员或操作员找回密码界面

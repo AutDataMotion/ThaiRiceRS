@@ -690,7 +690,7 @@ public class T3userController extends BaseController {
     public void rest_pass() {
         Result result = codeService.reset_pass(getPara("code"), getPara("pwd"));
         T3user user = getSessionAttr("user");
-        T2syslogService.addLog(EnumT2sysLog.INFO, BigInteger.ONE, "未知用户", "edit_pass", result.getDesc());
+        T2syslogService.addLog(EnumT2sysLog.INFO, BigInteger.ONE, "User", "edit_pass", result.getDesc());
         renderJson(result);
     }
 

@@ -13,7 +13,7 @@
     <link type="text/css" rel="stylesheet" href="${cxt!}/ui/thairice/CSS/bootstrapValidator.css">
     <link rel="stylesheet" href="${cxt!}/ui/thairice/CSS/bootstrap-imginput.css">
     <link type="text/css" id="skin" rel="stylesheet" href="${cxt!}/ui/thairice/CSS/skin/color_one.css">
-        
+    
     <script src="${cxt!}/ui/thairice/JS/jquery-2.0.0.min.js"></script>
     <style>
         .btn-file {
@@ -276,7 +276,9 @@
                                align="center" cellpadding="0" cellspacing="0">
                             <thead>
                             <tr>
-
+<!--                                 <th style="border-bottom: none;"><input type="checkbox"
+                                                                        align="center">Select
+                                </th> -->
                                 <th style="border-bottom: none;">Start date</th>
                                 <th style="border-bottom: none;">End date</th>
                                 <th style="border-bottom: none;">Zone code</th>
@@ -288,8 +290,8 @@
                             <tbody>
                             <%for(x in blogPage.list){ %>
                             <tr>
-<!--                                 <td style="text-align: center;"><input type="checkbox" class="reportDownloadCheckbox"
-                                                                       name="${x.id}" value="${x.download_path}"></td> -->
+                                <td style="text-align: center;"><input type="checkbox" class="reportDownloadCheckbox"
+                                                                       name="${x.id}" value="${x.download_path}"></td>
                                 <td style="text-align: center;">${x.start_time}</td>
                                 <td style="text-align: center;">${x.end_time}</td>
                                 <td style="text-align: center;">${x.zone_code}</td>
@@ -385,7 +387,7 @@
                         <div class="col-sm-9">
                             <div class="input-group">
                                 <input type="email" class="form-control"
-                                       placeholder="your E-mai like someone@exmaple.com" id="email" name="email" 
+                                       placeholder="Your E-mai like someone@exmaple.com" id="email" name="email" 
                                        value="${user.email}" readonly>
                                 <span class="input-group-addon" id="send_email"
                                       style="background-color:#5cb85c;color: #fff;background-color: #5cb85c;cursor: pointer;">Send authorization code</span>
@@ -732,28 +734,27 @@
             }
         }
     });
-    
     //批量删除
-      function batchDelete(id, pageNum)
-      {
-      	var url = '/jf/thairice/t10pdt_report/delete';  	  
-      	$.ajax({
-      		  type: 'POST',
-      		  url: url,
-      	      dataType: "json",
-      	      traditional: true,
-      		  data: {id:id},
-      		  success: function(res){
-      			if(res.code == "0000"){
-      				alert(res.desc);
-      				window.location.href="/jf/thairice/t10pdt_report/" + pageNum;
-      			} else {
-      				alert(res.desc);
-      			}
-      		  },
-      		  dataType: "json"
-      		});
-      }    
+    function batchDelete(id, pageNum)
+    {
+    	var url = '/jf/thairice/t10pdt_report/delete';  	  
+    	$.ajax({
+    		  type: 'POST',
+    		  url: url,
+    	      dataType: "json",
+    	      traditional: true,
+    		  data: {id:id},
+    		  success: function(res){
+    			if(res.code == "0000"){
+    				alert(res.desc);
+    				window.location.href="/jf/thairice/t10pdt_report/" + pageNum;
+    			} else {
+    				alert(res.desc);
+    			}
+    		  },
+    		  dataType: "json"
+    		});
+    }
 </script>
 <!-- <script>
 //更新最新消息
@@ -765,3 +766,4 @@ function lx(){
   	 });
 }
 </script>  -->
+
