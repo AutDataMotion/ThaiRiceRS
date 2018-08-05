@@ -11,7 +11,7 @@ table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td
             <div class="data-btns" style="margin-top: -50px;">
                 <button type="button" class="btn btn-success btn-sm" onclick="op('add')"><i class="glyphicon glyphicon-plus"></i>Add</button>
                 <button type="button" class="btn btn-warning btn-sm" onclick="op('edit')"><i class="glyphicon glyphicon-edit"></i>Edit</button>
-                <button type="button" class="btn btn-info btn-sm"   onclick="op('export')" style="width: auto;float: right;"><i class="glyphicon glyphicon-download-alt"></i>Export to Excel</button>
+                <button type="button" class="btn btn-info btn-sm"   onclick="op('export')" style="width: auto;float: right;background-color: #337ab7;"><i class="glyphicon glyphicon-download-alt"></i>Export to Excel</button>
                 <button type="button" class="btn btn-danger btn-sm" id="btn-del"><i class="glyphicon glyphicon-trash"></i>Delete</button>
                 <button type="button" class="btn btn-primary btn-sm" onclick="javascript:location.replace(location.href);"><i class="glyphicon glyphicon-refresh"></i>Refresh</button>
             </div>
@@ -262,8 +262,9 @@ table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td
                 },
                 emailAddress: {
                     message: 'The input is not a valid email address'
-                },
-                remote: {//ajax验证。server result:{"valid",true or false}
+                }
+                /*  ,
+                    remote: {//ajax验证。server result:{"valid",true or false}
                     url: '/jf/thairice/t3user/valiMailBox',
                     message: 'The email address has already exist',
                     delay: 2000,
@@ -274,7 +275,7 @@ table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td
                             return $('input[name="t3user.email"]').val();
                         }
                     }
-                }
+                } */
             }
         },
         't3user.name_': {
