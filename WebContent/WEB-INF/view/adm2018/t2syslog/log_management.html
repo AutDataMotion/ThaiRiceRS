@@ -1,31 +1,31 @@
 <% var cssSec={ %>
 <style>
+.input-group{width: 250px;float: right;}
+table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td{vertical-align: middle;text-align: left;}
+.even{background-color: rgb(219, 239, 246)!important;}
 </style>
 <% }; %> <% var contSec={ %>
-<div class="user_query">
+<div class="user_query"  >
 	<form role="form" class="form-inline" style="margin: 15px 0 15px 0;">
 		<div class="form-group">
-			<label>Type</label> <input id="Type" type="text"
-				placeholder="Type" class="form-control" style="width: 60px;">
+			 <input id="Type" type="text" placeholder="Type" class="form-control">
 		</div>
 		<div class="form-group">
-			<label>UserName</label> <input id="userName" type="text"
-				placeholder="userName" class="form-control" style="width: 80px;">
+			<input id="userName" type="text" placeholder="Account" class="form-control" >
 		</div>
 		<div class="form-group">
-			<label>Action</label> <input id="Action" type="text"
-				placeholder="Action" class="form-control" style="width: 80px;">
+			<input id="Action" type="text" placeholder="Action" class="form-control" >
 		</div>
 		<div class="form-group">
-			<label class="control-label">Time:</label>
-			<div class="input-group" id="starttime8">
+			<label class="control-label" style="margin-right: 19px;">From</label>
+			<div class="input-group" style="width: 160px;"  id="starttime8">
 				<input id="datetimeBeg" type="text" class="form-control"> <span
-					class="input-group-addon" readonly></span>
+					class="input-group-addon" ><i class="glyphicon glyphicon-calendar"></i></span>
 			</div>
-			<label class="control-label">to</label>
-			<div class="input-group" id="endtime8">
+			<label class="control-label" style="margin-left: 13px;margin-right: 13px;">To</label>
+			<div class="input-group" style="width: 160px;" id="endtime8">
 				<input id="datetimeEnd" type="text" class="form-control"> <span
-					class="input-group-addon" readonly></span>
+					class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span>
 			</div>
 		</div>
 		<div class="form-group">
@@ -38,48 +38,38 @@
 		width="100%" cellspacing="0" align="LEFT">
 		<thead>
 			<tr>
-
-				<th>id</th>
-				<th>type</th>
-				<th>userName</th>
-				<th>action</th>
-				<th>content</th>
-				<th>datetime</th>
+				<th>Id</th>
+				<th>Type</th>
+				<th>Account</th>
+				<th>Action</th>
+				<th>Content</th>
+				<th>Create time</th>
 			</tr>
 		</thead>
 	</table>
 </div>
 <% }; %> <% var jsSec={ %>
-<script src="${cxt!}/ui/jedate/jedate.js"></script>
+<script src="${cxt!}/ui/thairice/JS/jquery.dataTables.js"></script>
+<script src="${cxt!}/ui/thairice/JS/dataTables.bootstrap4.js"></script>
+<script src="${cxt!}/ui/thairice/JS/sb-admin-datatables.min.js"></script>
+<script src="${cxt!}/ui/thairice/area-select/distpicker.min.js"></script>
+<script src="${cxt!}/ui/thairice/area-select/distpicker.data.js"></script>
+<script type="text/javascript" src="${cxt!}/ui/thairice/JS/layer/layer.js"></script>
+<script src="${cxt!}/ui/thairice/common.js"></script>
 <script>
 		$(function(){
-		//日期选择插件
-		jeDate({
-			dateCell : "#datetimeBeg",
-			format : "YYYY-MM-DD",
-			isinitVal : false,
-			isTime : false, //isClear:false,
-			minDate : "2014-09-19",
-			okfun : function(val) {
-				alert(val)
-			}
-		})
-		jeDate({
-			dateCell : "#datetimeEnd",
-			format : "YYYY-MM-DD",
-			isinitVal : false,
-			isTime : false, //isClear:false,
-			minDate : "2014-09-19",
-			okfun : function(val) {
-				alert(val)
-			}
-		})
-		$('.data-table tbody tr:odd td').css('background-color','#dbeff6');
+		 //日期选择插件
+    $('#datetimeBeg').datetimepicker({
+        format: 'YYYY-MM-DD',
+        locale: moment.locale('zh-cn')
+    });
+    $('#datetimeEnd').datetimepicker({
+        format: 'YYYY-MM-DD',
+        locale: moment.locale('zh-cn')
+    });
 	})
 	</script>
 <script src="${cxt!}/ui/thairice/js_rd/jquery-json.js"></script>
-<script type="text/javascript"
-	src="${cxt!}/ui/DataTables/datatables.min.js"></script>
 <script src="${cxt!}/ui/thairice/js_rd/t2syslog.js"></script>
 
 <% }; %> <%
