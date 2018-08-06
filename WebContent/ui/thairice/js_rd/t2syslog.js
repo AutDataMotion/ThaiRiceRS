@@ -43,7 +43,11 @@ $(document).ready(function() {
 			}
 		},
 		buttons: [
-	        'excel', 'pdf'
+			 {
+					text : 'Download excel',
+					extend: 'excel' ,
+					title: 'systemlog'
+				}
 	    ],
 		columns : [ {
 			data : "id"
@@ -67,6 +71,7 @@ $(document).ready(function() {
 		datasrch.name3 = $('#Action').val();
 		datasrch.name4 = $('#datetimeBeg').val();
 		datasrch.name5 = $('#datetimeEnd').val();
+		
 		// 重新加载table数据
 		myTable.ajax.reload();
 	});

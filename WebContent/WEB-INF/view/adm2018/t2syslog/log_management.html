@@ -1,12 +1,29 @@
 <% var cssSec={ %>
 <style>
-.input-group{width: 250px;float: right;}
+.input-group{width: 250px;}
 table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td{vertical-align: middle;text-align: left;}
 .even{background-color: rgb(219, 239, 246)!important;}
+
+.dt-button{
+width: auto;
+    background-color: #337ab7;
+    font-size: 16px;
+    padding: 5px 10px;
+    border-radius: 3px;
+    color: #fff;
+    border-color: #46b8da;
+    height: -32px;
+    line-height: 26px;
+    display: inline-block;
+}
+a:hover { 
+color:#002d54; 
+text-decoration:none; 
+} 
 </style>
 <% }; %> <% var contSec={ %>
 <div class="user_query"  >
-	<form role="form" class="form-inline" style="margin: 15px 0 15px 0;">
+	<form role="form" class="form-inline" style="margin: 4px 0 -8px 0;">
 		<div class="form-group">
 			 <input id="Type" type="text" placeholder="Type" class="form-control">
 		</div>
@@ -29,7 +46,7 @@ table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td
 			</div>
 		</div>
 		<div class="form-group">
-			<button id="btnSearch" type="button" class="btn btn-primary">search</button>
+			<button id="btnSearch" type="button" class="btn btn-primary"><i class="glyphicon glyphicon-search"></i>Search</button>
 		</div>
 	</form>
 </div>
@@ -49,9 +66,8 @@ table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td
 	</table>
 </div>
 <% }; %> <% var jsSec={ %>
-<script src="${cxt!}/ui/thairice/JS/jquery.dataTables.js"></script>
+<script type="text/javascript" src="${cxt!}/ui/DataTables/datatables.min.js"></script>
 <script src="${cxt!}/ui/thairice/JS/dataTables.bootstrap4.js"></script>
-<script src="${cxt!}/ui/thairice/JS/sb-admin-datatables.min.js"></script>
 <script src="${cxt!}/ui/thairice/area-select/distpicker.min.js"></script>
 <script src="${cxt!}/ui/thairice/area-select/distpicker.data.js"></script>
 <script type="text/javascript" src="${cxt!}/ui/thairice/JS/layer/layer.js"></script>
@@ -59,11 +75,11 @@ table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td
 <script>
 		$(function(){
 		 //日期选择插件
-    $('#datetimeBeg').datetimepicker({
+    $('#starttime8').datetimepicker({
         format: 'YYYY-MM-DD',
         locale: moment.locale('zh-cn')
     });
-    $('#datetimeEnd').datetimepicker({
+    $('#endtime8').datetimepicker({
         format: 'YYYY-MM-DD',
         locale: moment.locale('zh-cn')
     });

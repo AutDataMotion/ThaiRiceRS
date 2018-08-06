@@ -151,7 +151,7 @@ public class LandDroughtScheduleJob extends AbsScheduleJob implements ITask {
 	public void run() {
 		// TODO Auto-generated method stub
 		boolean haveUndoData = false;
-		T2syslogService.warn(userId, userName, "drought job", ">>>>job begin");
+		log.info("drought job >>>>job begin");
 		while (haveUndoData) {
 			// 每批次读取一次参数配置
 			initParams();
@@ -180,7 +180,7 @@ public class LandDroughtScheduleJob extends AbsScheduleJob implements ITask {
 			});
 
 		}
-		T2syslogService.warn(userId, userName, "drought job", "<<<<job all done");
+		log.info("drought job <<<<job all done");
 	}
 
 	/*
