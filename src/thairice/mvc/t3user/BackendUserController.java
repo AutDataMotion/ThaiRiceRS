@@ -149,10 +149,47 @@ public class BackendUserController extends BaseController {
         // 全部导出
         if (getPara("select").equals("all")) {
             List<T3user> rates = service.selectUsers();
-            ExportService.service.exportDiy(titles,"Export user data", "thairice.t3user", getResponse(), getRequest(), rates);
+            for (T3user t3user : rates) {
+        	String dk="";
+        	for(String id:t3user.getPD_TpCd().toString().split(",")) {
+        	    if(id.equals("01")) {
+              	  	dk+="Rice acreage";
+                    }
+                    if(id.equals("02")) {
+              	  	dk+=",Rice growth";
+                    }
+                    if(id.equals("03")) {
+              	  	dk+=",Rice drought";
+                    }
+                    if(id.equals("04")) {
+                	dk+=",Rice yield";
+                    }
+                    t3user.setPD_TpCd(dk); 
+        	}
+             
+	    }
+            ExportService.service.exportDiy(titles,"ExportUserData", "thairice.t3user", getResponse(), getRequest(), rates);
         } else {
             List<T3user> rates = service.selectUsersByChoose(getPara("ids"));
-            ExportService.service.exportDiy(titles,"Export user data", "thairice.t3user", getResponse(), getRequest(), rates);
+            for (T3user t3user : rates) {
+        	String dk="";
+        	for(String id:t3user.getPD_TpCd().toString().split(",")) {
+        	    if(id.equals("01")) {
+              	  	dk+="Rice acreage";
+                    }
+                    if(id.equals("02")) {
+              	  	dk+=",Rice growth";
+                    }
+                    if(id.equals("03")) {
+              	  	dk+=",Rice drought";
+                    }
+                    if(id.equals("04")) {
+                	dk+=",Rice yield";
+                    }
+                    t3user.setPD_TpCd(dk); 
+        	}
+	    }
+            ExportService.service.exportDiy(titles,"ExportUserData", "thairice.t3user", getResponse(), getRequest(), rates);
         }
         renderNull();
     }
@@ -170,10 +207,10 @@ public class BackendUserController extends BaseController {
         // 全部导出
         if (getPara("select").equals("all")) {
             List<T3user> rates = service.selectOperators();
-            ExportService.service.exportDiy(titles,"Export operator data", "thairice.t3user", getResponse(), getRequest(), rates);
+            ExportService.service.exportDiy(titles,"ExportOperatorData", "thairice.t3user", getResponse(), getRequest(), rates);
         } else {
             List<T3user> rates = service.selectOperatorsByChoose(getPara("ids"));
-            ExportService.service.exportDiy(titles,"Export operator data", "thairice.t3user", getResponse(), getRequest(), rates);
+            ExportService.service.exportDiy(titles,"ExportOperatorData", "thairice.t3user", getResponse(), getRequest(), rates);
         }
         renderNull();
     }
@@ -183,7 +220,7 @@ public class BackendUserController extends BaseController {
      */
     public void exit() {
         T3user admin = getSessionAttr("admin");
-        T2syslogService.addLog(EnumT2sysLog.INFO, admin.getId(), admin.getAccount(), "exit", "exit succeeded");
+        T2syslogService.addLog(EnumT2sysLog.INFO, admin.getId(), admin.getAccount(), "Logout", "Logout succeeded");
         removeSessionAttr("admin");
         redirect("/jf/thairice/admin/user/login");
     }
@@ -209,11 +246,11 @@ public class BackendUserController extends BaseController {
             } else {
                 user.update();
             }
-            T2syslogService.addLog(EnumT2sysLog.INFO, admin.getId(), admin.getAccount(), "save", "Operation succeeded");
+            T2syslogService.addLog(EnumT2sysLog.INFO, admin.getId(), admin.getAccount(), "Save", "Operation succeeded");
             renderJson(new Result(1, "Operation succeeded"));
         } catch (Exception e) {
             e.printStackTrace();
-            T2syslogService.addLog(EnumT2sysLog.INFO, admin.getId(), admin.getAccount(), "save", "Operation failed");
+            T2syslogService.addLog(EnumT2sysLog.INFO, admin.getId(), admin.getAccount(), "Save", "Operation failed");
             renderJson(new Result(0, "Operation failed"));
         }
 
@@ -256,10 +293,10 @@ public class BackendUserController extends BaseController {
                     send_all.use(ConstantInitMy.db_dataSource_main).saveGenIntId();
                 }
             }
-            T2syslogService.addLog(EnumT2sysLog.INFO, u.getId(), u.getAccount(), "send_message", "Sent successful");
+            T2syslogService.addLog(EnumT2sysLog.INFO, u.getId(), u.getAccount(), "Send_message", "Sent successful");
             renderJson(new Result(1, "Sent successful"));
         } else {
-            T2syslogService.addLog(EnumT2sysLog.INFO, u.getId(), u.getAccount(), "send_message", "Failed to send");
+            T2syslogService.addLog(EnumT2sysLog.INFO, u.getId(), u.getAccount(), "Send_message", "Failed to send");
             renderJson(new Result(0, "Failed to send"));
         }
     }
@@ -289,7 +326,7 @@ public class BackendUserController extends BaseController {
         user.use(ConstantInitMy.db_dataSource_main).update();
        
         T3user admin = getSessionAttr("admin");
-        T2syslogService.addLog(EnumT2sysLog.INFO, admin.getId(), admin.getAccount(), "audit", "Operation succeeded");
+        T2syslogService.addLog(EnumT2sysLog.INFO, admin.getId(), admin.getAccount(), "Audit", "Operation succeeded");
         renderJson(new Result(1, "Operation succeeded"));
     }
 
@@ -312,7 +349,7 @@ public class BackendUserController extends BaseController {
         String ids = getPara("ids");
         Db.update(" DELETE FROM thairice.t14my_region WHERE id in (" + ids + ")");
         T3user admin = getSessionAttr("admin");
-        T2syslogService.addLog(EnumT2sysLog.INFO, admin.getId(), admin.getAccount(), "del_address", "successfully deleted");
+        T2syslogService.addLog(EnumT2sysLog.INFO, admin.getId(), admin.getAccount(), "Delete_area", "Delete Successful");
         renderJson(new Result(1, "successfully deleted"));
     }
 
@@ -371,7 +408,7 @@ public class BackendUserController extends BaseController {
 			record3.set("regionId",getParaToInt("area"));
 			Db.use(ConstantInitMy.db_dataSource_main).save("t14my_region", record3);*/
         T3user admin = getSessionAttr("admin");
-        T2syslogService.addLog(EnumT2sysLog.INFO, admin.getId(), admin.getAccount(), "add_address", "successfully");
+        T2syslogService.addLog(EnumT2sysLog.INFO, admin.getId(), admin.getAccount(), "Add_area", "Add succeeded");
         renderJson(new Result(1, "successfully"));
     }
 
@@ -383,10 +420,10 @@ public class BackendUserController extends BaseController {
         int rows = service.deletes(getPara("ids"));
         T3user admin = getSessionAttr("admin");
         if (rows > 0) {
-            T2syslogService.addLog(EnumT2sysLog.INFO, admin.getId(), admin.getAccount(), "delete", "Operation succeeded");
+            T2syslogService.addLog(EnumT2sysLog.INFO, admin.getId(), admin.getAccount(), "Delete_message", "Operation succeeded");
             renderJson(new Result(1, "Operation succeeded"));
         } else {
-            T2syslogService.addLog(EnumT2sysLog.INFO, admin.getId(), admin.getAccount(), "delete", "Operation failed");
+            T2syslogService.addLog(EnumT2sysLog.INFO, admin.getId(), admin.getAccount(), "Delete_message", "Operation failed");
             renderJson(new Result(0, "Operation failed"));
         }
     }
@@ -399,10 +436,10 @@ public class BackendUserController extends BaseController {
         boolean rlt = t3user.use(ConstantInitMy.db_dataSource_main).update();
         T3user admin = getSessionAttr("admin");
         if (rlt) {
-            T2syslogService.addLog(EnumT2sysLog.INFO, admin.getId(), admin.getAccount(), "edit_info", "Modified Successfully");
+            T2syslogService.addLog(EnumT2sysLog.INFO, admin.getId(), admin.getAccount(), "Edit_information", "Modified Successfully");
             renderJson(new Result(1, "Modified Successfully"));
         } else {
-            T2syslogService.addLog(EnumT2sysLog.INFO, admin.getId(), admin.getAccount(), "edit_info", "Fail to edit");
+            T2syslogService.addLog(EnumT2sysLog.INFO, admin.getId(), admin.getAccount(), "Edit_information", "Fail to edit");
             renderJson(new Result(0, "Fail to edit"));
         }
     }
@@ -414,7 +451,7 @@ public class BackendUserController extends BaseController {
     public void edit_pass() {
         Result result = codeService.reset_pass(getPara("code"), HashKit.md5(getPara("pwd")));
         T3user admin = getSessionAttr("admin");
-        T2syslogService.addLog(EnumT2sysLog.INFO, admin.getId(), admin.getAccount(), "edit_pass", result.getDesc());
+        T2syslogService.addLog(EnumT2sysLog.INFO, admin.getId(), admin.getAccount(), "Edit_password", result.getDesc());
         renderJson(result);
     }
 

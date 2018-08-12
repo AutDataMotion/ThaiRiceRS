@@ -77,6 +77,5 @@
 	<classpathentry combineaccessrules="false" kind="src" path="/UtilZW"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/DUCRPC"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-email-1.5.jar"/>
-	<classpathentry kind="lib" path="D:/DUC/泰国农业遥感v20180108/ice-3.6.2.jar"/>
 	<classpathentry kind="output" path="WebContent/WEB-INF/classes"/>
 </classpath>

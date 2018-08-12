@@ -54,7 +54,12 @@ public class T3userController extends BaseController {
      * 列表
      */
     public void index() {
-        T3user user = getSessionAttr("user");
+	 T3user user;
+	if(getPara("account", "user").equals("admin")) {
+	    user = getSessionAttr("admin");
+	}else {
+	    user = getSessionAttr("user");
+	}
         String PD_TpCd=user.getPD_TpCd();
         //Rice Acreage Rice Drought Rice Growth Rice Yield
         setAttr("name",PD_TpCd);
@@ -671,7 +676,7 @@ public class T3userController extends BaseController {
         // 创建授权码
         String authCode = codeService.createAuthCode(t3user.getBigInteger("id"), 0, 3600);
         boolean success = Mail.sendEmail(getParaToInt("type", 0) == 0 ? "Thailand agricultural remote sensing monitoring platform password assistance" : "change Password",
-                "Hi,\n\nAre you trying to reset password?\nIf so, use this code to finish reseting password:\n" + authCode +
+                "Hi,\n\nAre you trying to reset/recover password?\nIf so, use this code to finish reseting/recovering password:\n" + authCode +
                         //"\n\nDidn't sign in recently?\r\n" +
                         "\r\n" +
                         "If this wasn't you, someone entered your email address by mistake so you can disregard this email.\n\n\nThanks.", getPara("email"), Mail.MODE_TEXT);
@@ -690,7 +695,7 @@ public class T3userController extends BaseController {
     public void rest_pass() {
         Result result = codeService.reset_pass(getPara("code"), getPara("pwd"));
         T3user user = getSessionAttr("user");
-        T2syslogService.addLog(EnumT2sysLog.INFO, BigInteger.ONE, "User", "edit_pass", result.getDesc());
+        T2syslogService.addLog(EnumT2sysLog.INFO, BigInteger.ONE, "User", "Reset_password", result.getDesc());
         renderJson(result);
     }
 
@@ -701,7 +706,7 @@ public class T3userController extends BaseController {
     public void edit_pass() {
         Result result = codeService.reset_pass(getPara("code"), HashKit.md5(getPara("pwd")));
         T3user user = getSessionAttr("user");
-        T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), user.getAccount(), "edit_pass", result.getDesc());
+        T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), user.getAccount(), "Edit_password", result.getDesc());
         renderJson(result);
     }
 
@@ -710,7 +715,7 @@ public class T3userController extends BaseController {
      */
     public void exit() {
         T3user user = getSessionAttr("user");
-        T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), user.getAccount(), "exit", "exit succeeded");
+        T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), user.getAccount(), "Logout", "Logout succeeded");
         removeSessionAttr("user");
         redirect("/jf/thairice/t3user/login#page4");
     }
