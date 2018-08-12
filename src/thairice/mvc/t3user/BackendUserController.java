@@ -349,7 +349,7 @@ public class BackendUserController extends BaseController {
         String ids = getPara("ids");
         Db.update(" DELETE FROM thairice.t14my_region WHERE id in (" + ids + ")");
         T3user admin = getSessionAttr("admin");
-        T2syslogService.addLog(EnumT2sysLog.INFO, admin.getId(), admin.getAccount(), "Delete_address", "successfully deleted");
+        T2syslogService.addLog(EnumT2sysLog.INFO, admin.getId(), admin.getAccount(), "Delete_area", "Delete Successful");
         renderJson(new Result(1, "successfully deleted"));
     }
 
@@ -408,7 +408,7 @@ public class BackendUserController extends BaseController {
 			record3.set("regionId",getParaToInt("area"));
 			Db.use(ConstantInitMy.db_dataSource_main).save("t14my_region", record3);*/
         T3user admin = getSessionAttr("admin");
-        T2syslogService.addLog(EnumT2sysLog.INFO, admin.getId(), admin.getAccount(), "add_address", "successfully");
+        T2syslogService.addLog(EnumT2sysLog.INFO, admin.getId(), admin.getAccount(), "Add_area", "Add succeeded");
         renderJson(new Result(1, "successfully"));
     }
 
@@ -420,10 +420,10 @@ public class BackendUserController extends BaseController {
         int rows = service.deletes(getPara("ids"));
         T3user admin = getSessionAttr("admin");
         if (rows > 0) {
-            T2syslogService.addLog(EnumT2sysLog.INFO, admin.getId(), admin.getAccount(), "delete", "Operation succeeded");
+            T2syslogService.addLog(EnumT2sysLog.INFO, admin.getId(), admin.getAccount(), "Delete_message", "Operation succeeded");
             renderJson(new Result(1, "Operation succeeded"));
         } else {
-            T2syslogService.addLog(EnumT2sysLog.INFO, admin.getId(), admin.getAccount(), "delete", "Operation failed");
+            T2syslogService.addLog(EnumT2sysLog.INFO, admin.getId(), admin.getAccount(), "Delete_message", "Operation failed");
             renderJson(new Result(0, "Operation failed"));
         }
     }
@@ -436,10 +436,10 @@ public class BackendUserController extends BaseController {
         boolean rlt = t3user.use(ConstantInitMy.db_dataSource_main).update();
         T3user admin = getSessionAttr("admin");
         if (rlt) {
-            T2syslogService.addLog(EnumT2sysLog.INFO, admin.getId(), admin.getAccount(), "edit_info", "Modified Successfully");
+            T2syslogService.addLog(EnumT2sysLog.INFO, admin.getId(), admin.getAccount(), "Edit_information", "Modified Successfully");
             renderJson(new Result(1, "Modified Successfully"));
         } else {
-            T2syslogService.addLog(EnumT2sysLog.INFO, admin.getId(), admin.getAccount(), "edit_info", "Fail to edit");
+            T2syslogService.addLog(EnumT2sysLog.INFO, admin.getId(), admin.getAccount(), "Edit_information", "Fail to edit");
             renderJson(new Result(0, "Fail to edit"));
         }
     }
@@ -451,7 +451,7 @@ public class BackendUserController extends BaseController {
     public void edit_pass() {
         Result result = codeService.reset_pass(getPara("code"), HashKit.md5(getPara("pwd")));
         T3user admin = getSessionAttr("admin");
-        T2syslogService.addLog(EnumT2sysLog.INFO, admin.getId(), admin.getAccount(), "edit_password", result.getDesc());
+        T2syslogService.addLog(EnumT2sysLog.INFO, admin.getId(), admin.getAccount(), "Edit_password", result.getDesc());
         renderJson(result);
     }
 
