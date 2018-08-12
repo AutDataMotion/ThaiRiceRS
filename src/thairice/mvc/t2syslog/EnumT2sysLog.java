@@ -29,7 +29,7 @@ public enum EnumT2sysLog {
 				}
 			}
 			// 没找到则返回为正常信息
-			return INFO.getName();
+			return aid;
 		}
 		
 		/**
