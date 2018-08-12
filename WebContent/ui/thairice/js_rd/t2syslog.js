@@ -22,7 +22,6 @@ $(document).ready(function() {
 		dom : 'Bfrtip',
 		select : false,
 		serverSide : true,
-		scrollY : 400,
 		scrollX : true,
 		responsive : true,
 		"searching": false,
