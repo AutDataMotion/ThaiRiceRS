@@ -142,9 +142,9 @@ public class BackendUserController extends BaseController {
 	titles.add(new ExcelExportUtil.Pair("phone", "Mobile"));
 	titles.add(new ExcelExportUtil.Pair("email", "Email"));
 	titles.add(new ExcelExportUtil.Pair("name_", "Nickname"));
-	titles.add(new ExcelExportUtil.Pair("Prdt_EfDt", "Prdt_EfDt"));
-	titles.add(new ExcelExportUtil.Pair("PD_ExDat", "PD_ExDat"));
-	titles.add(new ExcelExportUtil.Pair("PD_TpCd", "PD_TpCd"));
+	titles.add(new ExcelExportUtil.Pair("Prdt_EfDt", "Effective date of product"));
+	titles.add(new ExcelExportUtil.Pair("PD_ExDat", "Product expiration date"));
+	titles.add(new ExcelExportUtil.Pair("PD_TpCd", "Product categories"));
 	
         // 全部导出
         if (getPara("select").equals("all")) {

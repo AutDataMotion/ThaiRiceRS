@@ -261,7 +261,7 @@
         {"data": "phone", orderable: false},
         {"data": "email", orderable: false},
         {"data": null,orderable: false,render: function (data, type, row, meta) {
-            return ''+data.prdt_efdt.substring(0,11)+'~'+data.pd_exdat.substring(0,11);
+            return ''+data.prdt_efdt.substring(0,11)+'~ '+data.pd_exdat.substring(0,11);
         }},
         {"data": null,orderable: false,render: function (data, type, row, meta) {
             return ''+change(data.pd_tpcd);
