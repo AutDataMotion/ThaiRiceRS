@@ -145,19 +145,18 @@ public class T2syslogService extends BaseService {
 		addLog(EnumT2sysLog.ERROR_S, userid, userName, action_, content);
 	}
 	public static void addLogToFile(Record record ){
-		EnumT2sysLog type = record.get(T2syslog.column_type_);
-		switch (type) {
-		case ERROR_S:
-		case ERROR_N:
-			log.error(record.toJson());
-			break;
-		case WARN:
-			log.warn(record.toJson());
-			break;
-		default:
+		String type = record.get(T2syslog.column_type_);
+		if (type.equals(EnumT2sysLog.INFO.getName())) {
 			log.info(record.toJson());
-			break;
+		} else if(type.equals(EnumT2sysLog.WARN.getName())){
+			log.warn(record.toJson());
+		} else if (type.equals(EnumT2sysLog.ERROR_S.getName())
+				|| type.equals(EnumT2sysLog.ERROR_S.getName())) {
+			log.error(record.toJson());
+		} else {
+			log.debug(record.toJson());
 		}
+	
 	}
 	
 	public static void startLogThread(){

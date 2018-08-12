@@ -27,7 +27,7 @@
             	<label>Status</label>
                 <select class="form-control" id="status">
 <!--                   			<option value=${status!}>${status_eng!"ALL"}</option> -->
-                  			<option value='00' ${selected00!}>ALL</option>
+                  			<option value='00' ${selected00!}>All</option>
 							<option value="01" ${selected01!}>Download success</option>
 							<option value="02" ${selected02!}>Download failed</option>
 							<option value="03" ${selected03!}>Downloading</option>
@@ -38,7 +38,7 @@
                 </select>
             </div>
 						<div class="form-group" style="margin-left: 5px;">
-							<label class="control-label">Collect time</label>
+							<label class="control-label">Collection time</label>
 							<div class="input-group" id="starttime1C">
 								<input type="text" id="starttime1" class="form-control"
 									value=${starttime1!}><span class="input-group-addon"><i
@@ -54,7 +54,7 @@
 						</div>
 						<div class="form-group" style="margin-left: 5px;">
 							<button type="button" onclick="dataQuery(1)"
-								class="btn btn-primary">Search</button>
+								class="btn btn-primary"><i class="glyphicon glyphicon-search" style="margin-right: 3px;"></i>Search</button>
 						</div>
 						<div class="form-group" style="margin-left: 20px;">
 							<button type="button" class="btn btn-success">
@@ -83,14 +83,14 @@
 						align="center" cellpadding="0" cellspacing="0">
 						<thead>
 							<tr>
-								<th style="border-bottom: none;"><input type="checkbox"
-									align="center"  name="checkAll1" onclick="selectAll('1')">All</th>
+								<th style="border-bottom: none;">&nbsp&nbsp&nbsp&nbsp<input type="checkbox"
+									align="center"  name="checkAll1" onclick="selectAll('1')">All</th>								
 								<th style="border-bottom: none;">File name</th>
 								<th style="border-bottom: none;">Size(MB)</th>
 								<th style="border-bottom: none;">Type</th>
 								<th style="border-bottom: none;">Status</th>
 								<th style="border-bottom: none;">Row column</th>
-								<th style="border-bottom: none;">Collect date</th>
+								<th style="border-bottom: none;">Collection date</th>
 								<th style="border-bottom: none;">Download time</th>
 						<!-- 		<th style="border-bottom: none;">Option</th> -->
 							</tr>
@@ -126,17 +126,16 @@
 				<div class="tab_query">
 					<form role="form" class="form-inline"
 						style="margin: 15px 0 15px 15px;">
-
 		            	<label>Type</label>
 		                <select class="form-control" id="datatype">
 		                  			<option value="00" ${selected200!}>All</option>
-									<option value="01" ${selected201!}>Area monitoring</option>
+						 			<option value="01" ${selected201!}>Area monitoring</option>
 									<option value="02" ${selected202!}>Drought monitoring</option>
 									<option value="03" ${selected203!}>Production estimates</option>
 									<option value="04" ${selected204!}>Condition monitoring</option>
 		                </select>
 						<div class="form-group" style="margin-left: 5px;">
-							<label class="control-label">Collect time</label>
+							<label class="control-label">Collection time</label>
 							<div class="input-group" id="starttime2C">
 								<input type="text" id="starttime2" class="form-control"
 									value=${starttime2!}><span class="input-group-addon"><i
@@ -152,7 +151,7 @@
 						</div>
 						<div class="form-group" style="margin-left: 5px;">
 							<button type="button" onclick="dataQuery(2)"
-								class="btn btn-primary">Search</button>
+								class="btn btn-primary"><i class="glyphicon glyphicon-search" style="margin-right: 3px;"></i>Search</button>
 						</div>
 						<div class="form-group" style="margin-left: 20px;">
 							<button type="button" class="btn btn-success">
@@ -167,7 +166,8 @@
 						</div>
 						<div class="form-group" style="margin-left: 5px;">
 							<button type="button" class="btn btn-danger" onclick="batchDelete('2')">
-								Delete
+								<i class="glyphicon glyphicon-trash"
+									style="margin-right: 3px;"></i>Delete
 							</button>
 						</div>
 					</form>
@@ -178,15 +178,15 @@
 						cellpadding="0" cellspacing="0">
 						<thead>
 							<tr>
-								<th style="border-bottom: none;"><input type="checkbox"
+								<th style="border-bottom: none;">&nbsp&nbsp&nbsp&nbsp<input type="checkbox"
 									align="center" name="checkAll2" onclick="selectAll('2')">All</th>	
 								<th style="border-bottom: none;">Type</th>
 								<th style="border-bottom: none;">Sample path</th>
 								<th style="border-bottom: none;">Product path</th>
-								<th style="border-bottom: none;">Collect date</th>
-								<th style="border-bottom: none;">Generate time</th>
+								<th style="border-bottom: none;">Collection date</th>
+								<th style="border-bottom: none;">Generation time</th>
 								<th style="border-bottom: none;">Zone code</th>
-								<th style="border-bottom: none;">Summary</th>
+								<th style="border-bottom: none;">Remark</th>
 							<!-- 	<th style="border-bottom: none;">Option</th> -->
 							</tr>
 						</thead>

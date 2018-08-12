@@ -41,6 +41,7 @@ import thairice.mvc.t7pdt_data.T7pdt_data;
 import thairice.mvc.t9sample_info.T9sample_info;
 import thairice.rpcjob.AbsScheduleJob;
 import thairice.utils.ParamUtils;
+import zeroc.client.ThariceClient;
 
 
 /**
@@ -739,8 +740,10 @@ public class T1parameterController extends BaseController {
 			//执行ClassifyA
 			ClassifyA argClassifyA = new ClassifyA(identifier,collect_time,source_file_list,zone_code,
 					ClassifyA_shpfilePath,sample_path,tempProductPath,ClassifyA_pathGdalwarpS);
-			EnumStatus result = AbsScheduleJob.classifyA(argClassifyA, null);
-			if(result.getId() == 1)
+//			EnumStatus result = AbsScheduleJob.classifyA(argClassifyA, null);
+//			if(result.getId() == 1)
+			String result = ThariceClient.Area_classifyA(argClassifyA, null);
+			if(result.equals("success"))
 			{
 				T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), user.getAccount(), "generateTempProduct", "generateTempProduct successful");
 				
@@ -828,14 +831,16 @@ public class T1parameterController extends BaseController {
 			ClassifyB argClassifyB = new ClassifyB(999,fileDate,fileDistrict,modClassShp.replaceAll("/", "\\\\\\\\"),ClassifyA_shpfilePath.replaceAll("/", "\\\\\\\\"),fileSavePath.replaceAll("/", "\\\\\\\\"));
 			//ClassifyB argClassifyB = new ClassifyB(999,fileDate,fileDistrict,"E:\\\\gpmodels\\\\waitingformodify.shp","D:\\\\Thailand_test\\\\shp","E:\\\\thairiceproduct\\\\Area\\\\2018-05-11");
 			
-			EnumStatus result = AbsScheduleJob.classifyB(argClassifyB, null);
-			if(result.getId() == 1)
+//			EnumStatus result = AbsScheduleJob.classifyB(argClassifyB, null);
+//			if(result.getId() == 1)
+			String result = ThariceClient.Area_classifyB(argClassifyB, null);
+			if(result.equals("success"))
 			{
 				T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), user.getAccount(), "SaveAreaEditedProduct", "SaveAreaEditedProduct successful");
 				
 				//save result info to database
 				String source_file = fileinfo+".tif";//2018-05-05_72.tif
-				String product_path = fileSavePath+fileDistrict+".shp";//E:\thairiceproduct\Area\2018-05-05\72.shp
+				String product_path = fileSavePath+"/"+fileDistrict+".shp";//E:\thairiceproduct\Area\2018-05-05\72.shp
 				
 				Date day = new Date();
 				SimpleDateFormat sf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
