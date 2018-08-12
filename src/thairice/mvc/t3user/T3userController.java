@@ -695,7 +695,7 @@ public class T3userController extends BaseController {
     public void rest_pass() {
         Result result = codeService.reset_pass(getPara("code"), getPara("pwd"));
         T3user user = getSessionAttr("user");
-        T2syslogService.addLog(EnumT2sysLog.INFO, BigInteger.ONE, "User", "edit_pass", result.getDesc());
+        T2syslogService.addLog(EnumT2sysLog.INFO, BigInteger.ONE, "User", "Reset_password", result.getDesc());
         renderJson(result);
     }
 
@@ -706,7 +706,7 @@ public class T3userController extends BaseController {
     public void edit_pass() {
         Result result = codeService.reset_pass(getPara("code"), HashKit.md5(getPara("pwd")));
         T3user user = getSessionAttr("user");
-        T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), user.getAccount(), "edit_pass", result.getDesc());
+        T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), user.getAccount(), "Edit_password", result.getDesc());
         renderJson(result);
     }
 
@@ -715,7 +715,7 @@ public class T3userController extends BaseController {
      */
     public void exit() {
         T3user user = getSessionAttr("user");
-        T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), user.getAccount(), "exit", "exit succeeded");
+        T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), user.getAccount(), "Logout", "Logout succeeded");
         removeSessionAttr("user");
         redirect("/jf/thairice/t3user/login#page4");
     }

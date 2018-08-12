@@ -220,7 +220,7 @@ public class BackendUserController extends BaseController {
      */
     public void exit() {
         T3user admin = getSessionAttr("admin");
-        T2syslogService.addLog(EnumT2sysLog.INFO, admin.getId(), admin.getAccount(), "exit", "exit succeeded");
+        T2syslogService.addLog(EnumT2sysLog.INFO, admin.getId(), admin.getAccount(), "Logout", "Logout succeeded");
         removeSessionAttr("admin");
         redirect("/jf/thairice/admin/user/login");
     }
@@ -246,11 +246,11 @@ public class BackendUserController extends BaseController {
             } else {
                 user.update();
             }
-            T2syslogService.addLog(EnumT2sysLog.INFO, admin.getId(), admin.getAccount(), "save", "Operation succeeded");
+            T2syslogService.addLog(EnumT2sysLog.INFO, admin.getId(), admin.getAccount(), "Save", "Operation succeeded");
             renderJson(new Result(1, "Operation succeeded"));
         } catch (Exception e) {
             e.printStackTrace();
-            T2syslogService.addLog(EnumT2sysLog.INFO, admin.getId(), admin.getAccount(), "save", "Operation failed");
+            T2syslogService.addLog(EnumT2sysLog.INFO, admin.getId(), admin.getAccount(), "Save", "Operation failed");
             renderJson(new Result(0, "Operation failed"));
         }
 
@@ -293,10 +293,10 @@ public class BackendUserController extends BaseController {
                     send_all.use(ConstantInitMy.db_dataSource_main).saveGenIntId();
                 }
             }
-            T2syslogService.addLog(EnumT2sysLog.INFO, u.getId(), u.getAccount(), "send_message", "Sent successful");
+            T2syslogService.addLog(EnumT2sysLog.INFO, u.getId(), u.getAccount(), "Send_message", "Sent successful");
             renderJson(new Result(1, "Sent successful"));
         } else {
-            T2syslogService.addLog(EnumT2sysLog.INFO, u.getId(), u.getAccount(), "send_message", "Failed to send");
+            T2syslogService.addLog(EnumT2sysLog.INFO, u.getId(), u.getAccount(), "Send_message", "Failed to send");
             renderJson(new Result(0, "Failed to send"));
         }
     }
@@ -326,7 +326,7 @@ public class BackendUserController extends BaseController {
         user.use(ConstantInitMy.db_dataSource_main).update();
        
         T3user admin = getSessionAttr("admin");
-        T2syslogService.addLog(EnumT2sysLog.INFO, admin.getId(), admin.getAccount(), "audit", "Operation succeeded");
+        T2syslogService.addLog(EnumT2sysLog.INFO, admin.getId(), admin.getAccount(), "Audit", "Operation succeeded");
         renderJson(new Result(1, "Operation succeeded"));
     }
 
@@ -349,7 +349,7 @@ public class BackendUserController extends BaseController {
         String ids = getPara("ids");
         Db.update(" DELETE FROM thairice.t14my_region WHERE id in (" + ids + ")");
         T3user admin = getSessionAttr("admin");
-        T2syslogService.addLog(EnumT2sysLog.INFO, admin.getId(), admin.getAccount(), "del_address", "successfully deleted");
+        T2syslogService.addLog(EnumT2sysLog.INFO, admin.getId(), admin.getAccount(), "Delete_address", "successfully deleted");
         renderJson(new Result(1, "successfully deleted"));
     }
 
@@ -451,7 +451,7 @@ public class BackendUserController extends BaseController {
     public void edit_pass() {
         Result result = codeService.reset_pass(getPara("code"), HashKit.md5(getPara("pwd")));
         T3user admin = getSessionAttr("admin");
-        T2syslogService.addLog(EnumT2sysLog.INFO, admin.getId(), admin.getAccount(), "edit_pass", result.getDesc());
+        T2syslogService.addLog(EnumT2sysLog.INFO, admin.getId(), admin.getAccount(), "edit_password", result.getDesc());
         renderJson(result);
     }
 
