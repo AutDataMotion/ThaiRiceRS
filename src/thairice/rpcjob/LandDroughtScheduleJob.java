@@ -46,7 +46,7 @@ public class LandDroughtScheduleJob extends AbsScheduleJob implements ITask {
 		String whereStr = sqlStr_ProcessStatus(EnumDataStatus.PDT_TYPE_Drought, EnumDataStatus.PROCESS_UN);
 		// sql 查询 为了参数有序，需要进行order by
 		// 查找NDVI_1的干旱数据文件
-		return T12PreProcessInf.dao.find(String.format(" select * from %s where   %s and data_type =%s   limit 100 ",
+		return T12PreProcessInf.dao.find(String.format(" select * from %s where   %s and data_type =%s   limit 10 ",
 				T12PreProcessInf.tableName, whereStr, EnumDataStatus.DATA_TYPE_NDVI_1.getIdStr()));
 	}
 
@@ -56,8 +56,8 @@ public class LandDroughtScheduleJob extends AbsScheduleJob implements ITask {
 		}
 
 		// 按时间范围查找lst文件
-		String dateBeg = GenerTimeStamp.pickDateStr(inputs.get(0).getData_collect_time());
-		String dateEnd = GenerTimeStamp.pickDateStr(inputs.get(inputs.size() - 1).getData_collect_time());
+		String dateBeg = GenerTimeStamp.TimestampToStr(inputs.get(0).getData_collect_time());
+		String dateEnd = GenerTimeStamp.TimestampToStr(inputs.get(inputs.size() - 1).getData_collect_time());
 		String whereStr = String.format("data_collect_time >= '%s' and data_collect_time <= '%s'  ", dateBeg, dateEnd);
 		// 根据NDVI_1查找对应的LST温度文件 批量
 		List<T12PreProcessInf> dataLSTs = T12PreProcessInf.dao
@@ -151,7 +151,7 @@ public class LandDroughtScheduleJob extends AbsScheduleJob implements ITask {
 	public void run() {
 		// TODO Auto-generated method stub
 		boolean haveUndoData = false;
-		log.info("drought job >>>>job begin");
+		log.info(">>>>job begin");
 		while (haveUndoData) {
 			// 每批次读取一次参数配置
 			initParams();
@@ -180,7 +180,7 @@ public class LandDroughtScheduleJob extends AbsScheduleJob implements ITask {
 			});
 
 		}
-		log.info("drought job <<<<job all done");
+		log.info(" <<<<job end");
 	}
 
 	/*
