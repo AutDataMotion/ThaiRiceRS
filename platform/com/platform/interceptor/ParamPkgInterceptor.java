@@ -47,9 +47,9 @@ public class ParamPkgInterceptor implements Interceptor {
 		String splitpage ="1";
 		try {
 		    Syslog reqSysLog = controller.getReqSysLog();
-		    //String operatorids = reqSysLog.getStr(Syslog.column_operatorids);
-		    //Operator operator = Operator.dao.cacheGet(operatorids);
-		    //splitpage = operator.getStr(Operator.column_splitpage);
+		    String operatorids = reqSysLog.getStr(Syslog.column_operatorids);
+		    Operator operator = Operator.dao.cacheGet(operatorids);
+		    splitpage = operator.getStr(Operator.column_splitpage);
 		} catch (Exception e) {
 		    e.printStackTrace();
 		}
