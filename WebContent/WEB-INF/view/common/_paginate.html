@@ -65,9 +65,9 @@
 
 .page-item.active .page-link {
   z-index: 1;
-  color: #fff;
+/*   color: #fff;
   background-color: #007bff;
-  border-color: #007bff;
+  border-color: #007bff; */
 }
 
 .page-item.disabled .page-link {
@@ -146,7 +146,7 @@
 			</li>
 			<%}else{%>	
 			<li class="paginate_button page-item previous">
-			<a href="${actionUrl}" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>	
+			<a href="${actionUrl}${currentPage - 1}${urlParas!}" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>	
 			</li>		
 			<%}%>
 			
