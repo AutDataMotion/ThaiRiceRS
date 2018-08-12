@@ -59,7 +59,7 @@
 
 .file_input {
 	width: 200px;
-	/*因为file-input在部分浏览器中会自带一个输入框，需要双击才可以点击上传,放大后将其定位到div外面就好啦*/
+	/*鍥犱负file-input鍦ㄩ儴鍒嗘祻瑙堝櫒涓細鑷甫涓�涓緭鍏ユ锛岄渶瑕佸弻鍑绘墠鍙互鐐瑰嚮涓婁紶,鏀惧ぇ鍚庡皢鍏跺畾浣嶅埌div澶栭潰灏卞ソ鍟�*/
 	height: 36px;
 	position: absolute;
 	left: -100px;
@@ -68,9 +68,9 @@
 	-moz-opacity: 0;
 	-ms-opacity: 0;
 	-webkit-opacity: 0;
-	opacity: 0; /*css属性——opcity不透明度，取值0-1*/
+	opacity: 0; /*css灞炴�р�斺�攐pcity涓嶉�忔槑搴︼紝鍙栧��0-1*/
 	filter: alpha(opacity = 0);
-	/*兼容IE8及以下--filter属性是IE特有的，它还有很多其它滤镜效果，而filter: alpha(opacity=0); 兼容IE8及以下的IE浏览器(如果你的电脑IE是8以下的版本，使用某些效果是可能会有一个允许ActiveX的提示,注意点一下就ok啦)*/
+	/*鍏煎IE8鍙婁互涓�--filter灞炴�ф槸IE鐗规湁鐨勶紝瀹冭繕鏈夊緢澶氬叾瀹冩护闀滄晥鏋滐紝鑰宖ilter: alpha(opacity=0); 鍏煎IE8鍙婁互涓嬬殑IE娴忚鍣�(濡傛灉浣犵殑鐢佃剳IE鏄�8浠ヤ笅鐨勭増鏈紝浣跨敤鏌愪簺鏁堟灉鏄彲鑳戒細鏈変竴涓厑璁窤ctiveX鐨勬彁绀�,娉ㄦ剰鐐逛竴涓嬪氨ok鍟�)*/
 	cursor: pointer;
 }
 
@@ -108,15 +108,15 @@
 			<ul class="operation_tools">
 				<li class="one" onclick="initFilesTable()"><a href="#"
 					class="btn btn-info" data-toggle="modal" data-target="#fileModal"
-					title="open file"> <span
+					title="Open Files"> <span
 						class="glyphicon glyphicon-folder-open"></span>
 				</a></li>
 				<li class="two" onclick="EditFeatures('add')"><a href="#"
-					class="btn btn-info" title="Add Feaures"> <span
+					class="btn btn-info" title="Add Features"> <span
 						class="glyphicon glyphicon-plus-sign"></span>
 				</a></li>
 				<li class="three" onclick="EditFeatures('delete')"><a href="#"
-					class="btn btn-info" title="Delete Feaures"> <span
+					class="btn btn-info" title="Delete Features"> <span
 						class="glyphicon glyphicon-minus-sign"></span>
 				</a></li>
 				<li class="four" onclick="Edit_Preview()"><a href="#"
@@ -138,7 +138,7 @@
 
 			</ul>
 		</div>
-		<!--显示模式和分类样本-->
+		<!--鏄剧ず妯″紡鍜屽垎绫绘牱鏈�-->
 		<div class="modes_editing">
 			<div class="editing_list">
 				<button type="button" class="btn btn-info btn-lg" title="tools list">
@@ -206,7 +206,7 @@
 				</div>
 			</div>
 		</div>
-		<!--显示模式和分类样本-->
+		<!--鏄剧ず妯″紡鍜屽垎绫绘牱鏈�-->
 		<div class="modes_samples">
 
 			<div class="samples">
@@ -464,7 +464,7 @@
 				<h5 class="modal-title" id="exampleModalLabel">Tip!</h5>
 				<button class="close" type="button" data-dismiss="modal"
 					aria-label="Close">
-					<span aria-hidden="true">×</span>
+					<span aria-hidden="true">x</span>
 				</button>
 			</div>
 			<div class="modal-body" id="hintContent"></div>
@@ -485,7 +485,7 @@
 				<h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
 				<button class="close" type="button" data-dismiss="modal"
 					aria-label="Close">
-					<span aria-hidden="true">×</span>
+					<span aria-hidden="true">x</span>
 				</button>
 			</div>
 			<div class="modal-body">Select "Logout" below if you are ready
@@ -503,10 +503,10 @@
 	<div class="modal-dialog" role="document">
 		<div class="modal-content">
 			<div class="modal-header">
-				<h5 class="modal-title" id="exampleModalLabel">File upload</h5>
+				<h5 class="modal-title" id="exampleModalLabel">Files List</h5>
 				<button class="close" type="button" data-dismiss="modal"
 					aria-label="Close">
-					<span aria-hidden="true">×</span>
+					<span aria-hidden="true">x</span>
 				</button>
 
 
@@ -515,7 +515,7 @@
 			</div>
 			<div class="modal-body">
 				<!-- input type="file" name="txt_file" id="txt_file01" multiple class="file" /-->
-				<p class="self_title text-center">Files</p>
+				<!--  p class="self_title text-center">Files</p-->
 				<div class="row">
 					<div class="col-sm-10 col-md-10" style="width: 100%;">
 						<table id="files_excel" class="hover" style="width: 100%"></table>
@@ -541,7 +541,7 @@
 					parameter</h5>
 				<button class="close" type="button" data-dismiss="modal"
 					aria-label="Close">
-					<span aria-hidden="true">×</span>
+					<span aria-hidden="true">x</span>
 				</button>
 			</div>
 			<div class="modal-body">
@@ -604,7 +604,7 @@
 					style="height: 45px; line-height: 45px;">The results</h5>
 				<button class="close" type="button" data-dismiss="modal"
 					aria-label="Close" style="margin-top: 13px;">
-					<span aria-hidden="true">×</span>
+					<span aria-hidden="true">x</span>
 				</button>
 			</div>
 			<div class="modal-body">
@@ -659,7 +659,7 @@
 		$(function(){
 			//alert("ooooooo");
 			init_productionConf_Monitoring();
-			//日期选择插件
+			//鏃ユ湡閫夋嫨鎻掍欢
 			$('#starttime6').datetimepicker({  
 				format: 'YYYY-MM-DD',  
 				locale: moment.locale('zh-cn')  
