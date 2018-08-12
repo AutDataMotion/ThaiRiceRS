@@ -149,10 +149,47 @@ public class BackendUserController extends BaseController {
         // 全部导出
         if (getPara("select").equals("all")) {
             List<T3user> rates = service.selectUsers();
-            ExportService.service.exportDiy(titles,"Export user data", "thairice.t3user", getResponse(), getRequest(), rates);
+            for (T3user t3user : rates) {
+        	String dk="";
+        	for(String id:t3user.getPD_TpCd().toString().split(",")) {
+        	    if(id.equals("01")) {
+              	  	dk+="Rice acreage";
+                    }
+                    if(id.equals("02")) {
+              	  	dk+=",Rice growth";
+                    }
+                    if(id.equals("03")) {
+              	  	dk+=",Rice drought";
+                    }
+                    if(id.equals("04")) {
+                	dk+=",Rice yield";
+                    }
+                    t3user.setPD_TpCd(dk); 
+        	}
+             
+	    }
+            ExportService.service.exportDiy(titles,"ExportUserData", "thairice.t3user", getResponse(), getRequest(), rates);
         } else {
             List<T3user> rates = service.selectUsersByChoose(getPara("ids"));
-            ExportService.service.exportDiy(titles,"Export user data", "thairice.t3user", getResponse(), getRequest(), rates);
+            for (T3user t3user : rates) {
+        	String dk="";
+        	for(String id:t3user.getPD_TpCd().toString().split(",")) {
+        	    if(id.equals("01")) {
+              	  	dk+="Rice acreage";
+                    }
+                    if(id.equals("02")) {
+              	  	dk+=",Rice growth";
+                    }
+                    if(id.equals("03")) {
+              	  	dk+=",Rice drought";
+                    }
+                    if(id.equals("04")) {
+                	dk+=",Rice yield";
+                    }
+                    t3user.setPD_TpCd(dk); 
+        	}
+	    }
+            ExportService.service.exportDiy(titles,"ExportUserData", "thairice.t3user", getResponse(), getRequest(), rates);
         }
         renderNull();
     }
@@ -170,10 +207,10 @@ public class BackendUserController extends BaseController {
         // 全部导出
         if (getPara("select").equals("all")) {
             List<T3user> rates = service.selectOperators();
-            ExportService.service.exportDiy(titles,"Export operator data", "thairice.t3user", getResponse(), getRequest(), rates);
+            ExportService.service.exportDiy(titles,"ExportOperatorData", "thairice.t3user", getResponse(), getRequest(), rates);
         } else {
             List<T3user> rates = service.selectOperatorsByChoose(getPara("ids"));
-            ExportService.service.exportDiy(titles,"Export operator data", "thairice.t3user", getResponse(), getRequest(), rates);
+            ExportService.service.exportDiy(titles,"ExportOperatorData", "thairice.t3user", getResponse(), getRequest(), rates);
         }
         renderNull();
     }

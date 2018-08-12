@@ -181,7 +181,7 @@
                             <label class="col-md-3 control-label" style="width:120px;">Address</label>
                             <div class="col-md-9" style="width:470px;">
                                 <input type="text" class="form-control" name="t3user.address" value="${user.address}"
-                                       placeholder="Your address">
+                                       placeholder="Your common working address">
                             </div>
                         </div>
                         <div class="form-group">
@@ -727,8 +727,8 @@
                     },
     	            stringLength: {
     	                min: 1,
-    	                max: 180,
-    	                message: 'The nickname cannot exceed 180 characters'
+    	                max: 32,
+    	                message: 'The nickname cannot exceed 32 characters'
     	            }
                 }
             }

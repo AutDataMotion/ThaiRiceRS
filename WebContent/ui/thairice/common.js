@@ -39,6 +39,7 @@ function showDialog(title) {
 function showMessage(content) {
     layer.alert(content, {
     	title:'Tips',
+    	icon: 1,
         skin: 'layui-layer-molv',// 样式类名
         closeBtn: 0,
         btn:['Ok']

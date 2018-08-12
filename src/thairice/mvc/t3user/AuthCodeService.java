@@ -84,7 +84,8 @@ public class AuthCodeService {
 	public String createAuthCode(BigInteger userId, int authType, long expireTime) {
 		long expireAt = System.currentTimeMillis() + (expireTime * 1000);
 		Record record = new Record();
-		String authCode = HashKit.md5("" + new Random().nextInt(1589745));
+		//String authCode = HashKit.md5("" + new Random().nextInt(1000000));
+		String authCode = String.valueOf(new Random().nextInt(1000000));
 		record.set("id", authCode);
 		record.set("userId", userId);
 		record.set("type", authType);

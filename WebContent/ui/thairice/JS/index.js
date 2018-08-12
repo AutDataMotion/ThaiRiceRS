@@ -128,8 +128,8 @@ $(function () {
                     },
     	            stringLength: {
     	                min: 1,
-    	                max: 180,
-    	                message: 'The nickname cannot exceed 180 characters'
+    	                max: 32,
+    	                message: 'The nickname cannot exceed 32 characters'
     	            }
                 }
             },
