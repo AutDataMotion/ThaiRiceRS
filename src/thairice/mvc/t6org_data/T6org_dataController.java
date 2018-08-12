@@ -82,7 +82,7 @@ public class T6org_dataController extends BaseController {
 			if (!StringUtils.isBlank(collectTimeEd)) {
 				sql += (" and date_format(t.collect_time ,'%Y-%m-%d' ) <= '" + collectTimeEd + "'");
 			}
-			Page pageT6 = T6org_data.dao.paginate(getParaToInt(0, 1), 12,
+			Page pageT6 = T6org_data.dao.paginate(getParaToInt(0, 1), 10,
 					"select t.name_, FORMAT(t.size_/(1000*1000), 1) as size_, date_format(t.dload_end_time ,'%Y-%m-%d %H:%m:%s') as dload_end_time,t.row_column, "
 							+ "(CASE t.type_ " + "when '01' then 'NDVI_1'\r\n" + "when '02' then 'NDVI_02'\r\n"
 							+ "when '03' then 'LST'\r\n" + "when '04' then 'CLASS'\r\n" + "when '05' then 'LANDSAT'"
@@ -92,7 +92,7 @@ public class T6org_dataController extends BaseController {
 							+ "when '06' then 'Processing'\r\n" + "when '07' then 'Not download'\r\n"
 							+ " else '' end) as status_, date_format(t.collect_time ,'%Y-%m-%d' ) as collect_time, t.id ",
 					sql + " order by t.collect_time");
-			Page pageT7 = T7pdt_data.dao.paginate(getParaToInt(0, 1), 12, "select *",
+			Page pageT7 = T7pdt_data.dao.paginate(getParaToInt(0, 1), 10, "select *",
 					" from t7pdt_data t order by t.collect_time");
 			setAttr("T6orgDataPage", pageT6);
 			setAttr("T7pdtDataPage", pageT7);
