@@ -2,10 +2,10 @@
 <style>
  .error {color: red;font-weight: bold;}
  .success {color: #5bb85d;font-weight:bold;}
- .expired {color: #337ab7;font-weight: bold;}
+ .expired {color: #f10b06;font-weight: bold;}
  .head{width: 40px;height: 40px;border-radius: 50%;}
  .bc{width: 70px;height:35px;}
- table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td{vertical-align: middle;text-align: left;}
+ table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td{vertical-align: middle;text-align: center;}
 .even{background-color: rgb(219, 239, 246)!important;}
 
         .list{padding: 10px;margin-top: -16px;}
@@ -37,7 +37,7 @@
             <div class="user_query" style="margin-top: -53px;">
                 <form id="form" class="form-inline" style="margin:4px 0 -8px 0;">
                     <div class="form-group">
-                        <input type="text" id="username" placeholder="Account" class="form-control">
+                        <input type="text" id="username" placeholder="Account / Mobile / Email" class="form-control">
                     </div>
                     <div class="form-group">
                         <label class="control-label" style="margin-right: 19px;">From</label>
@@ -261,15 +261,15 @@
         {"data": "phone", orderable: false},
         {"data": "email", orderable: false},
         {"data": null,orderable: false,render: function (data, type, row, meta) {
-            return ''+data.prdt_efdt.substring(0,11)+'~~~'+data.pd_exdat.substring(0,11);
+            return ''+data.prdt_efdt.substring(0,11)+'~ '+data.pd_exdat.substring(0,11);
         }},
         {"data": null,orderable: false,render: function (data, type, row, meta) {
             return ''+change(data.pd_tpcd);
         }},
         {"data": null,orderable: false,render: function (data, type, row, meta) {
                 if (data.status_ == '01') {
-                    return '<button type="button" class="btn btn-success btn-sm audit bc">Approve</button>&nbsp'
-                         + '<button type="button" class="btn btn-danger btn-sm bc" onclick="open_message(' + data.id + ',' + 3 + ')">Refuse</button>';
+                    return '<button type="button" class="btn btn-success btn-sm audit bc" style="font-weight: bold;">Approve</button>&nbsp'
+                         + '<button type="button" class="btn btn-danger btn-sm bc" style="font-weight: bold;" onclick="open_message(' + data.id + ',' + 3 + ')">Refuse</button>';
                 } else if (data.status_ == '02') {
                     return '<span class="success">Approved</span> <i class="glyphicon glyphicon-edit edit"></i>';
                 } else if (data.status_ == '03') {

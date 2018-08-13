@@ -5,7 +5,6 @@
  */
 package thairice.rpcjob;
 
-import java.math.BigInteger;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -22,8 +21,6 @@ import com.jfinal.plugin.cron4j.ITask;
 import RPCRice.PreProcess;
 import csuduc.platform.util.ComUtil;
 import csuduc.platform.util.timeUtils.GenerTimeStamp;
-import csuduc.platform.util.tuple.Tuple2;
-import csuduc.platform.util.tuple.TupleUtil;
 import thairice.config.ConfMain;
 import thairice.constant.EnumStatus;
 import thairice.mvc.t12preprocessinf.T12PreProcessInf;
