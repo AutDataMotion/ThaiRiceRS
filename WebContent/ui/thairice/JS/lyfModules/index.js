@@ -6,7 +6,8 @@ app.legendDiv = "#legendinfo";
 app.staChartDiv = "#stainfo";
 app.userID = '0';
 app.staExcelInit = false;
-app.Thai_shp_url =  hostIP+":6080/arcgis/rest/services/Thailand_shp/MapServer/0"
+//app.Thai_shp_url =  hostIP+":6080/arcgis/rest/services/Thailand_shp/MapServer/0"
+app.Thai_shp_url =  hostIP+":6080/arcgis/rest/services/Thailand_shp/MapServer/"
 $(function(){
 //	alert(hostIP);
 	initapp();
@@ -25,16 +26,19 @@ $(function(){
 		if(app.town_code!=0)
 		{
 			app.areaCode = app.town_code;
+			AddAreaLayer(1,app.areaCode);
 			
 		}
 		else if(app.city_code!=0)
 		{
 			app.areaCode = app.city_code;
+			AddAreaLayer(3,app.areaCode);
 			
 		}
 		else if(app.province_code!=0)
 		{
 			app.areaCode = app.province_code;
+			AddAreaLayer(2,app.areaCode);
 			
 		}
 		else{
@@ -201,7 +205,7 @@ function initapp()
 	      });
 	    
 	    // Carbon storage of trees in Warren Wilson College.
-	    var featureLayer = new FeatureLayer(app.Thai_shp_url);
+	    var featureLayer = new FeatureLayer(app.Thai_shp_url+"0");//泰国的国界图层
 		
 	    var symbol = new SimpleFillSymbol()
 	    .setColor(new Color([255,0,0,0]))
@@ -256,4 +260,85 @@ function initapp()
 	//初始化统计表格
 	 
 	 app.staChart = echarts.init(document.getElementById('staDiv'));
+}
+function AddAreaLayer(index,code)//添加行政区域边界图层
+{
+	require(["esri/map",
+		"esri/dijit/Scalebar",
+	    "dojo/dom",
+	    "dojo/on",
+	    "dojo/parser",
+	    "esri/urlUtils",
+	    "esri/config",
+	    "esri/layers/ArcGISDynamicMapServiceLayer",
+	    "esri/layers/FeatureLayer",
+	    "esri/tasks/query",
+	    "esri/symbols/SimpleFillSymbol", "esri/symbols/SimpleLineSymbol","esri/Color", "esri/renderers/SimpleRenderer",
+	    "esri/geometry/Extent",
+	    "dojo/domReady!"], function (
+	        Map,Scalebar,dom,on, parser,urlUtils,esriConfig,ArcGISDynamicMapServiceLayer,FeatureLayer,Query,SimpleFillSymbol, SimpleLineSymbol,Color, SimpleRenderer,Extent) {
+	    
+		parser.parse();
+
+		esriConfig.defaults.io.proxyUrl = hostIP+":8080/Java/proxy.jsp";
+		esriConfig.defaults.io.alwaysUseProxy = false;
+		
+		if (app.hasOwnProperty("AreaBoundLayer") ) {//删除之前的图层
+			 
+			 app.map.removeLayer(app.AreaBoundLayer);
+			 
+		}
+	    // Carbon storage of trees in Warren Wilson College.
+		app.AreaBoundLayer = new FeatureLayer(app.Thai_shp_url+index, {
+	        mode: FeatureLayer.MODE_ONDEMAND,
+	        //outFields: ["value"],
+	        outFields: ["CODE"],
+	       
+	        definitionExpression:"CODE="+code
+	    });
+		
+		var symbol = new SimpleFillSymbol()
+	    .setColor(new Color([255,0,0,0]))
+	    .setOutline(new SimpleLineSymbol(esri.symbol.SimpleLineSymbol.STYLE_SOLID, new Color([255,215,0]), 2)); ;
+	    var renderer = new SimpleRenderer(symbol);
+
+	    app.map.addLayer(app.AreaBoundLayer);
+	    
+		app.AreaBoundLayer.setRenderer(renderer);
+		
+//	  	console.log(app.AreaBoundLayer);
+	   
+		var count = 5;//如果发生错误，尝试执行5次
+		//缩放到指定 区域
+	    var queryParams = new Query();
+	    queryParams.outFields = ['CODE'];
+	    //queryParams.outStatistics = [ minStatDef, maxStatDef];
+	    queryParams.where = "CODE="+code;
+	    queryParams.returnGeometry = true;
+	    app.AreaBoundLayer.queryFeatures(queryParams, getStats, geterror);
+	    
+	    function getStats(results){
+//	    	 console.log("12");
+	    	 var feature = results.features[0];
+	    	 console.log(feature);
+	    	 app.map.setExtent(feature.geometry.getExtent());
+	    }
+	    
+	    function geterror(error)
+	    {
+//	    	console.log(error);
+	    	count--;
+	    	if(count>0)
+	    	{
+//	    		console.log(count);
+	    		app.AreaBoundLayer.queryFeatures(queryParams, getStats, geterror);
+	    	}
+	    	else{
+	    		console.log(error);
+	    	}
+	    	
+	    }
+
+	});
+	
 }
