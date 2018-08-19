@@ -38,7 +38,7 @@
                 </select>
             </div>
 						<div class="form-group" style="margin-left: 5px;">
-							<label class="control-label">Collection time</label>
+							<label class="control-label">Observation time</label>
 							<div class="input-group" id="starttime1C">
 								<input type="text" id="starttime1" class="form-control"
 									value=${starttime1!}><span class="input-group-addon"><i
@@ -90,7 +90,7 @@
 								<th style="border-bottom: none;">Type</th>
 								<th style="border-bottom: none;">Status</th>
 								<th style="border-bottom: none;">Row column</th>
-								<th style="border-bottom: none;">Collection date</th>
+								<th style="border-bottom: none;">Observation date</th>
 								<th style="border-bottom: none;">Download time</th>
 						<!-- 		<th style="border-bottom: none;">Option</th> -->
 							</tr>
@@ -113,7 +113,7 @@
 							<%}%>
 						</tbody>
 					</table>
-					<div align="center"><%
+					<div align="right"><%
 						includeFileTemplate("/common/_paginate.html",
 						{"currentPage":T6orgDataPage.pageNumber,"totalPage":T6orgDataPage.totalPage,"actionUrl":"/jf/thairice/t6org_data/"})
 						{} %></div>
@@ -135,7 +135,7 @@
 									<option value="04" ${selected204!}>Condition monitoring</option>
 		                </select>
 						<div class="form-group" style="margin-left: 5px;">
-							<label class="control-label">Collection time</label>
+							<label class="control-label">Observation time</label>
 							<div class="input-group" id="starttime2C">
 								<input type="text" id="starttime2" class="form-control"
 									value=${starttime2!}><span class="input-group-addon"><i
@@ -183,7 +183,7 @@
 								<th style="border-bottom: none;">Type</th>
 								<th style="border-bottom: none;">Sample path</th>
 								<th style="border-bottom: none;">Product path</th>
-								<th style="border-bottom: none;">Collection date</th>
+								<th style="border-bottom: none;">Observation date</th>
 								<th style="border-bottom: none;">Generation time</th>
 								<th style="border-bottom: none;">Zone code</th>
 								<th style="border-bottom: none;">Remark</th>
@@ -208,7 +208,7 @@
 							<%}%>
 						</tbody>
 					</table>
-					<div align="center">
+					<div align="right">
 					<%includeFileTemplate("/common/_paginate.html",
 					{"currentPage":T7pdtDataPage.pageNumber,"totalPage":T7pdtDataPage.totalPage,"actionUrl":"/jf/thairice/t7pdt_data/"})
 					{} %>
@@ -295,7 +295,7 @@ function checkBoxCheckMore(flag)
   }
   if(selectedNum == 0)
   {
-  	alert("一个都没有选中！");
+  	alert("You should select at least one！");
 	return false;
   } else
   	return true;
@@ -323,7 +323,7 @@ function selectAll(flag)
 
 //删除操作确认
 function del(){
-	var msg = "您真的确定要删除吗?\n\n请确认！";
+	var msg = "Are you sure to delete?\n\nPlease confirm！";
 	if(confirm(msg) == true){
 		return true;
 	} else {

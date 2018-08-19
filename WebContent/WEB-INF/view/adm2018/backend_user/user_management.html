@@ -4,7 +4,7 @@
  .success {color: #5bb85d;font-weight:bold;}
  .expired {color: #f10b06;font-weight: bold;}
  .head{width: 40px;height: 40px;border-radius: 50%;}
- .bc{width: 70px;height:35px;}
+ .bc{width: 66px;height:32px;}
  table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td{vertical-align: middle;text-align: center;}
 .even{background-color: rgb(219, 239, 246)!important;}
 
@@ -91,14 +91,14 @@
                 <table class="table table-bordered data-table" id="dataTable01" width="100%" cellspacing="0">
                     <thead>
                     <tr>
-                        <th width="6%"><input type="checkbox" id="cb-check-all" name="cb-check-all">All</th>
+                        <th width="5%"><input type="checkbox" id="cb-check-all" name="cb-check-all">All</th>
                         <th>Account</th>
                         <th>Mobile</th>
                         <th>Email</th>
                         <th>Service term</th>
                         <th>Products</th>
                         <th>Authorization</th>
-                        <th width="6%">Send</th>
+                        <th width="5%">Send</th>
                     </tr>
                     </thead>
                 </table>
@@ -261,7 +261,7 @@
         {"data": "phone", orderable: false},
         {"data": "email", orderable: false},
         {"data": null,orderable: false,render: function (data, type, row, meta) {
-            return ''+data.prdt_efdt.substring(0,11)+'~'+data.pd_exdat.substring(0,11);
+            return ''+data.prdt_efdt.substring(0,11)+'~ '+data.pd_exdat.substring(0,11);
         }},
         {"data": null,orderable: false,render: function (data, type, row, meta) {
             return ''+change(data.pd_tpcd);

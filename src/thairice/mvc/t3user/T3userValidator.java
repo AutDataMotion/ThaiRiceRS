@@ -63,7 +63,7 @@ public class T3userValidator extends Validator {
         //用户注册
         if (actionKey.equals(T3userController.pthc + "doReg")) {
         	if(TimeUtil.dateDiff(c.getPara("Prdt_EfDt",TimeUtil.getNow()), c.getPara("PD_ExDat"), "yyyy-MM-dd", "d")<=0){
-        		addError("desc", "The expiration date of the product should be later than the effective date");
+        		addError("desc", "Service Term is invalid");
         	}
         }
         //找回密码或修改密码

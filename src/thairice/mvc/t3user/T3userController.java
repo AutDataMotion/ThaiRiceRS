@@ -57,12 +57,12 @@ public class T3userController extends BaseController {
 	 T3user user;
 	if(getPara("account", "user").equals("admin")) {
 	    user = getSessionAttr("admin");
+	    setAttr("name",user.getPD_TpCd());
 	}else {
 	    user = getSessionAttr("user");
+	    T3user t3=T3user.dao.findById(user.getBigInteger("id"));
+	    setAttr("name",t3.getPD_TpCd());
 	}
-        String PD_TpCd=user.getPD_TpCd();
-        //Rice Acreage Rice Drought Rice Growth Rice Yield
-        setAttr("name",PD_TpCd);
         renderWithPath(pthv + "index.html");
     }
 

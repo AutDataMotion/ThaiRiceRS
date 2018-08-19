@@ -17,7 +17,9 @@ import com.jfinal.plugin.cron4j.ITask;
 
 import thairice.config.MyConfig;
 import thairice.constant.ConstantInitMy;
+import thairice.mvc.t2syslog.EnumT2sysLog;
 import thairice.mvc.t2syslog.T2syslog;
+import thairice.mvc.t2syslog.T2syslogService;
 import thairice.mvc.t3user.T3user;
 import thairice.mvc.t6org_data.T6org_data;
 import thairice.utils.DataConstants;
@@ -42,6 +44,7 @@ public class autoRemoteFtpScan extends Controller implements ITask {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			String time = sdf.format(new Date());
 			System.out.println("自动任务定时扫描检测远程ftp文件" + time);
+			T2syslogService.addLog(EnumT2sysLog.INFO, DataConstants.SYS_USER_ID, DataConstants.SYS_USER_NM, "Scan files to be downloaded", "Automaticly detect remote ftp files starting...");
 			final FtpUtils ftpUtils = new FtpUtils();
 			final FTPClient ftpClient = ftpUtils.connectFtp();
 			List<String> remotePathList = ParamUtils.getParamList(ParamUtils.PC_FTP_AUTO_DWLD,
@@ -72,6 +75,7 @@ public class autoRemoteFtpScan extends Controller implements ITask {
 				}
 			}
 		} catch (Exception e) {
+			T2syslogService.addLog(EnumT2sysLog.ERROR_N, DataConstants.SYS_USER_ID, DataConstants.SYS_USER_NM, "Scan files to be downloaded", "Automaticly detect remote ftp files abnormal!" + e);
 			LOG.error("定时扫描检测远程ftp文件发生异常：" + e);
 		}
 	}

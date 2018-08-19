@@ -142,9 +142,9 @@ public class BackendUserController extends BaseController {
 	titles.add(new ExcelExportUtil.Pair("phone", "Mobile"));
 	titles.add(new ExcelExportUtil.Pair("email", "Email"));
 	titles.add(new ExcelExportUtil.Pair("name_", "Nickname"));
-	titles.add(new ExcelExportUtil.Pair("Prdt_EfDt", "Prdt_EfDt"));
-	titles.add(new ExcelExportUtil.Pair("PD_ExDat", "PD_ExDat"));
-	titles.add(new ExcelExportUtil.Pair("PD_TpCd", "PD_TpCd"));
+	titles.add(new ExcelExportUtil.Pair("Prdt_EfDt", "Effective date of product"));
+	titles.add(new ExcelExportUtil.Pair("PD_ExDat", "Product expiration date"));
+	titles.add(new ExcelExportUtil.Pair("PD_TpCd", "Product categories"));
 	
         // 全部导出
         if (getPara("select").equals("all")) {
@@ -165,6 +165,8 @@ public class BackendUserController extends BaseController {
                 	dk+=",Rice yield";
                     }
                     t3user.setPD_TpCd(dk); 
+                    t3user.set("PD_ExDat",t3user.getPD_ExDat().toString().substring(0, 11));
+                    t3user.set("Prdt_EfDt",t3user.getPrdt_EfDt().toString().substring(0, 11));
         	}
              
 	    }
@@ -187,6 +189,8 @@ public class BackendUserController extends BaseController {
                 	dk+=",Rice yield";
                     }
                     t3user.setPD_TpCd(dk); 
+                    t3user.set("PD_ExDat",t3user.getPD_ExDat().toString().substring(0, 11));
+                    t3user.set("Prdt_EfDt",t3user.getPrdt_EfDt().toString().substring(0, 11));
         	}
 	    }
             ExportService.service.exportDiy(titles,"ExportUserData", "thairice.t3user", getResponse(), getRequest(), rates);

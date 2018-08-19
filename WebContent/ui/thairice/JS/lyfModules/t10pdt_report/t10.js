@@ -942,7 +942,7 @@ var sta = {};
             var option = {
             	color: ['#3398DB'],
                 title: {
-                    text: 'TaiLand Area',
+                    text: 'Rice Acreage',
                     textStyle:{
                     	color:'#fff'
                     }
@@ -979,7 +979,7 @@ var sta = {};
                     data: names
                 },
                 yAxis: {
-                	name:"Area/rai",
+                	name:"Acreage/rai",
                 	//nameLocation:'middle',
                 	nameTextStyle:{
                 		color:'#fff'
@@ -1039,7 +1039,7 @@ var sta = {};
             var option = {
             	color: ['#3398DB'],
                 title: {
-                    text: 'TaiLand Yield',
+                    text: 'Rice Yield',
                     textStyle:{
                     	color:'#fff'
                     }
@@ -1158,7 +1158,7 @@ var sta = {};
             	color: ['#00FF7F','#98FB98','#FFFF00','#FF8000','#FF0000'],
                 title: {
 //                    text: 'TaiLand Drought',
-                	text: 'TaiLand'+app.productKind_des,
+                	text: 'ThaiLand'+app.productKind_des,
                     textStyle:{
                     	color:'#fff'
                     }

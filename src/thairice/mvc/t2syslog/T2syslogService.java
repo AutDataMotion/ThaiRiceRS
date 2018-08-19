@@ -18,10 +18,12 @@ import org.apache.commons.lang.StringUtils;
 import org.apache.log4j.Logger;
 import org.apache.lucene.util.CollectionUtil;
 
+import com.alibaba.druid.sql.visitor.functions.If;
 import com.google.common.base.Strings;
 import com.jfinal.aop.Enhancer;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Record;
+import com.platform.mvc.base.BaseController;
 import com.platform.mvc.base.BaseService;
 
 import csuduc.platform.util.ReflectionUtils;
@@ -29,8 +31,10 @@ import csuduc.platform.util.StringUtil;
 import oracle.net.aso.p;
 import thairice.config.ConfMain;
 import thairice.mvc.comm.ParamComm;
+import thairice.mvc.t3user.T3user;
+import thairice.mvc.t3user.T3userController;
 
-public class T2syslogService extends BaseService {
+public class T2syslogService extends BaseService{
 
 	@SuppressWarnings("unused")
 	private static Logger log = Logger.getLogger(T2syslogService.class);
@@ -124,7 +128,6 @@ public class T2syslogService extends BaseService {
 				.set(T2syslog.column_action_, action_)
 				.set(T2syslog.column_content, content)
 				.set(T2syslog.column_add_time, new Date());
-		
 		if (queue.size() > 5000) {
 			// 太大只记录日志文件
 			addLogToFile(record);
@@ -132,6 +135,35 @@ public class T2syslogService extends BaseService {
 			queue.offer(record ); // 将指定元素插入此队列的尾部
 		}
 	}
+	
+	/**
+	 *  重载记录日志接口，不需要传用户信息，自动识别用户信息
+	 *  zhuchaobin
+	 *  2018-08-19
+	 */
+/*	public static void addLog(EnumT2sysLog type, String action_, String content){
+		Record record = new Record().set(T2syslog.column_type_, type.getName())
+				.set(T2syslog.column_action_, action_)
+				.set(T2syslog.column_content, content)
+				.set(T2syslog.column_add_time, new Date());
+		Integer userid = 99999999;
+		String username = "System";
+		T3userController t3 = new T3userController();
+		T3user user = t3.getSessionAttr("user");
+		if(null != user && (null !=user.getId())) {
+			userid = user.getId();
+			username = user.getAccount();
+		}
+		record.set(T2syslog.column_userid, userid);
+		record.set(T2syslog.column_username, username);
+		if (queue.size() > 5000) {
+			// 太大只记录日志文件
+			addLogToFile(record);
+		}else{
+			queue.offer(record ); // 将指定元素插入此队列的尾部
+		}
+	}*/
+	
 	public static void info(BigInteger userid, String userName, String action_, String content){
 		addLog(EnumT2sysLog.INFO, userid, userName, action_, content);
 	}
@@ -186,6 +218,5 @@ public class T2syslogService extends BaseService {
 			log.error("日志T2syslogService线程异常：" + e.getMessage());
 		}
 	}
-	
 	
 }

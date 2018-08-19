@@ -23,6 +23,8 @@ import csuduc.platform.util.ReportUtil;
 import thairice.entity.ResultEntity;
 import thairice.mvc.t14my_region.t14my_region;
 import thairice.mvc.t14my_region.t14my_regionService;
+import thairice.mvc.t2syslog.EnumT2sysLog;
+import thairice.mvc.t2syslog.T2syslogService;
 import thairice.mvc.t3user.T3user;
 import thairice.mvc.t3user.T3userService;
 import thairice.mvc.t6org_data.T6org_data;
@@ -203,9 +205,13 @@ public class T10pdt_reportController extends BaseController {
 		try {
 			T10pdt_report.dao.deleteById(id);
 			res = new ResultEntity("0000");
+            T3user user = getSessionAttr("user");
+            T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), user.getAccount(), "Delete report", res.getDesc());
 			renderJson(res);
 		} catch (Exception e) {
 			res = new ResultEntity("0014");
+            T3user user = getSessionAttr("user");
+            T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), user.getAccount(), "Delete report", res.getDesc());
 			renderJson(res);
 		}
 		

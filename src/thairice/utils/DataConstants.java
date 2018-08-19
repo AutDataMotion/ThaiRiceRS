@@ -29,8 +29,11 @@ public class DataConstants {
 	
 	public static final String FLAGE_OFF2 = "00";
 
-	// 用户ID：系统自动
+	// 用户ID：系统自动执行的动作日志使用
 	public static final BigInteger SYS_USER_ID = new BigInteger("99999999");
+	
+	// 用户名：系统自动执行的动作日志使用
+	public static final String SYS_USER_NM = "System";
 	
 	// 泰国全境，条带行列号
 	public static final String STR_H26V06 = "h26v06";
@@ -69,6 +72,5 @@ public class DataConstants {
 		PDT_DATA_TYPE.put("02","Drought monitoring");
 		PDT_DATA_TYPE.put("03","Production estimates");    
 		PDT_DATA_TYPE.put("04","Condition monitoring");
-	}
-	
+	}	
 }

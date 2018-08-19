@@ -21,7 +21,9 @@ import com.jfinal.plugin.cron4j.ITask;
 import thairice.config.MyConfig;
 import thairice.constant.ConstantInitMy;
 import thairice.mvc.t1parameter.T1parameter;
+import thairice.mvc.t2syslog.EnumT2sysLog;
 import thairice.mvc.t2syslog.T2syslog;
+import thairice.mvc.t2syslog.T2syslogService;
 import thairice.mvc.t3user.T3user;
 import thairice.mvc.t6org_data.T6org_data;
 import thairice.utils.DataConstants;
@@ -44,6 +46,7 @@ public class autoFtpDownload extends Controller implements ITask {
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
 			String time=sdf.format(new Date());
 			System.out.println("定时自动扫描待下载文件并启动ftp下载"+time);
+			T2syslogService.addLog(EnumT2sysLog.INFO, DataConstants.SYS_USER_ID, DataConstants.SYS_USER_NM, "Download remote ftp files", "Automatically scan files to be downloaded and start ftp download...");
 			final String localfilePath = ParamUtils.getParam(ParamUtils.PC_FTP_AUTO_DWLD, ParamUtils.FILE_STRG_ADR);
 			final FtpUtils ftpUtils = new FtpUtils();
 			final FTPClient ftpClient = ftpUtils.connectFtp();
@@ -84,6 +87,7 @@ public class autoFtpDownload extends Controller implements ITask {
 			}
 		} catch(Exception e) {
 			LOG.error("定时自动扫描待下载文件并启动ftp下载发生异常：" + e);
+			T2syslogService.addLog(EnumT2sysLog.ERROR_N, DataConstants.SYS_USER_ID, DataConstants.SYS_USER_NM, "Download remote ftp files", "Automatically scan files to be downloaded and start ftp download abnormal!" + e);
 		}
 	} 
 	

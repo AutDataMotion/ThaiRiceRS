@@ -5,6 +5,19 @@
 	display: -webkit-box;
   display: -ms-flexbox; 
    display: flex; 
+   flex-direction: row;
+   justify-content:flex-end;
+   padding-right: 0; 
+   list-style: none;
+  border-radius: 0.25rem; 
+  
+}
+
+.pagination2 {
+	display: -webkit-box;
+  display: -ms-flexbox; 
+   display: flex; 
+   flex-direction: row;
    padding-right: 0; 
    list-style: none;
   border-radius: 0.25rem; 
@@ -52,9 +65,9 @@
 
 .page-item.active .page-link {
   z-index: 1;
-  color: #fff;
+/*   color: #fff;
   background-color: #007bff;
-  border-color: #007bff;
+  border-color: #007bff; */
 }
 
 .page-item.disabled .page-link {
@@ -113,7 +126,7 @@
 
 <div class="row">
 	<div class="col-sm-8 col-md-5">
-		<div  id="dataTable01_info" class="pagination" style="margin-top:0px;"  role="status" aria-live="polite">Showing ${currentPage} of ${totalPage} pages</div>
+		<div  id="dataTable01_info" class="pagination2" style="margin-top:0px;"  role="status" aria-live="polite">Showing ${currentPage} of ${totalPage} pages</div>
 	</div>
 	<div class="col-sm-11 col-md-7" text-align="right">
 <!-- 		<div class="dataTables_paginate paging_simple_numbers" id="dataTable01_paginate"> -->
@@ -133,7 +146,7 @@
 			</li>
 			<%}else{%>	
 			<li class="paginate_button page-item previous">
-			<a href="${actionUrl}" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>	
+			<a href="${actionUrl}${currentPage - 1}${urlParas!}" data-dt-idx="0" tabindex="0" class="page-link">Previous</a>	
 			</li>		
 			<%}%>
 			
