@@ -12,7 +12,7 @@ public class as {
 	// System.out.println(TimeUtil.getHour());
 	// test by zw
 	// System.out.println(TimeUtil.isLaterThanNow("2018-04-16 00:00:00"));
-	System.out.println("2018-07-28 00:00:00.0".replace(".0", ""));
+	System.out.println("2018-07-28 00:00:00.0".substring(0, 11));
 	long day = TimeUtil.dateDiff(TimeUtil.getNow(), "2018-08-07 00:00:00", "yyyy-MM-dd HH:mm:ss", "d");
 	if (day < 0) {
 	    System.out.println("g");

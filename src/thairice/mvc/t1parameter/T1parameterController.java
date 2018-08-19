@@ -141,6 +141,8 @@ public class T1parameterController extends BaseController {
 				fileOld.delete();
 			file.renameTo(new File(upFile.getSaveDirectory() + "\\statistic_yield_file.csv"));			
 		}
+        T3user user = getSessionAttr("user");
+        T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), user.getAccount(), "Statistic yield file upload", "Successful");
 		renderWithPath("/adm2018/production_configuration.html");
 	}
 
@@ -262,6 +264,9 @@ public class T1parameterController extends BaseController {
 				parm.update();
 				LOG.debug("更新参数成功");
 				res = new ResultEntity("0000");
+				// 写入日志
+		        T3user user = getSessionAttr("user");
+		        T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), user.getAccount(), "Update MODIS files download path", "Successful");
 				renderJson(res);
 				return;
 			} else if("002".equals(flag)) {
@@ -274,6 +279,9 @@ public class T1parameterController extends BaseController {
 				ParamUtils.updateParam("10000003", "003", droughtThreshold3);
 				ParamUtils.updateParam("10000003", "004", droughtThreshold4);
 				LOG.debug("更新参数成功");
+				// 写入日志
+		        T3user user = getSessionAttr("user");
+		        T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), user.getAccount(), "Update drought threshold", "Successful");
 				res = new ResultEntity("0000");
 				renderJson(res);
 				return;
@@ -292,6 +300,9 @@ public class T1parameterController extends BaseController {
 				ParamUtils.updateParam("10000004", "006", inEndYear);
 				LOG.debug("更新参数成功");
 				res = new ResultEntity("0000");
+				// 写入日志
+		        T3user user = getSessionAttr("user");
+		        T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), user.getAccount(), "Update rice growth configuration", "Successful");
 				renderJson(res);
 				return;
 			} else {
@@ -303,6 +314,9 @@ public class T1parameterController extends BaseController {
 		} catch (Exception e) {
 			LOG.error("更新参数发生异常");
 			res = new ResultEntity("0011");
+			// 写入日志
+	        T3user user = getSessionAttr("user");
+	        T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), user.getAccount(), "Update products setup", res.getDesc());
 			renderJson(res);
 			return;
 		}

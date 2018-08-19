@@ -1,5 +1,8 @@
 <% var cssSec={ %>
 <style>
+.table>tbody>tr>td, .table>tbody>tr>th, .table>tfoot>tr>td, .table>tfoot>tr>th, .table>thead>tr>td, .table>thead>tr>th {
+    vertical-align: middle;
+}
 </style>
 <% }; %> <% var contSec={ %>
 
@@ -56,7 +59,7 @@
 							<button type="button" onclick="dataQuery(1)"
 								class="btn btn-primary"><i class="glyphicon glyphicon-search" style="margin-right: 3px;"></i>Search</button>
 						</div>
-						<div class="form-group" style="margin-left: 20px;">
+						<div class="form-group" style="margin-left: 5px;">
 							<button type="button" class="btn btn-success">
 								<i class="glyphicon glyphicon-duplicate"
 									style="margin-right: 3px;"></i>Backup
@@ -79,10 +82,10 @@
                     <table class="table table-bordered data-table table-special" id="dataTable03" width="100%" cellspacing="0" align="center"> -->
                     
 				<div class="tab_table_wrap">
-					<table class="table table-bordered data-table table-special"
+					<table class="table table-bordered data-table table-special" width="100%"
 						align="center" cellpadding="0" cellspacing="0">
 						<thead>
-							<tr>
+							<tr role="row" >
 								<th style="border-bottom: none;">&nbsp&nbsp&nbsp&nbsp<input type="checkbox"
 									align="center"  name="checkAll1" onclick="selectAll('1')">All</th>								
 								<th style="border-bottom: none;">File name</th>
@@ -97,12 +100,12 @@
 						</thead>
 						<tbody>
 							<%for(x in T6orgDataPage.list){ %>
-							<tr>
-								<td style="text-align: center;"><input type="checkbox"
+							<tr role="row" style="vertical-align:middle">
+								<td style="text-align: center;" height="30px"><input type="checkbox"
 									name="orgDataId" value=${x.id}></td>
 								<td style="text-align: center;">${x.name_}</td>
 								<td style="text-align: center;">${x.size_}</td>
-								<td style="text-align: center;">${x.type_}</td>
+								<td style="text-align: center;HEIGHT:50px;">${x.type_}</td>
 								<td style="text-align: center;">${x.status_}</td>
 								<td style="text-align: center;">${x.row_column}</td>
 								<td style="text-align: center;">${x.collect_time}</td>
@@ -249,9 +252,9 @@
 				document.getElementById("data01_content").className = "tab-pane fade";
 			}
 			if(flag == 9){"D:/DUC/泰国农业遥感v20180108/泰国农业4.4/泰国农业4.4/泰国大数据静态（系统操作员）/data_management.html"
-				alert(查询失败！);
+				alert("查询失败!");
 			}
-});"D:/DUC/泰国农业遥感v20180108/泰国农业4.4/泰国农业4.4/泰国大数据静态（系统操作员）/data_management.html"
+});
 </script>
 <script type="text/javascript"> 
 var dataQuery = function(v) {   

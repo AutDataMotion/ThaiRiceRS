@@ -43,7 +43,7 @@ $(document).ready(function() {
 		},
 		buttons: [
 			 {
-					text : 'Download excel',
+					text : 'Export to Excel',
 					extend: 'excel' ,
 					title: 'systemlog'
 				}
@@ -74,4 +74,9 @@ $(document).ready(function() {
 		// 重新加载table数据
 		myTable.ajax.reload();
 	});
+	
+	// 修改导出按钮样式
+	var btnExport =$('div.dt-buttons a');
+	console.log(btnExport);
+	btnExport.html('<i class="glyphicon glyphicon-download-alt"></i><span>Export to Excel</span>');
 });

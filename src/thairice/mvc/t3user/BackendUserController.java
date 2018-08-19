@@ -165,6 +165,8 @@ public class BackendUserController extends BaseController {
                 	dk+=",Rice yield";
                     }
                     t3user.setPD_TpCd(dk); 
+                    t3user.set("PD_ExDat",t3user.getPD_ExDat().toString().substring(0, 11));
+                    t3user.set("Prdt_EfDt",t3user.getPrdt_EfDt().toString().substring(0, 11));
         	}
              
 	    }
@@ -187,6 +189,8 @@ public class BackendUserController extends BaseController {
                 	dk+=",Rice yield";
                     }
                     t3user.setPD_TpCd(dk); 
+                    t3user.set("PD_ExDat",t3user.getPD_ExDat().toString().substring(0, 11));
+                    t3user.set("Prdt_EfDt",t3user.getPrdt_EfDt().toString().substring(0, 11));
         	}
 	    }
             ExportService.service.exportDiy(titles,"ExportUserData", "thairice.t3user", getResponse(), getRequest(), rates);
