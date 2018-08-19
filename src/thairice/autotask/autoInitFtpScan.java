@@ -14,6 +14,9 @@ import com.jfinal.core.Controller;
 import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.cron4j.ITask;
 import thairice.constant.ConstantInitMy;
+import thairice.mvc.t2syslog.EnumT2sysLog;
+import thairice.mvc.t2syslog.T2syslogService;
+import thairice.mvc.t3user.T3user;
 import thairice.mvc.t6org_data.T6org_data;
 import thairice.utils.DataConstants;
 import thairice.utils.DatesUtils;
@@ -35,6 +38,7 @@ public class autoInitFtpScan extends Controller implements ITask {
 	public void run() {
 		try {
 			LOG.debug("自动任务FTP初始化文件扫描开始.");
+			T2syslogService.addLog(EnumT2sysLog.INFO, DataConstants.SYS_USER_ID, DataConstants.SYS_USER_NM, "Init ftp scan", "FTP initialization file scan starting!");
 			// 获取FTP初始化文件扫描参数
 			// 初始化开关
 			String inlzSwtc = ParamUtils.getParam(ParamUtils.PC_FTP_AUTO_DWLD, ParamUtils.INLZ_SWTC);
@@ -46,15 +50,18 @@ public class autoInitFtpScan extends Controller implements ITask {
 			// 参数校验
 			if(StringUtils.isBlank(inlzSwtc)) {
 				LOG.error("初始化开关为空，自动任务FTP初始化文件扫描失败");
+	            T2syslogService.addLog(EnumT2sysLog.ERROR_S, DataConstants.SYS_USER_ID, DataConstants.SYS_USER_NM, "Init ftp scan", "Switch for init cann't be null!");
 				return;
 			}
 			if(StringUtils.isBlank(inlzStDt)) {
 				LOG.error("初始化开始日期为空，自动任务FTP初始化文件扫描失败");
+	            T2syslogService.addLog(EnumT2sysLog.ERROR_S, DataConstants.SYS_USER_ID, DataConstants.SYS_USER_NM, "Init ftp scan", "Start Date cann't be null!");
 				return;
 			}
 			if(StringUtils.isBlank(inlzEdDt)) {
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 				inlzEdDt = sdf.format(new Date());
+				T2syslogService.addLog(EnumT2sysLog.WARN, DataConstants.SYS_USER_ID, DataConstants.SYS_USER_NM, "Init ftp scan", "End Date is null!");
 				LOG.debug("初始化结束日期为空，自动任务FTP初始化文件扫描结束日期取当天日期：" + inlzEdDt);
 			}
 			// 如果开关为打开则开始逐天扫描
@@ -126,10 +133,12 @@ public class autoInitFtpScan extends Controller implements ITask {
 					ftpClient.disconnect();
 				}
 			} else {
+				T2syslogService.addLog(EnumT2sysLog.INFO, DataConstants.SYS_USER_ID, DataConstants.SYS_USER_NM, "Init ftp scan", "FTP initialization file scan switch is off!");
 				LOG.info("FTP初始化文件扫描开关为关闭");
 			}
 		} catch (Exception e) {
-			LOG.debug("FTP初始化文件扫描发生异常:" + e);
+			T2syslogService.addLog(EnumT2sysLog.ERROR_N, DataConstants.SYS_USER_ID, DataConstants.SYS_USER_NM, "Init ftp scan", "FTP initialization file scan abnormal!" + e);
+			LOG.error("FTP初始化文件扫描发生异常:" + e);
 		}
 	}
 
