@@ -34,7 +34,7 @@ import thairice.mvc.comm.ParamComm;
 import thairice.mvc.t3user.T3user;
 import thairice.mvc.t3user.T3userController;
 
-public class T2syslogService extends BaseController{
+public class T2syslogService extends BaseService{
 
 	@SuppressWarnings("unused")
 	private static Logger log = Logger.getLogger(T2syslogService.class);
@@ -141,7 +141,7 @@ public class T2syslogService extends BaseController{
 	 *  zhuchaobin
 	 *  2018-08-19
 	 */
-	public static void addLog(EnumT2sysLog type, String action_, String content){
+/*	public static void addLog(EnumT2sysLog type, String action_, String content){
 		Record record = new Record().set(T2syslog.column_type_, type.getName())
 				.set(T2syslog.column_action_, action_)
 				.set(T2syslog.column_content, content)
@@ -162,7 +162,7 @@ public class T2syslogService extends BaseController{
 		}else{
 			queue.offer(record ); // 将指定元素插入此队列的尾部
 		}
-	}
+	}*/
 	
 	public static void info(BigInteger userid, String userName, String action_, String content){
 		addLog(EnumT2sysLog.INFO, userid, userName, action_, content);
@@ -218,12 +218,5 @@ public class T2syslogService extends BaseController{
 			log.error("日志T2syslogService线程异常：" + e.getMessage());
 		}
 	}
-
-	@Override
-	protected void setViewPath() {
-		// TODO Auto-generated method stub
-		
-	}
-	
 	
 }
