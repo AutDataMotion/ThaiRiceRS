@@ -75,7 +75,7 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-collections4-4.1.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/java-8-oracle"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/UtilZW"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/DUCRPC"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-email-1.5.jar"/>
+	<classpathentry combineaccessrules="false" kind="src" path="/DUCRPC"/>
 	<classpathentry kind="output" path="WebContent/WEB-INF/classes"/>
 </classpath>
