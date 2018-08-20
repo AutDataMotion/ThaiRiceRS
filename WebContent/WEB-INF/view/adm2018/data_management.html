@@ -88,7 +88,7 @@
 							<tr role="row" >
 								<th style="border-bottom: none;">&nbsp&nbsp&nbsp&nbsp<input type="checkbox"
 									align="center"  name="checkAll1" onclick="selectAll('1')">All</th>								
-								<th style="border-bottom: none;">File name</th>
+								<th style="border-bottom: none; HEIGHT:45px;">File name</th>
 								<th style="border-bottom: none;">Size(MB)</th>
 								<th style="border-bottom: none;">Type</th>
 								<th style="border-bottom: none;">Status</th>
@@ -101,11 +101,11 @@
 						<tbody>
 							<%for(x in T6orgDataPage.list){ %>
 							<tr role="row" style="vertical-align:middle">
-								<td style="text-align: center;" height="30px"><input type="checkbox"
+								<td style="text-align: center;"><input type="checkbox"
 									name="orgDataId" value=${x.id}></td>
 								<td style="text-align: center;">${x.name_}</td>
 								<td style="text-align: center;">${x.size_}</td>
-								<td style="text-align: center;HEIGHT:50px;">${x.type_}</td>
+								<td style="text-align: center;HEIGHT:45px;">${x.type_}</td>
 								<td style="text-align: center;">${x.status_}</td>
 								<td style="text-align: center;">${x.row_column}</td>
 								<td style="text-align: center;">${x.collect_time}</td>
@@ -183,7 +183,7 @@
 							<tr>
 								<th style="border-bottom: none;">&nbsp&nbsp&nbsp&nbsp<input type="checkbox"
 									align="center" name="checkAll2" onclick="selectAll('2')">All</th>	
-								<th style="border-bottom: none;">Type</th>
+								<th style="border-bottom: none;HEIGHT:45px;">Type</th>
 								<th style="border-bottom: none;">Sample path</th>
 								<th style="border-bottom: none;">Product path</th>
 								<th style="border-bottom: none;">Observation date</th>
@@ -199,7 +199,7 @@
 								<td style="text-align: center;"><input type="checkbox"
 									name="pdtDataId" value=${x.id}></td>
 								<td style="text-align: center;">${x.type_}</td>
-								<td style="text-align: center;">${x.sample_path}</td>
+								<td style="text-align: center;HEIGHT:45px;">${x.sample_path}</td>
 								<td style="text-align: center;">${x.product_path}</td>
 								<td style="text-align: center;">${x.collect_time}</td>
 								<td style="text-align: center;">${x.generate_time}</td>
