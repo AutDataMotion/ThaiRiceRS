@@ -73,7 +73,7 @@
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/sigar.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/guava-25.1-jre.jar"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-collections4-4.1.jar"/>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/java-8-oracle"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/jre1.8.0_161"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/UtilZW"/>
 	<classpathentry kind="lib" path="WebContent/WEB-INF/lib/commons-email-1.5.jar"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/DUCRPC"/>
