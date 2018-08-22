@@ -98,7 +98,7 @@
                         <th>Service term</th>
                         <th>Products</th>
                         <th>Authorization</th>
-                        <th width="5%">Send</th>
+                        <th width="6%">Send</th>
                     </tr>
                     </thead>
                 </table>
@@ -605,6 +605,20 @@
         param.username = $("#username").val();
         param.min = $("#min").val();
         param.max = $("#max").val();
+        
+        //保证搜索产品失效日期大于产品生效日期
+        if($("#min").val()!=''&&$("#max").val()!=''){
+        	if(CompareDate(param.min,param.max)){
+        		showMessage("Service term is invalid");
+        	}
+        }
+        
+/*         if($("#Prdt_EfDt").val()!=''&&$("#PD_ExDat").val()!=''){
+        	if(CompareDate(param.Prdt_EfDt,param.PD_ExDat)){
+        		showMessage("Service term is invalid");
+        	}
+        } */
+        
         param.region = $("#region").val();
         param.audit = $("#audit").val();
         param.type = $("#type").val();
@@ -659,6 +673,11 @@
             }
      }
  });
+  //判断搜索日期失效日期是否大于生效日期
+   function CompareDate(d1,d2)
+	   {
+	     return ((new Date(d1.replace(/-/g,"\/"))) > (new Date(d2.replace(/-/g,"\/"))));
+	   }
 </script>
   <% }; %> <%
   include("../layout.html",{cssSec:cssSec,contSec:contSec,jsSec:jsSec}){}
