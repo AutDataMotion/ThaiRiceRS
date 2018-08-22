@@ -876,7 +876,7 @@
                   <w:rFonts w:ascii="Times New Roman" w:h-ansi="Times New Roman"/>
                   <wx:font wx:val="Times New Roman"/>
                 </w:rPr>
-                <w:t>Acreage(m2)</w:t>
+                <w:t>Acreage(rai)</w:t>
               </w:r>
             </w:p>
           </w:tc>
