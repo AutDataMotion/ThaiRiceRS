@@ -57,12 +57,14 @@ public class T3userController extends BaseController {
 	 T3user user;
 	if(getPara("account", "user").equals("admin")) {
 	    user = getSessionAttr("admin");
-	    setAttr("name",user.getPD_TpCd());
+	    T3user t3=T3user.dao.findById(user.getBigInteger("id"));
+	    setAttr("name",t3.getPD_TpCd());
 	}else {
 	    user = getSessionAttr("user");
 	    T3user t3=T3user.dao.findById(user.getBigInteger("id"));
 	    setAttr("name",t3.getPD_TpCd());
 	}
+	setAttr("account", getPara("account", "user"));
         renderWithPath(pthv + "index.html");
     }
 
@@ -245,7 +247,12 @@ public class T3userController extends BaseController {
             renderJson(list);
             return;
         }
-        T3user user = getSessionAttr("user");
+        T3user user;
+        if(getPara("account", "user").equals("user")) {
+            user = getSessionAttr("user");
+        }else {
+            user = getSessionAttr("admin");
+        }
         BigInteger userId = user.getBigInteger("id");
         if (type.equals("p")) {
             List<Record> list1 = Db.use(ConstantInitMy.db_dataSource_main).find("select * from t14my_region where userId=?", userId);

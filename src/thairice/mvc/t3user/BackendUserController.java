@@ -247,6 +247,15 @@ public class BackendUserController extends BaseController {
                 user.set("Prdt_EfDt", "2000-01-01 00:00:00");
                 user.set("PD_ExDat", "2199-01-01 00:00:00");
                 user.use(ConstantInitMy.db_dataSource_main).saveGenIntId();
+                List<Record>list=Db.use(ConstantInitMy.db_dataSource_main).find("select * from t13region where parentId=0 order by id desc");
+                for (Record record : list) {
+            	Record r=new Record();
+            	       r.set("userId", user.getId());
+                       r.set("provinceId", record.get("id"));
+                       r.set("cityId", 0);
+                       r.set("areaId", 0);
+                 Db.use(ConstantInitMy.db_dataSource_main).save("t14my_region", r);
+    	    }
             } else {
                 user.update();
             }

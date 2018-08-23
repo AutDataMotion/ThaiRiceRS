@@ -395,6 +395,12 @@
     }
     //修改信息
     function edit_info() {
+       if($("#Prdt_EfDt").val()!=''&&$("#PD_ExDat").val()!=''){
+    	if(CompareDate($("#Prdt_EfDt").val(),$("#PD_ExDat").val())){
+    		showMessage("Service term is invalid");
+    		return;
+    	}
+       }
         sendAjax("${cxt!}/jf/thairice/admin/user/audit", $("#info").serialize(), function (res) {
             showMessage(res.desc);
             if (res.code == 1) {
@@ -612,12 +618,6 @@
         		showMessage("Service term is invalid");
         	}
         }
-        
-/*         if($("#Prdt_EfDt").val()!=''&&$("#PD_ExDat").val()!=''){
-        	if(CompareDate(param.Prdt_EfDt,param.PD_ExDat)){
-        		showMessage("Service term is invalid");
-        	}
-        } */
         
         param.region = $("#region").val();
         param.audit = $("#audit").val();
