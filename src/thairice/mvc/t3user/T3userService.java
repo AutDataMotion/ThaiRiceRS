@@ -199,7 +199,7 @@ public class T3userService extends BaseService {
 			sb.append(" AND CONCAT(IFNULL(account,''),IFNULL(name_,''),IFNULL(phone,''),IFNULL(email,''))  LIKE '%"
 					+ name.trim().toLowerCase() + "%'");
 		}
-		if (StrKit.notBlank(min)||StrKit.notBlank(max)) {
+		if (StrKit.notBlank(min)&&StrKit.notBlank(max)) {
 			max = StrKit.isBlank(max) ? TimeUtil.getNow() : max;
 			//AND critime>'2014-03-30' AND critime<'2014-05-31' PD_ExDat
 			sb.append(" AND  Prdt_EfDt >'" + min + "'" + " AND PD_ExDat< DATE_ADD('" + max + "',interval 1 day)");
