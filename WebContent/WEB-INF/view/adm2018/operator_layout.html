@@ -14,6 +14,8 @@
 	<script type="text/javascript">
 		var cxt = '${cxt!}';
 		var hostIP = cxt.substring(0,cxt.length-3);
+		
+		
 	</script>
     <!-- CSS -->
    <!-- Bootstrap core CSS -->
@@ -111,6 +113,19 @@
 <script src="https://js.arcgis.com/3.24/"></script>
 <script src="${cxt!}/ui/thairice/JS/lyfModules/productionConf_lyf.js"></script> 
 <script src="${cxt!}/ui/thairice/JS/lyfModules/customoperation.js"></script> 
+
+<script>
+$(window).resize(function(){ 
+	if(document.body.clientWidth<1020){
+		$('.navbar-brand').text('');
+		
+	}else{
+		$('.navbar-brand').text('Thailand agricultural remote sensing monitoring platform');
+		
+	}
+	
+})
+	</script>
 <!-- Charts -->
 
 <!--  Form Related -->
