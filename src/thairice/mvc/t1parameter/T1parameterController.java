@@ -887,5 +887,24 @@ public class T1parameterController extends BaseController {
 		}
 		
 	}
-	
+	@Clear
+	public void preProcessing()
+	{
+		ThariceClient.preProcessing();
+	}
+	@Clear
+	public void landDrought()
+	{
+		ThariceClient.landDrought();
+	}
+	@Clear
+	public void grouthMonitor()
+	{
+		ThariceClient.grouthMonitor();
+	}
+	@Clear
+	public void landYield()
+	{
+		ThariceClient.landYield();
+	}
 }

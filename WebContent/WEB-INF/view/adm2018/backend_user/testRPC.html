@@ -1,0 +1,187 @@
+<!doctype html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width,initial-scale-1">
+<title>测试rpc</title>
+<link type="text/css" rel="stylesheet" href="${cxt!}/ui/thairice/CSS/base.css">
+<link type="text/css" rel="stylesheet" href="${cxt!}/ui/thairice/bootstrap-3.3.7-dist/css/bootstrap.min.css">
+<link type="text/css" rel="stylesheet" href="${cxt!}/ui/thairice/CSS/password_getback.css">
+<link type="text/css" rel="stylesheet" href="${cxt!}/ui/thairice/CSS/bootstrapValidator.css">
+<link rel="stylesheet" type="text/css" href="${cxt!}/ui/loading/app.min.css" />
+     <style type="text/css">
+     .container {width: 830px; height: auto;background: white;border-radius: 16px;}
+     </style>
+</head>
+<body style="background:url(${cxt!}/ui/thairice/Images/register/section4_bg.jpg) no-repeat center center;">
+    <div class="BbPasswordWrap" id="testrpc">
+        <div class="BbPassword">
+        	<h2></h2>
+            <div class="container">
+                <form id="restForm" class="form-horizontal" style="width:800px; margin:0 auto; padding-bottom:20px;">
+                  <p class="title">  test rpc  </p>
+                  
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label"></label>
+                    <div class="col-sm-8">
+                      <button type="button" class="btn btn-primary btn-lg password_getback" onclick="preProcessing()">预处理</button>
+                    </div>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label"></label>
+                    <div class="col-sm-8">
+                      <button type="button" class="btn btn-primary btn-lg password_getback" onclick="landDrought()">干旱监测</button>
+                    </div>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label"></label>
+                    <div class="col-sm-8">
+                      <button type="button" class="btn btn-primary btn-lg password_getback" onclick="grouthMonitor()">长势监测</button>
+                    </div>
+                  </div>
+                  
+                  <div class="form-group">
+                    <label class="col-sm-2 control-label"></label>
+                    <div class="col-sm-8">
+                      <button type="button" class="btn btn-primary btn-lg password_getback" onclick="landYield()">水稻估产</button>
+                    </div>
+                  </div>
+                </form>
+            </div>
+        </div>
+    </div>
+<script src="${cxt!}/ui/thairice/JS/jquery-2.0.0.min.js"></script> 
+<script src="${cxt!}/ui/thairice/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+<script type="text/javascript" src="${cxt!}/ui/thairice/JS/layer/layer.js"></script>
+<script type="text/javascript" src="${cxt!}/ui/thairice/JS/md5.js"></script>
+<script type="text/javascript" src="${cxt!}/ui/thairice/common.js"></script>
+<script src="${cxt!}/ui/thairice/JS/bootstrapValidator.js"></script>
+<script src="${cxt!}/ui/loading/app.min.js"></script>
+<script>
+		function preProcessing()
+		{
+			$.ajax({
+			    url:'/jf/thairice/t1parameter/preProcessing',
+			    type:'POST', //GET
+			    async:true,    //或false,是否异步
+
+			    beforeSend:function(xhr){
+			        //console.log(xhr)
+			        console.log('发送前');
+			        $("#testrpc").busyLoad("show", { text: "LOADING ...",
+			    		textPosition: "top"
+			    	});
+			    },
+			    success:function(data,textStatus,jqXHR){
+			    	
+			    		console.log("generateTempProduct---faliure");
+		    		
+			    },
+			    error:function(xhr,textStatus){
+			        console.log('错误')
+			        console.log(xhr)
+			        console.log(textStatus)
+			    },
+			    complete:function(){
+			        console.log('结束');
+			        $("#testrpc").busyLoad("hide");
+			    }
+			})
+		}
+		function landDrought()
+		{
+			$.ajax({
+			    url:'/jf/thairice/t1parameter/landDrought',
+			    type:'POST', //GET
+			    async:true,    //或false,是否异步
+
+			    beforeSend:function(xhr){
+			        //console.log(xhr)
+			        console.log('发送前');
+			        $("#testrpc").busyLoad("show", { text: "LOADING ...",
+			    		textPosition: "top"
+			    	});
+			    },
+			    success:function(data,textStatus,jqXHR){
+			    	
+			    		console.log("generateTempProduct---faliure");
+		    		
+			    },
+			    error:function(xhr,textStatus){
+			        console.log('错误')
+			        console.log(xhr)
+			        console.log(textStatus)
+			    },
+			    complete:function(){
+			        console.log('结束');
+			        $("#testrpc").busyLoad("hide");
+			    }
+			})
+		}
+		function grouthMonitor()
+		{
+			$.ajax({
+			    url:'/jf/thairice/t1parameter/grouthMonitor',
+			    type:'POST', //GET
+			    async:true,    //或false,是否异步
+
+			    beforeSend:function(xhr){
+			        //console.log(xhr)
+			        console.log('发送前');
+			        $("#testrpc").busyLoad("show", { text: "LOADING ...",
+			    		textPosition: "top"
+			    	});
+			    },
+			    success:function(data,textStatus,jqXHR){
+			    	console.log(data);
+			    	
+			    		console.log("generateTempProduct---faliure");
+		    		
+			    },
+			    error:function(xhr,textStatus){
+			        console.log('错误')
+			        console.log(xhr)
+			        console.log(textStatus)
+			    },
+			    complete:function(){
+			        console.log('结束');
+			        $("#testrpc").busyLoad("hide");
+			    }
+			})
+		}
+		function landYield()
+		{
+			$.ajax({
+			    url:'/jf/thairice/t1parameter/landYield',
+			    type:'POST', //GET
+			    async:true,    //或false,是否异步
+
+			    beforeSend:function(xhr){
+			        //console.log(xhr)
+			        console.log('发送前');
+			        $("#testrpc").busyLoad("show", { text: "LOADING ...",
+			    		textPosition: "top"
+			    	});
+			    },
+			    success:function(data,textStatus,jqXHR){
+			    	
+			    		console.log("generateTempProduct---faliure");
+		    		
+			    },
+			    error:function(xhr,textStatus){
+			        console.log('错误')
+			        console.log(xhr)
+			        console.log(textStatus)
+			    },
+			    complete:function(){
+			        console.log('结束');
+			        $("#testrpc").busyLoad("hide");
+			    }
+			})
+		}
+</script>
+</body>
+</html>
