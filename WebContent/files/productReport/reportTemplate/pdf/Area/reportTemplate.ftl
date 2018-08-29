@@ -139,7 +139,7 @@ th,td {
 			<tr style="background:gray;">
 				<td colspan="2">ID</td>  
 				<td colspan="2">ChildAreaName</td>
-				<td colspan="2">Acreage(m2)</td>			
+				<td colspan="2">Acreage(rai)</td>			
             </tr>
 			
 			<#list Arealist as area>

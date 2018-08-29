@@ -962,7 +962,7 @@ var sta = {};
                     }
                 },
                 legend: {
-                    data:['Area'],
+                    data:['Acreage'],
                     textStyle:{
                     	color:'#fff'
                     }
@@ -989,7 +989,7 @@ var sta = {};
                 	},
                 },
                 series: [{
-                    name: 'Area',
+                    name: 'Acreage',
                     type: 'bar',
                     data: datas,
                     markPoint : {

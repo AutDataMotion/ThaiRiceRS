@@ -75,7 +75,10 @@ public class BackendUserController extends BaseController {
     public void find_pass() {
         renderWithPath(pthv + "password_getback.html");
     }
-
+    @Clear
+    public void testrpc() {
+        renderWithPath(pthv + "testRPC.html");
+    }
     // 后台首页界面
     public void main() {
         T3user u = getSessionAttr("admin");

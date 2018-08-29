@@ -107,6 +107,18 @@
 <!-- Other -->
 
 <!-- All JS functions -->
+<script>
+$(window).resize(function(){ 
+	if(document.body.clientWidth<1020){
+		$('.navbar-brand').text('');
+		
+	}else{
+		$('.navbar-brand').text('Thailand agricultural remote sensing monitoring platform');
+		
+	}
+	
+})
+	</script>
 
 ${jsSec!}
 </body>
