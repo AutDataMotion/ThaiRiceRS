@@ -280,10 +280,10 @@
                                  <th style="border-bottom: none;"><input type="checkbox"
                                                                         align="center">Select
                                 </th>  -->
-                                <th style="border-bottom: none;">Start date</th>
-                                <th style="border-bottom: none;">End date</th>
-                                <th style="border-bottom: none;">Zone code</th>
                                 <th style="border-bottom: none;">Production type</th>
+                                <th style="border-bottom: none;">Zone code</th>
+                                <th style="border-bottom: none;">Generation time</th>
+                                <th style="border-bottom: none;">Observation date</th>                                                              
                                 <th style="border-bottom: none;">Suffix</th>
                                 <th style="border-bottom: none;">Option</th>
                             </tr>
@@ -293,10 +293,10 @@
                             <tr>
  <!--                                <td style="text-align: center;"><input type="checkbox" class="reportDownloadCheckbox"
                                                                        name="${x.id}" value="${x.download_path}"></td> -->
-                                <td style="text-align: center;">${x.start_time}</td>
-                                <td style="text-align: center;">${x.end_time}</td>
-                                <td style="text-align: center;">${x.zone_code}</td>
                                 <td style="text-align: center;">${x.pdt_type}</td>
+                                <td style="text-align: center;">${x.zone_code}</td>
+                                <td style="text-align: center;">${x.add_time}</td>
+                                <td style="text-align: center;">${x.collect_time}</td>                           
                                 <td style="text-align: center;">${x.suffix}</td>
                                 <td style="text-align: center;">
                                     <a onclick = "batchDelete(${x.id},  ${blogPage.pageNumber})" >delete </a>
