@@ -80,7 +80,10 @@
 	</div>
 <script>
 //更新最新消息
-setInterval("lx()",2000);
+var admin='${session.admin}';
+ if(admin==null||admin==''){
+	setInterval("lx()",30000);	
+} 
 function lx(){
 	sendAjax("${cxt!}/jf/thairice/t3user/refresh",null,function(res){
   		 $('#count').html(res.count);

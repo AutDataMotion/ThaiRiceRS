@@ -546,6 +546,7 @@
                   $("#area").html("<option value=\"\" >Subdistrict</option>");
                   return false;
               }
+              console.log("zx");
               sendAjax("${cxt!}/jf/thairice/t3user/userCityArea?type=a&account=${account}",{id:$('#city').val()},function (res) {
                   var optionstring = "";
                   optionstring += "<option value=\"\" >Subdistrict</option>";
