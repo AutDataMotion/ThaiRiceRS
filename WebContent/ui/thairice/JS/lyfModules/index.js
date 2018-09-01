@@ -26,18 +26,21 @@ $(function(){
 		if(app.town_code!=0)
 		{
 			app.areaCode = app.town_code;
+			app.areaName = app.town_name;
 			AddAreaLayer(1,app.areaCode);
 			
 		}
 		else if(app.city_code!=0)
 		{
 			app.areaCode = app.city_code;
+			app.areaName = app.city_name;
 			AddAreaLayer(3,app.areaCode);
 			
 		}
 		else if(app.province_code!=0)
 		{
 			app.areaCode = app.province_code;
+			app.areaName = app.province_name;
 			AddAreaLayer(2,app.areaCode);
 			
 		}
@@ -50,7 +53,8 @@ $(function(){
 		app.productKind_code = productKind_code;
 		if(app.areaCode&&app.productDate)
 		{
-			console.log(app.areaCode+","+app.productDate);
+//			alert(app.areaName);
+			console.log(app.areaCode+","+app.areaName+","+app.productDate);
 			AssembleProductLayerInfo(app.areaCode,app.productDate,app.productKind_code);
 		}
 		

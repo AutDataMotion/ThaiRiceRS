@@ -389,7 +389,7 @@
         <h4 class="modal-title" id="exampleModalLabel">System message</h4>
       </div>
       <div class="modal-body">
-        <p class="modal_text">The report is generated successfully and can be seen in the<span>Self center</span></p>
+        <p class="modal_text">The report is generated successfully and can be seen in the<span> Self center</span></p>
       </div>
       <div class="modal-footer">
         
@@ -519,8 +519,13 @@
 
       function initaddCityArea(type) {
     	  app.province_code = $('#province').val();//选中的省
+    	  app.province_name = $('#province option:selected').text();//选中的省
+    	  
     	  app.city_code = $('#city').val();//选中的市
+    	  app.city_name = $('#city option:selected').text();//选中的市
+    	  
     	  app.town_code = $('#area').val();//选中的地区
+    	  app.town_name = $('#area option:selected').text();//选中的地区
     	  
           if(type=="city"){
               $("#city").html("");
