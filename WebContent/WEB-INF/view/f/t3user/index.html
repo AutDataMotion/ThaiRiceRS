@@ -65,7 +65,7 @@
 <script src="${cxt!}/ui/loading/app.min.js"></script>
 <script src="${cxt!}/ui/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
 <!--script src="${cxt!}/ui/datetime-picker/moment.js"></script-->
-<script src="${cxt!}/ui/bootstrap-datetimepicker/js/bootstrap-datetimepicker.min.js"></script>
+<script src="${cxt!}/ui/bootstrap-datetimepicker/js/bootstrap-datetimepicker.js"></script>
 <script src="${cxt!}/ui/thairice/JS/lyfModules/index.js"></script>
 
 <script src="${cxt!}/ui/thairice/JS/lyfModules/t10pdt_report/html2canvas.min.js"></script>
@@ -132,6 +132,14 @@
 			forceParse: 0
 	    }).on('changeDate', function (ev) {//在控件显示时就触发事件
             app.productDate = $('#dateChoosed').val();//选择的产品日期
+            /*
+            if(app.areaCode&&app.productKind_code)
+            {
+            	AssembleProductLayerInfo(app.areaCode,app.productDate,app.productKind_code);
+            }
+            */
+        }).on('changeMonth', function (ev) {//在控件显示时就触发事件
+           //alert($('#dateChoosed').val());//选择的产品日期
             /*
             if(app.areaCode&&app.productKind_code)
             {
