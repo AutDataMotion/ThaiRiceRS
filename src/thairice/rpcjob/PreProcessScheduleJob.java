@@ -39,7 +39,7 @@ public class PreProcessScheduleJob extends AbsScheduleJob implements ITask {
 	public List<List<T6org_data>> loadDataFromDb() {
 		// todo 拼接查询条件, 还未确定, 确定后再做
 		// 查询下载成功的，已经构成一组的数据统计
-		String sqlDownloadSucCnt = "SELECT * FROM vpretodo_collectdate where cnt = 6 and type_ in ('03') limit 10";
+		String sqlDownloadSucCnt = "SELECT * FROM vpretodo_collectdate where cnt = 6 and type_ in ('01','02','03') limit 10";
 		List<Record> resDownloadSucCnt = ConfMain.db().find(sqlDownloadSucCnt);
 		if (CollectionUtils.isEmpty(resDownloadSucCnt)) {
 			return Lists.newArrayList();
@@ -47,8 +47,9 @@ public class PreProcessScheduleJob extends AbsScheduleJob implements ITask {
 		// 根据数据统计获取具体数据 sql 查询 为了参数有序，需要进行order by
 		List<List<T6org_data>> listGroupOrgDatas = resDownloadSucCnt.stream().map(sucCnt -> {
 			return T6org_data.dao.find(
-					" select * from  t6org_data where collect_time = ? and   type_ in ('03') order by row_column limit 6 ",
-					GenerTimeStamp.TimestampToStr(	sucCnt.get(T6org_data.column_collect_time)));
+					" select * from  t6org_data where date_format(collect_time, '%Y%m%d') = ? and   type_ in = ?  order by row_column limit 6 "
+					,GenerTimeStamp.pickDateStrKey(sucCnt.get(T6org_data.column_collect_time))
+					, sucCnt.get(T6org_data.column_type_));
 		}).collect(Collectors.toList());
 
 		return listGroupOrgDatas;
