@@ -79,7 +79,8 @@ public class GrouthMonitorScheduleJob extends AbsScheduleJob implements ITask {
 		List<Tuple2<Growth, Map<String, String>>> resList  = inputs.stream().map(preObj -> {
 			Growth target = new Growth();
 			// 用该批数据的第一行id作为taskID
-			target.id = preObj.getId();
+			Long id = preObj.getId();
+			target.id = id.intValue();
 			target.fileDate = GenerTimeStamp.pickDateStr(preObj.getData_collect_time());;
 			target.pathNdvi = addFilePathName(preObj.getFile_path(), preObj.getFile_name());
 			target.imageLanduse = "D:\\grouth\\data\\Clip_N2_2017.tif";

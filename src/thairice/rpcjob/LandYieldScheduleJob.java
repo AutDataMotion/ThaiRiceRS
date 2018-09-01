@@ -58,7 +58,8 @@ public class LandYieldScheduleJob extends AbsScheduleJob implements ITask {
 		List<Tuple2<Yield, Map<String, String>>> resList = inputs.stream().map(preObj -> {
 			Yield target = new Yield();
 			// 用该批数据的第一行id作为taskID
-			target.id = inputs.get(0).getId();
+			Long id = inputs.get(0).getId();
+			target.id = id.intValue();
 			target.fileDate = GenerTimeStamp.pickDateStr(preObj.getData_collect_time());
 			target.pathNdvi = addFilePathName(preObj.getFile_path(), preObj.getFile_name());
 			// target.outCode = "72";

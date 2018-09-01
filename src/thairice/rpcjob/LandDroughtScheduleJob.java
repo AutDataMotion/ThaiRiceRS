@@ -107,7 +107,8 @@ public class LandDroughtScheduleJob extends AbsScheduleJob implements ITask {
 			
 			Drought target = new Drought();
 			// 用该数据的id作为taskID
-			target.id = lstObj.getId();
+			Long id =  lstObj.getId();
+			target.id = id.intValue();
 			target.fileDate = lstCollectTime;
 			target.imageLst = addFilePathName( lstObj.getFile_path() , lstObj.getFile_name());
 			target.imageNdvi =imageNdviUse;

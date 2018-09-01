@@ -5,6 +5,7 @@
  */
 package thairice.rpcjob;
 
+import java.math.BigInteger;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
@@ -38,17 +39,16 @@ public class PreProcessScheduleJob extends AbsScheduleJob implements ITask {
 	public List<List<T6org_data>> loadDataFromDb() {
 		// todo 拼接查询条件, 还未确定, 确定后再做
 		// 查询下载成功的，已经构成一组的数据统计
-		String sqlDownloadSucCnt = "SELECT * FROM vpretodo_collectdate where cnt = 6 and type in ('03') limit 10";
+		String sqlDownloadSucCnt = "SELECT * FROM vpretodo_collectdate where cnt = 6 and type_ in ('03') limit 10";
 		List<Record> resDownloadSucCnt = ConfMain.db().find(sqlDownloadSucCnt);
 		if (CollectionUtils.isEmpty(resDownloadSucCnt)) {
-			log.warn("没有下载好的待预处理数据");
 			return Lists.newArrayList();
 		}
 		// 根据数据统计获取具体数据 sql 查询 为了参数有序，需要进行order by
 		List<List<T6org_data>> listGroupOrgDatas = resDownloadSucCnt.stream().map(sucCnt -> {
 			return T6org_data.dao.find(
-					" select * from  t6org_data where collect_time = ? and   type in ('03') order by row_column limit 6 ",
-					sucCnt.get(T6org_data.column_collect_time));
+					" select * from  t6org_data where collect_time = ? and   type_ in ('03') order by row_column limit 6 ",
+					GenerTimeStamp.TimestampToStr(	sucCnt.get(T6org_data.column_collect_time)));
 		}).collect(Collectors.toList());
 
 		return listGroupOrgDatas;
@@ -60,7 +60,8 @@ public class PreProcessScheduleJob extends AbsScheduleJob implements ITask {
 		}
 		PreProcess target = new PreProcess();
 		// 用该批数据的第一行id作为taskID
-		target.id = inputs.get(0).getId();
+		BigInteger id = inputs.get(0).getId();
+		target.id = id.intValue();
 		target.type = inputs.get(0).getType_();
 		target.h26v06 = fetchFilePathName(inputs.get(0));
 		target.h27v06 = fetchFilePathName(inputs.get(1));
@@ -68,7 +69,7 @@ public class PreProcessScheduleJob extends AbsScheduleJob implements ITask {
 		target.h27v08 =fetchFilePathName(inputs.get(3));
 		target.h28v07 = fetchFilePathName(inputs.get(4));
 		target.h28v08 = fetchFilePathName(inputs.get(5));
-		target.outFilePath = "D:\\Preprocess\\result\\"; //
+		target.outFilePath = "E:\\preprocess\\result\\"; //
 
 		Timestamp collectTime = inputs.get(0).getCollect_time();
 		String collectDateStr = GenerTimeStamp.pickDateStr(collectTime);
@@ -90,7 +91,7 @@ public class PreProcessScheduleJob extends AbsScheduleJob implements ITask {
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		boolean haveUndoData = false;
+		boolean haveUndoData = true;
 		log.info(">>>>job begin");
 		while (haveUndoData) {
 			// 从数据库读取数据
