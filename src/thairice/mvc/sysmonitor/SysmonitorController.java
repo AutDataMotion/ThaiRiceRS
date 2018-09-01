@@ -53,13 +53,14 @@ public class SysmonitorController extends BaseController {
 	static {
 		try {
 			//此处只为得到依赖库文件的目录，可根据实际项目自定义
-            String file = Paths.get(PathKit.getWebRootPath(),  "res", "sigar-bin","lib","sigar.jar").toString();
+            String file = Paths.get(PathKit.getWebRootPath(),"WEB-INF", "res", "sigar-bin","lib","sigar.jar").toString();
            
             File classPath = new File(file).getParentFile();
             System.out.println("get sigar" + file );
             System.out.println("get sigar" + classPath );
             String path = System.getProperty("java.library.path");
             String sigarLibPath = classPath.getCanonicalPath();
+            System.out.println("get sigar " + sigarLibPath );
             //为防止java.library.path重复加，此处判断了一下
             if (!path.contains(sigarLibPath)) {
                 if (isOSWin()) {
@@ -69,6 +70,8 @@ public class SysmonitorController extends BaseController {
                 }
                 System.setProperty("java.library.path", path);
             }
+            
+            System.out.println("path: " + path );
             
 			Sigar sigar = new Sigar();
 			cpuList = sigar.getCpuPercList();
@@ -93,6 +96,14 @@ public class SysmonitorController extends BaseController {
         String OS = System.getProperty("os.name").toLowerCase();
         System.out.println("-----isOsWin:" + OS);
         if (OS.indexOf("win") >= 0) {
+            return true;
+        } else return false;
+    }
+	
+	public static boolean isOSWinServer(){//OS 版本判断
+        String OS = System.getProperty("os.name").toLowerCase();
+        System.out.println("-----isOsWin:" + OS);
+        if (OS.indexOf("windows server") >= 0) {
             return true;
         } else return false;
     }
