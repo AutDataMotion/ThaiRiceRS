@@ -6,7 +6,9 @@
 package thairice.mvc.sysmonitor;
 
 import java.io.BufferedReader;
+import java.io.File;
 import java.io.InputStreamReader;
+import java.nio.file.Paths;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -19,6 +21,7 @@ import org.hyperic.sigar.SigarException;
 
 import com.jfinal.aop.Before;
 import com.jfinal.aop.Clear;
+import com.jfinal.kit.PathKit;
 import com.jfinal.log.Logger;
 import com.platform.constant.ConstantRender;
 import com.platform.mvc.base.BaseController;
@@ -49,6 +52,24 @@ public class SysmonitorController extends BaseController {
 	private static ResSysmonitor resSysmonitor;
 	static {
 		try {
+			//此处只为得到依赖库文件的目录，可根据实际项目自定义
+            String file = Paths.get(PathKit.getWebRootPath(),  "res", "sigar-bin","lib","sigar.jar").toString();
+           
+            File classPath = new File(file).getParentFile();
+            System.out.println("get sigar" + file );
+            System.out.println("get sigar" + classPath );
+            String path = System.getProperty("java.library.path");
+            String sigarLibPath = classPath.getCanonicalPath();
+            //为防止java.library.path重复加，此处判断了一下
+            if (!path.contains(sigarLibPath)) {
+                if (isOSWin()) {
+                    path += ";" + sigarLibPath;
+                } else {
+                    path += ":" + sigarLibPath;
+                }
+                System.setProperty("java.library.path", path);
+            }
+            
 			Sigar sigar = new Sigar();
 			cpuList = sigar.getCpuPercList();
 			cntCPU = cpuList.length;
@@ -68,6 +89,13 @@ public class SysmonitorController extends BaseController {
 			cpuList = null;
 		}
 	}
+	public static boolean isOSWin(){//OS 版本判断
+        String OS = System.getProperty("os.name").toLowerCase();
+        System.out.println("-----isOsWin:" + OS);
+        if (OS.indexOf("win") >= 0) {
+            return true;
+        } else return false;
+    }
 
 	//@Clear
 	public void index() {
