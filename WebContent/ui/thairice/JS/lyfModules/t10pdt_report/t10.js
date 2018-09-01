@@ -216,7 +216,7 @@ function addProductLayer(prov_code,productDate,productKind_des)
     	}
     	if(productKind_des=="Area")
     	{
-    		createRenderLayer(app.featureLayer,app.renderLayer,Render_field,"Area");
+    		createRenderLayer(app.featureLayer,app.renderLayer,Render_field,"Acreage");
     	}
         //createClassBreakRender(app.featureLayer,app.renderLayer,Render_field,5);
 	});
