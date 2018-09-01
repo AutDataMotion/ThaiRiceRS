@@ -216,7 +216,7 @@ function addProductLayer(prov_code,productDate,productKind_des)
     	}
     	if(productKind_des=="Area")
     	{
-    		createRenderLayer(app.featureLayer,app.renderLayer,Render_field,"Area");
+    		createRenderLayer(app.featureLayer,app.renderLayer,Render_field,"Acreage");
     	}
         //createClassBreakRender(app.featureLayer,app.renderLayer,Render_field,5);
 	});
@@ -1450,6 +1450,7 @@ function getReport(reprotType,mapPicUrl,legendPic_str,staPic_str)
 	    	ProductKind:productKind_code_2_des[app.productKind_code],//产品种类 yield等
 			productDate:app.productDate,//选择的产品日期
 			areaCode:app.areaCode,//选择的产品行政区域
+			areaName:app.areaName,//选择的产品行政区域
 	    	reprotType:reprotType,//报告格式 doc,pdf
 	    	mapPicUrl:mapPicUrl,//地图url
 	    	legendPic_str:legendPic_str,//图例url

@@ -249,7 +249,7 @@ public class T10pdt_reportController extends BaseController {
 		String ProductKind = getPara("ProductKind");
 		String productDate = getPara("productDate");
 		String areaCode = getPara("areaCode");
-		
+		String areaName = getPara("areaName");
 		String reprotType = getPara("reprotType");
 		String mapPicUrl = getPara("mapPicUrl");
 		String legendPic_str = getPara("legendPic_str");
@@ -294,8 +294,8 @@ public class T10pdt_reportController extends BaseController {
 		
 	    dataMap.put("titleKind", ProductKind);
 	    //dataMap.put("description", "test");
-	    dataMap.put("District", areaCode);
-	    
+//	    dataMap.put("District", areaCode);
+	    dataMap.put("District", areaName);
 	    
 	    Date day = new Date();
 	    SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
