@@ -203,6 +203,99 @@ public class FileUtils {
 			return null;
 		}
 	}
+	
+	public static void prepareTestData2(String fileDir, String storagePath) {
+    	File file=new File(fileDir);
+            for(File temp:file.listFiles()){//Java5的新特性之一就是增强的for循环。
+    /*	上面的for循环的意思是：定义一个File的变量temp，变量child会自动递增遍历File类型的数组listFiles   
+    我们不再需要写得像原来那么复杂了，数组、迭代器都可以这样使用，*/
+                if(temp.isFile()){
+                    System.out.println(temp.toString());
+                    prepareTestData(temp.toString(), storagePath);
+                }
+                
+            }
+}
+        
+	/**
+	 * 解析ftp远程文件路径
+	 * 
+	 * @param fileDir
+	 *            ftp远程文件路径
+	 * @author zhuchaobin, 2018-02-26
+	 * @return String T6org_data 解析后的原始文件对象
+	 * @throws ParseException
+	 */
+	public static T6org_data prepareTestData(String fileDir, String storagePath) {
+		LOG.debug("解析ftp远程文件路径：" + fileDir);
+		try {
+			if (StringUtils.isBlank(fileDir)) {
+				// ftp远程文件路径为空
+				LOG.error("ftp远程文件路径为空");
+				return null;
+			}
+			T6org_data orgDataObj = new T6org_data();
+			// 文件名
+			String fileName = fileDir.substring(fileDir.lastIndexOf("\\") + 1);
+			orgDataObj.setName_(fileName);
+/*			// 文件路径
+			String ftpPath = fileDir.substring(0, fileDir.lastIndexOf("\\"));
+			orgDataObj.setDownload_path(ftpPath);
+			// 解析源路径，得到归档目录
+			// 解析文件名
+			String[] filePathAttr = ftpPath.split("\\");
+			String storage_path = "";
+			if(5 <= filePathAttr.length) {
+				storage_path += (("\\") + filePathAttr[2]);
+				Timestamp fileDate = DatesUtils.getDateOfJL(filePathAttr[3], filePathAttr[4]);
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMM");
+				String strFileDate = sdf.format(fileDate);//时间存储为字符串
+				storage_path += (("\\") + strFileDate);
+				orgDataObj.setStorage_path(storage_path);
+			} else {
+				LOG.error("解析数据采集日期并生成归档目录失败，文件名格式不对！");
+			}*/
+			orgDataObj.setStorage_path(storagePath);
+			// 解析文件名
+			String[] fileAttr = fileName.split("\\.");
+			// 文件状态代码
+			orgDataObj.setStatus_(DataConstants.NOT_DOWNLOAD);
+			// 波段数编码
+			orgDataObj.setBand_number(DataConstants.MODIS_BANDNUM);
+			if (fileAttr.length >= 3) {
+				// 数据采集日期
+				String sampleStr = fileAttr[1];
+				if(8 == sampleStr.length()) {
+					orgDataObj.setCollect_time(DatesUtils.getDateOfJL(sampleStr.substring(1, 5), sampleStr.substring(5, 8)));
+				} else {
+					LOG.error("解析数据采集日期失败，文件名格式不对！");
+				}
+				// 文件类型代码
+				// orgDataObj.setType_(fileAttr[0]);
+				if("MOD13Q1".equals(fileAttr[0]))
+					orgDataObj.setType_("02");
+				else if("MOD13A2".equals(fileAttr[0]))
+						orgDataObj.setType_("01");
+				else if("MOD11A2".equals(fileAttr[0]))
+					orgDataObj.setType_("03");
+				else {
+					LOG.error("文件类型解析发生错误，文件类型不符合MOD13Q1、MOD13A2、MOD11A2三种之一！");
+					orgDataObj.setType_("99");
+				}
+				// 行列号
+				orgDataObj.setRow_column(fileAttr[2]);
+			} else {
+				LOG.error("解析行列号失败，文件名格式不对！");
+			}
+			orgDataObj.saveGenIntId();
+			return orgDataObj;
+		} catch (Exception e) {
+			// 解析ftp远程文件路径发生异常
+			LOG.error("解析ftp远程文件路径发生异常:");
+			e.printStackTrace();
+			return null;
+		}
+	}
 
 	// 判断文件是否存在
 	public static void judeFileExists(File file) {
@@ -265,6 +358,7 @@ public class FileUtils {
 		// String str = "MOD13Q1.A2001033.h00v08.006.2015141152020.hdf";
 		// String[] fileAttr = str.split("\\.");
 		// System.out.println(fileAttr.length);
+	    prepareTestData2("D:\\TEST", "d:\\");
 
 		File dir = new File("d://ddddd//113//4455");
 		String temp="12345678";

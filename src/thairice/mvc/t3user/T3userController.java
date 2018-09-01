@@ -25,6 +25,7 @@ import com.platform.constant.ConstantRender;
 import com.platform.interceptor.ParamPkgInterceptor;
 import com.platform.mvc.base.BaseController;
 
+import csuduc.platform.util.FileUtils;
 import thairice.constant.ConstantInitMy;
 import thairice.interceptor.UserLoginInterceptor;
 import thairice.mvc.r4message_send.R4message_send;
@@ -82,7 +83,6 @@ public class T3userController extends BaseController {
     }
 
     //消息个数实时更新
-    @Clear
     public void refresh() {
         T3user user = getSessionAttr("user");
         Record record = new Record();

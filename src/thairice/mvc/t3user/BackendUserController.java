@@ -145,7 +145,7 @@ public class BackendUserController extends BaseController {
 	titles.add(new ExcelExportUtil.Pair("phone", "Mobile"));
 	titles.add(new ExcelExportUtil.Pair("email", "Email"));
 	titles.add(new ExcelExportUtil.Pair("name_", "Nickname"));
-	titles.add(new ExcelExportUtil.Pair("Prdt_EfDt", "Effective date of product"));
+	titles.add(new ExcelExportUtil.Pair("Prdt_EfDt", "Product effective date"));
 	titles.add(new ExcelExportUtil.Pair("PD_ExDat", "Product expiration date"));
 	titles.add(new ExcelExportUtil.Pair("PD_TpCd", "Product categories"));
 	
@@ -210,13 +210,19 @@ public class BackendUserController extends BaseController {
 	titles.add(new ExcelExportUtil.Pair("phone", "Mobile"));
 	titles.add(new ExcelExportUtil.Pair("email", "Email"));
 	titles.add(new ExcelExportUtil.Pair("name_", "Nickname"));
-	titles.add(new ExcelExportUtil.Pair("create_time", "Create time"));
+	titles.add(new ExcelExportUtil.Pair("create_time", "Creation time"));
         // 全部导出
         if (getPara("select").equals("all")) {
             List<T3user> rates = service.selectOperators();
+            for (T3user t3user : rates) {
+        	t3user.set("create_time",t3user.getCreate_time().toString().substring(0,19));
+            }
             ExportService.service.exportDiy(titles,"ExportOperatorData", "thairice.t3user", getResponse(), getRequest(), rates);
         } else {
             List<T3user> rates = service.selectOperatorsByChoose(getPara("ids"));
+            for (T3user t3user : rates) {
+        	t3user.set("create_time",t3user.getCreate_time().toString().substring(0,19));
+            }
             ExportService.service.exportDiy(titles,"ExportOperatorData", "thairice.t3user", getResponse(), getRequest(), rates);
         }
         renderNull();
@@ -309,10 +315,10 @@ public class BackendUserController extends BaseController {
                     send_all.use(ConstantInitMy.db_dataSource_main).saveGenIntId();
                 }
             }
-            T2syslogService.addLog(EnumT2sysLog.INFO, u.getId(), u.getAccount(), "Send_message", "Sent successful");
+            T2syslogService.addLog(EnumT2sysLog.INFO, u.getId(), u.getAccount(), "Send message", "Sent successful");
             renderJson(new Result(1, "Sent successful"));
         } else {
-            T2syslogService.addLog(EnumT2sysLog.INFO, u.getId(), u.getAccount(), "Send_message", "Failed to send");
+            T2syslogService.addLog(EnumT2sysLog.INFO, u.getId(), u.getAccount(), "Send message", "Failed to send");
             renderJson(new Result(0, "Failed to send"));
         }
     }
@@ -365,7 +371,7 @@ public class BackendUserController extends BaseController {
         String ids = getPara("ids");
         Db.update(" DELETE FROM thairice.t14my_region WHERE id in (" + ids + ")");
         T3user admin = getSessionAttr("admin");
-        T2syslogService.addLog(EnumT2sysLog.INFO, admin.getId(), admin.getAccount(), "Delete_area", "Delete Successful");
+        T2syslogService.addLog(EnumT2sysLog.INFO, admin.getId(), admin.getAccount(), "Delete area", "Delete successful");
         renderJson(new Result(1, "successfully deleted"));
     }
 
@@ -424,7 +430,7 @@ public class BackendUserController extends BaseController {
 			record3.set("regionId",getParaToInt("area"));
 			Db.use(ConstantInitMy.db_dataSource_main).save("t14my_region", record3);*/
         T3user admin = getSessionAttr("admin");
-        T2syslogService.addLog(EnumT2sysLog.INFO, admin.getId(), admin.getAccount(), "Add_area", "Add succeeded");
+        T2syslogService.addLog(EnumT2sysLog.INFO, admin.getId(), admin.getAccount(), "Add area", "Add successful");
         renderJson(new Result(1, "successfully"));
     }
 
@@ -436,10 +442,10 @@ public class BackendUserController extends BaseController {
         int rows = service.deletes(getPara("ids"));
         T3user admin = getSessionAttr("admin");
         if (rows > 0) {
-            T2syslogService.addLog(EnumT2sysLog.INFO, admin.getId(), admin.getAccount(), "Delete_message", "Operation succeeded");
+            T2syslogService.addLog(EnumT2sysLog.INFO, admin.getId(), admin.getAccount(), "Delete message", "Operation succeeded");
             renderJson(new Result(1, "Operation succeeded"));
         } else {
-            T2syslogService.addLog(EnumT2sysLog.INFO, admin.getId(), admin.getAccount(), "Delete_message", "Operation failed");
+            T2syslogService.addLog(EnumT2sysLog.INFO, admin.getId(), admin.getAccount(), "Delete message", "Operation failed");
             renderJson(new Result(0, "Operation failed"));
         }
     }
@@ -452,11 +458,11 @@ public class BackendUserController extends BaseController {
         boolean rlt = t3user.use(ConstantInitMy.db_dataSource_main).update();
         T3user admin = getSessionAttr("admin");
         if (rlt) {
-            T2syslogService.addLog(EnumT2sysLog.INFO, admin.getId(), admin.getAccount(), "Edit_information", "Modified Successfully");
-            renderJson(new Result(1, "Modified Successfully"));
+            T2syslogService.addLog(EnumT2sysLog.INFO, admin.getId(), admin.getAccount(), "Modify information", "Modified successful");
+            renderJson(new Result(1, "Modified successful"));
         } else {
-            T2syslogService.addLog(EnumT2sysLog.INFO, admin.getId(), admin.getAccount(), "Edit_information", "Fail to edit");
-            renderJson(new Result(0, "Fail to edit"));
+            T2syslogService.addLog(EnumT2sysLog.INFO, admin.getId(), admin.getAccount(), "Modify information", "Fail to modify");
+            renderJson(new Result(0, "Fail to modify"));
         }
     }
 
@@ -467,7 +473,7 @@ public class BackendUserController extends BaseController {
     public void edit_pass() {
         Result result = codeService.reset_pass(getPara("code"), HashKit.md5(getPara("pwd")));
         T3user admin = getSessionAttr("admin");
-        T2syslogService.addLog(EnumT2sysLog.INFO, admin.getId(), admin.getAccount(), "Edit_password", result.getDesc());
+        T2syslogService.addLog(EnumT2sysLog.INFO, admin.getId(), admin.getAccount(), "Reset password", result.getDesc());
         renderJson(result);
     }
 
