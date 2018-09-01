@@ -153,13 +153,12 @@ public class FileUtils {
 			orgDataObj.setDownload_path(ftpPath);
 			// 解析源路径，得到归档目录
 			// 解析文件名
-			String[] filePathAttr = ftpPath.split("//");
+			String[] filePathAttr = ftpPath.split("/fileDate/");
 			String storage_path = "";
 			if(5 <= filePathAttr.length) {
 				storage_path += (("//") + filePathAttr[2]);
-				Timestamp fileDate = DatesUtils.getDateOfJL(filePathAttr[3], filePathAttr[4]);
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMM");
-				String strFileDate = sdf.format(fileDate);//时间存储为字符串
+				String strFileDate = DatesUtils.getDateOfJL(filePathAttr[3], filePathAttr[4]);
+				strFileDate = strFileDate.substring(0, 4) + strFileDate.substring(5, 2) ;
 				storage_path += (("//") + strFileDate);
 				orgDataObj.setStorage_path(storage_path);
 			} else {

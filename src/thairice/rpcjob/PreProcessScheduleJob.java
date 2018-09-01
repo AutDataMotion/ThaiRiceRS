@@ -47,8 +47,8 @@ public class PreProcessScheduleJob extends AbsScheduleJob implements ITask {
 		// 根据数据统计获取具体数据 sql 查询 为了参数有序，需要进行order by
 		List<List<T6org_data>> listGroupOrgDatas = resDownloadSucCnt.stream().map(sucCnt -> {
 			return T6org_data.dao.find(
-					" select * from  t6org_data where date_format(collect_time, '%Y%m%d') = ? and   type_ in = ?  order by row_column limit 6 "
-					,GenerTimeStamp.pickDateStrKey(sucCnt.get(T6org_data.column_collect_time))
+					" select * from  t6org_data where collect_time = ? and type_ in = ?  order by row_column limit 6 "
+					,sucCnt.get(T6org_data.column_collect_time)
 					, sucCnt.get(T6org_data.column_type_));
 		}).collect(Collectors.toList());
 
@@ -72,8 +72,7 @@ public class PreProcessScheduleJob extends AbsScheduleJob implements ITask {
 		target.h28v08 = fetchFilePathName(inputs.get(5));
 		target.outFilePath = "E:\\preprocess\\result\\"; //
 
-		Timestamp collectTime = inputs.get(0).getCollect_time();
-		String collectDateStr = GenerTimeStamp.pickDateStr(collectTime);
+		String collectDateStr = inputs.get(0).getCollect_time();
 		String type = EnumDataStatus.fetchDataTypeName(target.type);
 		target.outFileName = String.format("%s_%s.tif", type, collectDateStr); //
 
