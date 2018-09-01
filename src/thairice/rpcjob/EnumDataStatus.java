@@ -11,6 +11,8 @@ package thairice.rpcjob;
  */
 public enum EnumDataStatus {
 	
+	// 01下载成功、02下载失败、03下载中、04处理成功、
+	// 05处理失败、06处理中 07未下载
 	DOWNLOAD_SUCCE(1, "01","Download success"),
 	DOWNLOAD_FAIL(2, "02","Download failed"),
 	DOWNLOAD_ING(3, "03","Downloading"),
@@ -21,8 +23,8 @@ public enum EnumDataStatus {
 	PROCESS_FAIL(13, "13","Process failed"),
 	PROCESS_ING(14, "14","Processing"),
 	
-	
-	
+	// 01NDVI_1（干旱）、02NDVI_02(长势和估产）、03LST（干旱）
+	// 04CLASS（长势、干旱和估产）、05LANDSAT（面积）
 	DATA_TYPE_NDVI_1(1, "01","NDVI_1"),
 	DATA_TYPE_NDVI_02(2, "02","NDVI_02"),
 	DATA_TYPE_LST(3, "03","LST"),
@@ -47,6 +49,24 @@ public enum EnumDataStatus {
 		name = aname;
 	}
 
+	public static String fetchDataTypeName(String typeIdStr){
+		if (DATA_TYPE_NDVI_1.idStr.equals(typeIdStr)) {
+			return DATA_TYPE_NDVI_1.getName();
+		}
+		if (DATA_TYPE_NDVI_02.idStr.equals(typeIdStr)) {
+			return DATA_TYPE_NDVI_02.getName();
+		}
+		if (DATA_TYPE_LST.idStr.equals(typeIdStr)) {
+			return DATA_TYPE_LST.getName();
+		}
+		if (DATA_TYPE_CLASS.idStr.equals(typeIdStr)) {
+			return DATA_TYPE_CLASS.getName();
+		}
+		if (DATA_TYPE_LANDSAT.idStr.equals(typeIdStr)) {
+			return DATA_TYPE_LANDSAT.getName();
+		}
+		return null;
+	}
 	public String getIdText(){
 		return String.valueOf(id);
 	}
