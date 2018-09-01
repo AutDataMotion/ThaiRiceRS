@@ -5,6 +5,7 @@
  */
 package thairice.rpcjob;
 
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -33,8 +34,8 @@ import thairice.mvc.t6org_data.T6org_data;
 public class PreProcessScheduleJob extends AbsScheduleJob implements ITask {
 
 	private static Logger log = Logger.getLogger(PreProcessScheduleJob.class);
-	
-	public List<List<T6org_data>> loadDataFromDb(){
+
+	public List<List<T6org_data>> loadDataFromDb() {
 		// todo 拼接查询条件, 还未确定, 确定后再做
 		// 查询下载成功的，已经构成一组的数据统计
 		String sqlDownloadSucCnt = "SELECT * FROM vpretodo_collectdate where cnt = 6 and type in ('03') limit 10";
@@ -43,15 +44,17 @@ public class PreProcessScheduleJob extends AbsScheduleJob implements ITask {
 			log.warn("没有下载好的待预处理数据");
 			return Lists.newArrayList();
 		}
-		// 根据数据统计获取具体数据  sql 查询 为了参数有序，需要进行order by
+		// 根据数据统计获取具体数据 sql 查询 为了参数有序，需要进行order by
 		List<List<T6org_data>> listGroupOrgDatas = resDownloadSucCnt.stream().map(sucCnt -> {
-			return T6org_data.dao.find(" select * from  t6org_data where collect_time = ? and   type in ('03') order by row_column limit 6 ",  sucCnt.get(T6org_data.column_collect_time));
+			return T6org_data.dao.find(
+					" select * from  t6org_data where collect_time = ? and   type in ('03') order by row_column limit 6 ",
+					sucCnt.get(T6org_data.column_collect_time));
 		}).collect(Collectors.toList());
-		
+
 		return listGroupOrgDatas;
 	}
-	
-	public PreProcess mdlConvert(List<T6org_data> inputs ){
+
+	public PreProcess mdlConvert(List<T6org_data> inputs) {
 		if (Objects.isNull(inputs) || inputs.size() < 6) {
 			throw new IllegalArgumentException("PreProcess 参数不全");
 		}
@@ -59,19 +62,29 @@ public class PreProcessScheduleJob extends AbsScheduleJob implements ITask {
 		// 用该批数据的第一行id作为taskID
 		target.id = inputs.get(0).getId();
 		target.type = inputs.get(0).getType_();
-		target.h26v06 = inputs.get(0).getName_();
-		target.h27v06 = inputs.get(1).getName_();
-		target.h27v07 = inputs.get(2).getName_();
-		target.h27v08 = inputs.get(3).getName_();
-		target.h28v07 = inputs.get(4).getName_();
-		target.h28v08 = inputs.get(5).getName_();
-		target.shpfile = "";// 获取样本
-		target.outFile = "D:\\Preprocess\\result"; // 
-		
+		target.h26v06 = fetchFilePathName(inputs.get(0));
+		target.h27v06 = fetchFilePathName(inputs.get(1));
+		target.h27v07 = fetchFilePathName(inputs.get(2));
+		target.h27v08 =fetchFilePathName(inputs.get(3));
+		target.h28v07 = fetchFilePathName(inputs.get(4));
+		target.h28v08 = fetchFilePathName(inputs.get(5));
+		target.outFilePath = "D:\\Preprocess\\result\\"; //
+
+		Timestamp collectTime = inputs.get(0).getCollect_time();
+		String collectDateStr = GenerTimeStamp.pickDateStr(collectTime);
+		String type = EnumDataStatus.fetchDataTypeName(target.type);
+		target.outFileName = String.format("%s_%s.tif", type, collectDateStr); //
+
 		return target;
 	}
 	
-	/* (non-Javadoc)
+	private String fetchFilePathName(T6org_data data){
+		return (String)data.getStorage_path() + (String)data.getName_();
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see java.lang.Runnable#run()
 	 */
 	@Override
@@ -79,28 +92,28 @@ public class PreProcessScheduleJob extends AbsScheduleJob implements ITask {
 		// TODO Auto-generated method stub
 		boolean haveUndoData = false;
 		log.info(">>>>job begin");
-		while(haveUndoData){
+		while (haveUndoData) {
 			// 从数据库读取数据
-			List<List<T6org_data>> dbUndoDatas =  loadDataFromDb();
+			List<List<T6org_data>> dbUndoDatas = loadDataFromDb();
 			if (ComUtil.isEmptyList(dbUndoDatas)) {
 				log.info("no predata now");
 				haveUndoData = false;
-				break ;
+				break;
 			}
-			
+
 			dbUndoDatas.forEach(data -> {
 				// 封装为rpc接口数据
-				 PreProcess rpcTodoData = mdlConvert(data);
+				PreProcess rpcTodoData = mdlConvert(data);
 				// 调用rpc处理程序
-				 EnumStatus rpcRes = preProcessing(rpcTodoData, null);
+				EnumStatus rpcRes = preProcessing(rpcTodoData, null);
 				// 封装rpc结果数据，入库
-				 if (EnumStatus.Success == rpcRes) {
-					 updateToDb(data);
+				if (EnumStatus.Success == rpcRes) {
+					updateToDb(data, rpcTodoData);
 				} else {
 					// 修改标志位为失败，等待下次任务继续执行，当失败超过3次则标志位终生失败
 					data.stream().forEach(d -> {
-						Record record = new Record().set(T6org_data.column_id, d.getId())
-								.set(T6org_data.column_status_, EnumDataStatus.PROCESS_FAIL.getId());
+						Record record = new Record().set(T6org_data.column_id, d.getId()).set(T6org_data.column_status_,
+								EnumDataStatus.PROCESS_FAIL.getId());
 						ConfMain.db().update(T6org_data.tableName, record);
 					});
 				}
@@ -109,41 +122,42 @@ public class PreProcessScheduleJob extends AbsScheduleJob implements ITask {
 		log.info("<<<<job end");
 	}
 
-	public void updateToDb(List<T6org_data> inputs ){
+	public void updateToDb(List<T6org_data> inputs, PreProcess rpcTodoData) {
 		if (Objects.isNull(inputs)) {
 			return;
 		}
 		List<String> sourceFilePathList = Lists.newArrayList();
 		// 更新原始数据标志位
 		inputs.stream().forEach(d -> {
-			Record record = new Record().set(T6org_data.column_id, d.getId())
-					.set(T6org_data.column_status_, EnumDataStatus.PROCESS_SUCCE.getId());
+			Record record = new Record().set(T6org_data.column_id, d.getId()).set(T6org_data.column_status_,
+					EnumDataStatus.PROCESS_SUCCE.getId());
 			ConfMain.db().update(T6org_data.tableName, record);
-			sourceFilePathList.add((String)d.getStorage_path()+d.getName_());
+			sourceFilePathList.add((String) d.getStorage_path() + d.getName_());
 		});
 		// 存入预处理表
 		T12PreProcessInf target = new T12PreProcessInf();
-		// 用该批数据的第一行id作为taskID
-		target.setData_type(EnumDataStatus.DATA_TYPE_LST.getIdStr());
-		target.setSource_file_list(Joiner.on(splitChar).join(sourceFilePathList)); 
-		target.setFile_path(""); 
-		target.setFile_name("");
+		target.setData_type(rpcTodoData.type);
+		target.setSource_file_list(Joiner.on(splitChar).join(sourceFilePathList));
+		target.setFile_path(rpcTodoData.outFilePath);
+		target.setFile_name(rpcTodoData.outFileName);
 		target.setData_collect_time(inputs.get(0).getCollect_time());
 		target.setDrought_st(EnumDataStatus.PROCESS_UN.getIdStr());
 		target.setDrought_st(EnumDataStatus.PROCESS_UN.getIdStr());
 		target.setDrought_st(EnumDataStatus.PROCESS_UN.getIdStr());
 		target.setGenerate_time(GenerTimeStamp.dateToTimeStamp(new Date()));
 		target.save();
-		return ;
+		return;
 	}
-	
-	/* (non-Javadoc)
+
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.jfinal.plugin.cron4j.ITask#stop()
 	 */
 	@Override
 	public void stop() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }
