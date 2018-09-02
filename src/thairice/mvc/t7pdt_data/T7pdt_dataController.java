@@ -4,13 +4,20 @@ import com.platform.constant.ConstantRender;
 import com.platform.mvc.base.BaseController;
 import com.platform.mvc.base.BaseModel;
 
+import java.sql.Timestamp;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.List;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 import com.jfinal.aop.Before;
+import com.jfinal.aop.Clear;
 import com.jfinal.plugin.activerecord.Page;
 
 import thairice.constant.ConstantInitMy;
 import thairice.entity.ResultEntity;
+import thairice.mvc.t3user.T3user;
 import thairice.mvc.t6org_data.T6org_data;
 import thairice.utils.DataConstants;
 
@@ -194,5 +201,57 @@ public class T7pdt_dataController extends BaseController {
 		setAttr(ConstantRender.PATH_CTL_NAME, pthc);
 		setAttr(ConstantRender.PATH_VIEW_NAME, pthv);
 	}
-	
+	@Clear
+	public void get_pdt_data_year()
+	{
+		T3user user = getSessionAttr("user");
+		Timestamp startTime = user.getPrdt_EfDt();
+		Timestamp endTime = user.getPD_ExDat();
+		
+		DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");  
+		String startTimeStr = sdf.format(startTime);  //用户选择的服务起始时间
+		String endTimeStr = sdf.format(endTime);  //用户选择的服务结束时间
+		
+		String provinceCode = getPara("provinceCode", "").trim();
+		String productKind_code = getPara("productKind_code", "").trim();
+		List<T7pdt_data> t7pdt_data = T7pdt_dataService.service.SelectByZone_code(provinceCode,productKind_code,startTimeStr,endTimeStr);
+		renderJson(t7pdt_data);
+	}
+	@Clear
+	public void get_pdt_data_year_month()
+	{
+		T3user user = getSessionAttr("user");
+		Timestamp startTime = user.getPrdt_EfDt();
+		Timestamp endTime = user.getPD_ExDat();
+		
+		DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");  
+		String startTimeStr = sdf.format(startTime);  //用户选择的服务起始时间
+		String endTimeStr = sdf.format(endTime);  //用户选择的服务结束时间
+		
+		String provinceCode = getPara("provinceCode", "").trim();
+		String productKind_code = getPara("productKind_code", "").trim();
+		String year =  getPara("year", "").trim();
+		
+		List<T7pdt_data> t7pdt_data = T7pdt_dataService.service.SelectByZone_code_year(provinceCode,productKind_code,startTimeStr,endTimeStr,year);
+		renderJson(t7pdt_data);
+	}
+	@Clear
+	public void get_pdt_data_year_month_day()
+	{
+		T3user user = getSessionAttr("user");
+		Timestamp startTime = user.getPrdt_EfDt();
+		Timestamp endTime = user.getPD_ExDat();
+		
+		DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");  
+		String startTimeStr = sdf.format(startTime);  //用户选择的服务起始时间
+		String endTimeStr = sdf.format(endTime);  //用户选择的服务结束时间
+		
+		String provinceCode = getPara("provinceCode", "").trim();
+		String productKind_code = getPara("productKind_code", "").trim();
+		String year =  getPara("year", "").trim();
+		String month =  getPara("month", "").trim();
+		
+		List<T7pdt_data> t7pdt_data = T7pdt_dataService.service.SelectByZone_code_year_month(provinceCode,productKind_code,startTimeStr,endTimeStr,year,month);
+		renderJson(t7pdt_data);
+	}
 }

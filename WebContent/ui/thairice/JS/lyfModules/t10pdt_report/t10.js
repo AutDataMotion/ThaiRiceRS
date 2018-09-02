@@ -1491,5 +1491,235 @@ function getReport(reprotType,mapPicUrl,legendPic_str,staPic_str)
 	})
 	
 }
+function initTimeSelect_indexHtml(provinceCode)
+{
+//	alert(provinceCode);
+//	$(".BbAreaSelect").style.display="display";
+	var yearSelect = document.getElementById("year");
+//	yearSelect.options.length=0;
+//	var monthSelect = document.getElementById("month");
+//	monthSelect.options.length=0;  
+//	var daySelect = document.getElementById("day");
+//	daySelect.options.length=0;  
+	 $("#year").html("<option value='year' >Year</option>");
+	 $("#month").html("<option value='month' >Month</option>");
+	 $("#day").html("<option value='day' >Day</option>");
+	 if(!provinceCode||!app.productKind_code)
+	 {
+		 return false;
+	 }
+	$.ajax({
+	    url:'/jf/thairice/t7pdt_data/get_pdt_data_year',
+	    type:'POST', //GET
+	    async:true,    //或false,是否异步
+	    data:{
+	    	provinceCode:provinceCode,//行政代码
+	    	productKind_code:app.productKind_code//产品类别
+	    },
+	    timeout:5000,    //超时时间
+	    dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+	    beforeSend:function(xhr){
+	        //console.log(xhr)
+	        console.log('发送前')
+	    },
+	    success:function(data,textStatus,jqXHR){
+//	    	console.log(data);
+	    	if(data.length>0){
+//	    		var yearSelect = document.getElementById("year");
+	    		if(yearSelect)
+    			{
+//	    			var op = new Option("Year","Year");  
+//					yearSelect.options.add(op);  
+		    		for(var i =0;i<data.length;i++)
+		    		{
+		    			//循环将数组中的数据写入<option>标记中
+		    			var op = new Option(data[i]["year"],data[i]["year"]);  
+    					yearSelect.options.add(op);  
+	    			}
+    			}
+	    	}
+	    	else{
+//	    		alert("no data");
+	    		$('#systemTipsModal').modal();
+		    	
+		    	$('#systemTipsModalBtn').click(function(e) {
+		    		
+		    		//window.open(data.reportUrl,"_blank");
+		    		$('#systemTipsModal').modal('hide');
+		    		
+		        });
+	    	}
+	    },
+	    error:function(xhr,textStatus){
+	        console.log('错误')
+	        console.log(xhr)
+	        console.log(textStatus)
+	    },
+	    complete:function(){
+	        console.log('结束')
+	    }
+	})
+}
+function inityearIndex(type)
+{
+	if(type == "year")
+	{
+//		var monthSelect = document.getElementById("month");
+//		monthSelect.options.length=0;  
+//		var daySelect = document.getElementById("day");
+//		daySelect.options.length=0;  
+		
+		var year = $('#year option:selected').val();//选中的year
+		 $("#month").html("<option value='month' >Month</option>");
+		 $("#day").html("<option value='day' >Day</option>");
+//		alert(year);
+		if(year=="year")
+		{
+			return false;
+		}
+		$.ajax({
+		    url:'/jf/thairice/t7pdt_data/get_pdt_data_year_month',
+		    type:'POST', //GET
+		    async:true,    //或false,是否异步
+		    data:{
+		    	provinceCode:app.province_code,
+		    	productKind_code:app.productKind_code,//产品类别
+		    	year:year//用户ID
+		    	
+		    },
+		    timeout:5000,    //超时时间
+		    dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+		    beforeSend:function(xhr){
+		        //console.log(xhr)
+		        console.log('发送前')
+		    },
+		    success:function(data,textStatus,jqXHR){
+//		    	console.log(data);
+		    	if(data.length>0){
+		    		var monthSelect = document.getElementById("month");
+		    		if(monthSelect)
+	    			{
+//		    			var op = new Option("Year","Year");  
+//						yearSelect.options.add(op);  
+			    		for(var i =0;i<data.length;i++)
+			    		{
+			    			//循环将数组中的数据写入<option>标记中
+			    			var month = data[i]["month"]<10?'0'+data[i]["month"]:data[i]["month"];
+			    			var op = new Option(month,month);  
+			    			monthSelect.options.add(op);  
+		    			}
+	    			}
+		    	}
+		    	else{
+		    		$('#systemTipsModal').modal();
+			    	
+			    	$('#systemTipsModalBtn').click(function(e) {
+			    		
+			    		//window.open(data.reportUrl,"_blank");
+			    		$('#systemTipsModal').modal('hide');
+			    		
+			        });
+		    	}
+		    },
+		    error:function(xhr,textStatus){
+		        console.log('错误')
+		        console.log(xhr)
+		        console.log(textStatus)
+		    },
+		    complete:function(){
+		        console.log('结束')
+		    }
+		})
+	}
+	else if(type == "month")//选中的month
+	{
+//		var daySelect = document.getElementById("day");
+//		daySelect.options.length=0;  
+		
+		var year = $('#year option:selected').val();//选中的year
+		var month = $('#month option:selected').val();//选中的year
+		 $("#day").html("<option value='day' >Day</option>");
+		if(month=="month")
+		{
+			return false;
+		}	
+//		alert(year);
+		$.ajax({
+		    url:'/jf/thairice/t7pdt_data/get_pdt_data_year_month_day',
+		    type:'POST', //GET
+		    async:true,    //或false,是否异步
+		    data:{
+		    	provinceCode:app.province_code,
+		    	productKind_code:app.productKind_code,//产品类别
+		    	year:year,//year
+		    	month:month//month
+		    	
+		    },
+		    timeout:5000,    //超时时间
+		    dataType:'json',    //返回的数据格式：json/xml/html/script/jsonp/text
+		    beforeSend:function(xhr){
+		        //console.log(xhr)
+		        console.log('发送前')
+		    },
+		    success:function(data,textStatus,jqXHR){
+//		    	console.log(data);
+		    	if(data.length>0){
+		    		var daySelect = document.getElementById("day");
+		    		if(daySelect)
+	    			{
+//		    			var op = new Option("Year","Year");  
+//						yearSelect.options.add(op);  
+			    		for(var i =0;i<data.length;i++)
+			    		{
+			    			//循环将数组中的数据写入<option>标记中
+			    			var day = data[i]["day"]<10?'0'+data[i]["day"]:data[i]["day"];
+			    			var op = new Option(day,day);  
+			    			daySelect.options.add(op);  
+		    			}
+	    			}
+		    	}
+		    	else{
+		    		$('#systemTipsModal').modal();
+			    	
+			    	$('#systemTipsModalBtn').click(function(e) {
+			    		
+			    		//window.open(data.reportUrl,"_blank");
+			    		$('#systemTipsModal').modal('hide');
+			    		
+			        });
+		    	}
+		    },
+		    error:function(xhr,textStatus){
+		        console.log('错误')
+		        console.log(xhr)
+		        console.log(textStatus)
+		    },
+		    complete:function(){
+		        console.log('结束')
+		    }
+		})
+	}
+	else{//选中的day
+		var day = $('#day option:selected').val();//选中的year
+		if(day=="day")
+		{
+			return false;
+		}
+		else{
+			var year = $('#year option:selected').val();//选中的year
+			var month = $('#month option:selected').val();//选中的year
+			var day = $('#day option:selected').val();//选中的year
+			app.productDate = year+'-'+month+'-'+day+'';
+			
+			if(app.areaCode&&app.productDate&&app.productKind_code)
+			{
+				console.log(app.areaCode+","+app.areaName+","+app.productDate+","+app.productKind_code);
+				AssembleProductLayerInfo(app.areaCode,app.productDate,app.productKind_code);
+			}
+//			alert(app.productDate);
+			$('.StaButton').show();
+		}
+	}
+}
 //function print
 /**********************************************************************************/
