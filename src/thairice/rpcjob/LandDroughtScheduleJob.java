@@ -5,10 +5,7 @@
  */
 package thairice.rpcjob;
 
-import java.math.BigInteger;
 import java.util.List;
-import java.util.Objects;
-import java.util.stream.Collectors;
 
 import org.apache.commons.collections4.CollectionUtils;
 
@@ -20,9 +17,6 @@ import com.jfinal.plugin.cron4j.ITask;
 import RPCRice.Drought;
 import csuduc.platform.util.ComUtil;
 import csuduc.platform.util.timeUtils.GenerTimeStamp;
-import csuduc.platform.util.tuple.Tuple2;
-import csuduc.platform.util.tuple.TupleUtil;
-import oracle.net.aso.e;
 import thairice.config.ConfMain;
 import thairice.constant.EnumStatus;
 import thairice.mvc.t12preprocessinf.T12PreProcessInf;
@@ -69,11 +63,9 @@ public class LandDroughtScheduleJob extends AbsScheduleJob implements ITask {
 		}
 		T12PreProcessInf lstObj = null;
 		T12PreProcessInf ndviObj = null;
-		T12PreProcessInf ndviObjNext = null;
 
 		List<Drought> resList  = Lists.newArrayListWithCapacity(dataLSTs.size());
 		
-		String ndviCollectTimeNext= null;
 		String imageNdviUse = null;
 		
 		for (int idx_lst = 0; idx_lst < dataLSTs.size(); idx_lst++) {
@@ -100,7 +92,9 @@ public class LandDroughtScheduleJob extends AbsScheduleJob implements ITask {
 			Drought target = new Drought();
 			// 用该数据的id作为taskID
 			Long id =  lstObj.getId();
+			Long idndviLong = ndviObj.getId();
 			target.id = id.intValue();
+			target.idndvi = idndviLong.intValue();
 			target.fileDate = lstCollectTime;
 			target.imageLst = addFilePathName( lstObj.getFile_path() , lstObj.getFile_name());
 			target.imageNdvi =imageNdviUse;
@@ -172,6 +166,10 @@ public class LandDroughtScheduleJob extends AbsScheduleJob implements ITask {
 					// todo 修改标志位为失败，等待下次任务继续执行，当失败超过3次则标志位终生失败
 					dbDataStatus = EnumDataStatus.PROCESS_FAIL;
 				}
+				Record recordndvi = new Record().set(T12PreProcessInf.column_id, rpcData.idndvi)
+						.set(T12PreProcessInf.column_drought_st, dbDataStatus.getIdStr());
+				ConfMain.db().update(T12PreProcessInf.tableName, recordndvi);
+				
 				Record record = new Record().set(T12PreProcessInf.column_id, rpcData.id)
 						.set(T12PreProcessInf.column_drought_st, dbDataStatus.getIdStr());
 				ConfMain.db().update(T12PreProcessInf.tableName, record);
