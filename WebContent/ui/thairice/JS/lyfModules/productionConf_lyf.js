@@ -168,7 +168,9 @@ function init_productionConf_Monitoring()
 	              symbol = new SimpleLineSymbol();
 	              break;
 	            default:
-	              symbol = new SimpleFillSymbol();
+//	              symbol = new SimpleFillSymbol();
+	            	symbol = new SimpleFillSymbol("solid",  new SimpleLineSymbol(SimpleLineSymbol.STYLE_DASHDOT,
+	            		    new Color([255,0,0]), 2), new Color([255, 255, 255, 1]));
 	              break;
 	          }
 	          var graphic = new Graphic(evt.geometry, symbol);
@@ -407,7 +409,7 @@ function saveDraw(fileName)//save graphics to server
 			    		console.log("saveDraw---success");
 			    		if(app.DrawSample)
 			    		{
-			    			$("#hintContent").text("save success!");
+			    			$("#hintContent").text("save successful!");
 				    		$("#hintModal").modal('show');
 				    		
 				    		app.undoManager.clearRedo();
@@ -429,7 +431,12 @@ function saveDraw(fileName)//save graphics to server
 			    	}
 			    	else
 		    		{
+			    		$("#hintContent").text("save failed!");
+			    		$("#hintModal").modal('show');
 			    		
+			    		app.undoManager.clearRedo();
+			    		app.undoManager.clearUndo();
+			    		app.graphicsLayer.clear();
 		    		}
 			    },
 			    error:function(xhr,textStatus){

@@ -119,7 +119,7 @@ public class T10pdt_reportController extends BaseController {
 			setAttr("user", srv.SelectById(user.getBigInteger("id")));
 			setAttr("count", srv.getCount(user.getBigInteger("id")));
 		}
-		Page page  = T10pdt_report.dao.paginate(getParaToInt(0, 1), 10, "select t.id, t.start_time, t.end_time, t.zone_code,(case t.pdt_type \r\n" + 
+		Page page  = T10pdt_report.dao.paginate(getParaToInt(0, 1), 10, "select t.id, date_format(t.add_time ,'%Y-%m-%d %H:%i:%S') as add_time, date_format(t.collect_time ,'%Y-%m-%d') as collect_time, t.zone_code,(case t.pdt_type \r\n" + 
 				"when '01' then 'Area monitoring' \r\n" + 
 				"when '02' then 'Growth monitoring'\r\n" + 
 				"when '03' then 'Estimated production'\r\n" + 

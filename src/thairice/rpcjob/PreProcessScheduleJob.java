@@ -91,7 +91,7 @@ public class PreProcessScheduleJob extends AbsScheduleJob implements ITask {
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		boolean haveUndoData = true;
+		boolean haveUndoData = false;
 		log.info(">>>>job begin");
 		while (haveUndoData) {
 			// 从数据库读取数据

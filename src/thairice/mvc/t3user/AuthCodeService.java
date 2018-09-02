@@ -35,9 +35,9 @@ public class AuthCodeService {
 		if (row) {
 			// 激活后删除授权码
 			Db.update("delete from thairice.auth_code where id=?", authCodeId);
-			return new Result(1, "Activated successful");
+			return new Result(1, "Congratulations on your successful activation");
 		} else {
-			return new Result(0, "Activation fails");
+			return new Result(0, "Activation failed, please try again");
 		}
 
 	}

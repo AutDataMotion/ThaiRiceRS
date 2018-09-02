@@ -223,7 +223,7 @@ function submitForm() {
         if (res.code == 1) {
         	  setTimeout(function(){
         		  window.location.href = "/jf/thairice/t3user/notActivated";
-              },500);
+              },4000);
         }
     })
 }
