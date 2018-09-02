@@ -40,7 +40,7 @@ public class LandYieldScheduleJob extends AbsScheduleJob implements ITask {
 
 	private static String jobName = GrouthMonitorScheduleJob.class.getSimpleName();
 
-	private static String csvFilePath = "D:\\Thailand_test\\statistic\\";
+	private static String csvFilePath = "E:\\Thailand_data\\statistic\\";
 	public List<T12PreProcessInf> loadDataFromDb() {
 
 		String whereStr = sqlStr_ProcessStatus(EnumDataStatus.PDT_TYPE_Yield, EnumDataStatus.PROCESS_UN);
@@ -69,9 +69,9 @@ public class LandYieldScheduleJob extends AbsScheduleJob implements ITask {
 			target.pathGdalwarpS = "C:\\warmerda\\bld\\bin\\gdalwarp.exe";
 			// 所有年的该月该日的历史数据 放入map
 			Map<String, String> map = Maps.newHashMap();
-			String whereStr = sqlStr_ProcessStatus(EnumDataStatus.PDT_TYPE_Growth, EnumDataStatus.PROCESS_SUCCE);
+			String whereStr = sqlStr_ProcessStatus(EnumDataStatus.PDT_TYPE_Yield, EnumDataStatus.PROCESS_UN);
 			List<T12PreProcessInf> listArg = T12PreProcessInf.dao.find(String.format(
-					" select * from %s where  %s and data_type =%s and date_format(data_collect_time, '%%Y%%m%%d') between %s and %s  limit 100 ",
+					" select * from %s where  %s and data_type =%s and date_format(data_collect_time, '%%Y%%m%%d') between '%s' and '%s'  limit 100 ",
 					T12PreProcessInf.tableName, whereStr, EnumDataStatus.DATA_TYPE_NDVI_02.getIdStr(),
 					GenerTimeStamp.pickYearMonthDay(yearBeg, preObj.getData_collect_time()),
 					GenerTimeStamp.pickYearMonthDay(yearEnd, preObj.getData_collect_time())));
@@ -79,7 +79,7 @@ public class LandYieldScheduleJob extends AbsScheduleJob implements ITask {
 				T2syslogService.error(userId, userName, jobName, "Objects.isNull(listArg)");
 			} else {
 				listArg.forEach(
-						e -> map.put(String.valueOf(e.getId()), addFilePathName(e.getFile_path(), e.getFile_name())));
+						e -> map.put(String.valueOf((Long)e.getId()), addFilePathName(e.getFile_path(), e.getFile_name())));
 			}
 			return TupleUtil.tuple(target, map);
 		}).collect(Collectors.toList());
@@ -95,7 +95,7 @@ public class LandYieldScheduleJob extends AbsScheduleJob implements ITask {
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		boolean haveUndoData = false;
+		boolean haveUndoData = true;
 		log.info(">>>>job begin");
 		while (haveUndoData) {
 			// 从数据库读取数据
@@ -110,8 +110,8 @@ public class LandYieldScheduleJob extends AbsScheduleJob implements ITask {
 
 			// 存在全国省code 的csv才会调用，故便利csv文件来获取code
 			List<String> csvFileNames = FileUtils.getFileNames(csvFilePath);
-			if (CollectionUtils.isEmpty(csvFileNames)) {
-				T2syslogService.error(userId, userName, jobName, "no csvFiles");
+			if (CollectionUtils.isEmpty(csvFileNames) || CollectionUtils.isEmpty(rpcTodoDatas)) {
+				T2syslogService.info(userId, userName, jobName, "no csvFiles or no rpcData");
 				break;
 			}
 			rpcTodoDatas.forEach(rpcData -> {
