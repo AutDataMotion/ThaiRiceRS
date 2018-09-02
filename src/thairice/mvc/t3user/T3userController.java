@@ -166,12 +166,21 @@ public class T3userController extends BaseController {
                 }
                 Db.use(ConstantInitMy.db_dataSource_main).save("t14my_region", record);
             }
-            String authCode = codeService.createAuthCode(new BigInteger(t3user.get("id").toString()), 0, 3600);
+            
+            //邮箱验证，激活链接
+            String authCode = codeService.createAuthCode(new BigInteger(t3user.get("id").toString()), 0, 1800);
             if (StrKit.notBlank(authCode)) {
                 String url = PropKit.get("activation_url") + authCode;
-                String content = "Visit the activation link below to complete account activation：\n\n" + "<a href="
-                        + url + ">" + url + "</a>";
-                boolean success = Mail.sendEmail("Account activation", content, t3user.getEmail().toString(),
+                String content = "Hello!\r\n<br>"
+                			+ "We sent you this email because you're "
+                			+ "<br>signing up for a new Thai ARSM Platform account with your email address,<br>"
+                			+t3user.getEmail().toString()+
+                			"<br><br>"+"Click the following link to complete registration: <br><br>" 
+                			+ "<a href="+ url + ">" + url + "</a>"
+                			+"<br><br>This link will expire in 30 minutes. " 
+                	                +"<br><br>If this wasn't you, someone entered your email address by mistake so you can disregard this email."
+                			+"<br><br><br>Thanks";
+                boolean success = Mail.sendEmail("Your Thai ARSM Platform Account activation", content, t3user.getEmail().toString(),
                         Mail.MODE_HTML);
                 if (success) {
                     T2syslogService.addLog(EnumT2sysLog.INFO, new BigInteger(t3user.get("id").toString()), t3user.getAccount(), "Register", "Registration is successful");
@@ -682,10 +691,10 @@ public class T3userController extends BaseController {
             return;
         }
         // 创建授权码
-        String authCode = codeService.createAuthCode(t3user.getBigInteger("id"), 0, 3600);
-        boolean success = Mail.sendEmail(getParaToInt("type", 0) == 0 ? "Thailand agricultural remote sensing monitoring platform password assistance" : "change Password",
-                "Hi,\n\nAre you trying to reset/recover password?\nIf so, use this code to finish reseting/recovering password:\n" + authCode +
-                        //"\n\nDidn't sign in recently?\r\n" +
+        String authCode = codeService.createAuthCode(t3user.getBigInteger("id"), 0, 1800);
+        boolean success = Mail.sendEmail(getParaToInt("type", 0) == 0 ? "Your Thai ARSM Platform Verification Code" : "change Password",
+                "Hi,\nAre you trying to reset/recover password?\nIf so, use this code to finish reseting/recovering password.\n\n" + authCode +
+                        "\n\nThis code will expire in 30 minutes. \r\n" +
                         "\r\n" +
                         "If this wasn't you, someone entered your email address by mistake so you can disregard this email.\n\n\nThanks.", getPara("email"), Mail.MODE_TEXT);
         if (success) {
