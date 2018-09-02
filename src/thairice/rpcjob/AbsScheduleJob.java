@@ -39,17 +39,8 @@ public abstract class AbsScheduleJob {
 	protected static String userName = "rpc job";
 	
 	protected static RPCRice.InfRicePrx getRpcProxy() {
-		if (Objects.isNull(proxy)) {
-			synchronized (serverAddr) {
-				final RPCRice.InfRicePrx tmp = (InfRicePrx) IceClientUtil.getServicePrx(RPCRice.InfRicePrx.class,
-						serverAddr);
-				proxy = tmp;
-			}
-		}
-		if (Objects.isNull(proxy)) {
-			throw new IllegalArgumentException("getRpcProxy  proxy is null");
-		}
-		return proxy;
+		return  (InfRicePrx) IceClientUtil.getServicePrx(RPCRice.InfRicePrx.class,
+				serverAddr);
 	}
 
 	@FunctionalInterface

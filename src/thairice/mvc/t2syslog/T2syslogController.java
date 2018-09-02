@@ -1,19 +1,21 @@
 package thairice.mvc.t2syslog;
 
-import com.platform.constant.ConstantRender;
-import com.platform.mvc.base.BaseController;
-import com.platform.mvc.base.BaseModel;
-
-import csuduc.platform.util.JsonUtils;
-
 import java.util.List;
+import java.util.Objects;
 
 import org.apache.log4j.Logger;
+
 import com.jfinal.aop.Before;
 import com.jfinal.aop.Clear;
+import com.jfinal.plugin.cron4j.ITask;
+import com.platform.constant.ConstantRender;
+import com.platform.mvc.base.BaseController;
 
-import thairice.constant.ConstantInitMy;
 import thairice.interceptor.AdminLoginInterceptor;
+import thairice.rpcjob.GrouthMonitorScheduleJob;
+import thairice.rpcjob.LandDroughtScheduleJob;
+import thairice.rpcjob.LandYieldScheduleJob;
+import thairice.rpcjob.PreProcessScheduleJob;
 
 /**
  * XXX 管理 描述：
@@ -114,6 +116,68 @@ public class T2syslogController extends BaseController {
 	public void setViewPath() {
 		setAttr(ConstantRender.PATH_CTL_NAME, pthc);
 		setAttr(ConstantRender.PATH_VIEW_NAME, pthv);
+	}
+	
+	// ==========job 调用
+	private static PreProcessScheduleJob jobPre;
+	private static GrouthMonitorScheduleJob jobGrowth;
+	private static LandDroughtScheduleJob jobDrought;
+	private static LandYieldScheduleJob jobYield;
+	private static volatile int cntJobInvoke;
+	public void runjob(){
+		
+		if (cntJobInvoke  > 10) {
+			renderText("---");
+			return ;
+		}
+		
+		Integer idxJob = getParaToInt("jobid");
+		ITask jobTask = null;
+		
+		switch(idxJob){
+		case 1:
+			// ----------预处理
+			if (Objects.isNull(jobPre)) {
+				jobPre = new PreProcessScheduleJob();
+			}
+			jobTask = jobPre;
+			break;
+		case 2: // ------------长势
+			if (Objects.isNull(jobGrowth)) {
+				jobGrowth = new GrouthMonitorScheduleJob();
+			}
+			jobTask = jobGrowth;
+			break;
+		case 3:  // ------------干旱
+			if (Objects.isNull(jobDrought)) {
+				jobDrought = new LandDroughtScheduleJob();
+			}
+			jobTask = jobDrought;
+			break;
+		case 4:  // ---------估产
+			if (Objects.isNull(jobYield)) {
+				jobYield = new LandYieldScheduleJob();
+			}
+			jobTask = jobYield;
+			break;
+		}
+		
+		String resStr = "ok";
+		if (Objects.isNull(jobTask)) {
+			renderText("---");
+		} else {
+			try {
+				cntJobInvoke ++;
+				jobTask.run();
+			} catch (Exception e) {
+				// TODO: handle exception
+				System.out.println(e);
+				resStr = e.getMessage();
+			}finally {
+				cntJobInvoke --;
+			}
+			renderText(resStr);
+		}
 	}
 
 }

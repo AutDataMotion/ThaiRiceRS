@@ -4,6 +4,7 @@ import com.platform.annotation.Table;
 import com.platform.constant.ConstantInit;
 import com.platform.mvc.base.BaseModel;
 
+import java.math.BigInteger;
 import java.sql.Timestamp; 
 
 import org.apache.log4j.Logger;
@@ -21,7 +22,7 @@ public class T12PreProcessInf extends BaseModel<T12PreProcessInf> {
 	private static Logger log = Logger.getLogger(T12PreProcessInf.class);
 	
 	public static final T12PreProcessInf dao = new T12PreProcessInf();
-	public static final String tableName = "t12_pre_proces";
+	public static final String tableName = "t12_pre_process_inf";
 	/**
 	 * 字段描述：预处理数据编号 
 	 * 字段类型：bigint  长度：null
