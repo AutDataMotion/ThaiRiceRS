@@ -135,23 +135,23 @@
                     <form id="info" class="form-horizontal tab-form">
                         <p class="text-center form_title"> < User information > </p>
                         <div class="form-group">
-                            <label class="col-md-3 control-label" style="width:120px;">* Account</label>
+                            <label class="col-md-3 control-label" style="width:120px;">Account</label>
                             <div class="col-md-9" style="width:470px;">
-                                <input type="text" class="form-control" readonly value="${user.account}"
+                                <input type="text" class="form-control" disabled value="${user.account}"
                                        placeholder="The Account is made up of 6 to 12 letters and Numbers">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3 control-label" style="width:120px;">* Mobile</label>
+                            <label class="col-md-3 control-label" style="width:120px;">Mobile</label>
                             <div class="col-md-9" style="width:470px;">
-                                <input type="text" class="form-control" name="t3user.phone" value="${user.phone}"
+                                <input type="text" class="form-control" name="t3user.phone" disabled value="${user.phone}"
                                        placeholder="The Mobile Phone begins with 0 and the length is 10">
                             </div>
                         </div>
                         <div class="form-group">
-                            <label class="col-md-3 control-label" style="width:120px;">* Email</label>
+                            <label class="col-md-3 control-label" style="width:120px;">Email</label>
                             <div class="col-md-9" style="width:470px;">
-                                <input type="email" class="form-control" id="u_email" name="t3user.email"
+                                <input type="email" class="form-control" id="u_email" name="t3user.email" disabled
                                        value="${user.email}"
                                        placeholder="Your Email like someone@exmaple.com">
                             </div>
@@ -295,8 +295,8 @@
                                                                        name="${x.id}" value="${x.download_path}"></td> -->
                                 <td style="text-align: center;">${x.pdt_type}</td>
                                 <td style="text-align: center;">${x.zone_code}</td>
-                                <td style="text-align: center;">${x.add_time}</td>
-                                <td style="text-align: center;">${x.collect_time}</td>                           
+                                <td style="text-align: center;">${x.add_time_str}</td>
+                                <td style="text-align: center;">${x.collect_time_str}</td>                           
                                 <td style="text-align: center;">${x.suffix}</td>
                                 <td style="text-align: center;">
                                     <a onclick = "batchDelete(${x.id},  ${blogPage.pageNumber})" >delete </a>
