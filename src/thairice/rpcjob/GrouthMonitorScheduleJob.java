@@ -69,7 +69,7 @@ public class GrouthMonitorScheduleJob extends AbsScheduleJob implements ITask {
 		// todo 拼接查询条件, 还未确定, 确定后再做
 		String whereStr = sqlStr_ProcessStatus(EnumDataStatus.PDT_TYPE_Growth, EnumDataStatus.PROCESS_UN);
 		// sql 查询 为了参数有序，需要进行order by
-		return T12PreProcessInf.dao.find(String.format(" select * from %s where   %s and data_type =%s   limit 10 ",
+		return T12PreProcessInf.dao.find(String.format(" select * from %s where %s and data_type =%s limit 1 ",
 				T12PreProcessInf.tableName, whereStr, EnumDataStatus.DATA_TYPE_NDVI_02.getIdStr()));
 	}
 
@@ -97,14 +97,15 @@ public class GrouthMonitorScheduleJob extends AbsScheduleJob implements ITask {
 			Map<String, String> map = Maps.newHashMap();
 			String whereStr = sqlStr_ProcessStatus(EnumDataStatus.PDT_TYPE_Growth, EnumDataStatus.PROCESS_SUCCE);
 			List<T12PreProcessInf> listArg = T12PreProcessInf.dao.find(String.format(
-					" select * from %s where   %s and data_type =%s and date_format(data_collect_time, '%%Y%%m%%d') between %s and %s  limit 100 ",
+					" select * from %s where   %s and data_type =%s and date_format(data_collect_time, '%%Y%%m%%d') between '%s' and '%s'  limit 20 ",
 					T12PreProcessInf.tableName, whereStr, EnumDataStatus.DATA_TYPE_NDVI_02.getIdStr()
 					, GenerTimeStamp.pickYearMonthDay(yearBeg,preObj.getData_collect_time())
 					, GenerTimeStamp.pickYearMonthDay(yearEnd,preObj.getData_collect_time())));
 			if (Objects.isNull(listArg)) {
 				T2syslogService.error(userId, userName, jobName, "Objects.isNull(listArg)");
+				return null;
 			} else {
-				listArg.forEach(e->map.put(String.valueOf(e.getId())
+				listArg.forEach(e->map.put(String.valueOf((Long)e.getId())
 						, addFilePathName(e.getFile_path(),e.getFile_name())));
 			}
 			return TupleUtil.tuple(target, map);
@@ -121,7 +122,7 @@ public class GrouthMonitorScheduleJob extends AbsScheduleJob implements ITask {
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		boolean haveUndoData = false;
+		boolean haveUndoData = true;
 		log.info(">>>>job begin");
 		while (haveUndoData) {
 			// 每批次读取一次参数配置
@@ -129,13 +130,26 @@ public class GrouthMonitorScheduleJob extends AbsScheduleJob implements ITask {
 			// 从数据库读取数据
 			List<T12PreProcessInf> dbUndoDatas = loadDataFromDb();
 			if (ComUtil.isEmptyList(dbUndoDatas)) {
-				log.info("no predata now");
+				log.info("loadDataFromDb no predata now");
 				haveUndoData = false;
 				return;
 			}
 			// 封装为rpc接口数据
 			List<Tuple2<Growth, Map<String, String>>> rpcTodoDatas = mdlConvert(dbUndoDatas);
 
+			if (CollectionUtils.isEmpty(rpcTodoDatas)) {
+				log.info(" mdlConvert no predata now");
+				haveUndoData = false;
+				break;
+			}
+			Tuple2 tuple2  = rpcTodoDatas.get(0);
+			
+			if (Objects.isNull(tuple2)) {
+				log.info("mdlConvert no predata now");
+				haveUndoData = false;
+				break;
+			}
+			
 			rpcTodoDatas.forEach(rpcData -> {
 				// 调用rpc处理程序
 				 EnumStatus rpcRes = growthMonitor(rpcData.first, rpcData.second);
@@ -147,7 +161,7 @@ public class GrouthMonitorScheduleJob extends AbsScheduleJob implements ITask {
 				} 
 				 Record record = new Record().set(T12PreProcessInf.column_id, rpcData.first.id)
 							.set(T12PreProcessInf.column_condition_st, dbDataStatus.getIdStr());
-					ConfMain.db().update(T6org_data.tableName, record);
+					ConfMain.db().update(T12PreProcessInf.tableName, record);
 			});
 		}
 		log.info(">>> job end");

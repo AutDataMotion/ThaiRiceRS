@@ -6,6 +6,8 @@
 package thairice.rpcjob;
 
 import java.math.BigInteger;
+import java.sql.Timestamp;
+import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -45,7 +47,7 @@ public class LandYieldScheduleJob extends AbsScheduleJob implements ITask {
 
 		String whereStr = sqlStr_ProcessStatus(EnumDataStatus.PDT_TYPE_Yield, EnumDataStatus.PROCESS_UN);
 		// sql 查询 为了参数有序，需要进行order by
-		return T12PreProcessInf.dao.find(String.format(" select * from %s where   %s and data_type =%s   limit 10 ",
+		return T12PreProcessInf.dao.find(String.format(" select * from %s where %s and data_type =%s order by data_collect_time limit 1 ",
 				T12PreProcessInf.tableName, whereStr, EnumDataStatus.DATA_TYPE_NDVI_02.getIdStr()));
 	}
 
@@ -55,7 +57,11 @@ public class LandYieldScheduleJob extends AbsScheduleJob implements ITask {
 		}
 		int yearBeg = 2000;
 		// 前一年
-		int yearEnd = GenerTimeStamp.fetchYearByStep(-1);
+		Timestamp lastDate = inputs.get(0).getData_collect_time();
+		Calendar c = Calendar.getInstance();
+		c.setTime(lastDate);
+		c.add(Calendar.YEAR, -1);
+		int yearEnd = c.get(Calendar.YEAR);
 		List<Tuple2<Yield, Map<String, String>>> resList = inputs.stream().map(preObj -> {
 			Yield target = new Yield();
 			// 用该批数据的第一行id作为taskID
@@ -64,19 +70,20 @@ public class LandYieldScheduleJob extends AbsScheduleJob implements ITask {
 			target.fileDate = GenerTimeStamp.pickDateStr(preObj.getData_collect_time());
 			target.pathNdvi = addFilePathName(preObj.getFile_path(), preObj.getFile_name());
 			target.imageLanduse = "D:\\Thailand_test\\landuse";
-			target.outPath = " E:\\\\thairiceproduct\\\\Yield";
+			target.outPath = "E:\\\\thairiceproduct\\\\Yield";
 			target.shpfilePath = "D:\\\\Thailand_test\\\\shp";
 			target.pathGdalwarpS = "C:\\warmerda\\bld\\bin\\gdalwarp.exe";
 			// 所有年的该月该日的历史数据 放入map
 			Map<String, String> map = Maps.newHashMap();
-			String whereStr = sqlStr_ProcessStatus(EnumDataStatus.PDT_TYPE_Yield, EnumDataStatus.PROCESS_UN);
+			String whereStr = sqlStr_ProcessStatus(EnumDataStatus.PDT_TYPE_Yield, EnumDataStatus.PROCESS_SUCCE);
 			List<T12PreProcessInf> listArg = T12PreProcessInf.dao.find(String.format(
-					" select * from %s where  %s and data_type =%s and date_format(data_collect_time, '%%Y%%m%%d') between '%s' and '%s'  limit 100 ",
+					" select * from %s where  %s and data_type =%s and date_format(data_collect_time, '%%Y%%m%%d') between '%s' and '%s'  limit 20 ",
 					T12PreProcessInf.tableName, whereStr, EnumDataStatus.DATA_TYPE_NDVI_02.getIdStr(),
 					GenerTimeStamp.pickYearMonthDay(yearBeg, preObj.getData_collect_time()),
 					GenerTimeStamp.pickYearMonthDay(yearEnd, preObj.getData_collect_time())));
-			if (Objects.isNull(listArg)) {
+			if (CollectionUtils.isEmpty(listArg)) {
 				T2syslogService.error(userId, userName, jobName, "Objects.isNull(listArg)");
+				return null;
 			} else {
 				listArg.forEach(
 						e -> map.put(String.valueOf((Long)e.getId()), addFilePathName(e.getFile_path(), e.getFile_name())));
@@ -103,11 +110,23 @@ public class LandYieldScheduleJob extends AbsScheduleJob implements ITask {
 			if (ComUtil.isEmptyList(dbUndoDatas)) {
 				log.info("no predata now");
 				haveUndoData = false;
-				return;
+				break;
 			}
 			// 封装为rpc接口数据
 			List<Tuple2<Yield, Map<String, String>>> rpcTodoDatas = mdlConvert(dbUndoDatas);
-
+			
+			if (CollectionUtils.isEmpty(rpcTodoDatas)) {
+				log.info("no predata now");
+				haveUndoData = false;
+				break;
+			}
+			Tuple2 tuple2  = rpcTodoDatas.get(0);
+			
+			if (Objects.isNull(tuple2)) {
+				log.info("no predata now");
+				haveUndoData = false;
+				break;
+			}
 			// 存在全国省code 的csv才会调用，故便利csv文件来获取code
 			List<String> csvFileNames = FileUtils.getFileNames(csvFilePath);
 			if (CollectionUtils.isEmpty(csvFileNames) || CollectionUtils.isEmpty(rpcTodoDatas)) {
@@ -116,7 +135,7 @@ public class LandYieldScheduleJob extends AbsScheduleJob implements ITask {
 			}
 			rpcTodoDatas.forEach(rpcData -> {
 				csvFileNames.forEach(csvFileName ->{
-					String[] tokens = csvFileName.split(".");
+					String[] tokens = csvFileName.split("\\.");
 					rpcData.first.outCode = tokens[0];
 					rpcData.first.pathStatistics = csvFilePath + csvFileName;
 					// 调用rpc处理程序
@@ -128,7 +147,7 @@ public class LandYieldScheduleJob extends AbsScheduleJob implements ITask {
 						dbDataStatus = EnumDataStatus.PROCESS_FAIL;
 					}
 					Record record = new Record().set(T12PreProcessInf.column_id, rpcData.first.id)
-							.set(T12PreProcessInf.column_estimate_st, dbDataStatus.getId());
+							.set(T12PreProcessInf.column_estimate_st, dbDataStatus.getIdStr());
 					ConfMain.db().update(T12PreProcessInf.tableName, record);
 				});
 				

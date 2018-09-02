@@ -6,7 +6,6 @@
 package thairice.rpcjob;
 
 import java.math.BigInteger;
-import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -91,7 +90,7 @@ public class PreProcessScheduleJob extends AbsScheduleJob implements ITask {
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		boolean haveUndoData = false;
+		boolean haveUndoData = true;
 		log.info(">>>>job begin");
 		while (haveUndoData) {
 			// 从数据库读取数据
