@@ -47,7 +47,7 @@ public class PreProcessScheduleJob extends AbsScheduleJob implements ITask {
 		// 根据数据统计获取具体数据 sql 查询 为了参数有序，需要进行order by
 		List<List<T6org_data>> listGroupOrgDatas = resDownloadSucCnt.stream().map(sucCnt -> {
 			return T6org_data.dao.find(
-					" select * from  t6org_data where collect_time = ? and type_ in = ?  order by row_column limit 6 "
+					" select * from  t6org_data where collect_time = ? and type_  = ?  order by row_column limit 6 "
 					,sucCnt.get(T6org_data.column_collect_time)
 					, sucCnt.get(T6org_data.column_type_));
 		}).collect(Collectors.toList());
@@ -114,7 +114,7 @@ public class PreProcessScheduleJob extends AbsScheduleJob implements ITask {
 					// 修改标志位为失败，等待下次任务继续执行，当失败超过3次则标志位终生失败
 					data.stream().forEach(d -> {
 						Record record = new Record().set(T6org_data.column_id, d.getId()).set(T6org_data.column_status_,
-								EnumDataStatus.PROCESS_FAIL.getId());
+								EnumDataStatus.PROCESS_FAIL.getIdStr());
 						ConfMain.db().update(T6org_data.tableName, record);
 					});
 				}
@@ -131,22 +131,22 @@ public class PreProcessScheduleJob extends AbsScheduleJob implements ITask {
 		// 更新原始数据标志位
 		inputs.stream().forEach(d -> {
 			Record record = new Record().set(T6org_data.column_id, d.getId()).set(T6org_data.column_status_,
-					EnumDataStatus.PROCESS_SUCCE.getId());
+					EnumDataStatus.PROCESS_SUCCE.getIdStr());
 			ConfMain.db().update(T6org_data.tableName, record);
 			sourceFilePathList.add((String) d.getStorage_path() + d.getName_());
 		});
 		// 存入预处理表
-		T12PreProcessInf target = new T12PreProcessInf();
-		target.setData_type(rpcTodoData.type);
-		target.setSource_file_list(Joiner.on(splitChar).join(sourceFilePathList));
-		target.setFile_path(rpcTodoData.outFilePath);
-		target.setFile_name(rpcTodoData.outFileName);
-		target.setData_collect_time(inputs.get(0).getCollect_time());
-		target.setDrought_st(EnumDataStatus.PROCESS_UN.getIdStr());
-		target.setDrought_st(EnumDataStatus.PROCESS_UN.getIdStr());
-		target.setDrought_st(EnumDataStatus.PROCESS_UN.getIdStr());
-		target.setGenerate_time(GenerTimeStamp.dateToTimeStamp(new Date()));
-		target.save();
+		Record target = new Record()
+				.set(T12PreProcessInf.column_data_type, rpcTodoData.type)
+				.set(T12PreProcessInf.column_source_file_list, Joiner.on(splitChar).join(sourceFilePathList))
+				.set(T12PreProcessInf.column_file_path, rpcTodoData.outFilePath)
+				.set(T12PreProcessInf.column_file_name, rpcTodoData.outFileName)
+				.set(T12PreProcessInf.column_data_collect_time, GenerTimeStamp.DateKeyToTimestamp(inputs.get(0).getCollect_time()))
+				.set(T12PreProcessInf.column_condition_st, EnumDataStatus.PROCESS_UN.getIdStr())
+				.set(T12PreProcessInf.column_drought_st, EnumDataStatus.PROCESS_UN.getIdStr())
+				.set(T12PreProcessInf.column_estimate_st, EnumDataStatus.PROCESS_UN.getIdStr())
+				.set(T12PreProcessInf.column_generate_time, GenerTimeStamp.dateToTimeStamp(new Date()));
+	  ConfMain.db().save(T12PreProcessInf.tableName, target);
 		return;
 	}
 

@@ -5,6 +5,7 @@
  */
 package thairice.rpcjob;
 
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -62,8 +63,6 @@ public class LandYieldScheduleJob extends AbsScheduleJob implements ITask {
 			target.id = id.intValue();
 			target.fileDate = GenerTimeStamp.pickDateStr(preObj.getData_collect_time());
 			target.pathNdvi = addFilePathName(preObj.getFile_path(), preObj.getFile_name());
-			// target.outCode = "72";
-			// target.pathStatistics = "D:\\yield\\yield4\\statistic\\Suphanburd.csv";
 			target.imageLanduse = "D:\\Thailand_test\\landuse";
 			target.outPath = " E:\\\\thairiceproduct\\\\Yield";
 			target.shpfilePath = "D:\\\\Thailand_test\\\\shp";
@@ -73,7 +72,7 @@ public class LandYieldScheduleJob extends AbsScheduleJob implements ITask {
 			String whereStr = sqlStr_ProcessStatus(EnumDataStatus.PDT_TYPE_Growth, EnumDataStatus.PROCESS_SUCCE);
 			List<T12PreProcessInf> listArg = T12PreProcessInf.dao.find(String.format(
 					" select * from %s where  %s and data_type =%s and date_format(data_collect_time, '%%Y%%m%%d') between %s and %s  limit 100 ",
-					T12PreProcessInf.tableName, whereStr, EnumDataStatus.PDT_TYPE_Growth.getIdStr(),
+					T12PreProcessInf.tableName, whereStr, EnumDataStatus.DATA_TYPE_NDVI_02.getIdStr(),
 					GenerTimeStamp.pickYearMonthDay(yearBeg, preObj.getData_collect_time()),
 					GenerTimeStamp.pickYearMonthDay(yearEnd, preObj.getData_collect_time())));
 			if (Objects.isNull(listArg)) {

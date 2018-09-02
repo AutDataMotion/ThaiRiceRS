@@ -46,7 +46,7 @@ public class LandDroughtScheduleJob extends AbsScheduleJob implements ITask {
 		String whereStr = sqlStr_ProcessStatus(EnumDataStatus.PDT_TYPE_Drought, EnumDataStatus.PROCESS_UN);
 		// sql 查询 为了参数有序，需要进行order by
 		// 查找NDVI_1的干旱数据文件
-		return T12PreProcessInf.dao.find(String.format(" select * from %s where   %s and data_type =%s   limit 10 ",
+		return T12PreProcessInf.dao.find(String.format(" select * from %s where %s and data_type =%s order by data_collect_time   limit 10 ",
 				T12PreProcessInf.tableName, whereStr, EnumDataStatus.DATA_TYPE_NDVI_1.getIdStr()));
 	}
 
@@ -61,49 +61,41 @@ public class LandDroughtScheduleJob extends AbsScheduleJob implements ITask {
 		String whereStr = String.format("data_collect_time >= '%s' and data_collect_time <= '%s'  ", dateBeg, dateEnd);
 		// 根据NDVI_1查找对应的LST温度文件 批量
 		List<T12PreProcessInf> dataLSTs = T12PreProcessInf.dao
-				.find(String.format(" select * from %s where   %s and data_type =%s   limit 100 ",
+				.find(String.format(" select * from %s where   %s and data_type =%s and drought_st='11' order by data_collect_time   limit 100 ",
 						T12PreProcessInf.tableName, whereStr, EnumDataStatus.DATA_TYPE_LST.getIdStr()));
 		if (CollectionUtils.isEmpty(dataLSTs)) {
 			T2syslogService.warn(userId, userName, "mdlConvert ", "isEmpty(dataLSTs)");
 			return Lists.newArrayList();
 		}
-		int idx_ndvi = 0;
-		int idx_ndvi_next = 1;
 		T12PreProcessInf lstObj = null;
 		T12PreProcessInf ndviObj = null;
 		T12PreProcessInf ndviObjNext = null;
 
 		List<Drought> resList  = Lists.newArrayListWithCapacity(dataLSTs.size());
 		
+		String ndviCollectTimeNext= null;
+		String imageNdviUse = null;
+		
 		for (int idx_lst = 0; idx_lst < dataLSTs.size(); idx_lst++) {
 			// 找对应的ndvi文件，采取向前匹配原则
 			lstObj = dataLSTs.get(idx_lst);
-			ndviObj = idx_ndvi < inputs.size() ? inputs.get(idx_ndvi) : ndviObj;
-			ndviObjNext = idx_ndvi_next < inputs.size() ? inputs.get(idx_ndvi_next) : null;
-
 			String lstCollectTime = GenerTimeStamp.pickDateStr(lstObj.getData_collect_time());
-			String ndviCollectTime = GenerTimeStamp.pickDateStr(ndviObj.getData_collect_time());
-			String ndviCollectTimeNext;
-			String imageNdviUse = null;
-			if (Objects.isNull(ndviObjNext)) {
-				// 后面没有可匹配的ndvi 了,则只能用前面的
-				imageNdviUse = addFilePathName(ndviObj.getFile_path(), ndviObj.getFile_name());
-			} else {
-				if (lstCollectTime.compareToIgnoreCase(ndviCollectTime) >= 0) {
-					ndviCollectTimeNext = GenerTimeStamp.pickDateStr(ndviObjNext.getData_collect_time());
-					if (lstCollectTime.compareToIgnoreCase(ndviCollectTimeNext) < 0) {
-						imageNdviUse = addFilePathName(ndviObj.getFile_path(), ndviObj.getFile_name());
-					} else {
-						if (idx_ndvi < inputs.size() - 1) {
-							idx_ndvi++;
-							idx_ndvi_next++;
-						}
-					}
-				} else {
-					T2syslogService.warn(userId, userName, "mdlConvert", "lstCollectTime < ndviCollectTime");
+			for(int idx_ndvi = 0; idx_ndvi < inputs.size(); idx_ndvi++){
+				ndviObj = inputs.get(idx_ndvi);
+				String ndviCollectTime = GenerTimeStamp.pickDateStr(ndviObj.getData_collect_time());
+				if (lstCollectTime.compareToIgnoreCase(ndviCollectTime) > 0) {
 					continue;
+				} else if (lstCollectTime.compareToIgnoreCase(ndviCollectTime) == 0) {
+					break;
+				} else  {
+					if (idx_ndvi > 0) {
+						ndviObj = inputs.get(idx_ndvi -1);
+					}
+					break; 
 				}
 			}
+			
+			imageNdviUse = addFilePathName(ndviObj.getFile_path(), ndviObj.getFile_name());
 			
 			Drought target = new Drought();
 			// 用该数据的id作为taskID
@@ -113,8 +105,8 @@ public class LandDroughtScheduleJob extends AbsScheduleJob implements ITask {
 			target.imageLst = addFilePathName( lstObj.getFile_path() , lstObj.getFile_name());
 			target.imageNdvi =imageNdviUse;
 			target.imageLanduse = "D:\\Thailand_test\\landuse\\1km";
-			target.shpfilelPath = "D:\\Thailand_test\\shp";
-			target.outPath = "D:\\Thailand_test\\drought";
+			target.shpfilelPath = "D:\\\\Thailand_test\\\\shp";
+			target.outPath = "E:\\\\thairiceproduct\\\\Drought";
 			target.pathGdalwarpS = "C:\\warmerda\\bld\\bin\\gdalwarp.exe";
 			target.threshold1 = threshold1;
 			target.threshold2 = threshold2;
@@ -151,7 +143,7 @@ public class LandDroughtScheduleJob extends AbsScheduleJob implements ITask {
 	@Override
 	public void run() {
 		// TODO Auto-generated method stub
-		boolean haveUndoData = false;
+		boolean haveUndoData = true;
 		log.info(">>>>job begin");
 		while (haveUndoData) {
 			// 每批次读取一次参数配置
@@ -159,12 +151,17 @@ public class LandDroughtScheduleJob extends AbsScheduleJob implements ITask {
 			// 从数据库读取数据
 			List<T12PreProcessInf> dbUndoDatas = loadDataFromDb();
 			if (ComUtil.isEmptyList(dbUndoDatas)) {
-				T2syslogService.warn(userId, userName, "drought job", "no preprocess data now");
+				T2syslogService.info(userId, userName, "drought job", "loadDataFromDb no data now");
 				haveUndoData = false;
 				break;
 			}
 			// 封装为rpc接口数据
 			List<Drought> rpcTodoDatas = mdlConvert(dbUndoDatas);
+			if (ComUtil.isEmptyList(rpcTodoDatas)) {
+				T2syslogService.info(userId, userName, "drought job", "mdlConvert no data now");
+				haveUndoData = false;
+				break;
+			}
 
 			rpcTodoDatas.forEach(rpcData -> {
 				// 调用rpc处理程序
@@ -176,7 +173,7 @@ public class LandDroughtScheduleJob extends AbsScheduleJob implements ITask {
 					dbDataStatus = EnumDataStatus.PROCESS_FAIL;
 				}
 				Record record = new Record().set(T12PreProcessInf.column_id, rpcData.id)
-						.set(T12PreProcessInf.column_drought_st, dbDataStatus.getId());
+						.set(T12PreProcessInf.column_drought_st, dbDataStatus.getIdStr());
 				ConfMain.db().update(T12PreProcessInf.tableName, record);
 			});
 

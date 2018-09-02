@@ -5,6 +5,7 @@
  */
 package thairice.rpcjob;
 
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
@@ -83,9 +84,9 @@ public class GrouthMonitorScheduleJob extends AbsScheduleJob implements ITask {
 			target.id = id.intValue();
 			target.fileDate = GenerTimeStamp.pickDateStr(preObj.getData_collect_time());;
 			target.pathNdvi = addFilePathName(preObj.getFile_path(), preObj.getFile_name());
-			target.imageLanduse = "D:\\grouth\\data\\Clip_N2_2017.tif";
-			target.shpfilePath = "D:\\Thailand_test\\landuse";
-			target.outPath = "D:\\Thailand_test\\grouth";
+			target.imageLanduse = "D:\\Thailand_test\\landuse";
+			target.shpfilePath = "D:\\\\Thailand_test\\\\shp";
+			target.outPath = "E:\\\\thairiceproduct\\\\Growth";
 			target.pathGdalwarpS = "C:\\warmerda\\bld\\bin\\gdalwarp.exe";
 			target.threshold1 = threshold1;
 			target.threshold2 = threshold2;
@@ -145,7 +146,7 @@ public class GrouthMonitorScheduleJob extends AbsScheduleJob implements ITask {
 					 dbDataStatus = EnumDataStatus.PROCESS_FAIL;
 				} 
 				 Record record = new Record().set(T12PreProcessInf.column_id, rpcData.first.id)
-							.set(T12PreProcessInf.column_condition_st, dbDataStatus.getId());
+							.set(T12PreProcessInf.column_condition_st, dbDataStatus.getIdStr());
 					ConfMain.db().update(T6org_data.tableName, record);
 			});
 		}
