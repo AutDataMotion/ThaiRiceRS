@@ -31,7 +31,7 @@ public abstract class AbsScheduleJob {
 	private static Logger log = Logger.getLogger(AbsScheduleJob.class);
 
 	public final static char splitChar = '|';
-	public final static String serverAddr = "thairice:default -h 10.2.29.74 -p 8888";
+	public final static String serverAddr = "thairice:default -h 10.2.29.64 -p 8888";
 	private volatile static RPCRice.InfRicePrx proxy;
 
 	protected static BigInteger userId = new BigInteger("0");

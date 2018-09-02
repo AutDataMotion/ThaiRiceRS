@@ -215,16 +215,14 @@ public class DatesUtils {
 	 * @throws 
 	 * @date 2018-03-03
 	 */
-	public static Timestamp getDateOfJL(String year, String dayOfYear){
+	public static String getDateOfJL(String year, String dayOfYear){
 		Calendar cal = Calendar.getInstance();
 		cal.set(Calendar.YEAR, Integer.parseInt(year));
 		cal.set(Calendar.DAY_OF_YEAR, Integer.parseInt(dayOfYear));
 		java.util.Date rltDate =cal.getTime();
-		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");// 设置你想要的格式
+		SimpleDateFormat df = new SimpleDateFormat("yyyy-MM-dd");// 设置你想要的格式
 		String dateStr = df.format(cal.getTime());
-		String time = df.format(new Date());
-		Timestamp ts = Timestamp.valueOf(dateStr);		
-		return ts;		
+		return dateStr;		
 	}
 	
 	public static void main(String[] args) {

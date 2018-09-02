@@ -127,7 +127,7 @@ public class T6org_data extends BaseModel<T6org_data> {
 	private String band_number;
 	private String status_;
 	private String fail_code;
-	private Timestamp collect_time;
+	private String collect_time;
 	private Timestamp dload_start_time;
 	private Timestamp dload_end_time;
 
@@ -197,7 +197,7 @@ public class T6org_data extends BaseModel<T6org_data> {
 	public <T> T getFail_code() {
 		return get(column_fail_code);
 	}
-	public void setCollect_time(Timestamp collect_time){
+	public void setCollect_time(String collect_time){
 		set(column_collect_time, collect_time);
 	}
 	public <T> T getCollect_time() {

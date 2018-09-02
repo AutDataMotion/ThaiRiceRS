@@ -65,7 +65,7 @@ public class FileUtils {
 	public FileUtils() {
 	}
 
-	public static boolean folderCheckAndMake(String aDir){
+	public static boolean folderCheckAndMake(String aDir) {
 		java.io.File targetFolder = new java.io.File(aDir);
 		if (!targetFolder.exists()) {
 			try {
@@ -78,7 +78,7 @@ public class FileUtils {
 		}
 		return true;
 	}
-	
+
 	/**
 	 * 生成当日待下载ftp路径
 	 * 
@@ -153,13 +153,12 @@ public class FileUtils {
 			orgDataObj.setDownload_path(ftpPath);
 			// 解析源路径，得到归档目录
 			// 解析文件名
-			String[] filePathAttr = ftpPath.split("//");
+			String[] filePathAttr = ftpPath.split("/fileDate/");
 			String storage_path = "";
-			if(5 <= filePathAttr.length) {
+			if (5 <= filePathAttr.length) {
 				storage_path += (("//") + filePathAttr[2]);
-				Timestamp fileDate = DatesUtils.getDateOfJL(filePathAttr[3], filePathAttr[4]);
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMM");
-				String strFileDate = sdf.format(fileDate);//时间存储为字符串
+				String strFileDate = DatesUtils.getDateOfJL(filePathAttr[3], filePathAttr[4]);
+				strFileDate = strFileDate.substring(0, 4) + strFileDate.substring(5, 2);
 				storage_path += (("//") + strFileDate);
 				orgDataObj.setStorage_path(storage_path);
 			} else {
@@ -174,18 +173,19 @@ public class FileUtils {
 			if (fileAttr.length >= 3) {
 				// 数据采集日期
 				String sampleStr = fileAttr[1];
-				if(8 == sampleStr.length()) {
-					orgDataObj.setCollect_time(DatesUtils.getDateOfJL(sampleStr.substring(1, 5), sampleStr.substring(5, 8)));
+				if (8 == sampleStr.length()) {
+					orgDataObj.setCollect_time(
+							DatesUtils.getDateOfJL(sampleStr.substring(1, 5), sampleStr.substring(5, 8)));
 				} else {
 					LOG.error("解析数据采集日期失败，文件名格式不对！");
 				}
 				// 文件类型代码
 				// orgDataObj.setType_(fileAttr[0]);
-				if("MOD13Q1".equals(fileAttr[0]))
+				if ("MOD13Q1".equals(fileAttr[0]))
 					orgDataObj.setType_("02");
-				else if("MOD13A2".equals(fileAttr[0]))
-						orgDataObj.setType_("01");
-				else if("MOD11A2".equals(fileAttr[0]))
+				else if ("MOD13A2".equals(fileAttr[0]))
+					orgDataObj.setType_("01");
+				else if ("MOD11A2".equals(fileAttr[0]))
 					orgDataObj.setType_("03");
 				else {
 					LOG.error("文件类型解析发生错误，文件类型不符合MOD13Q1、MOD13A2、MOD11A2三种之一！");
@@ -204,26 +204,34 @@ public class FileUtils {
 			return null;
 		}
 	}
-	
-	public static void prepareTestData2(String fileDir, String storagePath) {
-    	File file=new File(fileDir);
-            for(File temp:file.listFiles()){//Java5的新特性之一就是增强的for循环。
-    /*	上面的for循环的意思是：定义一个File的变量temp，变量child会自动递增遍历File类型的数组listFiles   
-    我们不再需要写得像原来那么复杂了，数组、迭代器都可以这样使用，*/
-                if(temp.isFile()){
-                    System.out.println(temp.toString());
-                    prepareTestData(temp.toString(), storagePath);
-                }
-                
-            }
-}
-        
+
+	// 递归遍历目录，并完成原始数据文件归档入库
+	public static void prepareTestDataDir(String fileDir, String storagePath) {
+		File file = new File(fileDir);
+		for (File temp : file.listFiles()) {// Java5的新特性之一就是增强的for循环。
+			/*
+			 * 上面的for循环的意思是：定义一个File的变量temp，变量child会自动递增遍历File类型的数组listFiles
+			 * 我们不再需要写得像原来那么复杂了，数组、迭代器都可以这样使用，
+			 */
+			// 如果是文件
+			if (temp.isFile()) {
+				System.out.println(temp.toString());
+				prepareTestData(temp.toString(), storagePath);
+			} else {// 如果是目录，递归
+				if (temp.isDirectory()) {
+					prepareTestDataDir(temp.toString(), storagePath);
+				}
+			}
+
+		}
+	}
+
 	/**
-	 * 解析ftp远程文件路径
+	 * 解析单个原始文件并归档入库
 	 * 
 	 * @param fileDir
 	 *            ftp远程文件路径
-	 * @author zhuchaobin, 2018-02-26
+	 * @author zhuchaobin, 2018-09-02
 	 * @return String T6org_data 解析后的原始文件对象
 	 * @throws ParseException
 	 */
@@ -239,23 +247,6 @@ public class FileUtils {
 			// 文件名
 			String fileName = fileDir.substring(fileDir.lastIndexOf("\\") + 1);
 			orgDataObj.setName_(fileName);
-/*			// 文件路径
-			String ftpPath = fileDir.substring(0, fileDir.lastIndexOf("\\"));
-			orgDataObj.setDownload_path(ftpPath);
-			// 解析源路径，得到归档目录
-			// 解析文件名
-			String[] filePathAttr = ftpPath.split("\\");
-			String storage_path = "";
-			if(5 <= filePathAttr.length) {
-				storage_path += (("\\") + filePathAttr[2]);
-				Timestamp fileDate = DatesUtils.getDateOfJL(filePathAttr[3], filePathAttr[4]);
-				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMM");
-				String strFileDate = sdf.format(fileDate);//时间存储为字符串
-				storage_path += (("\\") + strFileDate);
-				orgDataObj.setStorage_path(storage_path);
-			} else {
-				LOG.error("解析数据采集日期并生成归档目录失败，文件名格式不对！");
-			}*/
 			orgDataObj.setStorage_path(storagePath);
 			// 解析文件名
 			String[] fileAttr = fileName.split("\\.");
@@ -266,18 +257,19 @@ public class FileUtils {
 			if (fileAttr.length >= 3) {
 				// 数据采集日期
 				String sampleStr = fileAttr[1];
-				if(8 == sampleStr.length()) {
-					orgDataObj.setCollect_time(DatesUtils.getDateOfJL(sampleStr.substring(1, 5), sampleStr.substring(5, 8)));
+				if (8 == sampleStr.length()) {
+					orgDataObj.setCollect_time(
+							DatesUtils.getDateOfJL(sampleStr.substring(1, 5), sampleStr.substring(5, 8)));
 				} else {
 					LOG.error("解析数据采集日期失败，文件名格式不对！");
 				}
 				// 文件类型代码
 				// orgDataObj.setType_(fileAttr[0]);
-				if("MOD13Q1".equals(fileAttr[0]))
+				if ("MOD13Q1".equals(fileAttr[0]))
 					orgDataObj.setType_("02");
-				else if("MOD13A2".equals(fileAttr[0]))
-						orgDataObj.setType_("01");
-				else if("MOD11A2".equals(fileAttr[0]))
+				else if ("MOD13A2".equals(fileAttr[0]))
+					orgDataObj.setType_("01");
+				else if ("MOD11A2".equals(fileAttr[0]))
 					orgDataObj.setType_("03");
 				else {
 					LOG.error("文件类型解析发生错误，文件类型不符合MOD13Q1、MOD13A2、MOD11A2三种之一！");
@@ -328,7 +320,7 @@ public class FileUtils {
 				LOG.debug("dir not exists, create it ...");
 				file.mkdirs();
 			}
-		} catch(Exception e) {
+		} catch (Exception e) {
 			LOG.error("判断文件夹是否存在发生异常：" + e);
 		}
 	}
@@ -337,14 +329,11 @@ public class FileUtils {
 	public static boolean isThairHV(String remoteFileName) {
 		String[] fileAttr = remoteFileName.split("\\.");
 		if (fileAttr.length >= 3) {
-			if( DataConstants.STR_H26V06.equals(fileAttr[2]) ||
-				DataConstants.STR_H27V06.equals(fileAttr[2]) ||
-				DataConstants.STR_H27V07.equals(fileAttr[2]) ||
-				DataConstants.STR_H27V08.equals(fileAttr[2]) ||
-				DataConstants.STR_H28V07.equals(fileAttr[2]) ||
-				DataConstants.STR_H28V08.equals(fileAttr[2]) ) {
-					LOG.debug("为泰国境内条带:" + remoteFileName);
-					return true;
+			if (DataConstants.STR_H26V06.equals(fileAttr[2]) || DataConstants.STR_H27V06.equals(fileAttr[2])
+					|| DataConstants.STR_H27V07.equals(fileAttr[2]) || DataConstants.STR_H27V08.equals(fileAttr[2])
+					|| DataConstants.STR_H28V07.equals(fileAttr[2]) || DataConstants.STR_H28V08.equals(fileAttr[2])) {
+				LOG.debug("为泰国境内条带:" + remoteFileName);
+				return true;
 			} else {
 				LOG.debug("非泰国境内条带:" + remoteFileName);
 				return false;
@@ -354,18 +343,18 @@ public class FileUtils {
 			return false;
 		}
 	}
-	
+
 	public static void main(String[] args) throws IOException {
 		// String str = "MOD13Q1.A2001033.h00v08.006.2015141152020.hdf";
 		// String[] fileAttr = str.split("\\.");
 		// System.out.println(fileAttr.length);
-	    prepareTestData2("D:\\TEST", "d:\\");
+		prepareTestDataDir("D:\\TEST", "e:\\testData\\");
 
-		File dir = new File("d://ddddd//113//4455");
-		String temp="12345678";
-		System.out.println(temp.substring(1,5));
-		System.out.println(temp.substring(5,8));
-		FileUtils.judeDirExists(dir);
+/*		File dir = new File("d://ddddd//113//4455");
+		String temp = "12345678";
+		System.out.println(temp.substring(1, 5));
+		System.out.println(temp.substring(5, 8));
+		FileUtils.judeDirExists(dir);*/
 	}
 
 }
