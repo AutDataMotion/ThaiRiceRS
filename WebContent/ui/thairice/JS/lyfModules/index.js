@@ -23,6 +23,12 @@ $(function(){
 //		console.log(app.province_code);
 //		console.log(app.city_code);
 //		console.log(app.town_code);
+		
+		productKind_code = $(this).attr("value");
+		app.productKind_code = productKind_code;
+		
+		initTimeSelect_indexHtml(app.province_code);
+		/*
 		if(app.town_code!=0)
 		{
 			app.areaCode = app.town_code;
@@ -47,16 +53,17 @@ $(function(){
 		else{
 			alert("area null");
 		}
+		*/
 //		console.log(app.areaCode);
 		//whichSelected = $(this).text();
-		productKind_code = $(this).attr("value");
-		app.productKind_code = productKind_code;
-		if(app.areaCode&&app.productDate)
-		{
-//			alert(app.areaName);
-			console.log(app.areaCode+","+app.areaName+","+app.productDate);
-			AssembleProductLayerInfo(app.areaCode,app.productDate,app.productKind_code);
-		}
+//		productKind_code = $(this).attr("value");
+//		app.productKind_code = productKind_code;
+//		if(app.areaCode&&app.productDate)
+//		{
+//
+//			console.log(app.areaCode+","+app.areaName+","+app.productDate);
+//			AssembleProductLayerInfo(app.areaCode,app.productDate,app.productKind_code);
+//		}
 		
 		/*
 		if(whichSelected!=$(this).text())
@@ -73,7 +80,7 @@ $(function(){
 
 		$(this).addClass('active').siblings().removeClass('active');
 		//$('.StaButton').toggle('normal');
-		$('.StaButton').show();
+//		$('.StaButton').show();
     });
 	
 	$('.staChartButton').click(function(e) {//生成统计图
