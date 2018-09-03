@@ -229,42 +229,25 @@
 <%includeFileTemplate("/thairice/common/user_top.html"){}%>
 <!--公共的头部end-->
 <div id="mapDiv"></div>
-<div class="BbAreaSelect" style="z-index: 9;position: fixed;">
-  <form class="form-inline">
-    <div class="form-group">
-            <!--div id="custom_data">
-	            <div class="form-group">
-	            	 <select class="province" id="province"  style="padding: 13px;border: 0px;width: 200px;" onchange="initaddCityArea('city')"></select>
-	            </div>
-	           <div class="form-group">
-	           		<select class="city" id="city" style="padding: 13px;border: 0px;width: 200px;" onchange="initaddCityArea('area')"></select>
-	           </div>
-	            <div class="form-group">
-	            	<select class="area" id="area" style="padding: 13px;border: 0px;width: 200px;" onchange="initaddCityArea('town')"></select>
-	            </div>
-            </div-->
-            <select class="province" id="province"  style="padding: 13px;border: 0px;width: 120px;" onchange="initaddCityArea('city')"></select>
-	</div>
-	<div class="form-group">
-    		<select class="city" id="city" style="padding: 13px;border: 0px;width: 120px;" onchange="initaddCityArea('area')"></select>
-    </div>
-    <div class="form-group">
-    	<select class="area" id="area" style="padding: 13px;border: 0px;width: 130px;" onchange="initaddCityArea('town')"></select>
-    </div>
+<!--div class="BbAreaSelect" style="z-index: 9;position: fixed;">
+  	<div class="form-group BbTimeSelect">
+  		<form class="form-inline">
+  			<div class="form-group">
+	           
+	            <select class="province" id="province"  style="padding: 13px;border: 0px;width: 120px;" onchange="initaddCityArea('city')"></select>
+			</div>
+			<div class="form-group">
+		    		<select class="city" id="city" style="padding: 13px;border: 0px;width: 120px;" onchange="initaddCityArea('area')"></select>
+		    </div>
+		    <div class="form-group">
+		    	<select class="area" id="area" style="padding: 13px;border: 0px;width: 130px;" onchange="initaddCityArea('town')"></select>
+		    </div>
+	  	</form>
+  	</div>
+	    
     <div class="form-group BbTimeSelect">
-      <label for="dateChoosed" style="line-height:50px; padding:0 5px; font-weight:normal;">Date:</label>
-	      	<!--div class="input-group date" id='date_choose' data-date="" data-date-format="yyyy-mm-dd" data-link-format="yyyy-mm-dd">
-	      	<input type="text" id='dateChoosed'  class="form-control" style="width:150px; float:left;">
-	        <span class="input-group-addon"> <i class="glyphicon glyphicon-calendar"></i> </span> 
-	        </div-->
-	        
-	        <!--div class="input-group date form_date" id='date_choose' data-date="" data-date-format="yyyy-mm-dd" data-link-field="dateChoosed" data-link-format="yyyy-mm-dd">
-                    <input class="form-control" size="16" type="text" value="" readonly style="width:150px; float:left;">
-                    
-					<span class="input-group-addon"><span class="glyphicon glyphicon-calendar"></span></span>
-            </div>
-            <input type="hidden" id="dateChoosed" value="" /><br/-->
-            <form class="form-inline">
+      		<form class="form-inline">
+            	<label for="dateChoosed" style="line-height:50px; padding:0 5px; font-weight:normal;">Date:</label>
             	<div class="form-group">
 			    	<select class="year" id="year" style="padding: 13px;border: 0px;width: 90px;" onchange="inityearIndex('year')">
 			    		<option value="year" selected>Year</option>
@@ -283,8 +266,8 @@
             </form>
 	</div>      
    
-  </form>
-</div>
+ 
+</div-->
 <div class="BbProductMenuWrap">
   <div class="BbProductabs"><span></span></div>
   <div class="BbProductMenu">
@@ -295,6 +278,42 @@
         <p class="list-group-item-text two droughtMonitoring" value="04" id="product04" style="display: none;">Rice Drought</p>
         <p class="list-group-item-text three conditionMonitoring" value="02" id="product02" style="display: none;">Rice Growth</p>
         <p class="list-group-item-text four productionEstimates" value="03" id="product03" style="display: none;">Rice Yield</p>
+        
+        <h4 class="list-group-item-heading">Region</h4>
+        <div class="form-group BbTimeSelect">
+  			<form class="form-inline">
+	  			<div class="form-group">
+		            <select class="province" id="province"  style="padding: 13px;border: 0px;width: 110px;" onchange="initaddCityArea('city')"></select>
+				</div>
+				<div class="form-group">
+			    		<select class="city" id="city" style="padding: 13px;border: 0px;width: 100px;" onchange="initaddCityArea('area')"></select>
+			    </div>
+			    <div class="form-group">
+			    	<select class="area" id="area" style="padding: 13px;border: 0px;width: 125px;" onchange="initaddCityArea('town')"></select>
+			    </div>
+	  		</form>
+  		</div>
+  		 <h4 class="list-group-item-heading">Date</h4>
+  		 <div class="form-group BbTimeSelect">
+      		<form class="form-inline">
+            	<!-- label for="dateChoosed" style="line-height:50px; padding:0 5px; font-weight:normal;">Date:</label-->
+            	<div class="form-group">
+			    	<select class="year" id="year" style="padding: 13px;border: 0px;width: 90px;" onchange="inityearIndex('year')">
+			    		<option value="year" selected>Year</option>
+			    	</select>
+			    </div>
+			    <div class="form-group">
+			    	<select class="month" id="month" style="padding: 13px;border: 0px;width: 100px;" onchange="inityearIndex('month')">
+			    		<option value="month" selected>Month</option>
+			    	</select>
+			    </div>
+			    <div class="form-group">
+			    	<select class="day" id="day" style="padding: 13px;border: 0px;width: 90px;" onchange="inityearIndex('day')">
+			    		<option value="day" selected>Day</option>
+			    	</select>
+			    </div>
+            </form>
+		</div> 
       </div>
     </div>
   </div>

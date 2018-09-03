@@ -89,9 +89,12 @@ body {
 }
 .BbProductMenu{
 	position:relative;
-	width:310px;
+	width:370px;
 	border-radius:5px;
 	padding:10px;
+}
+.BbTimeSelect{
+	margin-bottom: 0px;
 }
 .BbProductMenu .list-group-item-heading{
 	height:30px;
