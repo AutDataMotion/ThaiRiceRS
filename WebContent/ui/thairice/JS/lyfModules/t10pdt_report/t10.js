@@ -956,7 +956,14 @@ var sta = {};
                     feature: {
 //                        mark: {show: true},
 //                        dataView: {show: true, readOnly: false},
-                        magicType: {show: true, type: ['line', 'bar']},
+                        magicType: {
+                        	show: true,
+                        	type: ['line', 'bar'],
+                        	title:{
+                        		line:'line',
+                        		bar:'bar'
+                        	}
+                        },
 //                        restore: {show: true},
 //                        saveAsImage: {show: true}
                     }
@@ -968,7 +975,7 @@ var sta = {};
                     }
                 },
                 xAxis: {
-                	name:"Country",
+                	name:"Region",
                 	nameLocation:'end',
                 	nameTextStyle:{
                 		color:'#fff'
@@ -1053,7 +1060,13 @@ var sta = {};
                     feature: {
 //                        mark: {show: true},
 //                        dataView: {show: true, readOnly: false},
-                        magicType: {show: true, type: ['line', 'bar']},
+                        magicType: {show: true,
+                        	type: ['line', 'bar'],
+                        	title:{
+                        		line:'line',
+                        		bar:'bar'
+                        	}
+                        },
 //                        restore: {show: true},
 //                        saveAsImage: {show: true}
                     }
@@ -1065,7 +1078,7 @@ var sta = {};
                     }
                 },
                 xAxis: {
-                	name:"Country",
+                	name:"Region",
                 	nameLocation:'end',
                 	nameTextStyle:{
                 		color:'#fff'
@@ -1177,7 +1190,7 @@ var sta = {};
                     }
                 },
                 xAxis: {
-                	name:"Country",
+                	name:"Region",
                 	nameLocation:'end',
                 	nameTextStyle:{
                 		color:'#fff'
