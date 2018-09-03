@@ -69,8 +69,8 @@ body {
 }
 .BbProductMenuWrap{
 	position:absolute;
-	right:15px;
-	top:80px;
+	left:0px;
+	top:140px;
 	font-size:16px;
 	overflow:hidden;
 	z-index:9;
