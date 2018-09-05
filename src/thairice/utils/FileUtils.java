@@ -126,6 +126,58 @@ public class FileUtils {
 			return null;
 		}
 	}
+	
+	/**
+	 * 生成当日待下载url路径
+	 * 
+	 * @param pathTemplate
+	 * @param pathType
+	 *            01:/allData/6/MOD13Q1/YYYY/XXX/ 02:/allData/404/MOD12Q1
+	 * @param strDate
+	 *            指定处理某天yyyyMMdd的数据
+	 * @author zhuchaobin, 2018-02-07
+	 * @return String newPath
+	 * @throws ParseException
+	 */
+	public static String generateNewUrlPath(String pathTemplate, String pathType, Date scanDate) {
+		try {
+			String newPath = "";
+			if (StringUtils.isBlank(pathTemplate) || StringUtils.isBlank(pathType)) {
+				// 日志,生成当日待下载ftp路径出错：输入参数不能为空！
+				return null;
+			}
+			// 年
+			Calendar cal = Calendar.getInstance();
+			// 若日期参数为空，则取当前系统日期
+			if (null != scanDate) {
+				// 如果指定处理某天的数据
+				cal.setTime(scanDate);
+			}
+			// cal.set(2017, 1, 1);
+			String year = Integer.toString(cal.get(Calendar.YEAR));
+			// 三位日期（1-365）
+			DecimalFormat dfDayOfYear = new DecimalFormat("000");
+			String dayOfYear = dfDayOfYear.format(cal.get(Calendar.DAY_OF_YEAR));
+			// 如果是有数据的日期
+			if(DataConstants.DAYS_OF_JL.contains(dayOfYear)) {
+				if (DataConstants.PATH_TYPE01.equals(pathType)) {
+					// 路径类型：如/allData/6/MOD13Q1/YYYY/XXX/
+					newPath = pathTemplate.replace("$1", year);
+					newPath = newPath.replace("$2", dayOfYear);
+					newPath = DataConstants.NASA_RUL_PRE + newPath + ".csv";
+					return newPath;
+				} else if (DataConstants.PATH_TYPE02.equals(pathType)) {
+					// 路径类型：/allData/404/MOD12Q1
+					// 暂不实施
+				}
+			}
+			return newPath;
+		} catch (Exception e) {
+			e.printStackTrace();
+			LOG.error("生成当日待下载ftp路径发生异常!");
+			return null;
+		}
+	}
 
 	/**
 	 * 解析ftp远程文件路径
@@ -327,13 +379,30 @@ public class FileUtils {
 
 	// 判断文件是否为泰国境内条带数据
 	public static boolean isThairHV(String remoteFileName) {
-		String[] fileAttr = remoteFileName.split("\\.");
+/*		String[] fileAttr = remoteFileName.split("\\.");
 		if (fileAttr.length >= 3) {
 			if (DataConstants.STR_H26V06.equals(fileAttr[2]) || DataConstants.STR_H27V06.equals(fileAttr[2])
 					|| DataConstants.STR_H27V07.equals(fileAttr[2]) || DataConstants.STR_H27V08.equals(fileAttr[2])
 					|| DataConstants.STR_H28V07.equals(fileAttr[2]) || DataConstants.STR_H28V08.equals(fileAttr[2])) {
 				LOG.debug("为泰国境内条带:" + remoteFileName);
 				return true;
+			} else {
+				LOG.debug("非泰国境内条带:" + remoteFileName);
+				return false;
+			}
+		} else {
+			LOG.error("文件名无效：" + remoteFileName);
+			return false;
+		}*/
+		if (StringUtils.isNoneBlank(remoteFileName)) {
+			if ((remoteFileName.contains(DataConstants.STR_H26V06)) || 
+				(remoteFileName.contains(DataConstants.STR_H27V06)) ||
+				(remoteFileName.contains(DataConstants.STR_H27V07)) ||
+				(remoteFileName.contains(DataConstants.STR_H27V08)) ||
+				(remoteFileName.contains(DataConstants.STR_H28V07)) ||
+				(remoteFileName.contains(DataConstants.STR_H28V08))) {
+					LOG.debug("为泰国境内条带:" + remoteFileName);
+					return true;
 			} else {
 				LOG.debug("非泰国境内条带:" + remoteFileName);
 				return false;
