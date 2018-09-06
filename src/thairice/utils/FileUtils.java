@@ -419,7 +419,7 @@ public class FileUtils {
 	 * 个数maxDoloadProcessNums参数化
 	 * > maxDoloadProcessNums 返回true，否则false
 	 */
-	public static boolean getProcess(){
+	public static boolean isDownloadProcessBusy(){
 		boolean flag=false;
 		try{
 		Process p = Runtime.getRuntime().exec( "cmd /c tasklist ");
