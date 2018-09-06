@@ -116,9 +116,9 @@ public class TimeUtil {
             min = diff % nd % nh / nm + day * 24 * 60;// 计算差多少分钟
             sec = diff % nd % nh % nm / ns;// 计算差多少秒
             // 输出结果
-            System.out.println(
+/*            System.out.println(
                     "时间相差：" + day + "天" + (hour - day * 24) + "小时" + (min - day * 24 * 60) + "分钟" + sec + "秒。");
-            System.out.println("hour=" + hour + ",min=" + min);
+            System.out.println("hour=" + hour + ",min=" + min);*/
             if (str.equalsIgnoreCase("d")) {
                 return day;
             } else if (str.equalsIgnoreCase("h")) {

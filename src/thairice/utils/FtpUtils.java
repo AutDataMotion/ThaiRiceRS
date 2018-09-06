@@ -7,6 +7,7 @@
  */
 package thairice.utils;
 
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileInputStream;
@@ -14,8 +15,11 @@ import java.io.FileOutputStream;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.io.OutputStream;
+import java.net.MalformedURLException;
 import java.net.SocketException;
+import java.net.URL;
 import java.nio.file.CopyOption;
 import java.nio.file.Files;
 import java.nio.file.Paths;
@@ -710,7 +714,7 @@ public class FtpUtils {
 					remoteFiles[i].getTimestamp();
 					// System.out.println("第一次检测到文件:"+ ftpPath + remoteFileName);
 					// 判定是否为泰国境内条带
-					if(FileUtils.isThairHV(remoteFileName)) {
+					if (FileUtils.isThairHV(remoteFileName)) {
 						remoteFilePathMap.put(remoteFileName, remoteFiles[i].getSize());
 					} else {
 						LOG.debug("非泰国境内条带:" + remoteFileName);
@@ -737,15 +741,15 @@ public class FtpUtils {
 					for (int i = 0; i < remoteFiles.length; i++) {
 						String remoteFileName = remoteFiles[i].getName();
 						// 判定是否为泰国境内条带
-						if(FileUtils.isThairHV(remoteFileName)) {
-							Long secSize= remoteFiles[i].getSize();
-							Long fstSize  = (Long) remoteFilePathMap.get(remoteFileName);
+						if (FileUtils.isThairHV(remoteFileName)) {
+							Long secSize = remoteFiles[i].getSize();
+							Long fstSize = (Long) remoteFilePathMap.get(remoteFileName);
 							if (fstSize.equals(secSize)) {
 								remoteFilePathList.add(ftpPath + remoteFileName);
 								T6org_data org_data = new T6org_data();
 								// 解析文件属性
 								org_data = FileUtils.parseOrgDataDir(ftpPath + remoteFileName);
-								if(null != org_data) {
+								if (null != org_data) {
 									// 文件大小
 									org_data.setSize_(Float.parseFloat(String.valueOf(secSize)));
 									T6org_data_list.add(org_data);
@@ -771,6 +775,57 @@ public class FtpUtils {
 			e.printStackTrace();
 		}
 		return T6org_data_list;
+	}
+
+	/**
+	 * 扫描远程Url中下文件列表信息
+	 * 
+	 * @param ftpPath
+	 * @param
+	 * @author zhuchaobin
+	 * @return List remoteFilePathList
+	 * @throws InterruptedException
+	 */
+	public static List<T6org_data> detecUrlFilDirList(String remoteCsvPath) {
+		LOG.debug("扫描远程ftp目录下文件列表开始，参数remoteCsvPath=" + remoteCsvPath);
+		List remoteFilePathList = new ArrayList();
+		List<T6org_data> T6org_data_list = new ArrayList<T6org_data>();
+		try {
+			Map remoteFilePathMap = new HashMap<String, Long>();
+			String line = null;
+			String url = remoteCsvPath;
+			BufferedReader in = new BufferedReader(
+					new InputStreamReader(new URL(url).openConnection().getInputStream(), "GB2312"));
+			// GB2312可以根据需要替换成要读取网页的编码
+			while ((line = in.readLine()) != null) {
+				String[] fileInfoArr = line.split(",");
+				if (3 == fileInfoArr.length) {
+					String fileName = fileInfoArr[0];
+					String fileSize = fileInfoArr[2];
+					// 判定是否为泰国境内条带
+					if (FileUtils.isThairHV(fileName)) {
+						T6org_data org_data = new T6org_data();
+						// 解析文件属性
+						org_data = FileUtils.parseOrgDataDir(fileName);
+						if (null != org_data) {
+							// 文件大小
+							org_data.setSize_(Float.parseFloat(String.valueOf(fileSize)));
+							T6org_data_list.add(org_data);
+						}
+					} else {
+						LOG.debug("非泰国境内条带:" + fileName);
+					}
+				} else {
+					// 文件名信息有误
+				}
+			}
+			return T6org_data_list;
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			LOG.error("扫描远程ftp目录下文件列表发生异常:");
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 	/**
@@ -912,12 +967,12 @@ public class FtpUtils {
 					Integer.parseInt(ParamUtils.getParam(ParamUtils.PC_FTP_AUTO_DWLD, ParamUtils.PD_SRCFTP_PT)));
 			ftpInfoEntity.setLocalfilePath(ParamUtils.getParam(ParamUtils.PC_FTP_AUTO_DWLD, ParamUtils.FILE_STRG_ADR));
 			return ftpInfoEntity;
-		} catch(Exception e) {
+		} catch (Exception e) {
 			LOG.error("从参数明细表中获取ftp信息发生异常：" + e);
 			return null;
-		}		
+		}
 	}
-	
+
 	public static void initScanFtp() {
 		try {
 			LOG.debug("自动任务FTP初始化文件扫描开始.");
@@ -930,15 +985,15 @@ public class FtpUtils {
 			String inlzEdDt = ParamUtils.getParam(ParamUtils.PC_FTP_AUTO_DWLD, ParamUtils.INLZ_EDDT);
 			LOG.debug("FTP初始化文件扫描参数:开关=" + inlzSwtc + "扫描开始日期=" + inlzStDt + "扫描结束日期=" + inlzEdDt);
 			// 参数校验
-			if(StringUtils.isBlank(inlzSwtc)) {
+			if (StringUtils.isBlank(inlzSwtc)) {
 				LOG.error("初始化开关为空，自动任务FTP初始化文件扫描失败");
 				return;
 			}
-			if(StringUtils.isBlank(inlzStDt)) {
+			if (StringUtils.isBlank(inlzStDt)) {
 				LOG.error("初始化开始日期为空，自动任务FTP初始化文件扫描失败");
 				return;
 			}
-			if(StringUtils.isBlank(inlzEdDt)) {
+			if (StringUtils.isBlank(inlzEdDt)) {
 				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
 				inlzEdDt = sdf.format(new Date());
 				LOG.error("初始化结束日期为空，自动任务FTP初始化文件扫描结束日期取当天日期：" + inlzEdDt);

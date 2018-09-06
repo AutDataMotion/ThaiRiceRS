@@ -34,7 +34,7 @@ public class T3userService extends BaseService {
 		long count = Db.queryLong(
 				"SELECT COUNT(*)AS c FROM thairice.r4message_send s LEFT JOIN thairice.t3user u ON u.id=s.receive_userid WHERE u.id=? and s.status_='01'",
 				id);
-		System.out.println("count:" + count);
+		//System.out.println("count:" + count);
 		return count;
 	}
 

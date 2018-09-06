@@ -227,7 +227,7 @@ public class JfinalConfig extends JFinalConfig {
 	 * 中运行webAppDir路径可能需要适当调整，可以设置为WebContent的绝对路径
 	 */
 	public static void main(String[] args) {
-		JFinal.start("WebContent", 9000, "/", 10);
+		JFinal.start("WebContent", 8000, "/", 10);
 		// JFinal.start("D:\\DevelopmentTool\\IntelliJIDEA14.1.4" +
 		// "\\IdeaProjects\\JFinalUIBV2\\JFinalUIBV2\\WebContent", 99, "/", 5);
 	}
