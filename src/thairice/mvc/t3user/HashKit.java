@@ -61,8 +61,5 @@ public class HashKit {
 	}
 	
 	
-//	public static void main(String[] args) {
-//		System.out.println(HashKit.md5("123456"+"tianpeng"));
-//	}
 }
 

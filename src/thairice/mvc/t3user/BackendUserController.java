@@ -331,7 +331,7 @@ public class BackendUserController extends BaseController {
         user.set("Prdt_EfDt", getPara("Prdt_EfDt"));
         user.set("PD_ExDat", getPara("PD_ExDat"));
         long day = TimeUtil.dateDiff(TimeUtil.getNow(),getPara("PD_ExDat"), "yyyy-MM-dd", "d");
-        System.out.println(day);
+        //System.out.println(day);
         if(day<0) {
             user.setStatus_("04");
         }else {
