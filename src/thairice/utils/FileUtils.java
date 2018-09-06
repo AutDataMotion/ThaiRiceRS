@@ -8,6 +8,7 @@
 package thairice.utils;
 
 import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -413,6 +414,34 @@ public class FileUtils {
 		}
 	}
 
+	/*
+	 * zhuchaobin, 201809-6, 判断有多少wget下载进程
+	 * 个数maxDoloadProcessNums参数化
+	 * > maxDoloadProcessNums 返回true，否则false
+	 */
+	public static boolean getProcess(){
+		boolean flag=false;
+		try{
+		Process p = Runtime.getRuntime().exec( "cmd /c tasklist ");
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		InputStream os = p.getInputStream();
+		byte b[] = new byte[256];
+		while(os.read(b)> 0)
+		baos.write(b);
+		String s = baos.toString();
+		// System.out.println(s);
+		if(s.indexOf( "wget")>=0){
+		flag=true;
+		}
+		else{
+		System.out.println( "no ");
+		flag=false;
+		}
+		}catch(java.io.IOException ioe){
+		}
+		return flag;
+		}
+	
 	public static void main(String[] args) throws IOException {
 		// String str = "MOD13Q1.A2001033.h00v08.006.2015141152020.hdf";
 		// String[] fileAttr = str.split("\\.");
