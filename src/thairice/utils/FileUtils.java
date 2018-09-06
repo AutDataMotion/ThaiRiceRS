@@ -440,7 +440,7 @@ public class FileUtils {
 		}catch(java.io.IOException ioe){
 		}
 		return flag;
-		}
+	}
 	
 	public static void main(String[] args) throws IOException {
 		// String str = "MOD13Q1.A2001033.h00v08.006.2015141152020.hdf";
