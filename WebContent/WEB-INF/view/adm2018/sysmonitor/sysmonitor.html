@@ -30,7 +30,7 @@
             function (ec) {
             	
             	var cpuTitle = {
-        		        text: 'CPU Monitor',
+        		        text: 'CPU(Core) Monitor',
         		        textStyle: {       // 其余属性默认使用全局文本样式，详见TEXTSTYLE
     	                    fontWeight: 'bolder',
     	                    fontSize: 18,
@@ -44,7 +44,7 @@
         		    
         		    function seriesItem(i, acenterX, aradius)  {
             			return {
-            				name:'CPU-'+i,
+            				name:'CPU Core-'+i,
         	            type:'gauge',
         	            center : [acenterX+'%', '55%'],    // 默认全局居中
         	            radius : aradius+'%',

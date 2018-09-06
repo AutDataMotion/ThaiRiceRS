@@ -81,7 +81,7 @@
 <script>
 //更新最新消息
 var admin='${session.admin}';
- if(admin==null||admin==''){
+ if(admin==null||admin==''||admin=="admin"){
 	setInterval("lx()",30000);	
 } 
 function lx(){

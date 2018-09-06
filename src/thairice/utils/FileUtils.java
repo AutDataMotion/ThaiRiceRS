@@ -8,6 +8,7 @@
 package thairice.utils;
 
 import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -118,6 +119,58 @@ public class FileUtils {
 			} else if (DataConstants.PATH_TYPE02.equals(pathType)) {
 				// 路径类型：/allData/404/MOD12Q1
 				// 暂不实施
+			}
+			return newPath;
+		} catch (Exception e) {
+			e.printStackTrace();
+			LOG.error("生成当日待下载ftp路径发生异常!");
+			return null;
+		}
+	}
+	
+	/**
+	 * 生成当日待下载url路径
+	 * 
+	 * @param pathTemplate
+	 * @param pathType
+	 *            01:/allData/6/MOD13Q1/YYYY/XXX/ 02:/allData/404/MOD12Q1
+	 * @param strDate
+	 *            指定处理某天yyyyMMdd的数据
+	 * @author zhuchaobin, 2018-02-07
+	 * @return String newPath
+	 * @throws ParseException
+	 */
+	public static String generateNewUrlPath(String pathTemplate, String pathType, Date scanDate) {
+		try {
+			String newPath = "";
+			if (StringUtils.isBlank(pathTemplate) || StringUtils.isBlank(pathType)) {
+				// 日志,生成当日待下载ftp路径出错：输入参数不能为空！
+				return null;
+			}
+			// 年
+			Calendar cal = Calendar.getInstance();
+			// 若日期参数为空，则取当前系统日期
+			if (null != scanDate) {
+				// 如果指定处理某天的数据
+				cal.setTime(scanDate);
+			}
+			// cal.set(2017, 1, 1);
+			String year = Integer.toString(cal.get(Calendar.YEAR));
+			// 三位日期（1-365）
+			DecimalFormat dfDayOfYear = new DecimalFormat("000");
+			String dayOfYear = dfDayOfYear.format(cal.get(Calendar.DAY_OF_YEAR));
+			// 如果是有数据的日期
+			if(DataConstants.DAYS_OF_JL.contains(dayOfYear)) {
+				if (DataConstants.PATH_TYPE01.equals(pathType)) {
+					// 路径类型：如/allData/6/MOD13Q1/YYYY/XXX/
+					newPath = pathTemplate.replace("$1", year);
+					newPath = newPath.replace("$2", dayOfYear);
+					newPath = DataConstants.NASA_RUL_PRE + newPath + ".csv";
+					return newPath;
+				} else if (DataConstants.PATH_TYPE02.equals(pathType)) {
+					// 路径类型：/allData/404/MOD12Q1
+					// 暂不实施
+				}
 			}
 			return newPath;
 		} catch (Exception e) {
@@ -327,7 +380,7 @@ public class FileUtils {
 
 	// 判断文件是否为泰国境内条带数据
 	public static boolean isThairHV(String remoteFileName) {
-		String[] fileAttr = remoteFileName.split("\\.");
+/*		String[] fileAttr = remoteFileName.split("\\.");
 		if (fileAttr.length >= 3) {
 			if (DataConstants.STR_H26V06.equals(fileAttr[2]) || DataConstants.STR_H27V06.equals(fileAttr[2])
 					|| DataConstants.STR_H27V07.equals(fileAttr[2]) || DataConstants.STR_H27V08.equals(fileAttr[2])
@@ -341,9 +394,54 @@ public class FileUtils {
 		} else {
 			LOG.error("文件名无效：" + remoteFileName);
 			return false;
+		}*/
+		if (StringUtils.isNoneBlank(remoteFileName)) {
+			if ((remoteFileName.contains(DataConstants.STR_H26V06)) || 
+				(remoteFileName.contains(DataConstants.STR_H27V06)) ||
+				(remoteFileName.contains(DataConstants.STR_H27V07)) ||
+				(remoteFileName.contains(DataConstants.STR_H27V08)) ||
+				(remoteFileName.contains(DataConstants.STR_H28V07)) ||
+				(remoteFileName.contains(DataConstants.STR_H28V08))) {
+					LOG.debug("为泰国境内条带:" + remoteFileName);
+					return true;
+			} else {
+				LOG.debug("非泰国境内条带:" + remoteFileName);
+				return false;
+			}
+		} else {
+			LOG.error("文件名无效：" + remoteFileName);
+			return false;
 		}
 	}
 
+	/*
+	 * zhuchaobin, 201809-6, 判断有多少wget下载进程
+	 * 个数maxDoloadProcessNums参数化
+	 * > maxDoloadProcessNums 返回true，否则false
+	 */
+	public static boolean isDownloadProcessBusy(){
+		boolean flag=false;
+		try{
+		Process p = Runtime.getRuntime().exec( "cmd /c tasklist ");
+		ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		InputStream os = p.getInputStream();
+		byte b[] = new byte[256];
+		while(os.read(b)> 0)
+		baos.write(b);
+		String s = baos.toString();
+		// System.out.println(s);
+		if(s.indexOf( "wget")>=0){
+		flag=true;
+		}
+		else{
+		System.out.println( "no ");
+		flag=false;
+		}
+		}catch(java.io.IOException ioe){
+		}
+		return flag;
+	}
+	
 	public static void main(String[] args) throws IOException {
 		// String str = "MOD13Q1.A2001033.h00v08.006.2015141152020.hdf";
 		// String[] fileAttr = str.split("\\.");
