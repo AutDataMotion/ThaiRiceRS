@@ -37,6 +37,7 @@ import thairice.constant.PropertiesInitMy;
 
 import zeroc.util.IceClientUtil;
 import thairice.interceptor.AdminLoginInterceptor;
+import thairice.utils.FtpUtils;
 
 
 /**
@@ -196,8 +197,9 @@ public class JfinalConfig extends JFinalConfig {
 		//
 		// log.info("afterJFinalStart 数据清理");
 		// DataClear.start();
-		// FtpUtils.initScanFtp();
-
+		 // 初始化历史待下载文件信息
+		 FtpUtils.initScanHttp();
+		 FtpUtils.autoWgetdownload();
 	}
 
 	/**
@@ -227,7 +229,7 @@ public class JfinalConfig extends JFinalConfig {
 	 * 中运行webAppDir路径可能需要适当调整，可以设置为WebContent的绝对路径
 	 */
 	public static void main(String[] args) {
-		JFinal.start("WebContent", 8000, "/", 10);
+		JFinal.start("WebContent", 9000, "/", 10);
 		// JFinal.start("D:\\DevelopmentTool\\IntelliJIDEA14.1.4" +
 		// "\\IdeaProjects\\JFinalUIBV2\\JFinalUIBV2\\WebContent", 99, "/", 5);
 	}
