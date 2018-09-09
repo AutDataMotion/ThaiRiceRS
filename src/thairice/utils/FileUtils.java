@@ -41,6 +41,8 @@ import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPReply;
 import org.apache.log4j.Logger;
 
+import com.jfinal.kit.PropKit;
+
 import csuduc.platform.util.networkCom.FTPClientConfigure;
 import csuduc.platform.util.networkCom.FTPClientFactory;
 import csuduc.platform.util.networkCom.FTPClientPool;
@@ -420,25 +422,37 @@ public class FileUtils {
 	 * > maxDoloadProcessNums 返回true，否则false
 	 */
 	public static boolean isDownloadProcessBusy(){
+	    	//从参数表中读取参数值
+	    	String init = PropKit.use("init_rice.properties").get("");
+		int init1=PropKit.use("init_rice.properties").getInt("");
+		//*****************************************************************
 		boolean flag=false;
 		try{
-		Process p = Runtime.getRuntime().exec( "cmd /c tasklist ");
-		ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		InputStream os = p.getInputStream();
-		byte b[] = new byte[256];
-		while(os.read(b)> 0)
-		baos.write(b);
-		String s = baos.toString();
-		// System.out.println(s);
-		if(s.indexOf( "wget")>=0){
-		flag=true;
-		}
-		else{
-		System.out.println( "no ");
-		flag=false;
-		}
-		}catch(java.io.IOException ioe){
-		}
+		    Process p = Runtime.getRuntime().exec( "cmd /c tasklist ");
+		    ByteArrayOutputStream baos = new ByteArrayOutputStream();
+		    InputStream os = p.getInputStream();
+		    byte b[] = new byte[256];
+		    	while(os.read(b)> 0)
+		    	    baos.write(b);
+		    	    String s = baos.toString();
+        		// System.out.println(s);
+        		//统计“wget”在字符串s中是否出现10次及10次以上
+		    	    int count=0;
+		    	    for (int i = 0; i <s.length(); i++) {
+            			if(s.indexOf("wget")==i){
+            				s = s.substring(i+1,s.length());
+            				count++;
+            			}
+		    	    }
+        		System.out.println("共出现了"+count + "次");
+            		if(count>=10){
+            		    flag=true;
+            		}else{
+                    	    System.out.println( "no ");
+                    	    flag=false;
+            		}
+		    }catch(java.io.IOException ioe){	
+		    	}
 		return flag;
 	}
 	
