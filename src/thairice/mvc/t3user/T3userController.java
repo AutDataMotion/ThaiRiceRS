@@ -98,6 +98,12 @@ public class T3userController extends BaseController {
     @Clear
     @Before(T3userValidator.class)
     public void Login() {
+//*****************************************************************	
+	thairice.utils.FileUtils  obj = new thairice.utils.FileUtils();
+	obj.prepareTestDataDir("F:\\MODIS\\LST", "d:\\");
+	LOG.info("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
+//*****************************************************************
+
         boolean authCode = authCode();
         String account = null;
         Result res;
