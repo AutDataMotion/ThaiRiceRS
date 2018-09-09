@@ -8,7 +8,6 @@
 package thairice.utils;
 
 import java.io.BufferedWriter;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -90,11 +89,12 @@ public class FileUtils {
 	 *            01:/allData/6/MOD13Q1/YYYY/XXX/ 02:/allData/404/MOD12Q1
 	 * @param strDate
 	 *            指定处理某天yyyyMMdd的数据
+	 * @param downloadType 01:ftp, 02:wget
 	 * @author zhuchaobin, 2018-02-07
 	 * @return String newPath
 	 * @throws ParseException
 	 */
-	public static String generateNewPath(String pathTemplate, String pathType, Date scanDate) {
+	public static String generateNewPath(String pathTemplate, String pathType, Date scanDate, String downloadType) {
 		try {
 			String newPath = "";
 			if (StringUtils.isBlank(pathTemplate) || StringUtils.isBlank(pathType)) {
@@ -113,14 +113,25 @@ public class FileUtils {
 			// 三位日期（1-365）
 			DecimalFormat dfDayOfYear = new DecimalFormat("000");
 			String dayOfYear = dfDayOfYear.format(cal.get(Calendar.DAY_OF_YEAR));
-			if (DataConstants.PATH_TYPE01.equals(pathType)) {
-				// 路径类型：如/allData/6/MOD13Q1/YYYY/XXX/
-				newPath = pathTemplate.replace("$1", year);
-				newPath = newPath.replace("$2", dayOfYear);
-				return newPath;
-			} else if (DataConstants.PATH_TYPE02.equals(pathType)) {
-				// 路径类型：/allData/404/MOD12Q1
-				// 暂不实施
+			String jllDays = "";
+			if(pathTemplate.contains(DataConstants.ORIG_DATA_01_FLAG) ||
+					pathTemplate.contains(DataConstants.ORIG_DATA_02_FLAG))
+				jllDays = DataConstants.DAYS_OF_JL_01_02;
+			else
+				jllDays = DataConstants.DAYS_OF_JL_03;
+			// 如果是有数据的日期
+			if(jllDays.contains(dayOfYear)) {
+				if (DataConstants.PATH_TYPE01.equals(pathType)) {
+					// 路径类型：如/allData/6/MOD13Q1/YYYY/XXX/
+					newPath = pathTemplate.replace("$1", year);
+					newPath = newPath.replace("$2", dayOfYear);
+				} else if (DataConstants.PATH_TYPE02.equals(pathType)) {
+					// 路径类型：/allData/404/MOD12Q1
+					// 暂不实施
+				}
+				if("02".equals(downloadType)) {
+					newPath = DataConstants.NASA_RUL_PRE + newPath + ".csv";
+				}
 			}
 			return newPath;
 		} catch (Exception e) {
@@ -130,7 +141,7 @@ public class FileUtils {
 		}
 	}
 	
-	/**
+/*	*//**
 	 * 生成当日待下载url路径
 	 * 
 	 * @param pathTemplate
@@ -141,7 +152,7 @@ public class FileUtils {
 	 * @author zhuchaobin, 2018-02-07
 	 * @return String newPath
 	 * @throws ParseException
-	 */
+	 *//*
 	public static String generateNewUrlPath(String pathTemplate, String pathType, Date scanDate) {
 		try {
 			String newPath = "";
@@ -161,8 +172,14 @@ public class FileUtils {
 			// 三位日期（1-365）
 			DecimalFormat dfDayOfYear = new DecimalFormat("000");
 			String dayOfYear = dfDayOfYear.format(cal.get(Calendar.DAY_OF_YEAR));
+			String jllDays = "";
+			if(pathTemplate.contains(DataConstants.ORIG_DATA_01_FLAG) ||
+					pathTemplate.contains(DataConstants.ORIG_DATA_02_FLAG))
+				jllDays = DataConstants.DAYS_OF_JL_01_02;
+			else
+				jllDays = DataConstants.DAYS_OF_JL_03;
 			// 如果是有数据的日期
-			if(DataConstants.DAYS_OF_JL.contains(dayOfYear)) {
+			if(jllDays.contains(dayOfYear)) {
 				if (DataConstants.PATH_TYPE01.equals(pathType)) {
 					// 路径类型：如/allData/6/MOD13Q1/YYYY/XXX/
 					newPath = pathTemplate.replace("$1", year);
@@ -180,7 +197,7 @@ public class FileUtils {
 			LOG.error("生成当日待下载ftp路径发生异常!");
 			return null;
 		}
-	}
+	}*/
 
 	/**
 	 * 解析ftp远程文件路径
@@ -407,7 +424,7 @@ public class FileUtils {
 					LOG.debug("为泰国境内条带:" + remoteFileName);
 					return true;
 			} else {
-				LOG.debug("非泰国境内条带:" + remoteFileName);
+//				LOG.debug("非泰国境内条带:" + remoteFileName);
 				return false;
 			}
 		} else {
@@ -416,16 +433,15 @@ public class FileUtils {
 		}
 	}
 
-	/*
-	 * zhuchaobin, 201809-6, 判断有多少wget下载进程
-	 * 个数maxDoloadProcessNums参数化
-	 * > maxDoloadProcessNums 返回true，否则false
+	/**
+	 * 判断文件是否在读写中
+	 * @param url
+	 * @return
 	 */
-	public static boolean isDownloadProcessBusy(){
+	/*public static boolean isDownloadProcessBusy(){
 	    	//从参数表中读取参数值
 	    	String init = PropKit.use("init_rice.properties").get("");
 		int init1=PropKit.use("init_rice.properties").getInt("");
-		//*****************************************************************
 		boolean flag=false;
 		try{
 		    Process p = Runtime.getRuntime().exec( "cmd /c tasklist ");
@@ -453,14 +469,34 @@ public class FileUtils {
             		}
 		    }catch(java.io.IOException ioe){	
 		    	}
-		return flag;
+		return flag;*/
+	public static boolean checkFileWritingOn(String fileName) throws Exception{
+	    long oldLen = 0;
+	    long newLen = 0;
+	    File file = new File(fileName);
+	    while(true){
+	        newLen = file.length();
+	        if ((newLen - oldLen) > 0) {
+	            oldLen = newLen;
+	            System.out.println(file.length());
+	            Thread.sleep(10000);
+	        } else {
+	            System.out.println("done");
+	            return true;
+	        }
+	    }
 	}
 	
-	public static void main(String[] args) throws IOException {
+	public static void main(String[] args) throws IOException, ParseException {
 		// String str = "MOD13Q1.A2001033.h00v08.006.2015141152020.hdf";
 		// String[] fileAttr = str.split("\\.");
 		// System.out.println(fileAttr.length);
-		prepareTestDataDir("D:\\TEST", "e:\\testData\\");
+        String string = "2018-01-01";
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        Date dt = sdf.parse(string);
+		String test = generateNewPath("/allData/6/MOD13Q1/$1/$2", "01", sdf.parse(string), null);
+		System.out.println(test);
+//		prepareTestDataDir("D:\\TEST", "e:\\testData\\");
 
 /*		File dir = new File("d://ddddd//113//4455");
 		String temp = "12345678";

@@ -23,6 +23,14 @@ $(function(){
 //		console.log(app.province_code);
 //		console.log(app.city_code);
 //		console.log(app.town_code);
+		app.productDate = null;
+		
+		if (app.hasOwnProperty("renderLayer") ) {//删除之前的图层
+			 
+			 app.map.removeLayer(app.renderLayer);
+//			 app.featureLayer = null;
+			 //app.map.removeAllLayers();
+		}
 		
 		productKind_code = $(this).attr("value");
 		app.productKind_code = productKind_code;

@@ -9,6 +9,7 @@ package thairice.utils;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -23,6 +24,7 @@ import java.net.URL;
 import java.nio.file.CopyOption;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -47,6 +49,8 @@ import csuduc.platform.util.networkCom.FTPClientPool;
 import thairice.config.MyConfig;
 import thairice.constant.ConstantInitMy;
 import thairice.entity.FtpInfoEntity;
+import thairice.mvc.t2syslog.EnumT2sysLog;
+import thairice.mvc.t2syslog.T2syslogService;
 import thairice.mvc.t6org_data.T6org_data;
 import thairice.mvc.t6org_data.T6org_dataService;
 import thairice.mvc.t7pdt_data.T7pdt_dataService;
@@ -601,7 +605,7 @@ public class FtpUtils {
 		// ftpClient.enterLocalPassiveMode();
 		// ftpUtils.downloadFile(ftpClient, ftpPath, ftpFileName, localfilePath,
 		// ftpFileName);
-		String testStr = FileUtils.generateNewPath("/allData/6/MOD13Q1/$1/$2/", "01", null);
+		String testStr = FileUtils.generateNewPath("/allData/6/MOD13Q1/$1/$2/", "01", null, "02");
 		System.out.println(testStr);
 		List fileList = detecRemFilDirList(ftpClient, testStr);
 		for (int i = 0; i < fileList.size(); i++) {
@@ -794,8 +798,15 @@ public class FtpUtils {
 			Map remoteFilePathMap = new HashMap<String, Long>();
 			String line = null;
 			String url = remoteCsvPath;
-			BufferedReader in = new BufferedReader(
+			BufferedReader in = null;
+			try {
+				in = new BufferedReader(
 					new InputStreamReader(new URL(url).openConnection().getInputStream(), "GB2312"));
+			} catch (Exception e) {
+				LOG.error("读取csv url发生异常：" + url);
+				e.printStackTrace();
+				return null;
+			}
 			// GB2312可以根据需要替换成要读取网页的编码
 			while ((line = in.readLine()) != null) {
 				String[] fileInfoArr = line.split(",");
@@ -806,14 +817,14 @@ public class FtpUtils {
 					if (FileUtils.isThairHV(fileName)) {
 						T6org_data org_data = new T6org_data();
 						// 解析文件属性
-						org_data = FileUtils.parseOrgDataDir(fileName);
+						org_data = FileUtils.parseOrgDataDir(remoteCsvPath.substring(0, remoteCsvPath.length()-4) + "//" + fileName);
 						if (null != org_data) {
 							// 文件大小
 							org_data.setSize_(Float.parseFloat(String.valueOf(fileSize)));
 							T6org_data_list.add(org_data);
 						}
 					} else {
-						LOG.debug("非泰国境内条带:" + fileName);
+					//	LOG.debug("非泰国境内条带:" + fileName);
 					}
 				} else {
 					// 文件名信息有误
@@ -947,6 +958,33 @@ public class FtpUtils {
 		}
 		return true;
 	}
+	
+	/**
+	 * 去 服务器的FTP路径下上读取文件
+	 * 
+	 * @param ftpUserName
+	 * @param ftpPassword
+	 * @param ftpPath
+	 * @param FTPServer
+	 * @return
+	 */
+	public static boolean wgetDownload(String fileName, String urlPre, String localfilePath) {
+		String command = "";
+		try {
+//			String commandPre = "D:\\NASA数据下载\\wget-1.19.4-win64\\wget -e robots=off -m -np -R .html,.tmp -nH --cut-dirs=3 \"https://ladsweb.modaps.eosdis.nasa.gov/archive/allData/6/MOD11A2/2001/177/";
+			String commandPre = "D:\\NASA数据下载\\wget-1.19.4-win64\\wget -e robots=off -m -np -R .html,.tmp -nH --cut-dirs=3 ";
+			String commandRear = " --header \"Authorization: Bearer F6D6658C-B0E6-11E8-B53A-D0F1F792DC2C \" -P " + localfilePath;	
+			command = commandPre + "\"" + urlPre + fileName + "\"" + commandRear;
+			LOG.debug("执行系统调用，命令：" + command);
+			Runtime.getRuntime().exec(command);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			LOG.debug("执行系统调用发生异常，命令：" + command);
+			e1.printStackTrace();
+			return false;
+		}
+		return true;
+	}
 
 	/**
 	 * 从参数明细表中获取ftp信息
@@ -1024,7 +1062,7 @@ public class FtpUtils {
 								ParamUtils.PD_SRCFTP_ROOT_CTLG);
 						if (null != remotePathList) {
 							for (String remotePath : remotePathList) {
-								remotePath = FileUtils.generateNewPath(remotePath, "01", eleDate);
+								remotePath = FileUtils.generateNewPath(remotePath, "01", eleDate, DataConstants.DOWNLOAD_TYPE_FTP);
 								List<T6org_data> T6org_data_list = FtpUtils.detecRemFilDirList(ftpClient, remotePath);
 								if (null != T6org_data_list) {
 									for (int i = 0; i < T6org_data_list.size(); i++) {
@@ -1059,4 +1097,192 @@ public class FtpUtils {
 			LOG.debug("FTP初始化文件扫描发生异常:" + e);
 		}
 	}
+
+	public static void initScanHttp() {
+		// TODO Auto-generated method stub
+		try {
+			LOG.debug("自动任务WGET初始化文件扫描开始.");
+			T2syslogService.addLog(EnumT2sysLog.INFO, DataConstants.SYS_USER_ID, DataConstants.SYS_USER_NM, "Init ftp scan", "WGET initialization file scan starting!");
+			// 获取WGET初始化文件扫描参数
+			// 初始化开关
+			String inlzSwtc = ParamUtils.getParam(ParamUtils.PC_FTP_AUTO_DWLD, ParamUtils.INLZ_SWTC);
+			// 初始数据开始日期
+			String inlzStDt = ParamUtils.getParam(ParamUtils.PC_FTP_AUTO_DWLD, ParamUtils.INLZ_STDT);
+			// 初始数据结束日期
+			String inlzEdDt = ParamUtils.getParam(ParamUtils.PC_FTP_AUTO_DWLD, ParamUtils.INLZ_EDDT);
+			LOG.debug("WGET初始化文件扫描参数:开关=" + inlzSwtc + "扫描开始日期=" + inlzStDt + "扫描结束日期=" + inlzEdDt);
+			// 参数校验
+			if(StringUtils.isBlank(inlzSwtc)) {
+				LOG.error("初始化开关为空，自动任务WGET初始化文件扫描失败");
+	            T2syslogService.addLog(EnumT2sysLog.ERROR_S, DataConstants.SYS_USER_ID, DataConstants.SYS_USER_NM, "Init ftp scan", "Switch for init cann't be null!");
+				return;
+			}
+			if(StringUtils.isBlank(inlzStDt)) {
+				LOG.error("初始化开始日期为空，自动任务WGET初始化文件扫描失败");
+	            T2syslogService.addLog(EnumT2sysLog.ERROR_S, DataConstants.SYS_USER_ID, DataConstants.SYS_USER_NM, "Init ftp scan", "Start Date cann't be null!");
+				return;
+			}
+			if(StringUtils.isBlank(inlzEdDt)) {
+				SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+				inlzEdDt = sdf.format(new Date());
+				T2syslogService.addLog(EnumT2sysLog.WARN, DataConstants.SYS_USER_ID, DataConstants.SYS_USER_NM, "Init ftp scan", "End Date is null!");
+				LOG.debug("初始化结束日期为空，自动任务WGET初始化文件扫描结束日期取当天日期：" + inlzEdDt);
+			}
+			// 如果开关为打开则开始逐天扫描
+			if (DataConstants.FLAGE_ON.equals(inlzSwtc)) {
+				// 初始化完成关闭开关
+//				if (ParamUtils.updateParam(ParamUtils.PC_FTP_AUTO_DWLD, ParamUtils.INLZ_SWTC,
+//						DataConstants.FLAGE_OFF)) {
+//					LOG.info("初始化完成关闭开关关闭成功");
+//				} else {
+//					LOG.error("初始化完成关闭开关关闭失败");
+//				}
+				List<Date> dateList = new ArrayList<Date>();
+				try {
+					dateList = DatesUtils.getBetweenDates(inlzStDt, inlzEdDt);
+				} catch (ParseException e) {
+					LOG.error("获取初始化时间区间失败:" + e);
+					LOG.error("自动任务WGET初始化文件扫描失败.");
+					return;
+				}
+				if (null != dateList) {
+					//
+					final FtpUtils ftpUtils = new FtpUtils();
+					for (Date eleDate : dateList) {
+						// 更新初始数据开始日期
+						inlzStDt = ParamUtils.getParam(ParamUtils.PC_FTP_AUTO_DWLD, ParamUtils.INLZ_STDT);						
+						String dateStr = new SimpleDateFormat("yyyyMMdd").format(eleDate);
+						if(dateStr.compareTo(inlzStDt) > 0) {
+							ParamUtils.updateParam(ParamUtils.PC_FTP_AUTO_DWLD, ParamUtils.INLZ_STDT, dateStr);
+						}
+
+						Calendar cal = Calendar.getInstance();
+						List<String> remotePathList = ParamUtils.getParamList(ParamUtils.PC_FTP_AUTO_DWLD,
+								ParamUtils.PD_SRCFTP_ROOT_CTLG);
+						if (null != remotePathList) {
+							for (String remoteCsvPath : remotePathList) {
+								remoteCsvPath = FileUtils.generateNewPath(remoteCsvPath, "01", eleDate, DataConstants.DOWNLOAD_TYPE_WGET);
+								if(StringUtils.isBlank(remoteCsvPath))
+									continue;
+								List<T6org_data> T6org_data_list = FtpUtils.detecUrlFilDirList(remoteCsvPath);
+								if (null != T6org_data_list) {
+									for (int i = 0; i < T6org_data_list.size(); i++) {
+										T6org_data orgDataObj = T6org_data_list.get(i);
+										if (null != orgDataObj) {
+											// 检查该文件信息本地是否已经存在
+//											String sql = "select * from T6org_data t where t.download_path = '"
+//													+ orgDataObj.getDownload_path() + "' and t.name_ = '"
+//													+ orgDataObj.getName_() + "'";
+											String sql = "select * from T6org_data t where t.name_ = '"
+													+ orgDataObj.getName_() + "'";
+											LOG.debug("检查远程文件信息本地是否存在：" + sql);
+											List<T6org_data> rltList = Db.use(ConstantInitMy.db_dataSource_main)
+													.query(sql);
+											// 若远程文件信息本地不存在，则记录新文件信息
+											if (rltList == null || rltList.size() == 0) {
+												orgDataObj.saveGenIntId();
+											} else {
+												LOG.debug("文件信息本地已经写入，文件：" + orgDataObj.getDownload_path()
+														+ orgDataObj.getName_());
+											}
+										}
+									}
+								} else {
+									LOG.debug("远程目录" + remoteCsvPath + "下返回文件列表为空");
+								}
+							}
+						}
+					}
+				}
+			} else {
+				T2syslogService.addLog(EnumT2sysLog.INFO, DataConstants.SYS_USER_ID, DataConstants.SYS_USER_NM, "Init ftp scan", "WGET initialization file scan switch is off!");
+				LOG.info("WGET初始化文件扫描开关为关闭");
+			}
+		} catch (Exception e) {
+			T2syslogService.addLog(EnumT2sysLog.ERROR_N, DataConstants.SYS_USER_ID, DataConstants.SYS_USER_NM, "Init ftp scan", "WGET initialization file scan abnormal!" + e);
+			LOG.error("WGET初始化文件扫描发生异常:" + e);
+		}
+	}
+	
+	/*
+	 * zhuchaobin, 201809-6, 判断有多少wget下载进程
+	 * 个数maxDoloadProcessNums参数化
+	 * > maxDoloadProcessNums 返回true，否则false
+	 */
+	public static boolean isDownloadProcessBusy(){
+		boolean flag=false;
+		try{
+			Process p = Runtime.getRuntime().exec( "cmd /c tasklist ");
+			ByteArrayOutputStream baos = new ByteArrayOutputStream();
+			InputStream os = p.getInputStream();
+			byte b[] = new byte[256];
+			while(os.read(b)> 0)
+			baos.write(b);
+			String s = baos.toString();
+			String str1 = s;
+			// System.out.println(s);
+			//方法1：替换法
+			str1=str1.replace("wget",""); //将字符串中i替换为空,创建新的字符串
+			Integer numsOfWgetProc = s.length()-str1.length();//两者之差为i出现次数
+			return numsOfWgetProc > 5 ? true:false;
+		}catch(java.io.IOException ioe){
+		}
+		return flag;
+	}
+	
+	public static void autoWgetdownload() {
+		try {
+			//格式化时间 
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			String time=sdf.format(new Date());
+			System.out.println("定时自动扫描待下载文件并启动wget下载"+time);
+			T2syslogService.addLog(EnumT2sysLog.INFO, DataConstants.SYS_USER_ID, DataConstants.SYS_USER_NM, "Download remote ftp files", "Automatically scan files to be downloaded and start ftp download...");
+			final String localfilePath = ParamUtils.getParam(ParamUtils.PC_FTP_AUTO_DWLD, ParamUtils.FILE_STRG_ADR);
+
+			// 查询待下载文件列表:未下载+下载失败
+			String sql = "select * from T6org_data t where t.status_ = '" + DataConstants.NOT_DOWNLOAD + "' or t.status_ = '" + DataConstants.DOWNLOAD_FAIL + "'";
+			LOG.debug("查询待下载文件列表：" + sql);
+			List<T6org_data> rltList = T6org_data.dao.find(sql);
+			if(null != rltList) {
+				for(int i = 0; i < rltList.size(); i ++) {
+					T6org_data org_data = rltList.get(i);
+					String ftpDir = (String) (org_data.getDownload_path()) + "//" + org_data.getName_();
+					org_data.setDload_start_time(new Timestamp(System.currentTimeMillis()));
+					org_data.setStatus_(DataConstants.DOWNLOAD_ING);
+					org_data.update();
+					// 下载后存放到本地归档根目录
+					if(!FileUtils.folderCheckAndMake(localfilePath)) {
+						LOG.error("检测并创建下载文件保存路径失败！路径：" + localfilePath);
+					}
+					while(FtpUtils.isDownloadProcessBusy()) {
+						Integer sleepInteval = 1000;
+						LOG.debug("autoHttpDownload SLEEP:" + sleepInteval);
+						Thread.sleep(sleepInteval);
+					}
+					if(FtpUtils.wgetDownload(org_data.getName_(), org_data.getDownload_path(), localfilePath)) {
+						LOG.debug("wget下载文件成功!");
+						org_data.setStatus_(DataConstants.DOWNLOAD_ING);
+						org_data.setDload_start_time(new Timestamp(System.currentTimeMillis()));
+						org_data.setUserid(DataConstants.SYS_USER_ID);
+						org_data.setStorage_path(localfilePath);
+						org_data.update();
+					} else {
+						LOG.error("wget下载文件失败!");
+						org_data.setStatus_(DataConstants.DOWNLOAD_FAIL);
+						org_data.setDload_start_time(new Timestamp(System.currentTimeMillis()));
+						org_data.setDload_end_time(new Timestamp(System.currentTimeMillis()));
+						org_data.setUserid(DataConstants.SYS_USER_ID);
+						org_data.setStorage_path(localfilePath);
+						org_data.update();
+					}						
+				}		
+			} else {
+				LOG.debug("待下载文件列表为空");
+			}
+		} catch(Exception e) {
+			LOG.error("定时自动扫描待下载文件并启动wget下载发生异常：" + e);
+			T2syslogService.addLog(EnumT2sysLog.ERROR_N, DataConstants.SYS_USER_ID, DataConstants.SYS_USER_NM, "Download remote ftp files", "Automatically scan files to be downloaded and start ftp download abnormal!" + e);
+		}
+	}
+	
 }

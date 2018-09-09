@@ -129,7 +129,12 @@ public class DatesUtils {
 			Date dateEnd = sdf.parse(end);
 			tempEnd.setTime(dateEnd);
 			while (tempStart.before(tempEnd) || tempStart.equals(tempEnd)) {
-				result.add(tempStart.getTime());
+				if(DataConstants.DAYS_OF_JL_03.contains(getJLFromDay(tempStart))) {
+					LOG.debug("添加有数据的日期：" + getJLFromDay(tempStart));
+					result.add(tempStart.getTime());
+				} else {
+			//		LOG.debug("跳过没有数据的日期：" + tempStart);
+				}
 				tempStart.add(Calendar.DAY_OF_YEAR, 1);
 			}
 			return result;
@@ -207,6 +212,61 @@ public class DatesUtils {
 	
 	/**
 	 * 
+	 * @Description 根据年月日计算累计天
+	 * @param day yyyymmdd格式
+	 * @param 
+	 * @return
+	 * @author zhuchaobin
+	 * @throws 
+	 * @date 2018-03-03
+	 */
+	public static String getJLFromDay(String day){
+		String jllDay = "";
+        // 时间表示格式可以改变，yyyyMMdd需要写例如20160523这种形式的时间
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+        Date date;
+		try {
+			date = sdf.parse(day);
+	        Calendar calStar = Calendar.getInstance();
+	        calStar.setTime(date);
+			// 三位日期（1-365）
+	        jllDay = String.format("%06d", calStar.get(Calendar.DAY_OF_YEAR));
+		} catch (ParseException e) {
+			// TODO Auto-generated catch block
+			LOG.error("根据年月日计算累计天发生异常：");
+			e.printStackTrace();
+		}
+
+		return jllDay;
+	}
+	
+	/**
+	 * 
+	 * @Description 根据年月日计算累计天:重载
+	 * @param day Calendar格式
+	 * @param 
+	 * @return
+	 * @author zhuchaobin
+	 * @throws 
+	 * @date 2018-03-03
+	 */
+	public static String getJLFromDay(Calendar day){
+		String jllDay = "";
+        // 时间表示格式可以改变，yyyyMMdd需要写例如20160523这种形式的时间
+		try {
+			// 三位日期（1-365）
+			jllDay = String.format("%03d", day.get(Calendar.DAY_OF_YEAR));
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			LOG.error("根据年月日计算累计天发生异常：");
+			e.printStackTrace();
+		}
+
+		return jllDay;
+	}
+	
+	/**
+	 * 
 	 * @Description 根据年份，累积天计算当前自然日期(废弃不用)
 	 * @param 
 	 * @param 
@@ -229,7 +289,7 @@ public class DatesUtils {
 		// String str = "MOD13Q1.A2001033.h00v08.006.2015141152020.hdf";
 		// String[] fileAttr = str.split("\\.");
 		// System.out.println(fileAttr.length);
-		Calendar cal = Calendar.getInstance();
+/*		Calendar cal = Calendar.getInstance();
 		cal.set(Calendar.YEAR, 2001);
 		cal.set(Calendar.DAY_OF_YEAR, 344);
 		// 若日期参数为空，则取当前系统日期
@@ -246,8 +306,10 @@ public class DatesUtils {
 //		SimpleDateFormat sdf= new SimpleDateFormat("yyyy-MM-dd");
 
 		Timestamp ts = Timestamp.valueOf(dateStr);
-		System.out.println(ts);
-
+		System.out.println(ts);*/
+		
+		String test = String.format("%06d",12);//
+		System.out.println(test);
 		// cal.set(2017, 1, 1);
 
 	}

@@ -65,6 +65,12 @@ public class DataConstants {
 		ORG_DATA_TYPE.put("05","LANDSAT");
 	}
 	
+	// 文件路径标志
+	public static final String ORIG_DATA_02_FLAG = "MOD13Q1"; //NDVI_02(长势和估产）
+	public static final String ORIG_DATA_01_FLAG = "MOD13A2"; //NDVI_1（干旱）
+	public static final String ORIG_DATA_03_FLAG = "MOD11A2"; //LST（干旱）
+	public static final String ORIG_DATA_04_FLAG = "MOD12Q1"; //(长势和估产）
+	
 	// 产品类型
 	public static final HashMap<String, String> PDT_DATA_TYPE = new HashMap<String, String>();
 	static {
@@ -75,8 +81,15 @@ public class DataConstants {
 	}
 	// 一年中有数据的加利洛日
 //	String[] DAY_OF_JL = {"001","009","017","025","033","041","049","057","065","073","081","089","097","105","113","121","129","137","145","153","161","169","177","185","193","201","209","217","225","233","241","249","257","265","273","281","289","297","305","313","321","329","337","345","353","361"};
-	public static final String DAYS_OF_JL = "001,009,017,025,033,041,049,057,065,073,081,089,097,105,113,121,129,137,145,153,161,169,177,185,193,201,209,217,225,233,241,249,257,265,273,281,289,297,305,313,321,329,337,345,353,361";
+	// 03:MOD11A2
+	public static final String DAYS_OF_JL_03 = "001,009,017,025,033,041,049,057,065,073,081,089,097,105,113,121,129,137,145,153,161,169,177,185,193,201,209,217,225,233,241,249,257,265,273,281,289,297,305,313,321,329,337,345,353,361";
+	// 02:MOD13Q1 (长势和估产）和 01:MOD13A2（干旱）
+	public static final String DAYS_OF_JL_01_02 = "001,017,033,049,065,081,097,113,129,145,161,177,193,209,225,241,257,273,289,305,321,337,353";
 	// NASA网址前缀
 	public static final String NASA_RUL_PRE = "https://ladsweb.modaps.eosdis.nasa.gov/archive";
+	
+	// 下载方式，01：ftp  02：wget
+	public static final String DOWNLOAD_TYPE_FTP = "01";
+	public static final String DOWNLOAD_TYPE_WGET = "02";
 	
 }
