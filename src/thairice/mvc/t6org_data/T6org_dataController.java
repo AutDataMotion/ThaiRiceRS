@@ -4,13 +4,12 @@ import com.platform.constant.ConstantRender;
 import com.platform.mvc.base.BaseController;
 import com.platform.mvc.base.BaseModel;
 
-<<<<<<< HEAD
-=======
+
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 
->>>>>>> f43a8d0eed4dbd8d02e287ba81dcddac01f51fda
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
@@ -21,10 +20,9 @@ import thairice.constant.ConstantInitMy;
 import thairice.entity.ResultEntity;
 import thairice.mvc.t7pdt_data.T7pdt_data;
 import thairice.utils.DataConstants;
-<<<<<<< HEAD
-=======
+
 import thairice.utils.FileUtils;
->>>>>>> f43a8d0eed4dbd8d02e287ba81dcddac01f51fda
+
 
 
 /**
