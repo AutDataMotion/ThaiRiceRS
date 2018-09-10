@@ -4,6 +4,10 @@ import com.platform.constant.ConstantRender;
 import com.platform.mvc.base.BaseController;
 import com.platform.mvc.base.BaseModel;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+
 import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
 
@@ -14,6 +18,7 @@ import thairice.constant.ConstantInitMy;
 import thairice.entity.ResultEntity;
 import thairice.mvc.t7pdt_data.T7pdt_data;
 import thairice.utils.DataConstants;
+import thairice.utils.FileUtils;
 
 
 /**
@@ -194,4 +199,12 @@ public class T6org_dataController extends BaseController {
 		setAttr(ConstantRender.PATH_VIEW_NAME, pthv);
 	}
 	
+	public void testOrg() throws ParseException {
+		 String string = "2018-01-01";
+	        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+	        Date dt = sdf.parse(string);
+			String test = FileUtils.generateNewPath("/allData/6/MOD13Q1/$1/$2", "01", sdf.parse(string), null);
+			System.out.println(test);
+			FileUtils.prepareTestDataDir("E:\\testData", "E:\\thailand_data_org\\");
+	}
 }
