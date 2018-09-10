@@ -12,6 +12,7 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.eclipse.jetty.util.log.Log;
 
+import com.alibaba.fastjson.JSON;
 import com.jfinal.aop.Before;
 import com.jfinal.aop.Clear;
 import com.jfinal.aop.Duang;
@@ -126,6 +127,7 @@ public class T10pdt_reportController extends BaseController {
 				"when '04' then 'Drought monitoring'\r\n" + 
 				"else ''\r\n" + 
 				"end) as pdt_type, (case t.suffix when '01' then 'WORD' when '02' then 'PDF' else '' end) as suffix", "from T10pdt_report t where t.userid=" + user.getId() +" order by t.add_time desc");
+		log.info("查询报表返回结果" + JSON.toJSONString(page));
 		setAttr("blogPage",page );
 		setAttr("PersonInfoOrMyreport", 1);
 		setAttr("queryAllParm", "active");
