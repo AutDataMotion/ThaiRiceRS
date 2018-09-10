@@ -69,15 +69,15 @@ public class LandYieldScheduleJob extends AbsScheduleJob implements ITask {
 			target.id = id.intValue();
 			target.fileDate = GenerTimeStamp.pickDateStr(preObj.getData_collect_time());
 			target.pathNdvi = addFilePathName(preObj.getFile_path(), preObj.getFile_name());
-			target.imageLanduse = "D:\\Thailand_test\\landuse";
+			target.imageLanduse = "E:\\Thailand_test\\landuse";
 			target.outPath = "E:\\\\thairiceproduct\\\\Yield";
-			target.shpfilePath = "D:\\\\Thailand_test\\\\shp";
+			target.shpfilePath = "E:\\\\Thailand_test\\\\shp";
 			target.pathGdalwarpS = "C:\\warmerda\\bld\\bin\\gdalwarp.exe";
 			// 所有年的该月该日的历史数据 放入map
 			Map<String, String> map = Maps.newHashMap();
 			String whereStr = sqlStr_ProcessStatus(EnumDataStatus.PDT_TYPE_Yield, EnumDataStatus.PROCESS_SUCCE);
 			List<T12PreProcessInf> listArg = T12PreProcessInf.dao.find(String.format(
-					" select * from %s where  %s and data_type =%s and date_format(data_collect_time, '%%Y%%m%%d') between '%s' and '%s'  limit 20 ",
+					" select * from %s where  %s and data_type =%s and date_format(data_collect_time, '%%Y%%m%%d') between '%s' and '%s'  limit 200 ",
 					T12PreProcessInf.tableName, whereStr, EnumDataStatus.DATA_TYPE_NDVI_02.getIdStr(),
 					GenerTimeStamp.pickYearMonthDay(yearBeg, preObj.getData_collect_time()),
 					GenerTimeStamp.pickYearMonthDay(yearEnd, preObj.getData_collect_time())));
@@ -86,7 +86,10 @@ public class LandYieldScheduleJob extends AbsScheduleJob implements ITask {
 				return null;
 			} else {
 				listArg.forEach(
-						e -> map.put(String.valueOf((Long)e.getId()), addFilePathName(e.getFile_path(), e.getFile_name())));
+						e -> {
+							System.out.println((String)e.getFile_name());
+							map.put(String.valueOf((Long)e.getId()), addFilePathName(e.getFile_path(), e.getFile_name()));
+						});
 			}
 			return TupleUtil.tuple(target, map);
 		}).collect(Collectors.toList());

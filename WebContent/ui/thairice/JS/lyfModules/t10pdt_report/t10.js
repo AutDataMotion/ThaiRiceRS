@@ -15,8 +15,16 @@ productKind_code_2_des = {
 		'04':'Drought'
 }
 var renderLabel_Drought_Growth = {
-		"Drought":["Moist","Normal","Light Drought","Middling","Heavy"],
+		"Drought":["Moist","Normal","Light Drought","Moderate","Heavy"],
 		"Growth":["Very Bad","Bad","Average","Good","Excellent"],
+};
+var render_color = {
+		"Drought": [[56, 168, 0, 1],[139, 209, 0, 1],[255, 255, 0, 1],[255, 128, 0, 1],[255, 0, 0, 1]],
+		"Growth":[[255, 0, 0, 1],[255, 128, 0, 1],[255, 255, 0, 1],[139, 209, 0, 1],[56, 168, 0, 1]],
+};
+var render_color_rgb = {
+		"Drought": ['#38A800','#8BD100','#FFFF00','#FF8000','#FF0000'],
+		"Growth":['#FF0000','#FF8000','#FFFF00','#8BD100','#38A800'],
 };
 /*
  * areaCode:选择的行政区域
@@ -174,7 +182,7 @@ function addProductLayer(prov_code,productDate,productKind_des)
 //	    console.log(app.featureLayer.fullExtent);
 	    app.featureLayer.on("load",function(res){
 //	    	console.log(app.featureLayer.fullExtent);
-       	 	preview(app.featureLayer);//缩放到指定范围
+//       	 	preview(app.featureLayer);//缩放到指定范围
 //       	 createLegend(app.map, featureLayer,legendTitle);
         });
 	    //动态图层 供渲染使用
@@ -255,7 +263,8 @@ function createClassBreakRenderLayer(featureLayer,renderLayer,field,numbreaks,le
 		var drawingOptions = new LayerDrawingOptions();
 		
 	    var renderer = new ClassBreaksRenderer(null, field);
-	    var renderColor = [[56, 168, 0, 1],[139, 209, 0, 1],[255, 255, 0, 1],[255, 128, 0, 1],[255, 0, 0, 1]];
+//	    var renderColor = [[56, 168, 0, 1],[139, 209, 0, 1],[255, 255, 0, 1],[255, 128, 0, 1],[255, 0, 0, 1]];
+	    var renderColor = [[255, 0, 0, 1],[255, 128, 0, 1],[255, 255, 0, 1],[139, 209, 0, 1],[56, 168, 0, 1]];
 	    
 	    var queryParams = new Query();
 	    queryParams.outFields = [field];
@@ -367,38 +376,38 @@ function createUniqueValueRenderLayer(featureLayer,renderLayer,field,uniqueKinds
 		var drawingOptions = new LayerDrawingOptions();
 		
 	    var renderer = new UniqueValueRenderer(null, field);
-	    var renderColor = [[0, 255, 127, 1],[152, 251, 152, 1],[255, 255, 0, 1],[255, 128, 0, 1],[255, 0, 0, 1]];
+//	    var renderColor = [[0, 255, 127, 1],[152, 251, 152, 1],[255, 255, 0, 1],[255, 128, 0, 1],[255, 0, 0, 1]];
 //	    var renderLabel = {
 //	    		"Drought":["Moist","Normal","Light Drought","Middling","Heavy"],
 //	    		"Growth":["Very Bad","Bad","Average","Good","Excellent"],
 //	    };
 	      renderer.addValue({
 	        value: "1",
-	        symbol: new SimpleFillSymbol("solid", null, new Color(renderColor[0])),
+	        symbol: new SimpleFillSymbol("solid", null, new Color(render_color[legendTitle][0])),
 	        label: renderLabel_Drought_Growth[legendTitle][0],
 	        description: renderLabel_Drought_Growth[legendTitle][0]
 	      });
 	      renderer.addValue({
 	        value: "2",
-	        symbol: new SimpleFillSymbol("solid", null, new Color(renderColor[1])),
+	        symbol: new SimpleFillSymbol("solid", null, new Color(render_color[legendTitle][1])),
 	        label: renderLabel_Drought_Growth[legendTitle][1],
 	        description: renderLabel_Drought_Growth[legendTitle][1]
 	      });
 	      renderer.addValue({
 	        value: "3",
-	        symbol: new SimpleFillSymbol("solid", null, new Color(renderColor[2])),
+	        symbol: new SimpleFillSymbol("solid", null, new Color(render_color[legendTitle][2])),
 	        label: renderLabel_Drought_Growth[legendTitle][2],
 	        description: renderLabel_Drought_Growth[legendTitle][2]
 	      });
 	      renderer.addValue({
 	        value: "4",
-	        symbol: new SimpleFillSymbol("solid", null, new Color(renderColor[3])),
+	        symbol: new SimpleFillSymbol("solid", null, new Color(render_color[legendTitle][3])),
 	        label: renderLabel_Drought_Growth[legendTitle][3],
 	        description: renderLabel_Drought_Growth[legendTitle][3]
 	      });
 	      renderer.addValue({
 	        value: "5",
-	        symbol: new SimpleFillSymbol("solid", null, new Color(renderColor[4])),
+	        symbol: new SimpleFillSymbol("solid", null, new Color(render_color[legendTitle][4])),
 	        label: renderLabel_Drought_Growth[legendTitle][4],
 	        description: renderLabel_Drought_Growth[legendTitle][4]
 	      });
@@ -1158,20 +1167,21 @@ var sta = {};
 //    		            { title: "Light Drought" },
 //    		            { title: "Middling" },
 //    		            { title: "Heavy" }
-    		            { title: renderLabel_Drought_Growth[app.productKind_des][0]},
-    		            { title: renderLabel_Drought_Growth[app.productKind_des][1]},
-    		            { title: renderLabel_Drought_Growth[app.productKind_des][2]},
-    		            { title: renderLabel_Drought_Growth[app.productKind_des][3]},
-    		            { title: renderLabel_Drought_Growth[app.productKind_des][4]}
+    		            { title: renderLabel_Drought_Growth[app.productKind_des][0]+' Ratio(%)'},
+    		            { title: renderLabel_Drought_Growth[app.productKind_des][1]+' Ratio(%)'},
+    		            { title: renderLabel_Drought_Growth[app.productKind_des][2]+' Ratio(%)'},
+    		            { title: renderLabel_Drought_Growth[app.productKind_des][3]+' Ratio(%)'},
+    		            { title: renderLabel_Drought_Growth[app.productKind_des][4]+' Ratio(%)'}
     		        ]
     		    });
     		
     		// 指定图表的配置项和数据
             var option = {
-            	color: ['#00FF7F','#98FB98','#FFFF00','#FF8000','#FF0000'],
+//            	color: ['#00FF7F','#98FB98','#FFFF00','#FF8000','#FF0000'],
+            	color: render_color_rgb[app.productKind_des],
                 title: {
 //                    text: 'TaiLand Drought',
-                	text: 'ThaiLand'+app.productKind_des,
+                	text: 'ThaiLand '+app.productKind_des,
                     textStyle:{
                     	color:'#fff'
                     }
@@ -1202,7 +1212,7 @@ var sta = {};
                 },
                 yAxis: {
 //                	name:"Drought",
-                	name:app.productKind_des,
+                	name:app.productKind_des+' Ratio(%)',
                 	//nameLocation:'middle',
                 	nameTextStyle:{
                 		color:'#fff'

@@ -98,8 +98,8 @@ public class LandDroughtScheduleJob extends AbsScheduleJob implements ITask {
 			target.fileDate = lstCollectTime;
 			target.imageLst = addFilePathName( lstObj.getFile_path() , lstObj.getFile_name());
 			target.imageNdvi =imageNdviUse;
-			target.imageLanduse = "D:\\Thailand_test\\landuse\\1km";
-			target.shpfilelPath = "D:\\\\Thailand_test\\\\shp";
+			target.imageLanduse = "E:\\Thailand_test\\landuse\\1km";
+			target.shpfilelPath = "E:\\\\Thailand_test\\\\shp";
 			target.outPath = "E:\\\\thairiceproduct\\\\Drought";
 			target.pathGdalwarpS = "C:\\warmerda\\bld\\bin\\gdalwarp.exe";
 			target.threshold1 = threshold1;

@@ -84,8 +84,8 @@ public class GrouthMonitorScheduleJob extends AbsScheduleJob implements ITask {
 			target.id = id.intValue();
 			target.fileDate = GenerTimeStamp.pickDateStr(preObj.getData_collect_time());;
 			target.pathNdvi = addFilePathName(preObj.getFile_path(), preObj.getFile_name());
-			target.imageLanduse = "D:\\Thailand_test\\landuse";
-			target.shpfilePath = "D:\\\\Thailand_test\\\\shp";
+			target.imageLanduse = "E:\\Thailand_test\\landuse";
+			target.shpfilePath = "E:\\\\Thailand_test\\\\shp";
 			target.outPath = "E:\\\\thairiceproduct\\\\Growth";
 			target.pathGdalwarpS = "C:\\warmerda\\bld\\bin\\gdalwarp.exe";
 			target.threshold1 = threshold1;

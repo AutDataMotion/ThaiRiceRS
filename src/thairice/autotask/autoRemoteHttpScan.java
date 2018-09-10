@@ -1,3 +1,6 @@
+
+package thairice.autotask;
+
 import java.math.BigInteger;
 import java.text.SimpleDateFormat;
 import java.util.Date;

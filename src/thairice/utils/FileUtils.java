@@ -462,7 +462,9 @@ public class FileUtils {
         Date dt = sdf.parse(string);
 		String test = generateNewPath("/allData/6/MOD13Q1/$1/$2", "01", sdf.parse(string), null);
 		System.out.println(test);
-//		prepareTestDataDir("D:\\TEST", "e:\\testData\\");
+
+		prepareTestDataDir("D:\\TEST", "e:\\testData\\");
+
 
 /*		File dir = new File("d://ddddd//113//4455");
 		String temp = "12345678";
