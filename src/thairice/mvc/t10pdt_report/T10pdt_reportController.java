@@ -125,7 +125,7 @@ public class T10pdt_reportController extends BaseController {
 				"when '03' then 'Estimated production'\r\n" + 
 				"when '04' then 'Drought monitoring'\r\n" + 
 				"else ''\r\n" + 
-				"end) as pdt_type, (case t.suffix when '01' then 'WORD' when '02' then 'PDF' else '' end) as suffix", "from T10pdt_report t order by id asc");
+				"end) as pdt_type, (case t.suffix when '01' then 'WORD' when '02' then 'PDF' else '' end) as suffix", "from T10pdt_report t where t.userid=" + user.getId() +" order by t.add_time desc");
 		setAttr("blogPage",page );
 		setAttr("PersonInfoOrMyreport", 1);
 		setAttr("queryAllParm", "active");
