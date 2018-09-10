@@ -22,6 +22,9 @@ body {
         margin: 0;
         height: 100%;
 }
+#sta_excel_div select{
+	color:black;
+}
 /*
  * Global add-ons
  */

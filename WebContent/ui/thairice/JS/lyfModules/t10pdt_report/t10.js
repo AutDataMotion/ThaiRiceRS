@@ -777,17 +777,21 @@ var sta = {};
 //	    		 sum += feature.attributes[field];
 	    		 sum += feature_area;
 	    	 });
-//	    	 data.value = sum.toFixed(2)*900;
-	    	 data.value = sum.toFixed(2);
+//	    	
+	    	 data.value = sum>0?(sum.toFixed(2)):0;
+//	    	 data.value = sum.toFixed(2);
 	    	 staData.push(data);
 		} 
 		if(app.productKind_code=="03"){//Yield
 			
-			 var sum = 0;        
+			 var sum = 0;  
+			 var count = 0;
 	    	 dojo.forEach(features,function(feature) {
 	    		 sum += feature.attributes[field];
+	    		 count +=1; 
 	    	 });
-	    	 data.value = sum.toFixed(2);
+//	    	 data.value = sum.toFixed(2);
+	    	 data.value = sum>0?([((sum*1600)/(count*250*250)).toFixed(2),sum.toFixed(2)]):([0,0]);
 	    	 staData.push(data);
 		}
 		if(app.productKind_code=="04"||app.productKind_code=="02"){//Drought or Growth
@@ -1028,15 +1032,22 @@ var sta = {};
         if(app.productKind_code=="03"){//Yield
         	
         	var names = [];
-    		var datas = [];
+//    		var datas = [];
+        	var datas_sum_yield = [];
+        	var datas_unit_yield = [];
     		var dataSet = [];
     		dojo.forEach(staData,function(stadata) {
     			//console.log(stadata,i);
         		 names.push(stadata["name"]);
-        		 datas.push(stadata["value"]);
+//        		 datas.push(stadata["value"]);
+        		 datas_unit_yield.push(stadata["value"][0]);
+        		 datas_sum_yield.push(stadata["value"][1]);
         		 var data = [];
-        		 data.push(stadata["name"]);
-        		 data.push(Num2EnFormat(stadata["value"]));
+//        		 data.push(stadata["name"]);
+//        		 data.push(Num2EnFormat(stadata["value"]));
+        		 var temp_data = stadata["value"].slice(0);
+        		 data = [temp_data[0],Num2EnFormat(temp_data[1])];
+        		 data.unshift(stadata["name"]);
         		 dataSet.push(data);
         	 });
     		//统计表
@@ -1048,7 +1059,8 @@ var sta = {};
 //    		        "destroy": true,
     		        columns: [
     		            { title: "Name" },
-    		            { title: "Value/ton" }
+    		            { title: "Yield(ton)" },
+    		            { title: "Gross(ton)" }
     		        ]
     		    });
     		// 指定图表的配置项和数据
@@ -1110,7 +1122,7 @@ var sta = {};
                 series: [{
                     name: 'Yield',
                     type: 'bar',
-                    data: datas,
+                    data: datas_sum_yield,
                     markPoint : {
                         data : [
                             {type : 'max', name: 'MAX'},

@@ -137,16 +137,18 @@ th,td {
 				<td colspan="2">${Time}</td>				
             </tr> 
 			<tr style="background:gray;">
-				<td colspan="2">ID</td>  
+				<td colspan="1">ID</td>  
 				<td colspan="2">ChildAreaName</td>
-				<td colspan="2">Yield(ton)</td>			
+				<td colspan="1">Yield(ton)</td>	
+				<td colspan="2">Gross(ton)</td>			
             </tr>
 			
 			<#list Yieldlist as yield>
 			<tr>
-				<td colspan="2">${yield.code}</td>  
+				<td colspan="1">${yield.code}</td>  
 				<td colspan="2">${yield.name}</td>
-				<td colspan="2">${yield.value}</td>			
+				<td colspan="1">${yield.yield}</td>		
+				<td colspan="2">${yield.gross}</td>			
             </tr>
 			</#list> 
 			
