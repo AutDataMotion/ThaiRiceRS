@@ -120,14 +120,14 @@ public class T10pdt_reportController extends BaseController {
 			setAttr("user", srv.SelectById(user.getBigInteger("id")));
 			setAttr("count", srv.getCount(user.getBigInteger("id")));
 		}
-		Page page  = T10pdt_report.dao.paginate(getParaToInt(0, 1), 10, "select t.id, date_format(t.add_time ,'%Y-%m-%d %H:%i:%S') as add_time_str, date_format(t.collect_time ,'%Y-%m-%d') as collect_time_str, t.zone_code,(case t.pdt_type \r\n" + 
+		Page page  = T10pdt_report.dao.paginate(getParaToInt(0, 1), 10, "select t.id, date_format(t.add_time ,'%Y-%m-%d %H:%i:%S') as add_time, date_format(t.collect_time ,'%Y-%m-%d') as collect_time, t.zone_code,(case t.pdt_type \r\n" + 
 				"when '01' then 'Area monitoring' \r\n" + 
 				"when '02' then 'Growth monitoring'\r\n" + 
 				"when '03' then 'Estimated production'\r\n" + 
 				"when '04' then 'Drought monitoring'\r\n" + 
 				"else ''\r\n" + 
 				"end) as pdt_type, (case t.suffix when '01' then 'WORD' when '02' then 'PDF' else '' end) as suffix", "from T10pdt_report t where t.userid=" + user.getId() +" order by t.add_time desc");
-		log.info("查询报表返回结果" + JSON.toJSONString(page));
+//		log.info("查询报表返回结果" + JSON.toJSONString(page));
 		setAttr("blogPage",page );
 		setAttr("PersonInfoOrMyreport", 1);
 		setAttr("queryAllParm", "active");

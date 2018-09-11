@@ -107,21 +107,6 @@ public class T10pdt_report extends BaseModel<T10pdt_report> {
 	private String pdt_type;
 	private String suffix;
 	private String download_path;
-	private String add_time_str;
-	private String collect_time_str;
-	
-	public String getAdd_time_str() {
-		return add_time_str;
-	}
-	public void setAdd_time_str(String add_time_str) {
-		this.add_time_str = add_time_str;
-	}
-	public String getCollect_time_str() {
-		return collect_time_str;
-	}
-	public void setCollect_time_str(String collect_time_str) {
-		this.collect_time_str = collect_time_str;
-	}
 	public void setId(BigInteger id){
 		set(column_id, id);
 	}
