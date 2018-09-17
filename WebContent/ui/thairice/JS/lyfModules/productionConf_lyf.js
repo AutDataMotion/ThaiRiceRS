@@ -566,7 +566,7 @@ function copyAreaTifFile2gpWorkspace(tifFileName){
 	})
 }
 function copyTempShpFile2gpWorkspace(tifFileName){
-	console.log("copyAreaTifFile2gpWorkspace---begin--"+tifFileName);
+	console.log("copyTempShpFile2gpWorkspace---begin--"+tifFileName);
 	$.ajax({
 	    url:'/jf/thairice/t1parameter/copyTempShpFile2gpWorkspace',//获取面积相关的遥感影像 文件列表
 	    type:'POST', //GET
@@ -1014,11 +1014,31 @@ function areaRasterbandsExtract(){
 	        geoprocessor.getResultImageLayer(jobInfo.jobId, "output",imageParams, function(gpLayer){
 	        	
 	        	$("#mapDiv_productionConf").busyLoad("hide");
+	        	
+//	        	if (app.hasOwnProperty("featureLayer") ) {//删除之前的图层
+//		     		 
+//		     		 app.map.removeLayer(app.featureLayer);
+//		     		 
+//		          }
 //	        	
 		          app.map.removeLayer(app.renderLayer);
 		          app.renderLayer = gpLayer;
 		     
-		          app.map.addLayer(app.renderLayer,2);
+		          app.map.addLayer(app.renderLayer);
+		          app.map.reorderLayer(app.renderLayer,1);
+//		          app.map.addLayer(app.featureLayer);
+//		          app.renderLayer.on("load",function(res){
+////		  	    	alert("ooook");
+//		  	    	require(["esri/geometry/Extent","esri/map"], function(Extent,Map) {
+//		  	    		alert("oooo");
+//		  	    		var layerExt = app.renderLayer.fullExtent;
+//		  	        	app.map.centerAt(layerExt.getCenter());
+//		  	        	
+//		  	        	app.map.addLayer(app.featureLayer);
+//	  	    		
+//		  	    	});
+//		  	    	
+//		          });
 		          
 	        });
 	       }

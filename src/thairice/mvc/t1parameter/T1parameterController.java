@@ -535,6 +535,7 @@ public class T1parameterController extends BaseController {
 				
 				
 				File[] tempProductFiles = ReportUtil.fileFilter(tempProductPath, tempProductFileNamePrefix, null);
+				boolean result = false;
 				for(File file:tempProductFiles)
 				{
 					//copy temp product file to gpmodels workspace to prepare edit
@@ -547,9 +548,11 @@ public class T1parameterController extends BaseController {
 					///waitingformodify+.shp--->waitingformodify.shp
 					String copyTo1 = models_workspace+models_workspace_tempFilePreName+resultFileSuffix;
 					File newfile1 = new File(copyTo1);
-					ReportUtil.fileCopy(file,newfile1);
+					result = ReportUtil.fileCopy(file,newfile1);
 					
 				}
+				msg.put("flag", result);
+				renderJson(msg);
 			}
 			
 		}catch(Exception e)

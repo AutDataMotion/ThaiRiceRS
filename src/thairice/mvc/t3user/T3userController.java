@@ -98,6 +98,7 @@ public class T3userController extends BaseController {
     @Clear
     @Before(T3userValidator.class)
     public void Login() {
+
         boolean authCode = authCode();
         String account = null;
         Result res;

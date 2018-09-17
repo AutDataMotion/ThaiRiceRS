@@ -2,8 +2,9 @@
 *.class
 */init.properties
 */init_rice.properties
-*/productReport/
-!*/productReport/reportTemplate/
+WebContent/files/productReport/**/*.doc
+WebContent/files/productReport/**/*.pdf
+
 # Log file
 *.log
 

@@ -145,7 +145,7 @@ th,td {
 				<td colspan="1">Moist</td>  
 				<td colspan="1">Normal</td>
 				<td colspan="1">LightDrought</td>	
-				<td colspan="1">Middling</td>
+				<td colspan="1">Moderate</td>
 				<td colspan="1">Heavy</td>				
             </tr>
 			<#list Droughtlist as drought>

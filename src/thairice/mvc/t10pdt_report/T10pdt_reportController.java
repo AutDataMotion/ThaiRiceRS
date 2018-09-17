@@ -12,6 +12,7 @@ import java.util.Map;
 import org.apache.log4j.Logger;
 import org.eclipse.jetty.util.log.Log;
 
+import com.alibaba.fastjson.JSON;
 import com.jfinal.aop.Before;
 import com.jfinal.aop.Clear;
 import com.jfinal.aop.Duang;
@@ -119,13 +120,14 @@ public class T10pdt_reportController extends BaseController {
 			setAttr("user", srv.SelectById(user.getBigInteger("id")));
 			setAttr("count", srv.getCount(user.getBigInteger("id")));
 		}
-		Page page  = T10pdt_report.dao.paginate(getParaToInt(0, 1), 10, "select t.id, date_format(t.add_time ,'%Y-%m-%d %H:%i:%S') as add_time_str, date_format(t.collect_time ,'%Y-%m-%d') as collect_time_str, t.zone_code,(case t.pdt_type \r\n" + 
+		Page page  = T10pdt_report.dao.paginate(getParaToInt(0, 1), 10, "select t.id, date_format(t.add_time ,'%Y-%m-%d %H:%i:%S') as add_time, date_format(t.collect_time ,'%Y-%m-%d') as collect_time, t.zone_code,(case t.pdt_type \r\n" + 
 				"when '01' then 'Area monitoring' \r\n" + 
 				"when '02' then 'Growth monitoring'\r\n" + 
 				"when '03' then 'Estimated production'\r\n" + 
 				"when '04' then 'Drought monitoring'\r\n" + 
 				"else ''\r\n" + 
-				"end) as pdt_type, (case t.suffix when '01' then 'WORD' when '02' then 'PDF' else '' end) as suffix", "from T10pdt_report t order by id asc");
+				"end) as pdt_type, (case t.suffix when '01' then 'WORD' when '02' then 'PDF' else '' end) as suffix", "from T10pdt_report t where t.userid=" + user.getId() +" order by t.add_time desc");
+//		log.info("查询报表返回结果" + JSON.toJSONString(page));
 		setAttr("blogPage",page );
 		setAttr("PersonInfoOrMyreport", 1);
 		setAttr("queryAllParm", "active");
@@ -261,14 +263,14 @@ public class T10pdt_reportController extends BaseController {
 		
 		if(ProductKind.equals("Area"))
 		{
-			List<ReportUtil.Area_Yield> Arealist = new ArrayList<ReportUtil.Area_Yield>();
-			Arealist = ReportUtil.getArea_Yield(staData);
+			List<ReportUtil.Area> Arealist = new ArrayList<ReportUtil.Area>();
+			Arealist = ReportUtil.getArea(staData);
 			dataMap.put("Arealist", Arealist);
 		}
 		if(ProductKind.equals("Yield"))
 		{
-			List<ReportUtil.Area_Yield> Yieldlist = new ArrayList<ReportUtil.Area_Yield>();
-			Yieldlist = ReportUtil.getArea_Yield(staData);
+			List<ReportUtil.Yield> Yieldlist = new ArrayList<ReportUtil.Yield>();
+			Yieldlist = ReportUtil.getYield(staData);
 			dataMap.put("Yieldlist", Yieldlist);
 		}
 		if(ProductKind.equals("Drought"))

@@ -40,8 +40,6 @@ import org.apache.commons.net.ftp.FTPFile;
 import org.apache.commons.net.ftp.FTPReply;
 import org.apache.log4j.Logger;
 
-import com.jfinal.kit.PropKit;
-
 import csuduc.platform.util.networkCom.FTPClientConfigure;
 import csuduc.platform.util.networkCom.FTPClientFactory;
 import csuduc.platform.util.networkCom.FTPClientPool;
@@ -438,38 +436,6 @@ public class FileUtils {
 	 * @param url
 	 * @return
 	 */
-	/*public static boolean isDownloadProcessBusy(){
-	    	//从参数表中读取参数值
-	    	String init = PropKit.use("init_rice.properties").get("");
-		int init1=PropKit.use("init_rice.properties").getInt("");
-		boolean flag=false;
-		try{
-		    Process p = Runtime.getRuntime().exec( "cmd /c tasklist ");
-		    ByteArrayOutputStream baos = new ByteArrayOutputStream();
-		    InputStream os = p.getInputStream();
-		    byte b[] = new byte[256];
-		    	while(os.read(b)> 0)
-		    	    baos.write(b);
-		    	    String s = baos.toString();
-        		// System.out.println(s);
-        		//统计“wget”在字符串s中是否出现10次及10次以上
-		    	    int count=0;
-		    	    for (int i = 0; i <s.length(); i++) {
-            			if(s.indexOf("wget")==i){
-            				s = s.substring(i+1,s.length());
-            				count++;
-            			}
-		    	    }
-        		System.out.println("共出现了"+count + "次");
-            		if(count>=10){
-            		    flag=true;
-            		}else{
-                    	    System.out.println( "no ");
-                    	    flag=false;
-            		}
-		    }catch(java.io.IOException ioe){	
-		    	}
-		return flag;*/
 	public static boolean checkFileWritingOn(String fileName) throws Exception{
 	    long oldLen = 0;
 	    long newLen = 0;
@@ -496,7 +462,9 @@ public class FileUtils {
         Date dt = sdf.parse(string);
 		String test = generateNewPath("/allData/6/MOD13Q1/$1/$2", "01", sdf.parse(string), null);
 		System.out.println(test);
-//		prepareTestDataDir("D:\\TEST", "e:\\testData\\");
+
+		prepareTestDataDir("D:\\TEST", "e:\\testData\\");
+
 
 /*		File dir = new File("d://ddddd//113//4455");
 		String temp = "12345678";

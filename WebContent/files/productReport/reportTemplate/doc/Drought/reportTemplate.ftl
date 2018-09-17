@@ -1030,7 +1030,7 @@
                   <w:rFonts w:ascii="Times New Roman" w:h-ansi="Times New Roman" w:hint="fareast"/>
                   <wx:font wx:val="Times New Roman"/>
                 </w:rPr>
-                <w:t>Middling</w:t>
+                <w:t>Moderate</w:t>
               </w:r>
             </w:p>
           </w:tc>
