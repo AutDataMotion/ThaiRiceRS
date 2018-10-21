@@ -27,6 +27,7 @@ import java.nio.file.Paths;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -1148,6 +1149,8 @@ public class FtpUtils {
 				if (null != dateList) {
 					//
 					final FtpUtils ftpUtils = new FtpUtils();
+					// 倒着排序，最新的数据优先被下载，20181021
+					Collections.reverse(dateList);
 					for (Date eleDate : dateList) {
 						// 更新初始数据开始日期
 						inlzStDt = ParamUtils.getParam(ParamUtils.PC_FTP_AUTO_DWLD, ParamUtils.INLZ_STDT);						
