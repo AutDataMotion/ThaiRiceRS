@@ -1225,7 +1225,7 @@ public class FtpUtils {
 			String str1 = s;
 			// System.out.println(s);
 			//方法1：替换法
-			str1=str1.replace("wget",""); //将字符串中i替换为空,创建新的字符串
+			str1=str1.replace("wget","xxx"); //将字符串中i替换为空,创建新的字符串
 			Integer numsOfWgetProc = s.length()-str1.length();//两者之差为i出现次数
 			return numsOfWgetProc > 20 ? true:false;
 		}catch(java.io.IOException ioe){
