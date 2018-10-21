@@ -30,6 +30,7 @@ import thairice.constant.ConstantInitMy;
 import thairice.interceptor.UserLoginInterceptor;
 import thairice.mvc.r4message_send.R4message_send;
 import thairice.mvc.t10pdt_report.T10pdt_report;
+import thairice.mvc.t15_news_cnt.t15_news_cnt;
 import thairice.mvc.t2syslog.EnumT2sysLog;
 import thairice.mvc.t2syslog.T2syslogService;
 import thairice.mvc.t8message.T8message;
@@ -79,6 +80,11 @@ public class T3userController extends BaseController {
     public void login() {
         setAttr("returnUrl", "");
         keepPara("returnUrl");
+        
+		Page page  = t15_news_cnt.dao.paginate(getParaToInt(0, 1), 10, "select t.title, t.content, date_format(t.editTime ,'%Y/%m/%d') as editTime from t15_news_cnt t order by t.rank asc ", "");
+//		log.info("查询报表返回结果" + JSON.toJSONString(page));
+		setAttr("blogPage",page );
+		
         renderWithPath(pthv + "login.html");
     }
 
