@@ -555,6 +555,7 @@ public class T3userController extends BaseController {
         if (TimeUtil.isLaterThanNow(info.getPD_ExDat().toString())) {
             info.setStatus_("04");
         }
+        
         setAttr("city", ad[1]);
         setAttr("area", ad[2]);
         setAttr("user", info);
