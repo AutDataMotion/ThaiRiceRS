@@ -223,7 +223,7 @@ public class FileUtils {
 			orgDataObj.setDownload_path(ftpPath);
 			// 解析源路径，得到归档目录
 			// 解析文件名
-			String[] filePathAttr = ftpPath.split("/fileDate/");
+			String[] filePathAttr = ftpPath.split("//");
 			String storage_path = "";
 			if (5 <= filePathAttr.length) {
 				storage_path += (("//") + filePathAttr[2]);

@@ -154,7 +154,7 @@ public class ReadExcelUtils {
   
     public static void main(String[] args) {  
         try {  
-            String filepath = "D:\\XM系统\\数据库设计201801018_V1.0.xlsx";  
+            String filepath = "D:\\DUC\\泰国农业遥感v20180108\\数据库设计20180505_V1.5.xlsx";  
             ReadExcelUtils excelReader = new ReadExcelUtils(filepath);  
             // 对读取Excel表格标题测试  
               

@@ -1218,7 +1218,7 @@ public class FtpUtils {
 			Process p = Runtime.getRuntime().exec( "cmd /c tasklist ");
 			ByteArrayOutputStream baos = new ByteArrayOutputStream();
 			InputStream os = p.getInputStream();
-			byte b[] = new byte[256];
+			byte b[] = new byte[1024 * 4];
 			while(os.read(b)> 0)
 			baos.write(b);
 			String s = baos.toString();
@@ -1227,7 +1227,7 @@ public class FtpUtils {
 			//方法1：替换法
 			str1=str1.replace("wget",""); //将字符串中i替换为空,创建新的字符串
 			Integer numsOfWgetProc = s.length()-str1.length();//两者之差为i出现次数
-			return numsOfWgetProc > 5 ? true:false;
+			return numsOfWgetProc > 20 ? true:false;
 		}catch(java.io.IOException ioe){
 		}
 		return flag;
@@ -1258,9 +1258,9 @@ public class FtpUtils {
 						LOG.error("检测并创建下载文件保存路径失败！路径：" + localfilePath);
 					}
 					while(FtpUtils.isDownloadProcessBusy()) {
-						Integer sleepInteval = 1000;
-						LOG.debug("autoHttpDownload SLEEP:" + sleepInteval);
-						Thread.sleep(sleepInteval);
+						Integer sleepInteval = 1;
+						LOG.debug("autoHttpDownload busy, SLEEP:" + sleepInteval + "秒");
+						Thread.sleep(sleepInteval * 1000);
 					}
 					if(FtpUtils.wgetDownload(org_data.getName_(), org_data.getDownload_path(), localfilePath)) {
 						LOG.debug("wget下载文件成功!");
