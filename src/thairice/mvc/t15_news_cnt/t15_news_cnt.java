@@ -4,6 +4,7 @@ import com.platform.annotation.Table;
 import com.platform.constant.ConstantInit;
 import com.platform.mvc.base.BaseModel;
 
+import java.sql.Timestamp; 
 
 import org.apache.log4j.Logger;
 
@@ -37,31 +38,31 @@ public class t15_news_cnt extends BaseModel<t15_news_cnt> {
 	
 	/**
 	 * 字段描述：标题 
-	 * 字段类型：int  长度：null
+	 * 字段类型：varchar  长度：256
 	 */
 	public static final String column_title = "title";
 	
 	/**
 	 * 字段描述：内容 
-	 * 字段类型：varchar  长度：32
+	 * 字段类型：varchar  长度：3000
 	 */
 	public static final String column_content = "content";
 	
 	/**
 	 * 字段描述：修改时间 
-	 * 字段类型：varchar  长度：32
+	 * 字段类型：timestamp  长度：null
 	 */
 	public static final String column_editTime = "editTime";
 	
 	/**
 	 * 字段描述：时间戳 
-	 * 字段类型：char  长度：2
+	 * 字段类型：timestamp  长度：null
 	 */
 	public static final String column_tms = "tms";
 	
 	/**
 	 * 字段描述：排序 
-	 * 字段类型：varchar  长度：512
+	 * 字段类型：int  长度：null
 	 */
 	public static final String column_rank = "rank";
 	
@@ -74,11 +75,11 @@ public class t15_news_cnt extends BaseModel<t15_news_cnt> {
 
 	private Long newsid;
 	private Long usrid;
-	private Integer title;
+	private String title;
 	private String content;
-	private String editTime;
-	private String tms;
-	private String rank;
+	private Timestamp editTime;
+	private Timestamp tms;
+	private Integer rank;
 
 	public void setNewsid(Long newsid){
 		set(column_newsid, newsid);
@@ -92,7 +93,7 @@ public class t15_news_cnt extends BaseModel<t15_news_cnt> {
 	public <T> T getUsrid() {
 		return get(column_usrid);
 	}
-	public void setTitle(Integer title){
+	public void setTitle(String title){
 		set(column_title, title);
 	}
 	public <T> T getTitle() {
@@ -104,19 +105,19 @@ public class t15_news_cnt extends BaseModel<t15_news_cnt> {
 	public <T> T getContent() {
 		return get(column_content);
 	}
-	public void setEditTime(String editTime){
+	public void setEditTime(Timestamp editTime){
 		set(column_editTime, editTime);
 	}
 	public <T> T getEditTime() {
 		return get(column_editTime);
 	}
-	public void setTms(String tms){
+	public void setTms(Timestamp tms){
 		set(column_tms, tms);
 	}
 	public <T> T getTms() {
 		return get(column_tms);
 	}
-	public void setRank(String rank){
+	public void setRank(Integer rank){
 		set(column_rank, rank);
 	}
 	public <T> T getRank() {
