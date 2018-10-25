@@ -98,7 +98,7 @@ public class autoInitHttpScan extends Controller implements ITask {
 								ParamUtils.PD_SRCFTP_ROOT_CTLG);
 						if (null != remotePathList) {
 							for (String remoteCsvPath : remotePathList) {
-								remoteCsvPath = FileUtils.generateNewPath(remoteCsvPath, "01", eleDate);
+								remoteCsvPath = FileUtils.generateNewPath(remoteCsvPath, "01", eleDate, remoteCsvPath);
 								if(null == ftpClient)
 									ftpClient = ftpUtils.connectFtp();
 								List<T6org_data> T6org_data_list = FtpUtils.detecUrlFilDirList(remoteCsvPath);
