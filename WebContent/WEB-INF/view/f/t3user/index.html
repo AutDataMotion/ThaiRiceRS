@@ -555,30 +555,41 @@
 
 
       function initaddCityArea(type) {
-    	  app.province_code = $('#province').val();//选中的省
+    	  if(type=="city"){//if province clear previous data
+    		  app.productDate = null;
+    		  if (app.hasOwnProperty("renderLayer") ) {//删除之前的图层
+    				 
+    				 app.map.removeLayer(app.renderLayer);
+    				 app.featureLayer = null;
+    				 //app.map.removeAllLayers();
+    			}
+    	  		//alert($('#province option:selected').val());
+    	  }
+    	  /*
+    	  app.province_code = $('#province option:selected').val();//选中的省
     	  app.province_name = $('#province option:selected').text();//选中的省
     	  
-    	  app.city_code = $('#city').val();//选中的市
+    	  app.city_code = $('#city option:selected').val();//选中的市
     	  app.city_name = $('#city option:selected').text();//选中的市
     	  
-    	  app.town_code = $('#area').val();//选中的地区
+    	  app.town_code = $('#area option:selected').val();//选中的地区
     	  app.town_name = $('#area option:selected').text();//选中的地区
-    	  
-    	  	if(app.town_code!=0)
+    	  //alert(app.province_name+","+app.city_name+","+app.town_name);
+    	  	if(app.town_code!=0&&app.town_code)
 	  		{
 	  			app.areaCode = app.town_code;
 	  			app.areaName = app.town_name;
 	  			AddAreaLayer(1,app.areaCode);
 	  			
 	  		}
-	  		else if(app.city_code!=0)
+	  		else if(app.city_code!=0&&app.city_code)
 	  		{
 	  			app.areaCode = app.city_code;
 	  			app.areaName = app.city_name;
 	  			AddAreaLayer(3,app.areaCode);
 	  			
 	  		}
-	  		else if(app.province_code!=0)
+	  		else if(app.province_code!=0&&app.province_code)
 	  		{
 	  			app.areaCode = app.province_code;
 	  			app.areaName = app.province_name;
@@ -594,12 +605,23 @@
 				console.log(app.areaCode+","+app.areaName+","+app.productDate+","+app.productKind_code);
 				AssembleProductLayerInfo(app.areaCode,app.productDate,app.productKind_code);
 			}
+    	  */
 //			alert(app.productDate);
-			$('.StaButton').show();
+			//$('.StaButton').show();
 			/////////////////////
           if(type=="city"){
+        	   
+        	   app.province_code = $('#province option:selected').val();//选中的省
+    	  	   app.province_name = $('#province option:selected').text();//选中的省
+    	  	   app.areaCode = app.province_code;
+	  		   app.areaName = app.province_name;
+	  		   
+	  		 	//alert(app.areaCode);
+	  		 
+	  		   AddAreaLayer(2,app.areaCode);
+	  			
         	  initTimeSelect_indexHtml(app.province_code);
-        	  
+        	  //alert(app.province_code);
               $("#city").html("");
 
               $("#area").html("<option value=\"\" >Subdistrict</option>");
@@ -618,6 +640,15 @@
                   $("#city").html(optionstring);
               });
           }else if(type=="area"){
+        	  //alert($('#city option:selected').val());
+        	    app.city_code = $('#city option:selected').val();//选中的市
+    	  		app.city_name = $('#city option:selected').text();//选中的市
+    	  		app.areaCode = app.city_code;
+	  			app.areaName = app.city_name;
+	  			//alert(app.areaCode);
+	  			AddAreaLayer(3,app.areaCode);
+	  			
+	  			
               if($('#city').val()==""){
                   $("#area").html("<option value=\"\" >Subdistrict</option>");
                   return false;
@@ -632,6 +663,20 @@
                   $("#area").html(optionstring);
               });
           }
+          else{
+        	  //alert($('#area option:selected').val());
+	        	app.town_code = $('#area option:selected').val();//选中的地区
+	    	  	app.town_name = $('#area option:selected').text();//选中的地区
+	    	  	app.areaCode = app.town_code;
+	  			app.areaName = app.town_name;
+	  			//alert(app.areaCode);
+	  			AddAreaLayer(1,app.areaCode);
+          }
+          if(app.areaCode&&app.productDate&&app.productKind_code)
+			{
+				//alert(app.areaCode+","+app.areaName+","+app.productDate+","+app.productKind_code);
+				AssembleProductLayerInfo(app.areaCode,app.productDate,app.productKind_code);
+			}
       }
 </script>
 </body>

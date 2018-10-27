@@ -38,6 +38,8 @@ import thairice.constant.PropertiesInitMy;
 import zeroc.util.IceClientUtil;
 import thairice.interceptor.AdminLoginInterceptor;
 import thairice.utils.FtpUtils;
+import thairice.utils.AutoWGetDloadThread;
+import thairice.utils.AutoWGetScanThread;
 
 
 /**
@@ -198,8 +200,12 @@ public class JfinalConfig extends JFinalConfig {
 		// log.info("afterJFinalStart 数据清理");
 		// DataClear.start();
 		 // 初始化历史待下载文件信息
-		 FtpUtils.initScanHttp();
-		 FtpUtils.autoWgetdownload();
+//		 FtpUtils.initScanHttp();
+//		 FtpUtils.autoWgetdownload();
+		 // 启动WGET原始文件扫描线程
+		 new AutoWGetScanThread().start();	
+		 // 启动自动下载待下载文件线程
+		 new AutoWGetDloadThread().start();
 	}
 
 	/**

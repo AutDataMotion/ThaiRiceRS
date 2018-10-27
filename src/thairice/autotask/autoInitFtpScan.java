@@ -98,7 +98,7 @@ public class autoInitFtpScan extends Controller implements ITask {
 								ParamUtils.PD_SRCFTP_ROOT_CTLG);
 						if (null != remotePathList) {
 							for (String remotePath : remotePathList) {
-								remotePath = FileUtils.generateNewPath(remotePath, "01", eleDate);
+								remotePath = FileUtils.generateNewPath(remotePath, "01", eleDate, remotePath);
 								if(null == ftpClient)
 									ftpClient = ftpUtils.connectFtp();
 								List<T6org_data> T6org_data_list = FtpUtils.detecRemFilDirList(ftpClient, remotePath);

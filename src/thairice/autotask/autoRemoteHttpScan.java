@@ -52,7 +52,7 @@ public class autoRemoteHttpScan extends Controller implements ITask {
 					ParamUtils.PD_SRCFTP_ROOT_CTLG);
 			if (null != remotePathList) {
 				for (String remotePath : remotePathList) {
-					remotePath = FileUtils.generateNewPath(remotePath, "01", null);
+					remotePath = FileUtils.generateNewPath(remotePath, "01", null, remotePath);
 					List<T6org_data> T6org_data_list = FtpUtils.detecRemFilDirList(ftpClient, remotePath);
 					if (null != T6org_data_list) {
 						for (int i = 0; i < T6org_data_list.size(); i++) {
