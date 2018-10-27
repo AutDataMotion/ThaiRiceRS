@@ -30,6 +30,7 @@ import thairice.mvc.t11zone.T11zoneController;
 import thairice.mvc.t12preprocessinf.T12PreProcessInfController;
 import thairice.mvc.t13region.T13Region;
 import thairice.mvc.t13region.T13RegionController;
+import thairice.mvc.t15_news_cnt.t15_news_cntController;
 import thairice.mvc.t1parameter.T1parameterController;
 import thairice.mvc.t2syslog.T2syslogController;
 import thairice.mvc.t3user.BackendUserController;
@@ -72,5 +73,6 @@ public class RoutePlugins extends Routes {
 		add("/jf/thairice/sysmonitor", SysmonitorController.class);
 		// 系统操作员和用户管理
 		add("/jf/thairice/admin/user", BackendUserController.class);
+		add("/jf/thairice/t15_news_cnt", t15_news_cntController.class);
 	}
 }

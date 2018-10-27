@@ -138,7 +138,7 @@
                             <label class="col-md-3 control-label" style="width:120px;">Account</label>
                             <div class="col-md-9" style="width:470px;">
                                 <input type="text" class="form-control" disabled value="${user.account}"
-                                       placeholder="The Account is made up of 6 to 12 letters and Numbers">
+                                       placeholder="The Account is made up of 6 to 12 letters or Numbers">
                             </div>
                         </div>
                         <div class="form-group">
@@ -457,10 +457,8 @@
     })
     //发送邮箱授权码
     $('#send_email').click(function () {
-		if(flage){
-	        sendAjax("${cxt!}/jf/thairice/t3user/send_code", {email: $("#email").val()}, function (res) {
-	        showMessage(res.desc);
-			//一分钟倒计时
+      	if(flage){
+	     	//一分钟倒计时
 			countdown = setInterval(function() {
 				time--;
 				if(time == 0) {
@@ -472,7 +470,23 @@
 					flage=false;
 					$('#send_email').text('Resend verification code(' + time + ')');
 				}
-			}, 1000)	
+			}, 1000) 
+		
+	        sendAjax("${cxt!}/jf/thairice/t3user/send_code", {email: $("#email").val()}, function (res) {
+	        showMessage(res.desc);
+			/* //一分钟倒计时
+			countdown = setInterval(function() {
+				time--;
+				if(time == 0) {
+					flage=true;
+					$('#send_email').text("Send verification code");
+					time=60;
+					clearInterval(countdown);
+				} else {
+					flage=false;
+					$('#send_email').text('Resend verification code(' + time + ')');
+				}
+			}, 1000) */	
 	 	}); 
 	  }
    })	

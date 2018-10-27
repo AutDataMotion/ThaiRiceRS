@@ -1,0 +1,308 @@
+<% var cssSec={ %>
+<style>
+.undoIcon {
+	background-image: url(${cxt}/ui/thairice/Images/production/undo1.png);
+	width: 30px;
+	height: 30px;
+}
+
+.redoIcon {
+	background-image: url(${cxt}/ui/thairice/Images/production/redo1.png);
+	width: 30px;
+	height: 30px;
+}
+
+.undoGrayIcon {
+	background-image:
+		url(${cxt}/ui/thairice/Images/production/undo_gray1.png);
+	width: 30px;
+	height: 30px;
+}
+
+.redoGrayIcon {
+	background-image:
+		url(${cxt}/ui/thairice/Images/production/redo_gray1.png);
+	width: 30px;
+	height: 30px;
+}
+
+.tab-box {
+    width: 80%;
+}
+</style>
+<!-- 
+<style>
+.ui-upload {
+	height: 30px;
+	width: 80px;
+	background-color: #00abff;
+	font-size: 14px;
+	line-height: 30px;
+	cursor: pointer;
+	display: inline-block;
+	text-align: center;
+	color: #fff;
+	border-radius: 3px;
+	margin-left: 20px;
+}
+</style>
+
+<style>
+.div1 {
+	position: relative;
+}
+
+.div2 {
+	width: 100px;
+	height: 36px;
+	background: #2178fc;
+	color: #fff;
+	text-align: center;
+	line-height: 36px;
+}
+
+
+
+.fieldset_div {
+	float: left;
+	margin-bottom: 2px;
+}
+</style> -->
+
+<% }; %> <% var contSec={ %>
+
+<!--Nav tabs-->
+
+<!--Tab panes-->
+	<div class="tab-box">
+		<h4>< News content management ></h4>
+
+		<div class="input-group">
+			<span class="input-group-addon">NEWS-1</span> <input type="text"
+				class="form-control input-lg" name="news1" id="news1" size='550'
+				value="${news1!}">
+		</div>
+		<div class="input-group">
+			<span class="input-group-addon">NEWS-2</span> <input type="text"
+				class="form-control input-lg" name="news2" id="news2" size='250'
+				value="${news2!}">
+		</div>
+		<div class="input-group">
+			<span class="input-group-addon">NEWS-3</span> <input type="text"
+				class="form-control input-lg" name="news3" id="news3" size='250'
+				value="${news3!}">
+		</div>
+		<div class="input-group">
+			<span class="input-group-addon">NEWS-4</span> <input type="text"
+				class="form-control input-lg" name="news4" id="news4" size='250'
+				value="${news4!}">
+		</div>
+		<div class="input-group">
+			<span class="input-group-addon">NEWS-5</span> <input type="text"
+				class="form-control input-lg" name="news5" id="news5" size='250'
+				value="${news5!}">
+		</div>
+		<div class="input-group">
+			<span class="input-group-addon">NEWS-6</span> <input type="text"
+				class="form-control input-lg" name="news6" id="news6" size='250'
+				value="${news6!}">
+		</div>
+		<div class="input-group">
+			<span class="input-group-addon">NEWS-7</span> <input type="text"
+				class="form-control input-lg" name="news7" id="news7" size='250'
+				value="${news7!}">
+		</div>
+		<div class="input-group">
+			<span class="input-group-addon">NEWS-8</span> <input type="text"
+				class="form-control input-lg" name="news8" id="news8" size='250'
+				value="${news8!}">
+		</div>
+
+		<div class="form-group" style="text-align: center;">
+			<button class="btn btn-primary" onclick="save()">Submit</button>
+			<!--  <button class="btn btn-default">reset</button> -->
+		</div>
+	</div>
+
+
+</div>
+</div>
+</div>
+<!-- Hint Modal-->
+<div class="modal fade" id="hintModal" tabindex="-1" role="dialog"
+	aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Tip!</h5>
+				<button class="close" type="button" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">x</span>
+				</button>
+			</div>
+			<div class="modal-body" id="hintContent"></div>
+			<div class="modal-footer">
+				<button class="btn btn-secondary" type="button" data-dismiss="modal"
+					id="hintModal_okbtn">OK</button>
+
+			</div>
+		</div>
+	</div>
+</div>
+<!-- Logout Modal-->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog"
+	aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+				<button class="close" type="button" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">x</span>
+				</button>
+			</div>
+			<div class="modal-body">Select "Logout" below if you are ready
+				to end your current session.</div>
+			<div class="modal-footer">
+				<button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+				<a class="btn btn-primary" href="${cxt!}/jf/thairice/t3user/exit">Logout</a>
+			</div>
+		</div>
+	</div>
+</div>
+<!-- upload Modal-->
+<div class="modal fade" id="fileModal" tabindex="-1" role="dialog"
+	aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog" role="document">
+		<div class="modal-content">
+			<div class="modal-header">
+				<h5 class="modal-title" id="exampleModalLabel">Files List</h5>
+				<button class="close" type="button" data-dismiss="modal"
+					aria-label="Close">
+					<span aria-hidden="true">x</span>
+				</button>
+
+
+
+
+			</div>
+			<div class="modal-body">
+				<!-- input type="file" name="txt_file" id="txt_file01" multiple class="file" /-->
+				<!--  p class="self_title text-center">Files</p-->
+				<div class="row">
+					<div class="col-sm-10 col-md-10" style="width: 100%;">
+						<table id="files_excel" class="hover" style="width: 100%"></table>
+
+					</div>
+
+				</div>
+			</div>
+			<div class="modal-footer" style="text-align: center;">
+				<button id="fileModal_addbtn" class="btn btn-primary upload_btn"
+					type="button" data-dismiss="modal">Add</button>
+			</div>
+		</div>
+	</div>
+</div>
+
+<!-- RunResult Modal-->
+<div class="modal fade" id="RunResultModal" tabindex="-1" role="dialog"
+	aria-labelledby="exampleModalLabel" aria-hidden="true">
+	<div class="modal-dialog dialog-special" role="document"
+		style="margin-top: 100px;">
+		<div class="modal-content">
+			<div class="modal-header" style="height: 45px;">
+				<h5 class="modal-title" id="exampleModalLabel"
+					style="height: 45px; line-height: 45px;">The results</h5>
+				<button class="close" type="button" data-dismiss="modal"
+					aria-label="Close" style="margin-top: 13px;">
+					<span aria-hidden="true">x</span>
+				</button>
+			</div>
+			<div class="modal-body">
+				<div class="container-fluid">
+					<div class="row">
+						<div class="col-sm-6 col-md-6">
+							<p class="text">The original image</p>
+							<img class="img-responsive" src="Images/production/img01.jpg">
+						</div>
+						<div class="col-sm-6 col-md-6">
+							<p class="text">Results the image</p>
+							<img class="img-responsive" src="Images/production/img01.jpg">
+						</div>
+					</div>
+				</div>
+			</div>
+			<div class="modal-footer">
+				<input type="radio" name="rice">Rice <input type="radio"
+					name="rice" style="margin-left: 10px;">Not rice
+				<button class="btn btn-primary result_btn" type="button"
+					style="margin-left: 10px;" data-dismiss="modal">Run</button>
+			</div>
+		</div>
+
+		<% }; %> <% var jsSec={ %>
+
+
+		<script type="text/javascript">
+			function save() {
+				
+				if($("#news1").val().length > 84){
+					alert("The length of conteht can not longer than 84! Please input agin!");
+					return;
+				}
+				$.ajax({
+					type : 'POST',
+					url : '/jf/thairice/t15_news_cnt/save',
+					data : {
+						news1 : $("#news1").val(),
+						news2 : $("#news2").val(),
+						news3 : $("#news3").val(),
+						news4 : $("#news4").val(),
+						news5 : $("#news5").val(),
+						news6 : $("#news6").val(),
+						news7 : $("#news7").val(),
+						news8 : $("#news8").val()
+					},
+					success : function(res) {
+						/* 			if(res.code == "0003" || res.code == "0001"){
+						 document.getElementById("account").style.backgroundColor = "#faa390";
+						 } */
+						/* 			document.setElementById("ftpSrcPath0").value = "55555"; */
+						alert(res.desc);
+					},
+					dataType : "json"
+				});
+			}
+		</script>
+
+		<script type="text/javascript">
+			function message() {
+				var filePath = document.getElementById('hhhh').value;
+				if (filePath == null || filePath == "") {
+					alert("Please click the browse button and select a file first!");
+					return;
+				} else
+					alert("Upload successfully!");
+			}
+		</script>
+		<script>
+			function PostData() {
+				$.ajax({
+					type : "POST",
+					url : "/jf/thairice/t1parameter/riceYieldUpload",
+					data : "",
+					/* 	headers:{
+					 'Content-Type':'multipart/form-data'
+					 }, */
+					success : function(msg) {
+
+					}
+				});
+				return false;
+			}
+		</script>
+
+		<% }; %> <%
+		include("operator_layout.html",{cssSec:cssSec,contSec:contSec,jsSec:jsSec}){}
+		%>
