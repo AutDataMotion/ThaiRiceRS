@@ -324,20 +324,10 @@ public class BackendUserController extends BaseController {
     }
 
     /**
-     * 审核或修改用户信息,审核成功发送邮件通知
+     * 审核或修改用户信息
      */
     public void audit() {
         T3user user = getModel(T3user.class);
-        //System.out.println();
-        T3user check=T3user.dao.findById(getPara("myid"));
-        if(!check.getStatus_().equals("02")) {
-            //发送给用户的邮件内容
-            boolean success = Mail.sendEmail(getParaToInt("type", 0) == 0 ? "Notification of your Thai ARSM Platform" : "authorized successfully",
-                    "Thanks for visiting Thai ARSM Platform!\nPer your request,your account has been authorized successfully,\n" 
-                     +"and now you can login to use our product.\n\n"+
-                     "Thanks again for using our platform.", user.getEmail(), Mail.MODE_TEXT);
-            System.out.println("send email");
-        }
         user.set("Prdt_EfDt", getPara("Prdt_EfDt"));
         user.set("PD_ExDat", getPara("PD_ExDat"));
         long day = TimeUtil.dateDiff(TimeUtil.getNow(),getPara("PD_ExDat"), "yyyy-MM-dd", "d");

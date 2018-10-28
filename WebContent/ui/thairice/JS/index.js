@@ -36,7 +36,7 @@ $(function () {
                         message: 'The account is  required and can\'t be empty '
                     },
                     regexp: {
-                    	//regexp: 1/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,12}$/,
+                    	//regexp: /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,12}$/,
                     	regexp: /^[a-zA-Z0-9]{6,10}$/,
                         message: 'The account is made up of 6 to 12 letters or Numbers'
                     },
@@ -132,14 +132,6 @@ $(function () {
     	                max: 32,
     	                message: 'The nickname cannot exceed 32 characters'
     	            }
-                }
-            },
-            't3user.zip_encode': {
-            	validators: {   
-            		regexp: {
-                        regexp: /^[0-9]{5}$/,
-                        message: 'The zip code format is invalid'
-                    }
                 }
             },
             'PD_TpCd': {
