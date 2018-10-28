@@ -11,6 +11,7 @@
     <link type="text/css" rel="stylesheet" href="${cxt!}/ui/thairice/CSS/my_message.css">
     <link type="text/css" rel="stylesheet" href="${cxt!}/ui/thairice/CSS/nav_css.css">
     <link type="text/css" id="skin" rel="stylesheet" href="${cxt!}/ui/thairice/CSS/skin/color_one.css">
+    <link type="text/css" id="skin" rel="stylesheet" href="${cxt!}/CSS/skin/color_one.css">
     <style>
          .btn{padding: 6px 6px!important;}
         .tab_btns .btn{width: auto;padding: 0 10px 0 10px;}
@@ -20,6 +21,21 @@
 		.omit{white-space: nowrap;text-overflow: ellipsis;overflow: hidden;}
 		.omit:hover{overflow:visible;white-space: normal;}
     </style>
+        <script>
+    /*换肤*/
+	function skin1() {
+        var ob = document.getElementById('skin');
+        ob.href='${cxt!}/CSS/skin/color_one.css';
+    }
+    function skin2() {
+        var ob = document.getElementById('skin');
+        ob.href='${cxt!}/CSS/skin/color_two.css';
+    }
+	function skin3() {
+        var ob = document.getElementById('skin');
+        ob.href='${cxt!}/CSS/skin/color_three.css';
+    }
+    </script>
 </head>
 <body>
 <!--公共的头部start-->
