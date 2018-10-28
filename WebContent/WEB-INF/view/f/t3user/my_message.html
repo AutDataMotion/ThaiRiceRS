@@ -10,8 +10,14 @@
     <link href="${cxt!}/ui/thairice/CSS/dataTables.bootstrap4.css" rel="stylesheet">
     <link type="text/css" rel="stylesheet" href="${cxt!}/ui/thairice/CSS/my_message.css">
     <link type="text/css" rel="stylesheet" href="${cxt!}/ui/thairice/CSS/nav_css.css">
-    <link type="text/css" id="skin" rel="stylesheet" href="${cxt!}/ui/thairice/CSS/skin/color_one.css">
-    <link type="text/css" id="skin" rel="stylesheet" href="${cxt!}/CSS/skin/color_one.css">
+    <link type="text/css" rel="stylesheet" href="${cxt!}/CSS/nav_css.css">
+	<link type="text/css" id="skin" rel="stylesheet" href="${cxt!}/CSS/skin/color_one.css">
+  <!--   <link type="text/css" id="skin" rel="stylesheet" href="${cxt!}/ui/thairice/CSS/skin/color_one.css">
+    <link type="text/css" id="skin" rel="stylesheet" href="${cxt!}/ui/thairice/CSS/skin/color_two.css">
+    <link type="text/css" id="skin" rel="stylesheet" href="${cxt!}/ui/thairice/CSS/skin/color_three.css">
+    <link type="text/css" id="skin" rel="stylesheet" href="${cxt!}/CSS/skin/color_two.css">
+    <link type="text/css" id="skin" rel="stylesheet" href="${cxt!}/CSS/skin/color_three.css">
+    <link type="text/css" id="skin" rel="stylesheet" href="${cxt!}/CSS/skin/color_one.css"> -->
     <style>
          .btn{padding: 6px 6px!important;}
         .tab_btns .btn{width: auto;padding: 0 10px 0 10px;}
@@ -233,20 +239,6 @@ $("#navbar_user").addClass("active");
     $("#state").change(function () {
     	 _table.draw();
     });
-
-    /*换肤*/
-    function skin1() {
-        var ob = document.getElementById('skin');
-        ob.href = 'CSS/skin/color_one.css';
-    }
-    function skin2() {
-        var ob = document.getElementById('skin');
-        ob.href = 'CSS/skin/color_two.css';
-    }
-    function skin3() {
-        var ob = document.getElementById('skin');
-        ob.href = 'CSS/skin/color_three.css';
-    }
     $('.data-table tbody tr:odd td').css('background-color','#dbeff6');
 </script>
 </body>
