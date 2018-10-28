@@ -118,6 +118,15 @@ public class T2syslogController extends BaseController {
 		setAttr(ConstantRender.PATH_VIEW_NAME, pthv);
 	}
 	
+	// ============算法处理状态
+	public void  ajaxProcessStatus(){
+		renderWithPath( "/adm2018/process_status.html");
+	}
+	
+	public void  ajaxProcessStatusData(){
+		renderWithPath( "/adm2018/process_status.html");
+	}
+	
 	// ==========job 调用
 	private static PreProcessScheduleJob jobPre;
 	private static GrouthMonitorScheduleJob jobGrowth;
