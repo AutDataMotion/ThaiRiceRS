@@ -134,6 +134,14 @@ $(function () {
     	            }
                 }
             },
+            't3user.zip_encode': {
+            	validators: {   
+            		regexp: {
+                        regexp: /^[0-9]{5}$/,
+                        message: 'The zip code format is invalid'
+                    }
+                }
+            },
             'PD_TpCd': {
                 validators: {
                     notEmpty: {

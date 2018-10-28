@@ -12,10 +12,13 @@
     <link type="text/css" rel="stylesheet" href="${cxt!}/ui/thairice/CSS/nav_css.css">
     <link type="text/css" id="skin" rel="stylesheet" href="${cxt!}/ui/thairice/CSS/skin/color_one.css">
     <style>
+         .btn{padding: 6px 6px!important;}
         .tab_btns .btn{width: auto;padding: 0 10px 0 10px;}
         .input-group{width: 250px;float: right;margin-right: 20px;}
         .even{background-color: rgb(219, 239, 246)!important;}
         .table>tbody>tr>td{vertical-align: middle;}
+		.omit{white-space: nowrap;text-overflow: ellipsis;overflow: hidden;}
+		.omit:hover{overflow:visible;white-space: normal;}
     </style>
 </head>
 <body>
@@ -40,15 +43,15 @@
                     <input type="text" id="search" class="form-control" placeholder="Content">
                     <span class="input-group-btn"><button id="btn_search" class="btn btn-primary" type="button"><i class="glyphicon glyphicon-search"></i>Search</button></span>
                 </div>
-            <table class="table table-bordered data-table" id="dataTable01" style="word-wrap:break-word;word-break:break-all;">
+            <table class="table table-bordered data-table" id="dataTable01" style="word-wrap:break-word;word-break:break-all;table-layout:fixed;">
                 <thead>
                 <tr>
                     <th width="4%" style="border-bottom:none;text-align:left"><input type="checkbox" name="cb-check-all">  All</th>
                     <th width="10%" style="border-bottom:none;text-align:left">Type</th>
-                    <th width="62%"style="border-bottom:none;text-align:left">Content</th>
+                    <th width="54%"style="border-bottom:none;text-align:left">Content</th>
                     <th width="5%" style="border-bottom:none;text-align:left">Status</th>
                     <th width="12%" style="border-bottom:none;text-align:left">Received time</th>
-                    <th width="7%" style="border-bottom:none;text-align:left">View</th>
+                    <th width="15%" style="border-bottom:none;text-align:left">View</th>
                 </tr>
                 </thead>
             </table>
@@ -108,7 +111,9 @@ $("#navbar_user").addClass("active");
     		  return 'Remind';
     	  }
      	}},
-        {"data": "content", orderable: false},
+        {"data": null, orderable: false,render: function (data, type, row, meta) {
+      	  return '<div class="omit">'+data.content+'</div>';
+        }},
         { "data": null,orderable: false,render: function (data, type, row, meta) {
         	  if(data.status_=='01'){
         		  return '<span style="color:red;">Unread</span>'

@@ -150,7 +150,9 @@
                     </div>
                     </div>
                     <input type="hidden" id="userid" name="t3user.id">
+                    <input type="hidden" id="myid" name="myid">
                     <input type="hidden" id="status_" name="t3user.status_">
+                    <input type="hidden" id="myemail" name="t3user.email">
                 </form>
             </div>
             <div class="modal-footer">
@@ -356,12 +358,14 @@
         $("#Prdt_EfDt").val(obj.prdt_efdt);
         $("#PD_ExDat").val(obj.pd_exdat);
         $("#status_").val('02');
+        $("#myid").val(obj.id);
+        $("#myemail").val(obj.email);
         obj.pd_tpcd.split(",").forEach(function(item){
             $("input[type=checkbox]").each(function(){
                 if(item==$(this).val()){
                     $(this).attr("checked","true");
                 }
-            });
+            })
         });
     }
     //消息发送
