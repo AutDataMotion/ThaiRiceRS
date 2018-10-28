@@ -13,6 +13,7 @@ import com.platform.mvc.base.BaseController;
 
 import thairice.constant.ConstantInitMy;
 import thairice.mvc.t3user.Result;
+import thairice.mvc.t3user.T3user;
 
 /**
  * XXX 管理 描述：
@@ -54,6 +55,11 @@ public class T8messageController extends BaseController {
      * 删除多个
      */
     public void delete() {
+	T3user t3user=getSessionAttr("admin");
+	if(!t3user.getType_().equals("03")) {
+	    renderJson(new Result(0, "The operator does not have permission to delete message. Please contact the administrator to delete"));
+	    return;
+	}
 	int rows = service.deletes(getPara("ids"));
 	if (rows > 0) {
 	    renderJson(new Result(1, "Operation succeeded"));
@@ -66,6 +72,11 @@ public class T8messageController extends BaseController {
      * 清空全部消息
      */
     public void empty_message() {
+	T3user t3user=getSessionAttr("admin");
+	if(!t3user.getType_().equals("03")) {
+	    renderJson(new Result(0, "The operator does not have permission to empty the list. Please contact the administrator to empty"));
+	    return;
+	}
 	int row = Db.use(ConstantInitMy.db_dataSource_main).update(" UPDATE thairice.t8message SET show_flag=1");
 	if (row > 0) {
 	    renderJson(new Result(1, "Operation succeeded"));
