@@ -36,7 +36,7 @@ $(function () {
                         message: 'The account is  required and can\'t be empty '
                     },
                     regexp: {
-                    	//regexp: /^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,12}$/,
+                    	//regexp: 1/^(?![0-9]+$)(?![a-zA-Z]+$)[0-9A-Za-z]{6,12}$/,
                     	regexp: /^[a-zA-Z0-9]{6,10}$/,
                         message: 'The account is made up of 6 to 12 letters or Numbers'
                     },
