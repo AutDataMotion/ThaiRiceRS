@@ -1,0 +1,78 @@
+@charset "utf-8";
+/* CSS Document */
+html,body{
+	width:100%;
+	height:100%;
+	overflow:hidden;
+	overflow-y:auto;
+}
+.BbRegisterWrap{
+	width:830px;
+	height:650px;
+	position:absolute;
+	margin-left:-415px;
+	margin-top:-325px;
+	left:50%;
+	top:50%;
+}
+.BbRegister{
+	width:830px;
+	height:650px;
+	margin:0 auto;
+	position:relative;
+}
+.BbRegister h2{
+	width:100%;
+	height:70px;
+	background:url(../Images/welcome/yourlogo.png) no-repeat center center;
+	/*margin-bottom:20px;*/
+}
+.container{
+	width:830px;
+	height:555px;
+	background:url(../Images/register/register_cons_bg.png) no-repeat;
+}
+.container .title{
+	font-size:18px;
+	color:#00ccff;
+	height:50px;
+	line-height:50px;
+	text-align:center;
+	margin-top:10px;
+	font-weight:bold;
+	margin-bottom:0;
+}
+.container p{
+	text-align:center;
+}
+.BbRegister .form-horizontal .form-group{
+	margin:0;
+	margin-bottom:12px;
+}
+.BbRegister label{
+	font-weight:normal;
+}
+.BbRegister .form-horizontal.form_selfinfo{
+	display:block;
+}
+.BbRegister .form-horizontal.form_serviceinfo{
+	display:none;
+}
+.form-group .service label{
+	display:block;
+	height:30px;
+	margin-top:8px;
+}
+.account_in{
+	font-size:18px;
+	color:#999;
+	margin-top:10px;
+}
+.account_in a{
+	color:#00d8ff;
+}
+.account_in a:hover{
+	text-decoration:none;
+}
+
+
