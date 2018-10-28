@@ -99,9 +99,9 @@ public class T3userController extends BaseController {
     @Before(T3userValidator.class)
     public void Login() {
 //*****************************************************************	
-/*	thairice.utils.FileUtils  obj = new thairice.utils.FileUtils();
+	thairice.utils.FileUtils  obj = new thairice.utils.FileUtils();
 	obj.prepareTestDataDir("F:\\MODIS\\LST", "d:\\");
-	LOG.info("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");*/
+	LOG.info("XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX");
 //*****************************************************************
 
         boolean authCode = authCode();
@@ -155,37 +155,22 @@ public class T3userController extends BaseController {
             JSONArray array = new JSONArray(getPara("list"));
             for (int i = 0; i < array.length(); i++) {
                 JSONObject object = array.getJSONObject(i);
-                
-                if(object.getInt("province")==1) {
-                    List<Record>province=Db.use(ConstantInitMy.db_dataSource_main).find("select * from t13region where parentId=0");
-                    for(Record r:province) {
-                	if(!r.get("name").equals("ALL")) {
-                	    Record record = new Record();
-                            record.set("userId", t3user.getId());
-                            record.set("provinceId", r.getInt("Id"));
-                            record.set("cityId", 0);
-                            record.set("areaId", 0);
-                            Db.use(ConstantInitMy.db_dataSource_main).save("t14my_region", record); 
-                	}
-                    }
-                }else {
-                    Record record = new Record();
-                    record.set("userId", t3user.getId());
-                    record.set("provinceId", object.getInt("province"));
-                    String city = object.get("city") + "";
-                    String area = object.get("area") + "";
-                    if (StrKit.isBlank(city)) {
-                        record.set("cityId", 0);
-                    } else {
-                        record.set("cityId", object.getInt("city"));
-                    }
-                    if (StrKit.isBlank(area)) {
-                        record.set("areaId", 0);
-                    } else {
-                        record.set("areaId", object.getInt("area"));
-                    }
-                    Db.use(ConstantInitMy.db_dataSource_main).save("t14my_region", record);
+                Record record = new Record();
+                record.set("userId", t3user.getId());
+                record.set("provinceId", object.getInt("province"));
+                String city = object.get("city") + "";
+                String area = object.get("area") + "";
+                if (StrKit.isBlank(city)) {
+                    record.set("cityId", 0);
+                } else {
+                    record.set("cityId", object.getInt("city"));
                 }
+                if (StrKit.isBlank(area)) {
+                    record.set("areaId", 0);
+                } else {
+                    record.set("areaId", object.getInt("area"));
+                }
+                Db.use(ConstantInitMy.db_dataSource_main).save("t14my_region", record);
             }
             
             //邮箱验证，激活链接
@@ -724,7 +709,7 @@ public class T3userController extends BaseController {
             renderJson(new Result(0, "The email may not be sent out successfully, please contact the administrator"));
         }
     }
-    
+
     /**
      * 重置密码
      */

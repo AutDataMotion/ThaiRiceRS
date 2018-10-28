@@ -46,7 +46,7 @@
 						<label class="col-sm-2 control-label">* Account</label>
 							<div class="col-sm-8">
 								<input type="text" class="form-control"
-									placeholder="The Account is made up of 6 to 12 letters or Numbers"
+									placeholder="The Account is made up of 6 to 12 letters and Numbers"
 									name="t3user.account">
 							</div>
 						</div>
@@ -248,7 +248,7 @@
     <script src="${cxt!}/ui/thairice/area/jquery.cxselect.js"></script>
 	<script src="${cxt!}/ui/thairice/common.js"></script>
 	<script type="text/javascript">
-		sendAjax("${cxt!}/jf/thairice/t3user/province",null,function (res) {
+	sendAjax("${cxt!}/jf/thairice/t3user/province",null,function (res) {
 		   /*$('#custom_data').cxSelect({
 			    selects: ['province', 'city', 'area'],
 			    required: true,
@@ -302,18 +302,12 @@
             });
         }
     }
-	   var all='';
 	   $("#add").click(function(){
 		   var province=$('#province').val();
 		   if(province==""){
 			   layer.msg("Please choose the Province first ");
 			   return false;
 		   }
-		   if(all==1){
-			   layer.msg("You have added the area");
-			   return false;
-		   }
-		   all=province;
 		   var province=$('#province').val();
            var city=$('#city').val();
            var area=$('#area').val();
@@ -365,7 +359,6 @@
 	    	layer.confirm('Please confirm whether the record is deleted', {
 	    		title: ['Tips'],btn: ['OK','Cancel'] //按钮
 	    	}, function(){
-	    		all='';
 	          	$(obj).parent().remove();
 	          	layer.closeAll();
 	    	}, function(){
