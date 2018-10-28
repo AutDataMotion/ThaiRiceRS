@@ -13,6 +13,7 @@
     <link type="text/css" rel="stylesheet" href="${cxt!}/ui/thairice/CSS/bootstrapValidator.css">
     <link rel="stylesheet" href="${cxt!}/ui/thairice/CSS/bootstrap-imginput.css">
     <link type="text/css" id="skin" rel="stylesheet" href="${cxt!}/ui/thairice/CSS/skin/color_one.css">
+    <link type="text/css" id="skin" rel="stylesheet" href="${cxt!}/CSS/skin/color_one.css">
     
     
     <script src="${cxt!}/ui/thairice/JS/jquery-2.0.0.min.js"></script>
@@ -60,6 +61,21 @@
             left: -3px
         }
     </style>
+    <script>
+    /*换肤*/
+	function skin1() {
+        var ob = document.getElementById('skin');
+        ob.href='${cxt!}/CSS/skin/color_one.css';
+    }
+    function skin2() {
+        var ob = document.getElementById('skin');
+        ob.href='${cxt!}/CSS/skin/color_two.css';
+    }
+	function skin3() {
+        var ob = document.getElementById('skin');
+        ob.href='${cxt!}/CSS/skin/color_three.css';
+    }
+    </script>
 </head>
 <body>
 <!--公共的头部start-->
