@@ -58,12 +58,58 @@ function init_productionConf_Monitoring()
 		app.sample_excel.row.add( [
 			"<input type='text'  placeholder='sample name' style='width:100px; text-align:center;'>",
 			"<button type='button' onclick='startDraw_sample($(this))'><i class='glyphicon glyphicon-edit'></i>Draw</button>"+
+			"<button type='button' class='color-box' style='width:15px;height:15px;background-color:#ff8800;'></button>"+
           	"<button type='button' onclick='saveDraw_sample($(this))'><i class='glyphicon glyphicon-ok-circle'></i>Save</button>"+
           	"<button type='button' onclick='deleteDraw_sample($(this))'><i class='glyphicon glyphicon-remove-sign'></i>Cancel</button>"
            
         ] ).draw( false );
- 
+		$('.color-box').colpick({
+
+			colorScheme:'dark',
+
+			layout:'rgbhex',
+
+			color:'ff8800',
+
+			onSubmit:function(hsb,hex,rgb,el) {
+
+				$(el).css('background-color', '#'+hex);
+//				console.log(rgb);
+				$(el).colpickHide();
+				require([
+				     
+				      "esri/symbols/SimpleFillSymbol", "esri/renderers/SimpleRenderer",
+				      "esri/config",
+				      "esri/Color", "dojo/domReady!"
+				    ], function(
+				      SimpleFillSymbol, SimpleRenderer,
+				      esriConfig,
+				      Color
+				    ) {
+//					var renderer = new SimpleRenderer(
+//					          new SimpleFillSymbol("solid", null, new Color([255, 0, 255, 0.75]) // fuschia lakes!
+//					        ));
+
+//					app.graphicsLayer.setRenderer(renderer);
+//					app.graphicsLayer.redraw();
+					var graphicSys =  new SimpleFillSymbol("solid", null, new Color([rgb.r, rgb.g, rgb.b, 0.5])); // fuschia lakes!
+//					console.log(app.graphicsLayer.graphics);
+					if(app.graphicsLayer.graphics.length>0)
+					{
+						for(var i=0;i<app.graphicsLayer.graphics.length;i++){
+					           
+							app.graphicsLayer.graphics[i].setSymbol(graphicSys);
+				           
+				          }
+					}
+					
+				});
+				
+			}
+
+		});
     } );
+	
 	$('#rgbChange').on( 'click', function () {
 		areaRasterbandsExtract();
     } );
@@ -169,8 +215,10 @@ function init_productionConf_Monitoring()
 	              break;
 	            default:
 //	              symbol = new SimpleFillSymbol();
+//	            	symbol = new SimpleFillSymbol("solid",  new SimpleLineSymbol(SimpleLineSymbol.STYLE_DASHDOT,
+//	            		    new Color([255,0,0]), 2), new Color([255, 136, 0, 1]));
 	            	symbol = new SimpleFillSymbol("solid",  new SimpleLineSymbol(SimpleLineSymbol.STYLE_DASHDOT,
-	            		    new Color([255,0,0]), 2), new Color([255, 255, 255, 1]));
+	            		    new Color([255,0,0]), 2), new Color([app.color_R, app.color_G, app.color_B, 0.5]));
 	              break;
 	          }
 	          var graphic = new Graphic(evt.geometry, symbol);
@@ -237,6 +285,15 @@ function generateFeatureLayer(layerSource,fileName)
 */
 function startDraw_sample(tr)
 {
+//	color-box
+	var color_box = tr.parents('td').children("button.color-box")[0].style.backgroundColor;
+	
+	var parts = color_box.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
+//	console.log(parts);parts now should be ["rgb(0, 70, 255", "0", "70", "255"]
+	app.color_R = parseInt(parts[1]);
+	app.color_G = parseInt(parts[2]);
+	app.color_B = parseInt(parts[3]);
+	
 	app.DrawSample = true;//draw sample;
 	
 	app.graphicsLayer.clear();
@@ -602,11 +659,13 @@ function addRasterLayer(fileName)
 		"esri/layers/DynamicLayerInfo","esri/layers/LayerDataSource",
 	      "esri/layers/LayerDrawingOptions","esri/symbols/SimpleFillSymbol", 
 	      "esri/renderers/SimpleRenderer","esri/Color",
+	      "esri/geometry/Extent",
+	      "esri/SpatialReference",
 	      	"dojo/parser",
 		    "esri/urlUtils",
 		    "esri/config",
 		    "dojo/domReady!"], function(FeatureLayer,ArcGISDynamicMapServiceLayer,
-	    	DynamicLayerInfo,LayerDataSource,LayerDrawingOptions,SimpleFillSymbol,SimpleRenderer,Color,
+	    	DynamicLayerInfo,LayerDataSource,LayerDrawingOptions,SimpleFillSymbol,SimpleRenderer,Color,Extent,SpatialReference,
 	    	parser,urlUtils,esriConfig) { 
 		
 		parser.parse();
@@ -650,11 +709,17 @@ function addRasterLayer(fileName)
 	    app.renderLayer.on("load",function(res){
 //	    	alert("ooook");
 	    	require(["esri/geometry/Extent","esri/map"], function(Extent,Map) { 
+	    		//alert("00000");
 	    		var layerExt = app.renderLayer.fullExtent;
+	    		var startExtent = new Extent(layerExt.xmin, layerExt.ymin, layerExt.xmax, layerExt.ymax,
+	    		          new SpatialReference({ wkid:4326 }) );
+
+	    		app.map.setExtent(startExtent);
+	    		console.log(app.renderLayer);
 //	        	console.log(layerExt.getCenter());
-//	         	app.map.setExtent(layerExt.expand(1));
+//	         	app.map.setExtent(layerExt);
 //	        	getHeight()getWidth()
-	    		app.map.centerAt(layerExt.getCenter());
+//	    		app.map.centerAndZoom(layerExt.getCenter(),10);
 //	    		$("#mapDiv_productionConf").busyLoad("hide");
 	    	});
 	    	

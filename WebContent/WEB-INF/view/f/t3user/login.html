@@ -39,14 +39,10 @@
     <div class="container" style="width:1000px; margin:0 auto;">
     	<h2 class="announce_title"><span>News</span></h2>
         <ul class="list-group">
-          <li class="list-group-item">Lateset rice growth monitoring product of all of Thailand has been released. (13 Jul 2018)</li>
-          <li class="list-group-item">Rice acreage product of Suphan Buri Province has been updated. (10 Jul 2018)</li>
-          <li class="list-group-item">Rice drought monitoring report has been updated. (3 Jul 2018)</li>
-          <li class="list-group-item">Rice yield estimate of Srakaeo Province and Rayong Province can be queryed now. (3 Jul 2018)</li>
-          <li class="list-group-item">Lateset rice growth monitoring product of all of Thailand has been released. (23 Jun 2018)</li>
-          <li class="list-group-item">Rice acreage product of Suphan Buri Province has been updated. (20 Jun 2018)</li>
-          <li class="list-group-item">Rice drought monitoring report has been updated. (20 Jun 2018)</li>
-          <li class="list-group-item last">Rice yield estimate of Srakaeo Province and Rayong Province can be queryed now. (17 Jun 2018)</li>
+        
+	        <%for(x in blogPage.list){ %>
+	        	<li class="list-group-item">${x.title}(${x.editTime})</li>
+	        <%}%>
         </ul>
     </div>
   </div>

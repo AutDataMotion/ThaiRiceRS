@@ -56,6 +56,7 @@ function AssembleProductLayerInfo(areaCode,productDate,productKind_code)
 }
 function getProductDataAndCopy2Workspace(areaCode,productDate,productKind_des)
 {
+	
 	$.ajax({
 	    url:'/jf/thairice/t10pdt_report/CopyProductData2Workspace',
 	    type:'POST', //GET
@@ -78,12 +79,16 @@ function getProductDataAndCopy2Workspace(areaCode,productDate,productKind_des)
 //	    	alert("success");
 	    	if(data.result)
 	    	{
+	    		//alert("ok");
+	    		//$('.StaButton').show();// if data exist show StaButton
 	    		var prov_code = areaCode.substring(0,2);
 	    		
 	    		addProductLayer(prov_code,productDate,productKind_des);
 	    	}
 	    	else{
+	    		alert("no");
 	    		// 隐藏loading
+	    		//$('.StaButton').hide();// if data exist show StaButton
 	    		$("#mapDiv").busyLoad("hide");
 	    		
 	    		$('#systemTipsModal').modal();
@@ -120,6 +125,7 @@ function getProductDataAndCopy2Workspace(areaCode,productDate,productKind_des)
 }
 function addProductLayer(prov_code,productDate,productKind_des)
 {
+//	alert("addProductLayer");
 	var featureLayer_outFields = ["value","PROV_NAME","AMP_NAME","TAM_NAME","prov_code","amp_code","tam_code"];
 	var renderLayer_id = productKind_des;
 	var Render_field = 'value';
@@ -1575,6 +1581,7 @@ function initTimeSelect_indexHtml(provinceCode)
 	    	}
 	    	else{
 //	    		alert("no data");
+	    		$('.StaButton').hide();
 	    		$('#systemTipsModal').modal();
 		    	
 		    	$('#systemTipsModalBtn').click(function(e) {

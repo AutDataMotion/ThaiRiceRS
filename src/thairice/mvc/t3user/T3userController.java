@@ -30,6 +30,7 @@ import thairice.constant.ConstantInitMy;
 import thairice.interceptor.UserLoginInterceptor;
 import thairice.mvc.r4message_send.R4message_send;
 import thairice.mvc.t10pdt_report.T10pdt_report;
+import thairice.mvc.t15_news_cnt.t15_news_cnt;
 import thairice.mvc.t2syslog.EnumT2sysLog;
 import thairice.mvc.t2syslog.T2syslogService;
 import thairice.mvc.t8message.T8message;
@@ -79,6 +80,11 @@ public class T3userController extends BaseController {
     public void login() {
         setAttr("returnUrl", "");
         keepPara("returnUrl");
+        
+		Page page  = t15_news_cnt.dao.paginate(getParaToInt(0, 1), 10, "select t.title, t.content, date_format(t.editTime ,'%Y/%m/%d') as editTime from t15_news_cnt t order by t.rank asc ", "");
+//		log.info("查询报表返回结果" + JSON.toJSONString(page));
+		setAttr("blogPage",page );
+		
         renderWithPath(pthv + "login.html");
     }
 
@@ -542,7 +548,7 @@ public class T3userController extends BaseController {
         T3user user = getSessionAttr("user");
         String[] ad = user.getStr("area").split(" ");
 //        Page page = T10pdt_report.dao.paginate(getParaToInt(0, 1), 10, "select *", "from T10pdt_report order by id asc");
-        Page page  = T10pdt_report.dao.paginate(getParaToInt(0, 1), 10, "select *,(case pdt_type \r\n" + 
+        Page page  = T10pdt_report.dao.paginate(getParaToInt(0, 1), 10, "select t.id, date_format(t.add_time ,'%Y-%m-%d %H:%i:%S') as add_time, date_format(t.collect_time ,'%Y-%m-%d') as collect_time, t.zone_code,(case pdt_type \r\n" + 
 				"when '01' then 'Area monitoring' \r\n" + 
 				"when '02' then 'Growth monitoring'\r\n" + 
 				"when '03' then 'Estimated production'\r\n" + 
@@ -550,16 +556,17 @@ public class T3userController extends BaseController {
 				"else ''\r\n" + 
 				"end) as pdt_type,"
 				+ "(case suffix \r\n" + 
-						"when '01' then 'doc' \r\n" + 
-						"when '02' then 'pdf'\r\n" + 
+						"when '01' then 'WORD' \r\n" + 
+						"when '02' then 'PDF'\r\n" + 
 						"else ''\r\n" + 
-						"end) as suffix", "from T10pdt_report where userid = "+String.valueOf(user.getBigInteger("id"))+" order by id asc");
+						"end) as suffix", "from T10pdt_report t where userid = "+String.valueOf(user.getBigInteger("id"))+" order by t.add_time desc");
         setAttr("blogPage", page);
         setAttr("province", ad[0]);
         T3user info = srv.SelectById(user.getBigInteger("id"));
         if (TimeUtil.isLaterThanNow(info.getPD_ExDat().toString())) {
             info.setStatus_("04");
         }
+        
         setAttr("city", ad[1]);
         setAttr("area", ad[2]);
         setAttr("user", info);
