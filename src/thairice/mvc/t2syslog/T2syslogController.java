@@ -121,6 +121,7 @@ public class T2syslogController extends BaseController {
 	// ============算法处理状态
 	public void  ajaxProcessStatus(){
 		renderWithPath( "/adm2018/process_status.html");
+		setAttr("ajaxProcessStatus", "active");
 	}
 	
 	public void  ajaxProcessStatusData(){
