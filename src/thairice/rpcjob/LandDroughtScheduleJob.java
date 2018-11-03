@@ -29,7 +29,8 @@ import thairice.mvc.t2syslog.T2syslogService;
 public class LandDroughtScheduleJob extends AbsScheduleJob implements ITask {
 
 	private static Logger log = Logger.getLogger(LandDroughtScheduleJob.class);
-
+	public static JobStatusMdl statusMdl = new JobStatusMdl();
+	
 	// 参数配置
 	private float threshold1 = 0.2f;
 	private float threshold2 = 0.4f;
@@ -157,6 +158,7 @@ public class LandDroughtScheduleJob extends AbsScheduleJob implements ITask {
 				break;
 			}
 
+			statusMdl.start(rpcTodoDatas.size());
 			rpcTodoDatas.forEach(rpcData -> {
 				// 调用rpc处理程序
 				EnumStatus rpcRes = landDrought(rpcData, null);
@@ -165,6 +167,9 @@ public class LandDroughtScheduleJob extends AbsScheduleJob implements ITask {
 				if (EnumStatus.Success != rpcRes) {
 					// todo 修改标志位为失败，等待下次任务继续执行，当失败超过3次则标志位终生失败
 					dbDataStatus = EnumDataStatus.PROCESS_FAIL;
+					statusMdl.failedOne();
+				} else {
+					statusMdl.succOne();
 				}
 				Record recordndvi = new Record().set(T12PreProcessInf.column_id, rpcData.idndvi)
 						.set(T12PreProcessInf.column_drought_st, dbDataStatus.getIdStr());
@@ -174,8 +179,8 @@ public class LandDroughtScheduleJob extends AbsScheduleJob implements ITask {
 						.set(T12PreProcessInf.column_drought_st, dbDataStatus.getIdStr());
 				ConfMain.db().update(T12PreProcessInf.tableName, record);
 			});
-
 		}
+		statusMdl.stop();
 		log.info(" <<<<job end");
 	}
 

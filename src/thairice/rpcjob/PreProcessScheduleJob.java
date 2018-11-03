@@ -6,6 +6,7 @@
 package thairice.rpcjob;
 
 import java.math.BigInteger;
+import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
 import java.util.Objects;
@@ -35,6 +36,8 @@ public class PreProcessScheduleJob extends AbsScheduleJob implements ITask {
 
 	private static Logger log = Logger.getLogger(PreProcessScheduleJob.class);
 
+	public static JobStatusMdl statusMdl = new JobStatusMdl();
+	
 	public List<List<T6org_data>> loadDataFromDb() {
 		// todo 拼接查询条件, 还未确定, 确定后再做
 		// 查询下载成功的，已经构成一组的数据统计
@@ -93,6 +96,7 @@ public class PreProcessScheduleJob extends AbsScheduleJob implements ITask {
 		boolean haveUndoData = true;
 		log.info(">>>>job begin");
 		while (haveUndoData) {
+			
 			// 从数据库读取数据
 			List<List<T6org_data>> dbUndoDatas = loadDataFromDb();
 			if (ComUtil.isEmptyList(dbUndoDatas)) {
@@ -100,7 +104,7 @@ public class PreProcessScheduleJob extends AbsScheduleJob implements ITask {
 				haveUndoData = false;
 				break;
 			}
-
+			statusMdl.start(dbUndoDatas.size());
 			dbUndoDatas.forEach(data -> {
 				// 封装为rpc接口数据
 				PreProcess rpcTodoData = mdlConvert(data);
@@ -109,6 +113,7 @@ public class PreProcessScheduleJob extends AbsScheduleJob implements ITask {
 				// 封装rpc结果数据，入库
 				if (EnumStatus.Success == rpcRes) {
 					updateToDb(data, rpcTodoData);
+					statusMdl.succOne();
 				} else {
 					// 修改标志位为失败，等待下次任务继续执行，当失败超过3次则标志位终生失败
 					data.stream().forEach(d -> {
@@ -116,9 +121,11 @@ public class PreProcessScheduleJob extends AbsScheduleJob implements ITask {
 								EnumDataStatus.PROCESS_FAIL.getIdStr());
 						ConfMain.db().update(T6org_data.tableName, record);
 					});
+					statusMdl.failedOne();
 				}
 			});
 		}
+		statusMdl.stop();
 		log.info("<<<<job end");
 	}
 
@@ -135,16 +142,18 @@ public class PreProcessScheduleJob extends AbsScheduleJob implements ITask {
 			sourceFilePathList.add((String) d.getStorage_path() + d.getName_());
 		});
 		// 存入预处理表
+		Timestamp st = GenerTimeStamp.DateKeyToTimestamp(inputs.get(0).getCollect_time());
 		Record target = new Record()
 				.set(T12PreProcessInf.column_data_type, rpcTodoData.type)
 				.set(T12PreProcessInf.column_source_file_list, Joiner.on(splitChar).join(sourceFilePathList))
 				.set(T12PreProcessInf.column_file_path, rpcTodoData.outFilePath)
 				.set(T12PreProcessInf.column_file_name, rpcTodoData.outFileName)
-				.set(T12PreProcessInf.column_data_collect_time, GenerTimeStamp.DateKeyToTimestamp(inputs.get(0).getCollect_time()))
+				.set(T12PreProcessInf.column_data_collect_time, st)
 				.set(T12PreProcessInf.column_condition_st, EnumDataStatus.PROCESS_UN.getIdStr())
 				.set(T12PreProcessInf.column_drought_st, EnumDataStatus.PROCESS_UN.getIdStr())
 				.set(T12PreProcessInf.column_estimate_st, EnumDataStatus.PROCESS_UN.getIdStr())
-				.set(T12PreProcessInf.column_generate_time, GenerTimeStamp.dateToTimeStamp(new Date()));
+				.set(T12PreProcessInf.column_generate_time, GenerTimeStamp.dateToTimeStamp(new Date()))
+				.set(T12PreProcessInf.column_daynum, GenerTimeStamp.dayNumOfYear(st));
 	  ConfMain.db().save(T12PreProcessInf.tableName, target);
 		return;
 	}
@@ -160,4 +169,25 @@ public class PreProcessScheduleJob extends AbsScheduleJob implements ITask {
 
 	}
 
+	public static String redoDayNumsOfYear(Integer yearBeg, Integer yearEnd){
+		if (Objects.isNull(yearBeg) || Objects.isNull(yearEnd)
+				|| (yearEnd - yearBeg > 10)) {
+			return "not support";
+		}
+		
+		String sql = String.format("SELECT id, data_collect_time  FROM %s where date_format(data_collect_time, '%%Y') between '%d' and '%d'  limit 2000"
+				,  T12PreProcessInf.tableName, yearBeg, yearEnd) ;
+		List<Record> resDownloadSucCnt = ConfMain.db().find(sql);
+		if (CollectionUtils.isEmpty(resDownloadSucCnt)) {
+			return "no data";
+		}
+		resDownloadSucCnt.forEach(r -> {
+			Record record = new Record()
+					.set(T12PreProcessInf.column_id, r.get(T12PreProcessInf.column_id))
+					.set(T12PreProcessInf.column_daynum, GenerTimeStamp.dayNumOfYear(r.get(T12PreProcessInf.column_data_collect_time)));
+			ConfMain.db().update(T12PreProcessInf.tableName, record);
+		});
+		
+		return "done";
+	}
 }

@@ -39,8 +39,9 @@ import thairice.mvc.t2syslog.T2syslogService;
 public class LandYieldScheduleJob extends AbsScheduleJob implements ITask {
 
 	private static Logger log = Logger.getLogger(LandYieldScheduleJob.class);
-
-	private static String jobName = GrouthMonitorScheduleJob.class.getSimpleName();
+	public static JobStatusMdl statusMdl = new JobStatusMdl();
+	
+	private static String jobName = LandYieldScheduleJob.class.getSimpleName();
 
 	private static String csvFilePath = "E:\\Thailand_data\\statistic\\";
 	public List<T12PreProcessInf> loadDataFromDb() {
@@ -77,10 +78,13 @@ public class LandYieldScheduleJob extends AbsScheduleJob implements ITask {
 			Map<String, String> map = Maps.newHashMap();
 			String whereStr = sqlStr_ProcessStatus(EnumDataStatus.PDT_TYPE_Yield, EnumDataStatus.PROCESS_SUCCE);
 			List<T12PreProcessInf> listArg = T12PreProcessInf.dao.find(String.format(
-					" select * from %s where  %s and data_type =%s and date_format(data_collect_time, '%%Y%%m%%d') between '%s' and '%s'  limit 200 ",
-					T12PreProcessInf.tableName, whereStr, EnumDataStatus.DATA_TYPE_NDVI_02.getIdStr(),
-					GenerTimeStamp.pickYearMonthDay(yearBeg, preObj.getData_collect_time()),
-					GenerTimeStamp.pickYearMonthDay(yearEnd, preObj.getData_collect_time())));
+					" select * from %s where  %s and data_type =%s "
+					+ " and date_format(data_collect_time, '%%Y') between '%d' and '%d' "
+					+ " and date_format(data_collect_time, '%%m%%d') = '%s'  limit 200 ",
+					T12PreProcessInf.tableName, whereStr, EnumDataStatus.DATA_TYPE_NDVI_02.getIdStr()
+					,yearBeg, yearEnd
+					,preObj.getDaynum()
+					));
 			if (CollectionUtils.isEmpty(listArg)) {
 				T2syslogService.error(userId, userName, jobName, "Objects.isNull(listArg)");
 				return null;
@@ -136,6 +140,7 @@ public class LandYieldScheduleJob extends AbsScheduleJob implements ITask {
 				T2syslogService.info(userId, userName, jobName, "no csvFiles or no rpcData");
 				break;
 			}
+			statusMdl.start(dbUndoDatas.size());
 			rpcTodoDatas.forEach(rpcData -> {
 				csvFileNames.forEach(csvFileName ->{
 					String[] tokens = csvFileName.split("\\.");
@@ -148,6 +153,9 @@ public class LandYieldScheduleJob extends AbsScheduleJob implements ITask {
 					if (EnumStatus.Success != rpcRes) {
 						// todo 修改标志位为失败，等待下次任务继续执行，当失败超过3次则标志位终生失败
 						dbDataStatus = EnumDataStatus.PROCESS_FAIL;
+						statusMdl.failedOne();
+					}else {
+						statusMdl.succOne();
 					}
 					Record record = new Record().set(T12PreProcessInf.column_id, rpcData.first.id)
 							.set(T12PreProcessInf.column_estimate_st, dbDataStatus.getIdStr());
@@ -156,6 +164,7 @@ public class LandYieldScheduleJob extends AbsScheduleJob implements ITask {
 				
 			});
 		}
+		statusMdl.stop();
 		log.info("<<<<job end");
 	}
 

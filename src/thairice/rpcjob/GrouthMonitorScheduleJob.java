@@ -37,7 +37,8 @@ import thairice.mvc.t6org_data.T6org_data;
 public class GrouthMonitorScheduleJob extends AbsScheduleJob implements ITask {
 
 	private static Logger log = Logger.getLogger(GrouthMonitorScheduleJob.class);
-
+	public static JobStatusMdl statusMdl = new JobStatusMdl();
+	
 	// 参数配置
 	private float threshold1 = 0.39f;
 	private float threshold2 = 2.33f;
@@ -97,10 +98,13 @@ public class GrouthMonitorScheduleJob extends AbsScheduleJob implements ITask {
 			Map<String, String> map = Maps.newHashMap();
 			String whereStr = sqlStr_ProcessStatus(EnumDataStatus.PDT_TYPE_Growth, EnumDataStatus.PROCESS_SUCCE);
 			List<T12PreProcessInf> listArg = T12PreProcessInf.dao.find(String.format(
-					" select * from %s where   %s and data_type =%s and date_format(data_collect_time, '%%Y%%m%%d') between '%s' and '%s'  limit 20 ",
+					" select * from %s where   %s and data_type =%s "
+					+ " and date_format(data_collect_time, '%%Y') between '%d' and '%d'  "
+					+ " and daynum = %d  limit 200 ",
 					T12PreProcessInf.tableName, whereStr, EnumDataStatus.DATA_TYPE_NDVI_02.getIdStr()
-					, GenerTimeStamp.pickYearMonthDay(yearBeg,preObj.getData_collect_time())
-					, GenerTimeStamp.pickYearMonthDay(yearEnd,preObj.getData_collect_time())));
+					, yearBeg, yearEnd
+					, preObj.getDaynum()
+					));
 			if (Objects.isNull(listArg)) {
 				T2syslogService.error(userId, userName, jobName, "Objects.isNull(listArg)");
 				return null;
@@ -132,8 +136,9 @@ public class GrouthMonitorScheduleJob extends AbsScheduleJob implements ITask {
 			if (ComUtil.isEmptyList(dbUndoDatas)) {
 				log.info("loadDataFromDb no predata now");
 				haveUndoData = false;
-				return;
+				break;
 			}
+			
 			// 封装为rpc接口数据
 			List<Tuple2<Growth, Map<String, String>>> rpcTodoDatas = mdlConvert(dbUndoDatas);
 
@@ -149,7 +154,7 @@ public class GrouthMonitorScheduleJob extends AbsScheduleJob implements ITask {
 				haveUndoData = false;
 				break;
 			}
-			
+			statusMdl.start(rpcTodoDatas.size());
 			rpcTodoDatas.forEach(rpcData -> {
 				// 调用rpc处理程序
 				 EnumStatus rpcRes = growthMonitor(rpcData.first, rpcData.second);
@@ -158,12 +163,16 @@ public class GrouthMonitorScheduleJob extends AbsScheduleJob implements ITask {
 				 if (EnumStatus.Success != rpcRes) {
 					// todo 修改标志位为失败，等待下次任务继续执行，当失败超过3次则标志位终生失败
 					 dbDataStatus = EnumDataStatus.PROCESS_FAIL;
-				} 
+					 statusMdl.failedOne();
+				} else {
+					statusMdl.succOne();
+				}
 				 Record record = new Record().set(T12PreProcessInf.column_id, rpcData.first.id)
 							.set(T12PreProcessInf.column_condition_st, dbDataStatus.getIdStr());
 					ConfMain.db().update(T12PreProcessInf.tableName, record);
 			});
 		}
+		statusMdl.stop();
 		log.info(">>> job end");
 	}
 
