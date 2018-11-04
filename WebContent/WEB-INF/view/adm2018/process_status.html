@@ -9,6 +9,21 @@
     font-size: 24px;
 }
 
+.btn-stop {
+	position:relative;
+	line-height:40px;
+	border-radius:5px;
+	color:#fff;
+	font-size:20px;
+	text-align:center;
+	cursor:pointer;
+	box-shadow:0 1px 2px rgba(0,0,0,.3);
+	overflow:hidden;
+	background-image: -webkit-gradient(linear,left top,left bottom,from(#748ea0),to(#0685b4));
+    opacity: 1;
+    border: 1px solid rgb(46, 206, 206);
+}
+
 .breathe-btn {
 	position:relative;
 	line-height:40px;
@@ -29,13 +44,13 @@
 }
 @-webkit-keyframes breathe {
 	0% {
-	opacity:.2;
-	box-shadow:0 1px 2px rgba(255,255,255,0.1);
-}
-100% {
-	opacity:1;
-	border:1px solid rgba(59,235,235,1);
-	box-shadow:0 1px 30px rgba(59,255,255,1);
+		opacity:.2;
+		box-shadow:0 1px 2px rgba(255,255,255,0.1);
+	}
+	100% {
+		opacity:1;
+		border:1px solid rgba(59,235,235,1);
+		box-shadow:0 1px 30px rgba(59,255,255,1);
 }
 
 </style>
@@ -43,11 +58,11 @@
 <!-- 为ECharts准备一个具备大小（宽高）的Dom -->
 
 <div class="toolbar row">
-	<div class="col-sm-6 hidden-xs">
-		<div class="page-header">
-			<h1>
-				
-			</h1>
+	<div class="col-lg-12 col-md-12 hidden-xs">
+		<div class="page-header center">
+			<h2>
+				Processing Status of Each Batch of Data 
+			</h2>
 		</div>
 	</div>
 </div>
@@ -55,7 +70,49 @@
 	<div class="col-lg-6 col-md-12 ">
 		<div class="panel panel-blue">
 			<div class="panel-heading border-light">
-				<h2 class="panel-title center">Preprocess Status</h2>
+				<h2 class="panel-title center">Preprocess </h2>
+			</div>
+			<div class="panel-body no-padding">
+				<div class="padding-10">
+					<h4 class="no-margin inline-block padding-5">Status</h4>
+				</div>
+				<div class="clearfix padding-5 space5">
+					<div id="pre-btn" class="col-xs-12 text-center no-padding btn-stop">
+							<span id="pre-text" class="text-bold block text-extra-large">Waiting</span>
+					</div>
+				</div>
+			</div>
+			
+			<div class="panel-body no-padding">
+				<div class="padding-10">
+					<h4 class="no-margin inline-block padding-5">Statistics</h4>
+				</div>
+				<div class="clearfix padding-5 space5">
+					<div class="col-xs-4 text-center no-padding">
+						<div class="border-right border-dark">
+							<span id="pre-todo" class="text-bold block text-extra-large">12</span> <span
+								class="text-light">To Do</span>
+						</div>
+					</div>
+					<div class="col-xs-4 text-center no-padding">
+						<div class="border-right border-dark">
+							<span id="pre-suc" class="text-bold block text-extra-large">10</span> <span
+								class="text-light">Successful</span>
+						</div>
+					</div>
+					<div class="col-xs-4 text-center no-padding">
+						<span id="pre-fail" class="text-bold block text-extra-large">2</span> <span
+							class="text-light">Failed</span>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+	
+	<div class="col-lg-6 col-md-12 ">
+		<div class="panel panel-blue">
+			<div class="panel-heading border-light">
+				<h2 class="panel-title center">Drought</h2>
 			</div>
 			<div class="panel-body no-padding">
 				<div class="padding-10">
@@ -97,49 +154,7 @@
 	<div class="col-lg-6 col-md-12 ">
 		<div class="panel panel-blue">
 			<div class="panel-heading border-light">
-				<h2 class="panel-title center">Drought Status</h2>
-			</div>
-			<div class="panel-body no-padding">
-				<div class="padding-10">
-					<h4 class="no-margin inline-block padding-5">Status</h4>
-				</div>
-				<div class="clearfix padding-5 space5">
-					<div class="col-xs-12 text-center no-padding breathe-btn">
-							<span class="text-bold block text-extra-large">Running</span>
-					</div>
-				</div>
-			</div>
-			
-			<div class="panel-body no-padding">
-				<div class="padding-10">
-					<h4 class="no-margin inline-block padding-5">Statistics</h4>
-				</div>
-				<div class="clearfix padding-5 space5">
-					<div class="col-xs-4 text-center no-padding">
-						<div class="border-right border-dark">
-							<span class="text-bold block text-extra-large">12</span> <span
-								class="text-light">To Do</span>
-						</div>
-					</div>
-					<div class="col-xs-4 text-center no-padding">
-						<div class="border-right border-dark">
-							<span class="text-bold block text-extra-large">10</span> <span
-								class="text-light">Successful</span>
-						</div>
-					</div>
-					<div class="col-xs-4 text-center no-padding">
-						<span class="text-bold block text-extra-large">2</span> <span
-							class="text-light">Failed</span>
-					</div>
-				</div>
-			</div>
-		</div>
-	</div>
-	
-	<div class="col-lg-6 col-md-12 ">
-		<div class="panel panel-blue">
-			<div class="panel-heading border-light">
-				<h2 class="panel-title center">Growth Status</h2>
+				<h2 class="panel-title center">Growth</h2>
 			</div>
 			<div class="panel-body no-padding">
 				<div class="padding-10">
@@ -181,7 +196,7 @@
 <div class="col-lg-6 col-md-12 ">
 		<div class="panel panel-blue">
 			<div class="panel-heading border-light">
-				<h2 class="panel-title center">Yield Status</h2>
+				<h2 class="panel-title center">Yield</h2>
 			</div>
 			<div class="panel-body no-padding">
 				<div class="padding-10">
@@ -220,5 +235,10 @@
 		</div>
 	</div>
 </div>
-<% }; %> <% var jsSec={ %> <% }; %> <%
+<% }; %> <% var jsSec={ %> 
+
+<script type="text/javascript">
+	
+		</script>
+<% }; %> <%
 include("layout.html",{cssSec:cssSec,contSec:contSec,jsSec:jsSec}){} %>

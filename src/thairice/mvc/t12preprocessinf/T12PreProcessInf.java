@@ -83,6 +83,12 @@ public class T12PreProcessInf extends BaseModel<T12PreProcessInf> {
 	 */
 	public static final String column_generate_time = "generate_time";
 	
+	/**
+	 * 字段描述：预处理数据生成时间 
+	 * 字段类型：datetime  长度：null
+	 */
+	public static final String column_daynum = "daynum";
+	
 	
 	/**
 	 * sqlId : thairice.t12PreProcessInf.splitPageFrom
@@ -100,7 +106,15 @@ public class T12PreProcessInf extends BaseModel<T12PreProcessInf> {
 	private String condition_st;
 	private String estimate_st;
 	private Timestamp generate_time;
-
+	private Integer daynum;
+	
+	public void setDaynum(Integer daynum){
+		set(column_daynum, daynum);
+	}
+	public <T> T getDaynum() {
+		return get(column_daynum);
+	}
+	
 	public void setId(Long id){
 		set(column_id, id);
 	}

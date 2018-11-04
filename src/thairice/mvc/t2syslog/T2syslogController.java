@@ -1,10 +1,12 @@
 package thairice.mvc.t2syslog;
 
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 
 import org.apache.log4j.Logger;
 
+import com.google.common.collect.Lists;
 import com.jfinal.aop.Before;
 import com.jfinal.aop.Clear;
 import com.jfinal.plugin.cron4j.ITask;
@@ -13,6 +15,7 @@ import com.platform.mvc.base.BaseController;
 
 import thairice.interceptor.AdminLoginInterceptor;
 import thairice.rpcjob.GrouthMonitorScheduleJob;
+import thairice.rpcjob.JobStatusMdl;
 import thairice.rpcjob.LandDroughtScheduleJob;
 import thairice.rpcjob.LandYieldScheduleJob;
 import thairice.rpcjob.PreProcessScheduleJob;
@@ -125,7 +128,11 @@ public class T2syslogController extends BaseController {
 	}
 	
 	public void  ajaxProcessStatusData(){
-		renderWithPath( "/adm2018/process_status.html");
+		List<JobStatusMdl> processStatus = Arrays.asList(PreProcessScheduleJob.statusMdl
+				, LandDroughtScheduleJob.statusMdl
+				, GrouthMonitorScheduleJob.statusMdl
+				, LandYieldScheduleJob.statusMdl);
+		renderJson(processStatus);
 	}
 	
 	// ==========job 调用
@@ -142,6 +149,7 @@ public class T2syslogController extends BaseController {
 		}
 		
 		Integer idxJob = getParaToInt("jobid");
+	
 		ITask jobTask = null;
 		
 		switch(idxJob){
@@ -170,6 +178,13 @@ public class T2syslogController extends BaseController {
 			}
 			jobTask = jobYield;
 			break;
+			
+		case 5: // ----------重新生成预处理表的采集时间的每年第几天
+			Integer yearBeg = getParaToInt("ybeg");
+			Integer yearEnd = getParaToInt("yend");
+			String resRedo = PreProcessScheduleJob.redoDayNumsOfYear(yearBeg, yearEnd);
+			renderText(resRedo);
+			return ;
 		}
 		
 		String resStr = "ok";
