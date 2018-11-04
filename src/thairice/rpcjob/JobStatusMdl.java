@@ -43,7 +43,7 @@ public class JobStatusMdl implements Serializable {
 	}
 
 	public synchronized void succOne() {
-		if(cntTodo > 1){
+		if(cntTodo >= 1){
 			cntTodo -= 1;
 		} else {
 			cntDoing = 0;
@@ -52,7 +52,7 @@ public class JobStatusMdl implements Serializable {
 	}
 
 	public synchronized void failedOne() {
-		if(cntTodo > 1){
+		if(cntTodo >= 1){
 			cntTodo -= 1;
 		} else {
 			cntDoing = 0;
