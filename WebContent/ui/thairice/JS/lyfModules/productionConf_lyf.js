@@ -440,6 +440,10 @@ function generateTempProduct()
 		    	{
 //		    		alert("save success!")
 		    		console.log("generateTempProduct---success");
+		    		
+		    		$("#hintContent").text("Generate successful!");
+		    		$("#hintModal").modal('show');
+		    		
 		    		var productfileName = data["filename"];
 	    			var workspaceId = areaworkspaceId;
 	    			addProductFeatureLayer(workspaceId,productfileName);
@@ -447,6 +451,8 @@ function generateTempProduct()
 		    	else
 	    		{
 		    		console.log("generateTempProduct---faliure");
+		    		$("#hintContent").text("Generate faliure!");
+		    		$("#hintModal").modal('show');
 	    		}
 		    },
 		    error:function(xhr,textStatus){
