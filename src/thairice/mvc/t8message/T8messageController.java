@@ -57,7 +57,7 @@ public class T8messageController extends BaseController {
     public void delete() {
 	T3user t3user=getSessionAttr("admin");
 	if(!t3user.getType_().equals("03")) {
-	    renderJson(new Result(0, "The operator does not have permission to delete message. Please contact the administrator to delete"));
+	    renderJson(new Result(0, "The operator does not have permission to delete message,please contact the administrator"));
 	    return;
 	}
 	int rows = service.deletes(getPara("ids"));
@@ -74,7 +74,7 @@ public class T8messageController extends BaseController {
     public void empty_message() {
 	T3user t3user=getSessionAttr("admin");
 	if(!t3user.getType_().equals("03")) {
-	    renderJson(new Result(0, "The operator does not have permission to empty the list. Please contact the administrator to empty"));
+	    renderJson(new Result(0, "The operator does not have permission to empty the list,please contact the administrator"));
 	    return;
 	}
 	int row = Db.use(ConstantInitMy.db_dataSource_main).update(" UPDATE thairice.t8message SET show_flag=1");

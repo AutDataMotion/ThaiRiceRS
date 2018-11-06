@@ -128,11 +128,49 @@ public class T2syslogController extends BaseController {
 	}
 	
 	public void  ajaxProcessStatusData(){
-		List<JobStatusMdl> processStatus = Arrays.asList(PreProcessScheduleJob.statusMdl
+		List<JobStatusMdl> processStatus = Arrays.asList(
+				PreProcessScheduleJob.statusMdl
 				, LandDroughtScheduleJob.statusMdl
 				, GrouthMonitorScheduleJob.statusMdl
 				, LandYieldScheduleJob.statusMdl);
 		renderJson(processStatus);
+	}
+	
+	public void mockProcessStatusData(){
+		new Thread(()->{
+			int cntAll = 10;
+			int cntSuc = 8;
+			int cntFail = 2;
+			PreProcessScheduleJob.statusMdl.start(cntAll);
+			LandDroughtScheduleJob.statusMdl.start(cntAll);
+			GrouthMonitorScheduleJob.statusMdl.start(cntAll);
+			LandYieldScheduleJob.statusMdl.start(cntAll);
+
+			for (int i = 0; i < cntAll; i++) {
+				if (i %2 == 0) {
+					PreProcessScheduleJob.statusMdl.succOne();
+					LandDroughtScheduleJob.statusMdl.succOne();
+					GrouthMonitorScheduleJob.statusMdl.succOne();
+					LandYieldScheduleJob.statusMdl.succOne();
+				}else {
+					PreProcessScheduleJob.statusMdl.failedOne();
+					LandDroughtScheduleJob.statusMdl.failedOne();
+					GrouthMonitorScheduleJob.statusMdl.failedOne();
+					LandYieldScheduleJob.statusMdl.failedOne();
+				}
+				try {
+					Thread.sleep(2*1000L);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+			}
+			PreProcessScheduleJob.statusMdl.stop();
+			LandDroughtScheduleJob.statusMdl.stop();
+			GrouthMonitorScheduleJob.statusMdl.stop();
+			LandYieldScheduleJob.statusMdl.stop();
+			
+		}).start();
 	}
 	
 	// ==========job 调用
