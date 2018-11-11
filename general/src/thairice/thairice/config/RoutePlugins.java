@@ -6,7 +6,7 @@
  * @version 1.0
  */
 package thairice.config;
-import thairice.mvc.t15_news_cnt.t15_news_cntController;
+import thairice.mvc.t16_pdt_sample.t16_pdt_sampleController;
 import com.jfinal.config.Routes;
 /**
  * 创建时间：2016年1月28日 下午2:15:23
@@ -30,6 +30,6 @@ import com.jfinal.config.Routes;
 public class RoutePlugins extends Routes {
 	@Override
 	public void config() {
-		add("/jf/thairice/t15_news_cnt", t15_news_cntController.class);
+		add("/jf/thairice/t16_pdt_sample", t16_pdt_sampleController.class);
 	}
 }

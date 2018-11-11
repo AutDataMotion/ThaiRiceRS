@@ -1152,50 +1152,51 @@ public class FtpUtils {
 					// 倒着排序，最新的数据优先被下载，20181021
 					Collections.reverse(dateList);
 					for (Date eleDate : dateList) {
-						// 更新初始数据开始日期
-						inlzStDt = ParamUtils.getParam(ParamUtils.PC_FTP_AUTO_DWLD, ParamUtils.INLZ_STDT);						
-						String dateStr = new SimpleDateFormat("yyyyMMdd").format(eleDate);
-						if(dateStr.compareTo(inlzStDt) > 0) {
-							ParamUtils.updateParam(ParamUtils.PC_FTP_AUTO_DWLD, ParamUtils.INLZ_STDT, dateStr);
-						}
-
-						Calendar cal = Calendar.getInstance();
-						List<String> remotePathList = ParamUtils.getParamList(ParamUtils.PC_FTP_AUTO_DWLD,
-								ParamUtils.PD_SRCFTP_ROOT_CTLG);
-						if (null != remotePathList) {
-							for (String remoteCsvPath : remotePathList) {
-								remoteCsvPath = FileUtils.generateNewPath(remoteCsvPath, "01", eleDate, DataConstants.DOWNLOAD_TYPE_WGET);
-								if(StringUtils.isBlank(remoteCsvPath))
-									continue;
-								List<T6org_data> T6org_data_list = FtpUtils.detecUrlFilDirList(remoteCsvPath);
-								if (null != T6org_data_list) {
-									for (int i = 0; i < T6org_data_list.size(); i++) {
-										T6org_data orgDataObj = T6org_data_list.get(i);
-										if (null != orgDataObj) {
-											// 检查该文件信息本地是否已经存在
-//											String sql = "select * from T6org_data t where t.download_path = '"
-//													+ orgDataObj.getDownload_path() + "' and t.name_ = '"
-//													+ orgDataObj.getName_() + "'";
-											String sql = "select * from T6org_data t where t.name_ = '"
-													+ orgDataObj.getName_() + "'";
-											LOG.debug("检查远程文件信息本地是否存在：" + sql);
-											List<T6org_data> rltList = Db.use(ConstantInitMy.db_dataSource_main)
-													.query(sql);
-											// 若远程文件信息本地不存在，则记录新文件信息
-											if (rltList == null || rltList.size() == 0) {
-												orgDataObj.saveGenIntId();
-											} else {
-												LOG.debug("文件信息本地已经写入，文件：" + orgDataObj.getDownload_path()
-														+ orgDataObj.getName_());
+							// 更新初始数据开始日期
+							inlzStDt = ParamUtils.getParam(ParamUtils.PC_FTP_AUTO_DWLD, ParamUtils.INLZ_STDT);						
+							String dateStr = new SimpleDateFormat("yyyyMMdd").format(eleDate);
+							if(dateStr.compareTo(inlzStDt) > 0) {
+								ParamUtils.updateParam(ParamUtils.PC_FTP_AUTO_DWLD, ParamUtils.INLZ_STDT, dateStr);
+							}
+	
+							Calendar cal = Calendar.getInstance();
+							List<String> remotePathList = ParamUtils.getParamList(ParamUtils.PC_FTP_AUTO_DWLD,
+									ParamUtils.PD_SRCFTP_ROOT_CTLG);
+							if (null != remotePathList) {
+								for (String remoteCsvPath : remotePathList) {
+									remoteCsvPath = FileUtils.generateNewPath(remoteCsvPath, "01", eleDate, DataConstants.DOWNLOAD_TYPE_WGET);
+									if(StringUtils.isBlank(remoteCsvPath))
+										continue;
+									List<T6org_data> T6org_data_list = FtpUtils.detecUrlFilDirList(remoteCsvPath);
+									if (null != T6org_data_list) {
+										for (int i = 0; i < T6org_data_list.size(); i++) {
+											T6org_data orgDataObj = T6org_data_list.get(i);
+											if (null != orgDataObj) {
+												// 检查该文件信息本地是否已经存在
+	//											String sql = "select * from T6org_data t where t.download_path = '"
+	//													+ orgDataObj.getDownload_path() + "' and t.name_ = '"
+	//													+ orgDataObj.getName_() + "'";
+												String sql = "select * from T6org_data t where t.name_ = '"
+														+ orgDataObj.getName_() + "'";
+												LOG.debug("检查远程文件信息本地是否存在：" + sql);
+												List<T6org_data> rltList = Db.use(ConstantInitMy.db_dataSource_main)
+														.query(sql);
+												// 若远程文件信息本地不存在，则记录新文件信息
+												if (rltList == null || rltList.size() == 0) {
+													orgDataObj.saveGenIntId();
+												} else {
+													LOG.debug("文件信息本地已经写入，文件：" + orgDataObj.getDownload_path()
+															+ orgDataObj.getName_());
+												}
 											}
 										}
+									} else {
+										LOG.debug("远程目录" + remoteCsvPath + "下返回文件列表为空");
 									}
-								} else {
-									LOG.debug("远程目录" + remoteCsvPath + "下返回文件列表为空");
 								}
 							}
 						}
-					}
+					
 				}
 			} else {
 				T2syslogService.addLog(EnumT2sysLog.INFO, DataConstants.SYS_USER_ID, DataConstants.SYS_USER_NM, "Init ftp scan", "WGET initialization file scan switch is off!");

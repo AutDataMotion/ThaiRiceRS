@@ -47,7 +47,36 @@
     </div>
   </div>
   <div class="section section3">
-    <div class="slide">
+  
+  	        <%for(x in pageT16.list){ %>
+						        	 <div class="slide">
+					    	<div class="samples_wrap">
+					        	<div class="samples one">
+					            	<div class="samples_top">
+					            		<div class="sample_parameter">
+					                    	<div class="parameter_left">
+					                        	<p>Rice planting area</p>
+					                            <p>Rice drought</p>
+					                            <p>Rice condition</p>
+					                            <p>Rice production</p>
+					                        </div>
+					                        <div class="parameter_right">
+					                        	<p>${x.rice_planting_area}</p>
+					                            <p>${x.rice_drought}</p>
+					                            <p>${x.rice_condition}</p>
+					                            <p>${x.rice_production}</p>
+					                        </div>
+					                    </div>
+					                </div>
+					                <div class="samples_down">
+					                	<p class="img"><img src="${cxt!}${x.pic_path}" width="660" height="340"></p>
+					                    <p class="text">${x.pdt_desc}</p>
+					                </div>
+					            </div>
+	        <%}%>
+	        
+	        
+ <!--    <div class="slide">
     	<div class="samples_wrap">
         	<div class="samples one">
             	<div class="samples_top">
@@ -155,6 +184,9 @@
         	
         </div>
     </div>
+  -->   
+    
+    
   </div>
   <div class="section section4">
     <div class="welcome_login">
@@ -190,21 +222,25 @@
                 <div class="row">
                   <div class="col-xs-4 col-sm-4 one">
                     <address>
-                        Times&Fortune World Building,<br>
+                    	${address}
+<!--                         Times&Fortune World Building,<br>
                         Building 4,Room 1105,<br>
                         NO.1 Hangfeng Road,<br>
                         Fengtai District, Beijing 100070,<br>
-                        China
+                        China -->
                     </address>
                   </div>
                   <div class="col-xs-4 col-sm-4 two">
                     <p>
-                        +86-13439166851<br>
+                    
+                        <!-- +86-13439166851<br> -->
                         
                     </p>
                   </div>
                   <div class="col-xs-4 col-sm-4 three">
-                    <p>xin.liu@t-suntech.com</p>
+                  
+                  <p>${email}</p>
+                    <!-- <p>xin.liu@t-suntech.com</p> -->
                   </div>
                 </div>
                 <div class="copyrights"><p>备案号 | 友情链接 | 友情链接 | 友情链接</p></div>

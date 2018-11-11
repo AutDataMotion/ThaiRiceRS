@@ -15,104 +15,18 @@ var arearasterbandsextractUrl = hostIP+":6080/arcgis/rest/services/arearasterban
 var areatifsBaseUrl = hostIP+":8080/areatifs/";
 //var merge_gpserver_workspace = "C:/arcgisserver/directories/arcgisjobs/merge_gpserver/";
 //var erase_gpserver_workspace = "C:/arcgisserver/directories/arcgisjobs/erase_gpserver/";
+//
+//var m_GraphicsLayers = new Array();
+var m_GraphicsLayerIndex = 0;
+var m_GraphicsLayers = {};
+var m_GraphicsLayers_selectedIndex;//当前选中的
 function init_productionConf_Monitoring()
 {
-
+	
 //    packages: [{
 //      "name": "lyfModules",
 //      "location": "/ui/thairice/JS/" + "lyfModules"
 //    }]
-	/************初始化加载文件列表**************/
-	app.files_excel = $('#files_excel').DataTable({
-		columns: [
-        	{ title: "Name" },
-            { title: "Date" },
-            { title: "District" }
-        ]
-    });
-	//高亮显示选中的文件列表的行
-	 $('#files_excel tbody').on( 'click', 'tr', function () {
-	        if ( $(this).hasClass('selected') ) {
-	            $(this).removeClass('selected');
-	        }
-	        else {
-	        	app.files_excel.$('tr.selected').removeClass('selected');
-	            $(this).addClass('selected');
-	        }
-	    } );
-	/************设置样本表格参数***************/
-	app.sample_excel = $('#sample_excel').DataTable( {
-		"searching": false,
-		"paging":   false,
-        "ordering": false,
-        "info":     false
-    } );
-	$('.editing_list').on( 'click', function () {
-		$('.editing').toggle();
-		$('.samples').toggle();
-    } );
-	$('#addRow').on( 'click', function () {
-		app.undoManager.clearRedo();
-		app.undoManager.clearUndo();
-		app.graphicsLayer.clear();
-		app.sample_excel.row.add( [
-			"<input type='text'  placeholder='sample name' style='width:100px; text-align:center;'>",
-			"<button type='button' onclick='startDraw_sample($(this))'><i class='glyphicon glyphicon-edit'></i>Draw</button>"+
-			"<button type='button' class='color-box' style='width:15px;height:15px;background-color:#ff8800;'></button>"+
-          	"<button type='button' onclick='saveDraw_sample($(this))'><i class='glyphicon glyphicon-ok-circle'></i>Save</button>"+
-          	"<button type='button' onclick='deleteDraw_sample($(this))'><i class='glyphicon glyphicon-remove-sign'></i>Cancel</button>"
-           
-        ] ).draw( false );
-		$('.color-box').colpick({
-
-			colorScheme:'dark',
-
-			layout:'rgbhex',
-
-			color:'ff8800',
-
-			onSubmit:function(hsb,hex,rgb,el) {
-
-				$(el).css('background-color', '#'+hex);
-//				console.log(rgb);
-				$(el).colpickHide();
-				require([
-				     
-				      "esri/symbols/SimpleFillSymbol", "esri/renderers/SimpleRenderer",
-				      "esri/config",
-				      "esri/Color", "dojo/domReady!"
-				    ], function(
-				      SimpleFillSymbol, SimpleRenderer,
-				      esriConfig,
-				      Color
-				    ) {
-//					var renderer = new SimpleRenderer(
-//					          new SimpleFillSymbol("solid", null, new Color([255, 0, 255, 0.75]) // fuschia lakes!
-//					        ));
-
-//					app.graphicsLayer.setRenderer(renderer);
-//					app.graphicsLayer.redraw();
-					var graphicSys =  new SimpleFillSymbol("solid", null, new Color([rgb.r, rgb.g, rgb.b, 0.5])); // fuschia lakes!
-//					console.log(app.graphicsLayer.graphics);
-					if(app.graphicsLayer.graphics.length>0)
-					{
-						for(var i=0;i<app.graphicsLayer.graphics.length;i++){
-					           
-							app.graphicsLayer.graphics[i].setSymbol(graphicSys);
-				           
-				          }
-					}
-					
-				});
-				
-			}
-
-		});
-    } );
-	
-	$('#rgbChange').on( 'click', function () {
-		areaRasterbandsExtract();
-    } );
 	require(["esri/map",
 		"esri/dijit/Scalebar",
 		"esri/undoManager",
@@ -191,12 +105,20 @@ function init_productionConf_Monitoring()
 	    
 //	    app.map.on("layers-add-result", initEditing);
 	 	
-	    app.graphicsLayer = new GraphicsLayer();
+//	    app.graphicsLayer = new GraphicsLayer();
+	    //作为编辑面积产品数据用的图层  添加、删除
+	    var graphicsLayerForEdit = new esri.layers.GraphicsLayer();
+
+		m_GraphicsLayers['graphicsLayerForEdit'] = graphicsLayerForEdit;
+		
+		
 	    
 	    app.map.on("load", createToolbar);
 	    function createToolbar(themap) {
 	    	  
-	    	app.map.addLayer(app.graphicsLayer);
+//	    	app.map.addLayer(app.graphicsLayer);
+	    	app.map.addLayer(graphicsLayerForEdit);
+	    	
 	    	
 	    	app.toolbar = new Draw(app.map);
 	    	app.toolbar.on("draw-end", addToMap);
@@ -224,16 +146,168 @@ function init_productionConf_Monitoring()
 	          var graphic = new Graphic(evt.geometry, symbol);
 	          var customoperation = require('customoperation');
 	          var operation = new customoperation.Add({
-		          graphicsLayer: app.graphicsLayer,
+//		          graphicsLayer: app.graphicsLayer,
+	        	  graphicsLayer:m_GraphicsLayers[m_GraphicsLayers_selectedIndex],
 		          addedGraphic: graphic
 	          });
 
 	          app.undoManager.add(operation);
-	          
-	          app.graphicsLayer.add(graphic);
+	          m_GraphicsLayers[m_GraphicsLayers_selectedIndex].add(graphic);
+//	          app.graphicsLayer.add(graphic);
 	        }
+	   
 	});
+	/************初始化加载文件列表**************/
 	
+	app.files_excel = $('#files_excel').DataTable({
+		columns: [
+        	{ title: "Name" },
+            { title: "Date" },
+            { title: "District" }
+        ]
+    });
+	//高亮显示选中的文件列表的行
+	 $('#files_excel tbody').on( 'click', 'tr', function () {
+	        if ( $(this).hasClass('selected') ) {
+	            $(this).removeClass('selected');
+	        }
+	        else {
+	        	app.files_excel.$('tr.selected').removeClass('selected');
+	            $(this).addClass('selected');
+	        }
+	    } );
+	/************设置样本表格参数***************/
+	app.sample_excel = $('#sample_excel').DataTable( {
+		"searching": false,
+		"paging":   false,
+        "ordering": false,
+        "info":     false
+    } );
+	$('.editing_list').on( 'click', function () {
+		$('.editing').toggle();
+		$('.samples').toggle();
+    } );
+	$('#addRow').on( 'click', function () {
+//		GraphicsLayerIndex=GraphicsLayerIndex+1;
+//		m_GraphicsLayerIndex++;
+//		alert(m_GraphicsLayerIndex++);
+		var GraphicsLayerIndex='GraphicsLayerIndex'+m_GraphicsLayerIndex++;
+		
+		var graphicsLayer = new esri.layers.GraphicsLayer();
+		  
+//		  var graphicsLayerObj  = {
+//					'index':GraphicsLayerIndex,
+//					'graphicsLayer':graphicsLayer
+//		  } 
+//		
+//		m_GraphicsLayers.push(graphicsLayerObj);
+		  
+		m_GraphicsLayers[GraphicsLayerIndex] = graphicsLayer;
+		app.map.addLayer(graphicsLayer);
+//		app.undoManager.clearRedo();
+//		app.undoManager.clearUndo();
+//		app.graphicsLayer.clear();
+		app.sample_excel.row.add( [
+			"<input type='text'  id='"+GraphicsLayerIndex+"' placeholder='sample name' style='width:100px; text-align:center;'>",
+			"<button type='button' onclick='startDraw_sample($(this))'><i class='glyphicon glyphicon-edit'></i>Draw</button>"+
+			"<button type='button' class='color-box' style='width:15px;height:15px;background-color:#ff8800;'></button>"+
+          	"<button type='button' onclick='saveDraw_sample($(this))'><i class='glyphicon glyphicon-ok-circle'></i>Save</button>"+
+          	"<button type='button' onclick='deleteDraw_sample($(this))'><i class='glyphicon glyphicon-remove-sign'></i>Cancel</button>"
+           
+        ] ).draw( false );
+		$('.color-box').colpick({
+
+			colorScheme:'dark',
+
+			layout:'rgbhex',
+
+			color:'ff8800',
+
+			onSubmit:function(hsb,hex,rgb,el) {
+
+				m_GraphicsLayers_selectedIndex = $(el).parents('tr').find("input")[0].id;
+				
+				$(el).css('background-color', '#'+hex);
+//				console.log(rgb);
+				$(el).colpickHide();
+				require([
+				     
+				      "esri/symbols/SimpleFillSymbol", "esri/renderers/SimpleRenderer",
+				      "esri/config",
+				      "esri/Color", "dojo/domReady!"
+				    ], function(
+				      SimpleFillSymbol, SimpleRenderer,
+				      esriConfig,
+				      Color
+				    ) {
+//					var renderer = new SimpleRenderer(
+//					          new SimpleFillSymbol("solid", null, new Color([255, 0, 255, 0.75]) // fuschia lakes!
+//					        ));
+
+//					app.graphicsLayer.setRenderer(renderer);
+//					app.graphicsLayer.redraw();
+					/*
+					for(var i =0;i<m_GraphicsLayers.length;i++)
+					{
+						if(selectedGraphicsLayerIndex == m_GraphicsLayers[i]["index"]){
+							var graphicSys =  new SimpleFillSymbol("solid", null, new Color([rgb.r, rgb.g, rgb.b, 0.5])); // fuschia lakes!
+//							console.log(app.graphicsLayer.graphics);
+							var selectedGraphicsLayer = m_GraphicsLayers[i]["graphicsLayer"];
+							if(selectedGraphicsLayer.graphics.length>0)
+							{
+								for(var i=0;i<selectedGraphicsLayer.graphics.length;i++){
+							           
+									selectedGraphicsLayer.graphics[i].setSymbol(graphicSys);
+						           
+						          }
+								
+							}
+							break;
+						}
+						
+					}
+					*/
+			
+					var graphicSys =  new SimpleFillSymbol("solid", null, new Color([rgb.r, rgb.g, rgb.b, 0.5])); // fuschia lakes!
+//							console.log(app.graphicsLayer.graphics);
+//							var selectedGraphicsLayer = m_GraphicsLayers[i]["graphicsLayer"];
+					if(m_GraphicsLayers[m_GraphicsLayers_selectedIndex].graphics.length>0)
+					{
+						for(var i=0;i<m_GraphicsLayers[m_GraphicsLayers_selectedIndex].graphics.length;i++){
+					           
+							m_GraphicsLayers[m_GraphicsLayers_selectedIndex].graphics[i].setSymbol(graphicSys);
+				           
+				          }
+						
+					}
+					
+					
+				});
+				
+			}
+
+		});
+    } );
+	
+	$('#rgbChange').on( 'click', function () {
+		areaRasterbandsExtract();
+    } );
+	
+	
+}
+//根据index 获取当前选中的GraphicsLayer
+function getGraphicsLayer(selectedGraphicsLayerIndex)
+{
+	for(var i =0;i<m_GraphicsLayers.length;i++)
+	{
+		if(selectedGraphicsLayerIndex == m_GraphicsLayers[i]["index"]){
+			
+			var selectedGraphicsLayer = m_GraphicsLayers[i]["graphicsLayer"];
+			return selectedGraphicsLayer;
+			
+		}
+		
+	}
 }
 function getLayerSource(workspaceId,dataSourceName)
 {
@@ -285,19 +359,28 @@ function generateFeatureLayer(layerSource,fileName)
 */
 function startDraw_sample(tr)
 {
-//	color-box
+
 	var color_box = tr.parents('td').children("button.color-box")[0].style.backgroundColor;
 	
 	var parts = color_box.match(/^rgb\((\d+),\s*(\d+),\s*(\d+)\)$/);
-//	console.log(parts);parts now should be ["rgb(0, 70, 255", "0", "70", "255"]
+//			console.log(parts);parts now should be ["rgb(0, 70, 255", "0", "70", "255"]
 	app.color_R = parseInt(parts[1]);
 	app.color_G = parseInt(parts[2]);
 	app.color_B = parseInt(parts[3]);
 	
 	app.DrawSample = true;//draw sample;
+	/*************************
+	 * 
+	 * @param tr
+	 * @returns
+	 */
+	m_GraphicsLayers_selectedIndex = tr.parents('tr').find("input")[0].id;
+
 	
-	app.graphicsLayer.clear();
 	app.toolbar.activate("polygon");
+
+//	console.log(m_GraphicsLayers);
+
 }
 function saveDraw_sample(tr)
 {
@@ -314,7 +397,8 @@ function saveDraw_sample(tr)
 	}
 	else{
 		var fileName = sampleName+".shp";
-		saveDraw(fileName);
+		m_GraphicsLayers_selectedIndex = tr.parents('tr').find("input")[0].id;
+		saveDraw(fileName,m_GraphicsLayers_selectedIndex);
 //		var filePath = "E:/arcgisserver_shp_workspace/AreaSample/2018-05-11_72/samle/";
 //		var graphicArray = app.graphicsLayer.graphics;
 //		saveDraw(fileName,filePath);
@@ -356,6 +440,10 @@ function generateTempProduct()
 		    	{
 //		    		alert("save success!")
 		    		console.log("generateTempProduct---success");
+		    		
+		    		$("#hintContent").text("Generate successful!");
+		    		$("#hintModal").modal('show');
+		    		
 		    		var productfileName = data["filename"];
 	    			var workspaceId = areaworkspaceId;
 	    			addProductFeatureLayer(workspaceId,productfileName);
@@ -363,6 +451,8 @@ function generateTempProduct()
 		    	else
 	    		{
 		    		console.log("generateTempProduct---faliure");
+		    		$("#hintContent").text("Generate faliure!");
+		    		$("#hintModal").modal('show');
 	    		}
 		    },
 		    error:function(xhr,textStatus){
@@ -385,15 +475,22 @@ function generateTempProduct()
 }
 function deleteDraw_sample(tr)
 {
-	
+//	console.log(m_GraphicsLayers);
 	app.sample_excel.row( tr.parents('tr') ).remove().draw();
 	
-	app.undoManager.clearRedo();
-	app.undoManager.clearUndo();
-	app.graphicsLayer.clear();
+	m_GraphicsLayers_selectedIndex = tr.parents('tr').find("input")[0].id;
+//	var selectedGraphicsLayer = getGraphicsLayer(selectedGraphicsLayerIndex);
+	
+	app.map.removeLayer(m_GraphicsLayers[m_GraphicsLayers_selectedIndex]);
+//	app.undoManager.clearRedo();
+//	app.undoManager.clearUndo();
+//	app.graphicsLayer.clear();
+	delete m_GraphicsLayers[m_GraphicsLayers_selectedIndex];
+//	console.log(m_GraphicsLayers);
+	app.toolbar.deactivate();
 	
 }
-function saveDraw(fileName)//save graphics to server
+function saveDraw(fileName,which2save)//save graphics to server
 {
 	$("#mapDiv_productionConf").busyLoad("show", { text: "LOADING ...",
 		textPosition: "top"
@@ -417,8 +514,8 @@ function saveDraw(fileName)//save graphics to server
 			   };
 		
 		  var outSpatialReference = new SpatialReference(4326);
-		  
-		  app.graphicsLayer.graphics.forEach(function(graphic){
+//		  m_GraphicsLayers_selectedIndex = tr.parents('tr').find("input")[0].id;
+		  m_GraphicsLayers[which2save].graphics.forEach(function(graphic){
 //			  graphic.geometry = projection.project(graphic.geometry, outSpatialReference);
 			  if (webMercatorUtils.canProject(graphic.geometry, outSpatialReference)) {
 				  var result = webMercatorUtils.project(graphic.geometry, outSpatialReference);
@@ -469,9 +566,9 @@ function saveDraw(fileName)//save graphics to server
 			    			$("#hintContent").text("save successful!");
 				    		$("#hintModal").modal('show');
 				    		
-				    		app.undoManager.clearRedo();
-				    		app.undoManager.clearUndo();
-				    		app.graphicsLayer.clear();
+//				    		app.undoManager.clearRedo();
+//				    		app.undoManager.clearUndo();
+//				    		app.graphicsLayer.clear();
 			    		}
 			    		else{
 			    			///////编辑productLayer add 添加
@@ -491,9 +588,9 @@ function saveDraw(fileName)//save graphics to server
 			    		$("#hintContent").text("save failed!");
 			    		$("#hintModal").modal('show');
 			    		
-			    		app.undoManager.clearRedo();
-			    		app.undoManager.clearUndo();
-			    		app.graphicsLayer.clear();
+//			    		app.undoManager.clearRedo();
+//			    		app.undoManager.clearUndo();
+//			    		app.graphicsLayer.clear();
 		    		}
 			    },
 			    error:function(xhr,textStatus){
@@ -550,6 +647,26 @@ function initFilesTable()
 //		    			console.log(app.files_excel.row('.selected').data());
 		    			//加载遥感影像的同时加载与影像关联的临时中间产品数据
 		    			app.tifFileName = app.files_excel.row('.selected').data()[0];
+		    			/********恢复相关参数设置***************/
+		    			app.undoManager.clearRedo();
+			    		app.undoManager.clearUndo();
+//			    		
+			    		m_GraphicsLayers_selectedIndex = 'graphicsLayerForEdit';
+				      	m_GraphicsLayers[m_GraphicsLayers_selectedIndex].clear();
+				      	
+				      	for(var key in m_GraphicsLayers)
+				      	{
+				      		if(key != m_GraphicsLayers_selectedIndex)
+				      		{
+				      			app.map.removeLayer(m_GraphicsLayers[key]);
+				      			delete m_GraphicsLayers[key];
+				      		}
+				      	}
+				      	console.log(m_GraphicsLayers);
+				      	app.sample_excel.rows().remove().draw();
+				      	
+				      	/****************************************************/
+				      	  
 		    			//将选中的tif文件关联的temp shp文件copy to gpmodels ，备editing
 		    			copyTempShpFile2gpWorkspace(app.tifFileName);
 		    			//将选中的tif文件copy to gpmodels ，备改变波段显示
@@ -811,7 +928,11 @@ function EditFeatures(addOrdelete){
 	
 	app.edit = addOrdelete;//add or delete features
 	
-	app.graphicsLayer.clear();
+	m_GraphicsLayers_selectedIndex = 'graphicsLayerForEdit';
+	
+//	m_GraphicsLayers[m_GraphicsLayers_selectedIndex].clear();
+	
+//	app.graphicsLayer.clear();
 	app.toolbar.activate("polygon");
 }
 function Edit_Preview()
@@ -914,7 +1035,11 @@ function doGeoprocessor(){
 	    		  ImageParameters,LayerDrawingOptions,projection,SpatialReference,webMercatorUtils,dom){
 				  var gp_params={};
 				  
-				  var addOrerase_features = app.graphicsLayer.graphics;
+				  m_GraphicsLayers_selectedIndex = 'graphicsLayerForEdit';
+					
+//				  m_GraphicsLayers[m_GraphicsLayers_selectedIndex].clear();
+					
+				  var addOrerase_features = m_GraphicsLayers[m_GraphicsLayers_selectedIndex].graphics;
 //			        console.log(addOrerase_features);
 				  var outSpatialReference = new SpatialReference(4326);
 				  var features = [];  
@@ -979,9 +1104,12 @@ function doGeoprocessor(){
 				          */
 				          app.map.addLayer(app.featureLayer,2);
 				          
-				          app.undoManager.clearRedo();
-			    		  app.undoManager.clearUndo();
-			    		  app.graphicsLayer.clear();
+//				          app.undoManager.clearRedo();
+//			    		  app.undoManager.clearUndo();
+//			    		  app.graphicsLayer.clear();
+				          m_GraphicsLayers_selectedIndex = 'graphicsLayerForEdit';
+				      	
+				      	  m_GraphicsLayers[m_GraphicsLayers_selectedIndex].clear();
 				          //将gp执行的生成结果result.shp转存到models空间 滚动更新 备下次使用
 				          copyResult2Modelspace(app.edit,jobInfo.jobId);
 			        });
@@ -1032,9 +1160,15 @@ function copyResult2Modelspace(edit,jobId){
 }
 function Edit_Cancel()
 {
-	app.undoManager.clearRedo();
-	app.undoManager.clearUndo();
-	app.graphicsLayer.clear();
+//	app.undoManager.clearRedo();
+//	app.undoManager.clearUndo();
+	
+	m_GraphicsLayers_selectedIndex = 'graphicsLayerForEdit';
+	
+	m_GraphicsLayers[m_GraphicsLayers_selectedIndex].clear();
+	app.toolbar.deactivate();
+//	app.graphicsLayer.clear();
+	
 }
 function areaRasterbandsExtract(){
 	console.log("areaRasterbandsExtract---begin");

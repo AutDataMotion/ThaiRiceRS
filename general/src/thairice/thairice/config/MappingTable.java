@@ -8,7 +8,7 @@
 package thairice.config;
 
 import org.apache.log4j.Logger;
-import thairice.mvc.t15_news_cnt.t15_news_cnt;
+import thairice.mvc.t16_pdt_sample.t16_pdt_sample;
 import com.jfinal.plugin.activerecord.ActiveRecordPlugin;
 /**
  * 创建时间：2016年3月12日 上午10:11:42
@@ -34,7 +34,7 @@ public class MappingTable {
 	private static Logger log = Logger.getLogger(MappingTable.class);
 	public static void mapping(ActiveRecordPlugin arp){
 		log.info("thairice MappingTable 表手工注册-----begin");
-		arp.addMapping("t15_news_cnt", "id", t15_news_cnt.class);
+		arp.addMapping("t16_pdt_sample", "id", t16_pdt_sample.class);
 		log.info("thairice MappingTable 表手工注册-----end");
 		
 	}

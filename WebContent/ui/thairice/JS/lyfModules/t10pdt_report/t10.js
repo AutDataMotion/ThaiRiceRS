@@ -86,7 +86,7 @@ function getProductDataAndCopy2Workspace(areaCode,productDate,productKind_des)
 	    		addProductLayer(prov_code,productDate,productKind_des);
 	    	}
 	    	else{
-	    		alert("no");
+//	    		alert("no");
 	    		// 隐藏loading
 	    		//$('.StaButton').hide();// if data exist show StaButton
 	    		$("#mapDiv").busyLoad("hide");
@@ -187,6 +187,7 @@ function addProductLayer(prov_code,productDate,productKind_des)
 //	    console.log(app.featureLayer);
 //	    console.log(app.featureLayer.fullExtent);
 	    app.featureLayer.on("load",function(res){
+	    	queryFeatureNum(app.featureLayer);
 //	    	console.log(app.featureLayer.fullExtent);
 //       	 	preview(app.featureLayer);//缩放到指定范围
 //       	 createLegend(app.map, featureLayer,legendTitle);
@@ -236,7 +237,69 @@ function addProductLayer(prov_code,productDate,productKind_des)
 	});
 	
 }
-
+function queryFeatureNum(featureLayer)//查看app.featureLayer 是否有数据
+{
+//	alert("queryFeatureNum");
+	require([
+		"esri/symbols/SimpleFillSymbol", 
+	    "esri/symbols/SimpleLineSymbol",
+	    "esri/renderers/ClassBreaksRenderer",
+	    "esri/layers/LayerDrawingOptions",
+	    "esri/Color",
+	    "esri/tasks/query",
+	    "dojo/dom",
+	    "dojo/domReady!"],
+	    function(SimpleFillSymbol,SimpleLineSymbol,ClassBreaksRenderer,LayerDrawingOptions,Color,Query,dom){
+		 	
+			var count = 5;//如果发生错误，尝试执行5次
+			var queryParams = new Query();
+//		    queryParams.outFields = ['value'];
+		    //queryParams.outStatistics = [ minStatDef, maxStatDef];
+		    queryParams.where = "1=1";
+		    
+		    featureLayer.queryFeatures(queryParams, getStats, geterror);
+//		    featureLayer.queryFeatures(queryParams);
+//		    console.log(featureLayer.url);
+//		    featureLayer.on("query-features-complete",getStats);
+//		    console.log("13");
+		 // Executes on each query
+		    function getStats(results){
+//		    	 console.log("12");
+		    	 var features = results.features;
+		    	 if(features.length == 0)
+			    	{
+		    		 	$('.StaButton').hide();
+		    		 	$('#legendinfo').hide();
+			    		$('#systemTipsModal').modal();
+				    	
+				    	$('#systemTipsModalBtn').click(function(e) {
+				    		
+				    		//window.open(data.reportUrl,"_blank");
+				    		$('#systemTipsModal').modal('hide');
+				    		
+				        });
+			    	}
+		    	 else{
+		    		 $('.StaButton').show();
+		    		 $('#legendinfo').show();
+		    	 }
+		    }
+		    function geterror(error)
+		    {
+//		    	console.log(error);
+		    	count--;
+		    	if(count>0)
+		    	{
+//		    		console.log(count);
+		    		featureLayer.queryFeatures(queryParams, getStats, geterror);
+		    	}
+		    	else{
+		    		console.log(error);
+		    	}
+		    	
+		    }
+	});
+}
 function getLayerSource(workspaceId,dataSourceName)
 {
 	var dataSource = new esri.layers.TableDataSource();
@@ -734,7 +797,7 @@ var sta = {};
               function getStats(results){
              	 
              	 var features = results.features;
-             	 //console.log("staDataByUnitGeometry",features);
+//             	 console.log("staDataByUnitGeometry",features.length);
              	 processData(features,field,data,staData);
              	 //console.log(staData);
              	 /*
@@ -776,14 +839,17 @@ var sta = {};
 	{
 		if(app.productKind_code=="01"){//Area
 //			console.log(data);
-			var sum = 0;        
-	    	 dojo.forEach(features,function(feature) {
-	    		 var feature_area = calculatorArea(feature);
-	    		
-//	    		 sum += feature.attributes[field];
-	    		 sum += feature_area;
-	    	 });
-//	    	
+			var sum = 0;     
+			if(features.length>0)
+			{
+				dojo.forEach(features,function(feature) {
+		    		 var feature_area = calculatorArea(feature);
+		    		
+//		    		 sum += feature.attributes[field];
+		    		 sum += feature_area;
+		    	 });
+			}
+	    	
 	    	 data.value = sum>0?(sum.toFixed(2)):0;
 //	    	 data.value = sum.toFixed(2);
 	    	 staData.push(data);
@@ -792,10 +858,17 @@ var sta = {};
 			
 			 var sum = 0;  
 			 var count = 0;
-	    	 dojo.forEach(features,function(feature) {
-	    		 sum += feature.attributes[field];
-	    		 count +=1; 
-	    	 });
+			 if(features.length>0)
+			 {
+				 dojo.forEach(features,function(feature) {
+		    		 
+		    		 sum += feature.attributes[field];
+		    		
+		    		 
+		    		 count +=1; 
+		    	 });
+			 }
+	    	 
 //	    	 data.value = sum.toFixed(2);
 	    	 data.value = sum>0?([((sum*1600)/(count*250*250)).toFixed(2),sum.toFixed(2)]):([0,0]);
 	    	 staData.push(data);
@@ -809,35 +882,46 @@ var sta = {};
 			 var middlingNum = 0;
 			 var heavyNum = 0;
 			 
-	    	 dojo.forEach(features,function(feature) {
-	    		 sum += 1;
-	    		 
-	    		 if(feature.attributes[field]==1)
-    			 {
-    			 	moistNum+=1;
-    			 }
-	    		 if(feature.attributes[field]==2)
-    			 {
-	    			normalNum+=1;
-    			 }
-	    		 if(feature.attributes[field]==3)
-    			 {
-	    			lightDroughtNum+=1;
-    			 }
-	    		 if(feature.attributes[field]==4)
-    			 {
-	    			middlingNum+=1;
-    			 }
-	    		 if(feature.attributes[field]==5)
-    			 {
-	    			heavyNum+=1;
-    			 }
-	    	 });
-	    	 data.value = [toHundred(moistNum/sum),
-	    		 toHundred(normalNum/sum),
-	    		 toHundred(lightDroughtNum/sum),
-	    		 toHundred(middlingNum/sum),
-	    		 toHundred(heavyNum/sum)];
+			 if(features.length>0)
+			 {
+				 dojo.forEach(features,function(feature) {
+		    		 sum += 1;
+		    		 
+		    		 if(feature.attributes[field]==1)
+	    			 {
+	    			 	moistNum+=1;
+	    			 }
+		    		 if(feature.attributes[field]==2)
+	    			 {
+		    			normalNum+=1;
+	    			 }
+		    		 if(feature.attributes[field]==3)
+	    			 {
+		    			lightDroughtNum+=1;
+	    			 }
+		    		 if(feature.attributes[field]==4)
+	    			 {
+		    			middlingNum+=1;
+	    			 }
+		    		 if(feature.attributes[field]==5)
+	    			 {
+		    			heavyNum+=1;
+	    			 }
+		    	 });
+		    	 data.value = [toHundred(moistNum/sum),
+		    		 toHundred(normalNum/sum),
+		    		 toHundred(lightDroughtNum/sum),
+		    		 toHundred(middlingNum/sum),
+		    		 toHundred(heavyNum/sum)];
+			 }
+			 else{
+				 data.value = [0,
+		    		 0,
+		    		 0,
+		    		 0,
+		    		 0];
+			 }
+	    	 
 	    	 staData.push(data);
 		}
 		
@@ -1566,6 +1650,7 @@ function initTimeSelect_indexHtml(provinceCode)
 	    success:function(data,textStatus,jqXHR){
 //	    	console.log(data);
 	    	if(data.length>0){
+	    		$('#legendinfo').show();
 //	    		var yearSelect = document.getElementById("year");
 	    		if(yearSelect)
     			{
@@ -1580,7 +1665,8 @@ function initTimeSelect_indexHtml(provinceCode)
     			}
 	    	}
 	    	else{
-//	    		alert("no data");
+//	    		alert("no data00");
+	    		$('#legendinfo').hide();
 	    		$('.StaButton').hide();
 	    		$('#systemTipsModal').modal();
 		    	
