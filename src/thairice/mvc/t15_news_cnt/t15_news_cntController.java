@@ -48,7 +48,6 @@ public class t15_news_cntController extends BaseController {
 	public void index() {
 /*		paging(ConstantInitMy.db_dataSource_main, splitPage, BaseModel.sqlId_splitPage_select, t15_news_cnt.sqlId_splitPage_from);
 		renderWithPath(pthv+"list.html");*/		
-		// 插入或者更新成绩统计表最后一次成绩
 		String sql = "select t.title, t.content, date_format(t.editTime ,'%Y/%m/%d') as editTime from t15_news_cnt t order by t.rank asc ";
 		List<t15_news_cnt> newsList = t15_news_cnt.dao.find(sql);
 		if((newsList != null) && (newsList.size()>= 8)) {

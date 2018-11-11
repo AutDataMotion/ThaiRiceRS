@@ -127,37 +127,120 @@
 	</div>
 	
 	<h4 class="info-text">Published case</h4>
-	
+		<div class="tab-box">								
+			<div class="form-group" style="margin-bottom: 0;">
+				<div class="input-group">
+					<div class="input-group-addon color-four">Case sequence</div>
+				<select class="form-control" id="pdt_id" name ="pdt_id">
+                  <option value="1"}>Case 1</option>
+                  <option value="2"}>Case 2</option>
+                  <option value="3"}>Case 3</option>
+                  <option value="4"}>Case 4</option>
+                  <option value="5"}>Case 5</option>
+                </select>					
+				</div>
+			</div>
+		
+			<div class="form-group" style="margin-bottom: 0;">
+				<div class="input-group">
+					<div class="input-group-addon color-four">Description</div>
+					<input type="text" class="form-control" name="pdt_desc"
+						id="pdt_desc" placeholder="Description">						
+				</div>
+			</div>
+			<div class="form-group" style="margin-bottom: 0;">
+				<div class="input-group">
+					<div class="input-group-addon color-four">Rice planting area</div>
+					<input type="text" class="form-control" name="rice_planting_area"
+						id="rice_planting_area" placeholder="Rice planting area">						
+				</div>
+			</div>
+			<div class="form-group" style="margin-bottom: 0;">
+				<div class="input-group">
+					<div class="input-group-addon color-four">Rice drought</div>
+					<input type="text" class="form-control" name="rice_drought"
+						id="rice_drought" placeholder="Rice drought">						
+				</div>
+			</div>
+			<div class="form-group" style="margin-bottom: 0;">
+				<div class="input-group">
+					<div class="input-group-addon color-four">Rice condition</div>
+					<input type="text" class="form-control" name="rice_condition"
+						id="rice_condition" placeholder="Rice condition">						
+				</div>
+			</div>
+			<div class="form-group" style="margin-bottom: 0;">
+				<div class="input-group">
+					<div class="input-group-addon color-four">Rice production</div>
+					<input type="text" class="form-control" name="rice_production"
+						id="rice_production" placeholder="Rice production">						
+				</div>
+			</div>
+<!-- 			<div class="form-group" style="margin-bottom: 0;">
+				<div class="input-group">
+					<div class="input-group-addon color-four">Image path</div>
+					<input type="text" class="form-control" name="pic_path"
+						id="pic_path" placeholder="Image path">						
+				</div>
+			</div> -->
+			
+		<iframe id="framFile" name="framFile" style="display: none;"></iframe>
+		<form method="post" action="t16_pdt_sample/imageUpload"
+			enctype="multipart/form-data" target="framFile"
+			onsubmit="return message();" class="form-horizontal tab-form"
+			style="width: 500px; margin: 100px auto 0; background: #fff; border-radius: 5px; padding: 5px 20px;">
+			<div align="center">
+				<input type="text" class="form-control"
+					style="Float: left; width: 250px; margin: 2px"
+					name="uploadFilePath" id="uploadFilePath"
+					placeholder="Click the Browse button and select"> &nbsp<label
+					class="btn btn-success" style="Float: left; margin: 2px"><input
+					class="file_input" type="file" name="file" id="hhhh"
+					onchange="document.getElementById('uploadFilePath').value = document.getElementById('hhhh').value;">
+					Browse...</label> &nbsp<input type="submit" class="btn btn-success"
+					value="Submit" style="Float: left; margin: 2px">
+			</div>
+		</form>
+		
+
+			<div class="form-group" style="text-align: center;">
+				<button class="btn btn-primary" onclick="savePdtCase()">Submit</button>
+				<!-- <button class="btn btn-default">reset</button> -->
+			</div>
+			</div>
+			
+			
 	
 		<h4 class="info-text">Contact us</h4>
 		<form class="form-horizontal" style="width: 80%; margin: 0 auto 20px;">
 		  <div class="form-group">
 			<label class="col-sm-3 control-label">address</label>
 			<div class="col-sm-7">
-				<textarea class="form-control" rows="3" style="resize: none;"></textarea>
+				<textarea class="form-control" rows="3" style="resize: none;"  	name="address"
+						id="address" ></textarea>
 			</div>
 		  </div>
 		  <div class="form-group">
-			<label class="col-sm-3 control-label">The phone</label>
+			<label class="col-sm-3 control-label">Telphone</label>
 			<div class="col-sm-7">
-			  <input type="tel" class="form-control">
+			  <input type="tel" class="form-control" name="telphone" id="telphone">
 			</div>
 		  </div>
-<!-- 		  <div class="form-group">
-			<label class="col-sm-3 control-label">Mobile phone</label>
+ 		  <div class="form-group">
+			<label class="col-sm-3 control-label">Mobile</label>
 			<div class="col-sm-7">
-			  <input type="tel" class="form-control">
+			  <input type="tel" class="form-control"  name="mobile" id="mobile">
 			</div>
-		  </div> -->
+		  </div>
 		  <div class="form-group">
 			<label class="col-sm-3 control-label">Email</label>
 			<div class="col-sm-7">
-			  <input type="email" class="form-control">
+			  <input type="email" class="form-control" name="email" id="email">
 			</div>
 		  </div>
 		  <div class="form-group" style="margin-top: 25px;">
-		  	<button type="button" class="btn btn-primary active col-sm-2 col-sm-offset-4">Submit</button>
-			<button type="button" class="btn btn-default active col-sm-2 col-sm-offset-1">Cancel</button>
+		  	<button class="btn btn-primary" onclick="updateParams('003')">Submit</button>
+			<!-- <button type="button" class="btn btn-default active col-sm-2 col-sm-offset-1">Cancel</button> -->
 		  </div>
 		</form>
 
@@ -312,6 +395,37 @@
 				});
 			}
 		</script>
+		
+		<script type="text/javascript">
+			function savePdtCase() {
+				
+/* 				if($("#news1").val().length > 84){
+					alert("The length of conteht can not longer than 84! Please input agin!");
+					return;
+				} */
+				$.ajax({
+					type : 'POST',
+					url : '/jf/thairice/t16_pdt_sample/save',
+					data : {
+						id : $("#pdt_id").val(),
+						rice_planting_area : $("#rice_planting_area").val(),
+						rice_drought : $("#rice_drought").val(),
+						rice_condition : $("#rice_condition").val(),
+						rice_production : $("#rice_production").val(),
+						pic_path : $("#hhhh").val(),
+						pdt_desc : $("#pdt_desc").val()
+					},
+					success : function(res) {
+						/* 			if(res.code == "0003" || res.code == "0001"){
+						 document.getElementById("account").style.backgroundColor = "#faa390";
+						 } */
+						/* 			document.setElementById("ftpSrcPath0").value = "55555"; */
+						alert(res.desc);
+					},
+					dataType : "json"
+				});
+			}
+		</script>
 
 		<script type="text/javascript">
 			function message() {
@@ -339,6 +453,99 @@
 				return false;
 			}
 		</script>
+		
+				<script type="text/javascript"> 
+    function updateParams(flag){
+	$.ajax({
+		  type: 'POST',
+		  url: '/jf/thairice/t1parameter/updateParams',
+		  data: {flag:flag,address:$("#address").val(),telphone:$("#telphone").val(),mobile:$("#mobile").val(),email:$("#email").val()},	
+		  success: function(res){
+/* 			if(res.code == "0003" || res.code == "0001"){
+					document.getElementById("account").style.backgroundColor = "#faa390";
+			} */
+/* 			document.setElementById("ftpSrcPath0").value = "55555"; */
+			alert(res.desc);
+		  },
+		  dataType: "json"
+		});
+	}
+    
+    function queryParams(flag){	
+    	$.ajax({
+    		  type: 'POST',
+    		  url: '/jf/thairice/t1parameter/queryParams',
+    		  data: {flag:flag},
+    		  success: function(res){
+    			if(res.code == "0000"){
+    				if(res.flag == "001"){
+    			 		if(res.ftpSrcPath0 != undefined)
+		    				document.getElementById("ftpSrcPath0").value = res.ftpSrcPath0;
+    			 		else
+    			 			document.getElementById("ftpSrcPath0").value = "";
+    			 		
+    			 		if(res.ftpSrcPath1 != undefined)
+		    				document.getElementById("ftpSrcPath1").value = res.ftpSrcPath1;
+    			 		else
+    			 			document.getElementById("ftpSrcPath1").value = "";
+    			 		
+    			 		if(res.ftpSrcPath2 != undefined)
+		    				document.getElementById("ftpSrcPath2").value = res.ftpSrcPath2;
+    			 		else
+    			 			document.getElementById("ftpSrcPath2").value = "";
+    			 		
+		    			if(res.ftpSrcPath3 != undefined)
+		    				document.getElementById("ftpSrcPath3").value = res.ftpSrcPath3;
+		    			else
+		    				document.getElementById("ftpSrcPath3").value = "";
+    				} else if(res.flag == "002"){
+		    			document.getElementById("droughtThreshold4").value = res.droughtThreshold4;
+		    			document.getElementById("droughtThreshold1").value = res.droughtThreshold1;
+		    			document.getElementById("droughtThreshold2").value = res.droughtThreshold2;
+		    			document.getElementById("droughtThreshold3").value = res.droughtThreshold3;
+    				} else if(res.flag == "003"){
+		    			document.getElementById("conditionThreshold1").value = res.conditionThreshold1;
+		    			document.getElementById("conditionThreshold2").value = res.conditionThreshold2;
+		    			document.getElementById("conditionThreshold3").value = res.conditionThreshold3;
+		    			document.getElementById("conditionThreshold4").value = res.conditionThreshold4;
+		    			document.getElementById("inStartYear").value = res.inStartYear;
+		    			document.getElementById("inEndYear").value = res.inEndYear;
+		    			
+    				} else{
+    					alert(res.desc);
+    				}
+    			} else {
+    				alert(res.desc);
+    			}
+    		  },
+    		  dataType: "json"
+    		});
+    	}
+</script>
+
+		<script type="text/javascript">
+        function message() {
+         var filePath = document.getElementById('hhhh').value;
+         if(filePath==null || filePath==""){
+        	 alert("Please click the browse button and select a file first!");
+        	 return;
+         } else
+         	alert("Upload successfully!");
+        }        
+    </script>
+		<script> function PostData() { $.ajax({ type:"POST", 
+	url: "/jf/thairice/t1parameter/riceYieldUpload",
+	data : "", 
+/* 	headers:{
+		'Content-Type':'multipart/form-data'
+	}, */
+	success: function(msg) {
+		
+	} 
+	}); 
+	return false; 
+	} 
+	</script>
 
 		<% }; %> <%
 		include("operator_layout.html",{cssSec:cssSec,contSec:contSec,jsSec:jsSec}){}
