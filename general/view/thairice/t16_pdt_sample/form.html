@@ -1,16 +1,6 @@
 
 
 <div class="form-group">
-	<label class="col-sm-2 control-label">id</label>
-	<div class="col-sm-7">
-		<input type="text" name="t16_pdt_sample.rank" value="${t16_pdt_sample.rank!}" 
-		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
-		<span class="help-inline col-sm-2"></span>
-	</div>
-	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
-</div>
-
-<div class="form-group">
 	<label class="col-sm-2 control-label">rice_planting_area</label>
 	<div class="col-sm-7">
 		<input type="text" name="t16_pdt_sample.rice_planting_area" value="${escapeXml(t16_pdt_sample.rice_planting_area!)}" 
@@ -54,6 +44,16 @@
 	<label class="col-sm-2 control-label">图片路径</label>
 	<div class="col-sm-7">
 		<input type="text" name="t16_pdt_sample.pic_path" value="${escapeXml(t16_pdt_sample.pic_path!)}" 
+		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
+		<span class="help-inline col-sm-2"></span>
+	</div>
+	<span class="help-inline col-sm-2"> <i class="fa fa-info-circle"></i> 1-100个任意字符 </span>
+</div>
+
+<div class="form-group">
+	<label class="col-sm-2 control-label">产品描述</label>
+	<div class="col-sm-7">
+		<input type="text" name="t16_pdt_sample.pdt_desc" value="${escapeXml(t16_pdt_sample.pdt_desc!)}" 
 		class="form-control" maxlength="100" vMin="1" vType="length" onblur="platform_verify.onblurVali(this);">
 		<span class="help-inline col-sm-2"></span>
 	</div>

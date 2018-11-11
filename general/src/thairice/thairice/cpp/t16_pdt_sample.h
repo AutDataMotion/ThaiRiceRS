@@ -26,7 +26,7 @@ private:
 	 * 字段描述：id 
 	 * 字段类型：bigint  长度：null
 	 */
-	long rank;
+	long id;
 	/**
 	 * 字段描述：rice_planting_area 
 	 * 字段类型：varchar  长度：256
@@ -52,16 +52,21 @@ private:
 	 * 字段类型：varchar  长度：256
 	 */
 	string pic_path;
+	/**
+	 * 字段描述：产品描述 
+	 * 字段类型：varchar  长度：512
+	 */
+	string pdt_desc;
 public:
 	
 	
-	t16_pdt_sample& setRank(long arank){
-		rank = arank;
-		mapSQLTokens["rank"] = to_string(rank);
+	t16_pdt_sample& setId(long aid){
+		id = aid;
+		mapSQLTokens["id"] = to_string(id);
 		return *this;
 	}
-	long getRank() {
-		return rank;
+	long getId() {
+		return id;
 	}
 	
 	
@@ -117,6 +122,17 @@ public:
 	}
 	string getPic_path() {
 		return pic_path;
+	}
+	
+	
+	t16_pdt_sample& setPdt_desc(string apdt_desc){
+		pdt_desc = apdt_desc;
+		
+		mapSQLTokens["pdt_desc"] = "'"+pdt_desc+"'";
+		return *this;
+	}
+	string getPdt_desc() {
+		return pdt_desc;
 	}
 	
 };

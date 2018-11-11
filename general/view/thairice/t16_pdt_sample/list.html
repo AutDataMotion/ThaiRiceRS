@@ -91,8 +91,8 @@
 										onchange="common_common.checkFunc('dataTable', this.checked);"> 
 								</th>
 								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
-										'mainPanel', 'splitPage', 'rank')">
-									id	${orderBy("rank")}
+										'mainPanel', 'splitPage', 'id')">
+									id	${orderBy("id")}
 								</th>
 								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
 										'mainPanel', 'splitPage', 'rice_planting_area')">
@@ -114,6 +114,10 @@
 										'mainPanel', 'splitPage', 'pic_path')">
 									图片路径	${orderBy("pic_path")}
 								</th>
+								<th class="hidden-xs" onclick="common_splitPage.orderbyFun(
+										'mainPanel', 'splitPage', 'pdt_desc')">
+									产品描述	${orderBy("pdt_desc")}
+								</th>
 								<th class="hidden-xs">
 									${i18nMap["admin.common.operation"]}
 								</th>
@@ -130,7 +134,7 @@
 								
 								<td>
 
-							${item["rank"]!}
+							${item["id"]!}
 
 								</td>
 								
@@ -165,6 +169,13 @@
 								<td>
 
 								${escapeXml(item["pic_path"]!)}
+
+								</td>
+							
+								
+								<td>
+
+								${escapeXml(item["pdt_desc"]!)}
 
 								</td>
 							

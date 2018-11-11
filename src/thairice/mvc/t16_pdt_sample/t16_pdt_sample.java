@@ -27,7 +27,7 @@ public class t16_pdt_sample extends BaseModel<t16_pdt_sample> {
 	 * 字段描述：id 
 	 * 字段类型：bigint  长度：null
 	 */
-	public static final String column_rank = "rank";
+	public static final String column_id = "id";
 	
 	/**
 	 * 字段描述：rice_planting_area 
@@ -59,6 +59,12 @@ public class t16_pdt_sample extends BaseModel<t16_pdt_sample> {
 	 */
 	public static final String column_pic_path = "pic_path";
 	
+	/**
+	 * 字段描述：产品描述 
+	 * 字段类型：varchar  长度：512
+	 */
+	public static final String column_pdt_desc = "pdt_desc";
+	
 	
 	/**
 	 * sqlId : thairice.t16_pdt_sample.splitPageFrom
@@ -66,18 +72,19 @@ public class t16_pdt_sample extends BaseModel<t16_pdt_sample> {
 	 */
 	public static final String sqlId_splitPage_from = "thairice.t16_pdt_sample.splitPageFrom";
 
-	private Long rank;
+	private Long id;
 	private String rice_planting_area;
 	private String rice_drought;
 	private String rice_condition;
 	private String rice_production;
 	private String pic_path;
+	private String pdt_desc;
 
-	public void setRank(Long rank){
-		set(column_rank, rank);
+	public void setId(Long id){
+		set(column_id, id);
 	}
-	public <T> T getRank() {
-		return get(column_rank);
+	public <T> T getId() {
+		return get(column_id);
 	}
 	public void setRice_planting_area(String rice_planting_area){
 		set(column_rice_planting_area, rice_planting_area);
@@ -108,6 +115,12 @@ public class t16_pdt_sample extends BaseModel<t16_pdt_sample> {
 	}
 	public <T> T getPic_path() {
 		return get(column_pic_path);
+	}
+	public void setPdt_desc(String pdt_desc){
+		set(column_pdt_desc, pdt_desc);
+	}
+	public <T> T getPdt_desc() {
+		return get(column_pdt_desc);
 	}
 	
 }
