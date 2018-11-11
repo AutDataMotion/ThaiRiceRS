@@ -324,6 +324,13 @@
 			   var c=$(this).find('#c').attr("type");
 			   var a=$(this).find('#a').attr("type");
 			   console.log(province+"==="+p+"===="+city+"==="+c+"===="+area+"==="+a);
+			   //增加省份和全选的重复
+/* 			   if(p!=""){
+				    if(province=="ALL"){
+                       ret= false;
+					}
+				} */
+			   //**********************************
 				if(province==p && city==c && area==a){
                     ret= false;
 				}
