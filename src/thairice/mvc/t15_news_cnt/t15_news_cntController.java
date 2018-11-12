@@ -13,6 +13,7 @@ import com.jfinal.plugin.activerecord.Page;
 
 import thairice.constant.ConstantInitMy;
 import thairice.entity.ResultEntity;
+import thairice.mvc.t16_pdt_sample.t16_pdt_sample;
 import thairice.mvc.t1parameter.T1parameter;
 import thairice.mvc.t2syslog.EnumT2sysLog;
 import thairice.mvc.t2syslog.T2syslogService;
@@ -56,6 +57,20 @@ public class t15_news_cntController extends BaseController {
 				LOG.debug(newsList.get(i).getTitle());
 			}
 		}
+		// 产品信息展示
+		Page pageT16  = t16_pdt_sample.dao.paginate(getParaToInt(0, 1), 10, "select * from t16_pdt_sample t order by t.id asc ", "");
+		// 联系我们展示
+		String address = ParamUtils.getParam("10000005", "001");
+		String telphone = ParamUtils.getParam("10000005", "002");
+		String mobile = ParamUtils.getParam("10000005", "003");
+		String email = ParamUtils.getParam("10000005", "004");
+		//		log.info("查询报表返回结果" + JSON.toJSONString(page));
+
+		setAttr("pageT16",pageT16);
+		setAttr("address",address);
+		setAttr("telphone",telphone);
+		setAttr("mobile",mobile);
+		setAttr("email",email);
 		setAttr("t15_news_cnt", "active");
 		renderWithPath("/adm2018/news_management.html");
 	}
@@ -68,16 +83,32 @@ public class t15_news_cntController extends BaseController {
 		// 处理结果
 		ResultEntity res = null;
 		try {
-				String news1 = getPara("news1");
+/*				String news1 = getPara("news1");
 				String news2 = getPara("news2");
 				String news3 = getPara("news3");
 				String news4 = getPara("news4");
 				String news5 = getPara("news5");
 				String news6 = getPara("news6");
 				String news7 = getPara("news7");
-				String news8 = getPara("news8");
+				String news8 = getPara("news8");*/
 				
-				t15_news_cnt newsCnt = new t15_news_cnt();
+				String sql = "select t.title, t.content, date_format(t.editTime ,'%Y/%m/%d') as editTime from t15_news_cnt t order by t.rank asc ";
+				List<t15_news_cnt> newsList = t15_news_cnt.dao.find(sql);
+				if((newsList != null) && (newsList.size() > 0)) {
+					for(int i = 0; i < newsList.size(); i ++) {
+						String newsTitle = getPara("news" + i);
+						LOG.info("newsTitle=" + newsTitle);
+						LOG.info("newsList.get(i).getTitle()=" + newsList.get(i).getTitle());
+						if(!newsList.get(i).getTitle().equals(newsTitle)) {
+							t15_news_cnt newsCnt = new t15_news_cnt();
+							newsCnt.setNewsid(new Long((long)i));
+							newsCnt.setTitle(newsTitle);
+							newsCnt.update();
+						}
+					}
+				}
+				
+/*				t15_news_cnt newsCnt = new t15_news_cnt();
 				newsCnt.setNewsid(1l);
 				newsCnt.setTitle(news1);
 				newsCnt.update();
@@ -101,7 +132,7 @@ public class t15_news_cntController extends BaseController {
 				newsCnt.update();
 				newsCnt.setNewsid(8l);
 				newsCnt.setTitle(news8);
-				newsCnt.update();
+				newsCnt.update();*/
 
 				LOG.debug("更新新闻成功");
 				res = new ResultEntity("0000");
