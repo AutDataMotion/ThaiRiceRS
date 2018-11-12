@@ -1,0 +1,586 @@
+﻿<!DOCTYPE html>
+<!-- saved from url=(0042)https://v3.bootcss.com/examples/dashboard/ -->
+<html lang="zh-CN">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<!-- 上述3个meta标签*必须*放在最前面，任何其他内容都*必须*跟随其后！ -->
+<meta name="description" content="">
+<meta name="author" content="">
+<!--<link rel="icon" href="https://v3.bootcss.com/favicon.ico">-->
+
+<title>信息发布</title>
+
+<!-- Bootstrap core CSS -->
+<link href="bootstrap-3.3.7-dist/css/bootstrap.min.css" rel="stylesheet">
+<link href="datetime-picker/bootstrap-datetimepicker.min.css" rel="stylesheet">
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
+<link href="data/ie10-viewport-bug-workaround.css" rel="stylesheet">
+<link href="CSS/dataTables.bootstrap4.css" rel="stylesheet">
+<link rel="stylesheet" href="CSS/bootstrap-imginput.css">
+<!-- Custom styles for this template -->
+<link href="data/dashboard.css" rel="stylesheet">
+<link rel="stylesheet" href="CSS/nav_css.css">
+<link rel="stylesheet" href="CSS/operator_management.css">
+<link rel="stylesheet" href="CSS/information_release.css">
+<!-- Just for debugging purposes. Don't actually copy these 2 lines! -->
+<!--[if lt IE 9]><script src="../../assets/js/ie8-responsive-file-warning.js"></script><![endif]-->
+<script src="data/ie-emulation-modes-warning.js"></script>
+<script src="JS/ie-open.js"></script>
+<script src="JS/bootstrap-imginput.js"></script>
+<!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+<!--[if lt IE 9]>
+      <script src="https://cdn.bootcss.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+</head>
+
+<body>
+<nav class="navbar navbar-inverse navbar-fixed-top">
+  <div class="container-fluid">
+    <div class="navbar-header">
+      <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+      <p class="navbar-brand">Thai agricultural remote sensing monitoring platform</p>
+    </div>
+    <div id="navbar" class="navbar-collapse collapse">
+      <ul class="nav navbar-nav navbar-right">
+        <li><a href="data_selfinfo.html"><i class="glyphicon glyphicon-user"></i>Admin</a></li>
+        <li><a href="#" data-toggle="modal" data-target="#exampleModal"><i class="glyphicon glyphicon-log-out"></i>Log out</a></li>
+        <li><a href="#"><i class="glyphicon glyphicon-question-sign"></i></a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+<div class="container-fluid">
+  <div class="row">
+    <div class="col-sm-3 col-md-2 sidebar">
+      <ul class="nav nav-sidebar">
+        <li style="margin-bottom:20px;">
+          <p class="function_text">Function menu</p>
+        </li>
+        <li><a href="data.html">Operator management <span class="sr-only">(current)</span></a></li>
+        <li><a href="user_management.html">User management</a></li>
+        <!--<li><a class="special" href="index.html" target="_blank">Product data query</a></li>-->
+		<!--<li><a class="special" href="index.html" target="_blank">Product data query</a></li>-->
+        <li><a class="special" href="#" onclick="open_win()" >Product data query</a></li>
+        <li><a href="data_management.html">Data management</a></li>
+        <li><a href="#">System state</a></li>
+        <li><a href="production_configuration.html">Production configuration</a></li>
+        <li><a href="log_management.html">Log management</a></li>
+        <li><a href="data_selfinfo.html">Personal center</a></li>
+        <li><a href="data_message.html">My message</a></li>
+		<li class="active"><a href="#">Information release</a></li>
+      </ul>
+    </div>
+    <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+      	<h4 class="info-text">News release</h4>
+		<div class="data-btns clearfix">
+        <button type="button" class="btn btn-success btn-sm release_add" data-toggle="modal" data-target="#releaseaddModal"><i class="glyphicon glyphicon-plus"></i>Add</button>
+        <button type="button" class="btn btn-warning btn-sm release_edit" data-toggle="modal" data-target="#releaseeditModal"><i class="glyphicon glyphicon-edit"></i>Edit</button>
+        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal"><i class="glyphicon glyphicon-trash"></i>Delete</button>
+        <button type="button" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-refresh"></i>Refresh</button>
+        <div class="input-group col-sm-3" style="float: right;">
+		  <a class="input-group-addon"><i class="glyphicon glyphicon-search"></i></a>
+		  <input type="text" class="form-control" placeholder="Keyword search">
+		</div>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-bordered data-table" id="dataTable17" width="100%" cellspacing="0" align="center">
+          <thead>
+            <tr>
+              <th width="15%"><input type="checkbox">
+                Select all</th>
+              <th>News content</th>
+              <th width="20%">Release date</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><input type="checkbox">
+                &nbsp;</td>
+              <td>adfefaojeowufgweougwego</td>
+              <td>2018-11-11 12:00:00</td>
+            </tr>
+            <tr>
+              <td><input type="checkbox">
+                &nbsp;</td>
+              <td>adfefaojeowufgweougwego</td>
+              <td>2018-11-11 12:00:00</td>
+            </tr>
+            <tr>
+              <td><input type="checkbox">
+                &nbsp;</td>
+              <td>adfefaojeowufgweougwego</td>
+              <td>2018-11-11 12:00:00</td>
+            </tr>
+            <tr>
+              <td><input type="checkbox">
+                &nbsp;</td>
+              <td>adfefaojeowufgweougwego</td>
+              <td>2018-11-11 12:00:00</td>
+            </tr>
+            <tr>
+              <td><input type="checkbox">
+                &nbsp;</td>
+              <td>adfefaojeowufgweougwego</td>
+              <td>2018-11-11 12:00:00</td>
+            </tr>
+            <tr>
+              <td><input type="checkbox">
+                &nbsp;</td>
+              <td>adfefaojeowufgweougwego</td>
+              <td>2018-11-11 12:00:00</td>
+            </tr>
+            <tr>
+              <td><input type="checkbox">
+                &nbsp;</td>
+              <td>adfefaojeowufgweougwego</td>
+              <td>2018-11-11 12:00:00</td>
+            </tr>
+            <tr>
+              <td><input type="checkbox">
+                &nbsp;</td>
+              <td>adfefaojeowufgweougwego</td>
+              <td>2018-11-11 12:00:00</td>
+            </tr>
+            <tr>
+              <td><input type="checkbox">
+                &nbsp;</td>
+              <td>adfefaojeowufgweougwego</td>
+              <td>2018-11-11 12:00:00</td>
+            </tr>
+			  <tr>
+              <td><input type="checkbox">
+                &nbsp;</td>
+              <td>adfefaojeowufgweougwego</td>
+              <td>2018-11-11 12:00:00</td>
+            </tr>
+            <tr>
+              <td><input type="checkbox">
+                &nbsp;</td>
+              <td>adfefaojeowufgweougwego</td>
+              <td>2018-11-11 12:00:00</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+		<h4 class="info-text">Published case</h4>
+		<div class="data-btns clearfix">
+        <button type="button" class="btn btn-success btn-sm published_add" data-toggle="modal" data-target="#publishedaddModal"><i class="glyphicon glyphicon-plus"></i>Add</button>
+        <button type="button" class="btn btn-warning btn-sm published_edit" data-toggle="modal" data-target="#publishededitModal"><i class="glyphicon glyphicon-edit"></i>Edit</button>
+        <button type="button" class="btn btn-danger btn-sm" data-toggle="modal" data-target="#deleteModal"><i class="glyphicon glyphicon-trash"></i>Delete</button>
+        <button type="button" class="btn btn-primary btn-sm"><i class="glyphicon glyphicon-refresh"></i>Refresh</button>
+        <div class="input-group col-sm-3" style="float: right;">
+		  <a class="input-group-addon"><i class="glyphicon glyphicon-search"></i></a>
+		  <input type="text" class="form-control" placeholder="Keyword search">
+		</div>
+      </div>
+      <div class="table-responsive">
+        <table class="table table-bordered data-table" id="dataTable18" width="100%" cellspacing="0" align="center">
+          <thead>
+            <tr>
+              <th width="15%"><input type="checkbox">
+                Select all</th>
+              <th>Picture</th>
+			  <th>Rice planting area</th>
+			  <th>Rice drought</th>
+			  <th>Rice condition</th>
+			  <th>Rice production</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><input type="checkbox">
+                &nbsp;</td>
+              <td>A001.jpg</td>
+              <td>14546464km²</td>
+			  <td>30%</td>
+			  <td>good</td>
+			  <td>4654654654kg</td>
+            </tr>
+            <tr>
+              <td><input type="checkbox">
+                &nbsp;</td>
+              <td></td>
+              <td></td>
+			  <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox">
+                &nbsp;</td>
+              <td></td>
+              <td></td>
+			  <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+			<tr>
+              <td><input type="checkbox">
+                &nbsp;</td>
+              <td></td>
+              <td></td>
+			  <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox">
+                &nbsp;</td>
+              <td></td>
+              <td></td>
+			  <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+			<tr>
+              <td><input type="checkbox">
+                &nbsp;</td>
+              <td></td>
+              <td></td>
+			  <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox">
+                &nbsp;</td>
+              <td></td>
+              <td></td>
+			  <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+			<tr>
+              <td><input type="checkbox">
+                &nbsp;</td>
+              <td></td>
+              <td></td>
+			  <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox">
+                &nbsp;</td>
+              <td></td>
+              <td></td>
+			  <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+			<tr>
+              <td><input type="checkbox">
+                &nbsp;</td>
+              <td></td>
+              <td></td>
+			  <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+            <tr>
+              <td><input type="checkbox">
+                &nbsp;</td>
+              <td></td>
+              <td></td>
+			  <td></td>
+              <td></td>
+              <td></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+		<h4 class="info-text">Contact us</h4>
+		<form class="form-horizontal" style="width: 80%; margin: 0 auto 20px;">
+		  <div class="form-group">
+			<label class="col-sm-3 control-label">address</label>
+			<div class="col-sm-7">
+				<textarea class="form-control" rows="3" style="resize: none;"></textarea>
+			</div>
+		  </div>
+		  <div class="form-group">
+			<label class="col-sm-3 control-label">The phone</label>
+			<div class="col-sm-7">
+			  <input type="tel" class="form-control">
+			</div>
+		  </div>
+		  <div class="form-group">
+			<label class="col-sm-3 control-label">Mobile phone</label>
+			<div class="col-sm-7">
+			  <input type="tel" class="form-control">
+			</div>
+		  </div>
+		  <div class="form-group">
+			<label class="col-sm-3 control-label">Email</label>
+			<div class="col-sm-7">
+			  <input type="email" class="form-control">
+			</div>
+		  </div>
+		  <div class="form-group" style="margin-top: 25px;">
+		  	<button type="button" class="btn btn-primary active col-sm-2 col-sm-offset-4">Submit</button>
+			<button type="button" class="btn btn-default active col-sm-2 col-sm-offset-1">Cancel</button>
+		  </div>
+		</form>
+    </div>
+  </div>
+</div>
+<!-- Logout Modal-->
+<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Ready to Leave?</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">×</span> </button>
+      </div>
+      <div class="modal-body">Select "Logout" below if you are ready to end your current session.</div>
+      <div class="modal-footer">
+        <button class="btn btn-secondary" type="button" data-dismiss="modal">Cancel</button>
+        <a class="btn btn-primary" href="backend_login.html">Logout</a> </div>
+    </div>
+  </div>
+</div>
+<!-- add Modal-->
+<div class="modal fade" id="releaseaddModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add news</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">×</span> </button>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" style="margin:0 auto;">
+          <div class="form-group">
+            <label class="control-label col-md-2">News</label>
+          </div>
+		  <div class="form-group" style="width: 90%; margin: 0 auto 30px;">
+		  	 <textarea class="form-control" rows="6" style="resize: none;"></textarea>	
+		  </div>
+          <div class="form-group">
+            <label class="col-md-3 control-label">Release date:</label>
+            <div class="input-group col-md-7" id="starttime9"><input type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span></div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" type="button" data-dismiss="modal">Submit</button>
+        <button class="btn btn-default" type="button" data-dismiss="modal">Cancel</button>
+    </div>
+  </div>
+</div>
+</div>
+<div class="modal fade" id="publishedaddModal" tabindex="-1" role="dialog" aria-labelledby="addModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Add case</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">×</span> </button>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" style="margin:0 auto;">
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Choose picture</label>
+			<div class="col-sm-6">
+			  <div class="fileinput fileinput-new" data-provides="fileinput"  id="exampleInputUpload1">
+              	<div class="fileinput-new thumbnail" style="width: 170px;height: 120px; border:none; padding:0; background: #eaf2f4">
+                	<img src="" id="picImg1" alt="" />
+                </div>
+                <div class="fileinput-preview fileinput-exists thumbnail" style="width: 170px;height: 120px; border:none; padding:0;"></div>
+                <div style="cursor:pointer;">
+                	<span class="btn btn-primary btn-file" style="background-color: #fff; border-color: #fff; color: #00aace;">
+                    	<span class="fileinput-new">change picture</span>
+                        <input type="file" name="pic1" id="picID1" accept="image/gif,image/jpeg,image/x-png"/>
+                    </span>
+                </div>
+              </div>
+			</div>
+          </div>
+		  <div class="form-group">
+            <label class="col-sm-3 control-label">Rice planting area</label>
+			<div class="col-sm-6">
+			  <input type="text" class="form-control">
+			</div>
+			<label class="col-sm-1 control-label">km²</label>
+          </div>
+		  <div class="form-group">
+            <label class="col-sm-3 control-label">Rice drought</label>
+			<div class="col-sm-6">
+			  <input type="text" class="form-control">
+			</div>
+			<label class="col-sm-1 control-label">%</label>
+          </div>
+		  <div class="form-group">
+            <label class="col-sm-3 control-label">Rice condition</label>
+			<div class="col-sm-6">
+				<select class="form-control">
+					<option>good</option>
+					<option>common</option>
+				</select>
+			</div>
+          </div>
+		  <div class="form-group">
+            <label class="col-sm-3 control-label">Rice production</label>
+			<div class="col-sm-6">
+			  <input type="text" class="form-control">
+			</div>
+			<label class="col-sm-1 control-label">kg</label>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" type="button" data-dismiss="modal">Submit</button>
+        <button class="btn btn-default" type="button" data-dismiss="modal">Cancel</button>
+    </div>
+  </div>
+</div>
+</div>
+<!-- edit Modal-->
+<div class="modal fade" id="releaseeditModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true" data-show="false">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit news</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">×</span> </button>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" style="margin:0 auto;">
+          <div class="form-group">
+            <label class="control-label col-md-2">News</label>
+          </div>
+		  <div class="form-group" style="width: 90%; margin: 0 auto 30px;">
+		  	 <textarea class="form-control" rows="6" style="resize: none;"></textarea>	
+		  </div>
+          <div class="form-group">
+            <label class="col-md-3 control-label">Release date:</label>
+            <div class="input-group col-md-7" id="starttime10"><input type="text" class="form-control"><span class="input-group-addon"><i class="glyphicon glyphicon-calendar"></i></span></div>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" type="button" data-dismiss="modal">Sure</button>
+        <button class="btn btn-default" type="button" data-dismiss="modal">Cancel</button>
+    </div>
+  </div>
+</div>
+</div>
+<div class="modal fade" id="publishededitModal" tabindex="-1" role="dialog" aria-labelledby="editModalLabel" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Edit case</h5>
+        <button class="close" type="button" data-dismiss="modal" aria-label="Close"> <span aria-hidden="true">×</span> </button>
+      </div>
+      <div class="modal-body">
+        <form class="form-horizontal" style="margin:0 auto;">
+          <div class="form-group">
+            <label class="col-sm-3 control-label">Choose picture</label>
+			<div class="col-sm-6">
+			  <div class="fileinput fileinput-new" data-provides="fileinput"  id="exampleInputUpload1">
+              	<div class="fileinput-new thumbnail" style="width: 170px;height: 120px; border:none; padding:0; background: #eaf2f4">
+                	<img src="" id="picImg1" alt="" />
+                </div>
+                <div class="fileinput-preview fileinput-exists thumbnail" style="width: 170px;height: 120px; border:none; padding:0;"></div>
+                <div style="cursor:pointer;">
+                	<span class="btn btn-primary btn-file" style="background-color: #fff; border-color: #fff; color: #00aace;">
+                    	<span class="fileinput-new">change picture</span>
+                        <input type="file" name="pic1" id="picID1" accept="image/gif,image/jpeg,image/x-png"/>
+                    </span>
+                </div>
+              </div>
+			</div>
+          </div>
+		  <div class="form-group">
+            <label class="col-sm-3 control-label">Rice planting area</label>
+			<div class="col-sm-6">
+			  <input type="text" class="form-control">
+			</div>
+			<label class="col-sm-1 control-label">km²</label>
+          </div>
+		  <div class="form-group">
+            <label class="col-sm-3 control-label">Rice drought</label>
+			<div class="col-sm-6">
+			  <input type="text" class="form-control">
+			</div>
+			<label class="col-sm-1 control-label">%</label>
+          </div>
+		  <div class="form-group">
+            <label class="col-sm-3 control-label">Rice condition</label>
+			<div class="col-sm-6">
+				<select class="form-control">
+					<option>good</option>
+					<option>common</option>
+				</select>
+			</div>
+          </div>
+		  <div class="form-group">
+            <label class="col-sm-3 control-label">Rice production</label>
+			<div class="col-sm-6">
+			  <input type="text" class="form-control">
+			</div>
+			<label class="col-sm-1 control-label">kg</label>
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button class="btn btn-primary" type="button" data-dismiss="modal">Submit</button>
+        <button class="btn btn-default" type="button" data-dismiss="modal">Cancel</button>
+    </div>
+  </div>
+</div>
+</div>
+	<!-- delete Modal-->
+    <div class="modal fade" id="deleteModal" tabindex="-1" role="dialog" aria-labelledby="deleteModalLabel" aria-hidden="true">
+      <div class="modal-dialog" role="document">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title">System message</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          </div>
+          <div class="modal-body">
+            Are you sure to delete?
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" data-dismiss="modal">Sure</button>
+          </div>
+        </div><!-- /.modal-content -->
+      </div><!-- /.modal-dialog -->
+    </div>
+
+<!-- Bootstrap core JavaScript
+    ================================================== --> 
+<!-- Placed at the end of the document so the pages load faster --> 
+<script src="data/jquery.min.js"></script> 
+<script>window.jQuery || document.write('<script src="../../assets/js/vendor/jquery.min.js"><\/script>')</script> 
+<script src="bootstrap-3.3.7-dist/js/bootstrap.min.js"></script> 
+<script src="datetime-picker/moment.js"></script>
+<script src="datetime-picker/bootstrap-datetimepicker.min.js"></script>
+<script src="JS/jquery.dataTables.js"></script> 
+<script src="JS/dataTables.bootstrap4.js"></script> 
+<script src="JS/sb-admin-datatables.min.js"></script> 
+<!-- Just to make our placeholder images work. Don't actually copy the next line! --> 
+<script src="data/holder.min.js"></script> 
+<!-- IE10 viewport hack for Surface/desktop Windows 8 bug --> 
+<script src="data/ie10-viewport-bug-workaround.js"></script> 
+<script>
+    	$(function(){
+			$('.data-table tbody tr:odd td').css('background-color','#dbeff6');
+			//日期选择插件
+			$('#starttime9').datetimepicker({  
+				format: 'YYYY-MM-DD',  
+				locale: moment.locale('zh-cn')  
+			});
+			$('#starttime10').datetimepicker({  
+				format: 'YYYY-MM-DD',  
+				locale: moment.locale('zh-cn')  
+			}); 
+			/*模态框点击空白处不关闭，要在div上加data-show="false"及下列代码*/
+			$('#editModal').modal({backdrop: 'static', keyboard: true});
+			/*$('#addModal').modal({backdrop: 'static', keyboard: true});
+			$('#deleteModal').modal({backdrop: 'static', keyboard: true});
+			$('#editModal').modal({backdrop: 'static', keyboard: true});*/
+		})
+</script>
+</body>
+</html>
