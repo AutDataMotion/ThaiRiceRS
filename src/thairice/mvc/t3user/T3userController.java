@@ -31,10 +31,12 @@ import thairice.interceptor.UserLoginInterceptor;
 import thairice.mvc.r4message_send.R4message_send;
 import thairice.mvc.t10pdt_report.T10pdt_report;
 import thairice.mvc.t15_news_cnt.t15_news_cnt;
+import thairice.mvc.t16_pdt_sample.t16_pdt_sample;
 import thairice.mvc.t2syslog.EnumT2sysLog;
 import thairice.mvc.t2syslog.T2syslogService;
 import thairice.mvc.t8message.T8message;
 import thairice.mvc.t8message.T8messageService;
+import thairice.utils.ParamUtils;
 
 /**
  * 前台用户中心
@@ -80,11 +82,22 @@ public class T3userController extends BaseController {
     public void login() {
         setAttr("returnUrl", "");
         keepPara("returnUrl");
-        
+        // 新闻信息展示
 		Page page  = t15_news_cnt.dao.paginate(getParaToInt(0, 1), 10, "select t.title, t.content, date_format(t.editTime ,'%Y/%m/%d') as editTime from t15_news_cnt t order by t.rank asc ", "");
-//		log.info("查询报表返回结果" + JSON.toJSONString(page));
-		setAttr("blogPage",page );
-		
+		// 产品信息展示
+		Page pageT16  = t16_pdt_sample.dao.paginate(getParaToInt(0, 1), 10, "select * from t16_pdt_sample t order by t.id asc ", "");
+		// 联系我们展示
+		String address = ParamUtils.getParam("10000005", "001");
+		String telphone = ParamUtils.getParam("10000005", "002");
+		String mobile = ParamUtils.getParam("10000005", "003");
+		String email = ParamUtils.getParam("10000005", "004");
+		//		log.info("查询报表返回结果" + JSON.toJSONString(page));
+		setAttr("blogPage",page);
+		setAttr("pageT16",pageT16);
+		setAttr("address",address);
+		setAttr("telphone",telphone);
+		setAttr("mobile",mobile);
+		setAttr("email",email);
         renderWithPath(pthv + "login.html");
     }
 

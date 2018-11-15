@@ -47,114 +47,35 @@
     </div>
   </div>
   <div class="section section3">
-    <div class="slide">
-    	<div class="samples_wrap">
-        	<div class="samples one">
-            	<div class="samples_top">
-            		<div class="sample_parameter">
-                    	<div class="parameter_left">
-                        	<p>Rice planting area</p>
-                            <p>Rice drought</p>
-                            <p>Rice condition</p>
-                            <p>Rice production</p>
-                        </div>
-                        <div class="parameter_right">
-                        	<p>99.999㎡</p>
-                            <p>0.3</p>
-                            <p>6000</p>
-                            <p>99999KG</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="samples_down">
-                	<p class="img"><img src="${cxt!}/ui/thairice/Images/welcome/sample_a.png" width="660" height="340"></p>
-                    <p class="text">Bang Nang Buat Rice Growth</p>
-                </div>
-            </div>
-        	
-        </div>
-    </div>
-    <div class="slide">
-    	<div class="samples_wrap">
-        	<div class="samples two">
-            	<div class="samples_top">
-            		<div class="sample_parameter">
-                    	<div class="parameter_left">
-                        	<p>Rice planting area</p>
-                            <p>Rice drought</p>
-                            <p>Rice condition</p>
-                            <p>Rice production</p>
-                        </div>
-                        <div class="parameter_right">
-                        	<p>99.999㎡</p>
-                            <p>0.3</p>
-                            <p>6000</p>
-                            <p>99999KG</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="samples_down">
-                	<p class="img"><img src="${cxt!}/ui/thairice/Images/welcome/sample_b.png" width="660" height="340"></p>
-                    <p class="text">Bang Nang Buat Rice Yield</p>
-                </div>
-            </div>
-        	
-        </div>
-    </div>
-    <div class="slide">
-    	<div class="samples_wrap">
-        	<div class="samples three">
-            	<div class="samples_top">
-            		<div class="sample_parameter">
-                    	<div class="parameter_left">
-                        	<p>Rice planting area</p>
-                            <p>Rice drought</p>
-                            <p>Rice condition</p>
-                            <p>Rice production</p>
-                        </div>
-                        <div class="parameter_right">
-                        	<p>99.999㎡</p>
-                            <p>0.3</p>
-                            <p>6000</p>
-                            <p>99999KG</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="samples_down">
-                	<p class="img"><img src="${cxt!}/ui/thairice/Images/welcome/sample_c.png" width="660" height="340"></p>
-                    <p class="text">Bang Nang Buat Rice Drought</p>
-                </div>
-            </div>
-        	
-        </div>
-    </div>
-    <div class="slide">
-    	<div class="samples_wrap">
-        	<div class="samples four">
-            	<div class="samples_top">
-            		<div class="sample_parameter">
-                    	<div class="parameter_left">
-                        	<p>Rice planting area</p>
-                            <p>Rice drought</p>
-                            <p>Rice condition</p>
-                            <p>Rice production</p>
-                        </div>
-                        <div class="parameter_right">
-                        	<p>99.999㎡</p>
-                            <p>0.3</p>
-                            <p>6000</p>
-                            <p>99999KG</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="samples_down">
-                	<p class="img"><img src="${cxt!}/ui/thairice/Images/welcome/sample_d.png" width="660" height="340"></p>
-                    <p class="text">Bang Nang Buat Rice Acreage</p>
-                </div>
-            </div>
-        	
-        </div>
-    </div>
+  
+  	        <%for(x in pageT16.list){ %>
+					<div class="slide">
+					    	<div class="samples_wrap">
+					        	<div class="samples one">
+					            	<div class="samples_top">
+					            		<div class="sample_parameter">
+					                    	<div class="parameter_left">
+					                        	<p>Rice planting area</p>
+					                            <p>Rice drought</p>
+					                            <p>Rice condition</p>
+					                            <p>Rice production</p>
+					                        </div>
+					                        <div class="parameter_right">
+					                        	<p>${x.rice_planting_area}</p>
+					                            <p>${x.rice_drought}</p>
+					                            <p>${x.rice_condition}</p>
+					                            <p>${x.rice_production}</p>
+					                        </div>
+					                    </div>
+					                </div>
+					                <div class="samples_down">
+					                	<p class="img"><img src="${cxt!}/${x.pic_path}" width="660" height="340"></p>
+					                    <p class="text">${x.pdt_desc}</p>
+					                </div>
+					            </div>
+					         </div>
+					   </div>
+	        <%}%> 
   </div>
   <div class="section section4">
     <div class="welcome_login">
@@ -190,27 +111,24 @@
                 <div class="row">
                   <div class="col-xs-4 col-sm-4 one">
                     <address>
-                        Times&Fortune World Building,<br>
-                        Building 4,Room 1105,<br>
-                        NO.1 Hangfeng Road,<br>
-                        Fengtai District, Beijing 100070,<br>
-                        China
+                    	${address}
                     </address>
                   </div>
                   <div class="col-xs-4 col-sm-4 two">
                     <p>
-                        +86-13439166851<br>
-                        
+                    	${telphone}
+                    </p>
+                    <p>
+                    	${mobile}
                     </p>
                   </div>
                   <div class="col-xs-4 col-sm-4 three">
-                    <p>xin.liu@t-suntech.com</p>
+	                  <p>${email}</p>
                   </div>
                 </div>
                 <div class="copyrights"><p>备案号 | 友情链接 | 友情链接 | 友情链接</p></div>
             </div>
         </div>
-        
     </div>
   </div>
 </div>
