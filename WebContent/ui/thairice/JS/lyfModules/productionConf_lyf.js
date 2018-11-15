@@ -163,7 +163,8 @@ function init_productionConf_Monitoring()
 		columns: [
         	{ title: "Name" },
             { title: "Date" },
-            { title: "District" }
+            { title: "District" },
+            { title: "DistrictName" }
         ]
     });
 	//高亮显示选中的文件列表的行
@@ -637,6 +638,7 @@ function initFilesTable()
 		    			file.push(data.files[i].name);
 		    			file.push(data.files[i].date);
 		    			file.push(data.files[i].district);
+		    			file.push(data.files[i].districtName);
 //		    			dataSet.push(file);
 		    			app.files_excel.row.add(file).draw();
 		    		}
@@ -681,9 +683,9 @@ function initFilesTable()
 		    			//在workspace空间中，加载对应日期的中间产品数据，
 		    			//如果空间中有对应的数据，即加载，若无，不会加载成功
 		    			addProductFeatureLayer(areaworkspaceId,tempproductfileName);
-		    			
-		    			
-		    			
+		    			//缩放到图层Extent
+		    			var tifFileCode = app.files_excel.row('.selected').data()[2];
+		    			zoomToFeatureLayer(tifFileCode);
 		    	    } );
 		    		
 	            }  
@@ -701,6 +703,70 @@ function initFilesTable()
 		    }
 		})
 
+}
+function zoomToFeatureLayer(code)
+{
+	require(["esri/map",
+		"esri/dijit/Scalebar",
+	    "dojo/dom",
+	    "dojo/on",
+	    "dojo/parser",
+	    "esri/urlUtils",
+	    "esri/config",
+	    "esri/layers/ArcGISDynamicMapServiceLayer",
+	    "esri/layers/FeatureLayer",
+	    "esri/tasks/query",
+	    "esri/symbols/SimpleFillSymbol", "esri/symbols/SimpleLineSymbol","esri/Color", "esri/renderers/SimpleRenderer",
+	    "esri/geometry/Extent",
+	    "dojo/domReady!"], function (
+	        Map,Scalebar,dom,on, parser,urlUtils,esriConfig,ArcGISDynamicMapServiceLayer,FeatureLayer,Query,SimpleFillSymbol, SimpleLineSymbol,Color, SimpleRenderer,Extent) {
+	    
+		parser.parse();
+
+		esriConfig.defaults.io.proxyUrl = hostIP+":8080/Java/proxy.jsp";
+		esriConfig.defaults.io.alwaysUseProxy = false;
+		
+	    // Carbon storage of trees in Warren Wilson College.
+		var zoomLayer = new FeatureLayer(hostIP+":6080/arcgis/rest/services/Thailand_shp/MapServer/2", {
+	        mode: FeatureLayer.MODE_ONDEMAND,
+	        //outFields: ["value"],
+	        outFields: ["CODE"],
+	       
+	        definitionExpression:"CODE="+code
+	    });
+		
+		var count = 5;//如果发生错误，尝试执行5次
+		//缩放到指定 区域
+	    var queryParams = new Query();
+	    queryParams.outFields = ['CODE'];
+	    //queryParams.outStatistics = [ minStatDef, maxStatDef];
+	    queryParams.where = "CODE="+code;
+	    queryParams.returnGeometry = true;
+	    zoomLayer.queryFeatures(queryParams, getStats, geterror);
+	    
+	    function getStats(results){
+//	    	 console.log("12");
+	    	 var feature = results.features[0];
+	    	 console.log(feature);
+	    	 app.map.setExtent(feature.geometry.getExtent());
+	    }
+	    
+	    function geterror(error)
+	    {
+//	    	console.log(error);
+	    	count--;
+	    	if(count>0)
+	    	{
+//	    		console.log(count);
+	    		zoomLayer.queryFeatures(queryParams, getStats, geterror);
+	    	}
+	    	else{
+	    		console.log(error);
+	    	}
+	    	
+	    }
+
+	});
 }
 function copyAreaTifFile2gpWorkspace(tifFileName){
 	console.log("copyAreaTifFile2gpWorkspace---begin--"+tifFileName);

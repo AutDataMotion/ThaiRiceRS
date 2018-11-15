@@ -33,6 +33,7 @@ import csuduc.platform.util.lyf.lyfGis;
 import thairice.constant.EnumStatus;
 import thairice.entity.ResultEntity;
 import thairice.interceptor.AdminLoginInterceptor;
+import thairice.mvc.t13region.T13Region;
 import thairice.mvc.t2syslog.EnumT2sysLog;
 import thairice.mvc.t2syslog.T2syslogService;
 import thairice.mvc.t3user.Result;
@@ -431,7 +432,10 @@ public class T1parameterController extends BaseController {
 						file.put("sample_path", sample_path);
 						file.put("date", tifFileName.split("_")[0]);
 						String temp = tifFileName.split("_")[1];
-						file.put("district", temp.substring(0, temp.lastIndexOf('.')));
+						String code = temp.substring(0, temp.lastIndexOf('.'));
+						file.put("district", code);
+						String codeName = getProvinceNameByCode(code);
+						file.put("districtName", codeName);
 						files.add(file);
 						saveTifFilesInfo2Database(file);
 					}
@@ -446,6 +450,19 @@ public class T1parameterController extends BaseController {
 			e.printStackTrace();
 		}
 		
+	}
+	public String getProvinceNameByCode(String codeStr) {
+		int code = Integer.valueOf(codeStr);
+		T13Region item = T13Region.dao.findFirst("select * from t13region where Id=?",code);
+		
+		if(item==null)
+		{
+			return "";//
+		}
+		else {
+			return item.getName().toString();
+//			return "";
+		}
 	}
 	public boolean saveTifFilesInfo2Database(JSONObject file)
 	{
