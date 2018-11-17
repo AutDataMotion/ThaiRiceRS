@@ -8,6 +8,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.json.JSONArray;
+import org.json.JSONObject;
+
 import com.jfinal.aop.Before;
 import com.jfinal.aop.Clear;
 import com.jfinal.aop.Duang;
@@ -63,6 +66,7 @@ public class BackendUserController extends BaseController {
         }
         if (pass.equals(user.getPwd())) {
             setSessionAttr("admin", user);
+            setSessionAttr("user", user);
             T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), account, "Login", "Login successful");
             renderJson(new Result(1, "Login successful"));
         }else {
@@ -390,61 +394,69 @@ public class BackendUserController extends BaseController {
         int province = getParaToInt("province");
         int city = getParaToInt("city", 0);
         int area = getParaToInt("area", 0);
-        //判断选择是否重复
-        boolean ret = true;
-        List<Record> list1 = Db.use(ConstantInitMy.db_dataSource_main).find("select * from t14my_region where userId=?", getParaToInt("userId"));
-        for (int i = 0; i < list1.size(); i++) {
-            Record record = list1.get(i);
-            int p = record.getInt("provinceId");
-            int c = record.getInt("cityId");
-            int a = record.getInt("areaId");
-            if (province == p && city == c && area == a) {
-                ret = false;
+        //***********************************************
+        
+        if(province==1) {
+            Db.use(ConstantInitMy.db_dataSource_main).update("delete  from t14my_region where userId="+getParaToInt("userId"));
+            List<Record>prv=Db.use(ConstantInitMy.db_dataSource_main).find("select * from t13region where parentId=0");
+            for(Record r:prv) {
+        	if(!r.get("name").equals("ALL")) {
+        	    Record record = new Record();
+                    record.set("userId", getParaToInt("userId"));
+                    record.set("provinceId", r.getInt("Id"));
+                    record.set("cityId", 0);
+                    record.set("areaId", 0);
+                    Db.use(ConstantInitMy.db_dataSource_main).save("t14my_region", record); 
+        	}
             }
-            if (province == p) {
-                if (c == 0 && city != 0) {
+        }else {
+            //判断选择是否重复
+            boolean ret = true;
+            List<Record> list1 = Db.use(ConstantInitMy.db_dataSource_main).find("select * from t14my_region where userId=?", getParaToInt("userId"));
+            for (int i = 0; i < list1.size(); i++) {
+                Record record = list1.get(i);
+                int p = record.getInt("provinceId");
+                int c = record.getInt("cityId");
+                int a = record.getInt("areaId");
+                if (province == p && city == c && area == a) {
                     ret = false;
                 }
-                if (c != 0 && city == 0) {
-                    ret = false;
-                }
-            }
-            if (province == p) {
-                if (city == c) {
-                    if (a == 0 && area != 0) {
+                if (province == p) {
+                    if (c == 0 && city != 0) {
                         ret = false;
                     }
-                    if (a != 0 && area == 0) {
+                    if (c != 0 && city == 0) {
                         ret = false;
                     }
                 }
+                if (province == p) {
+                    if (city == c) {
+                        if (a == 0 && area != 0) {
+                            ret = false;
+                        }
+                        if (a != 0 && area == 0) {
+                            ret = false;
+                        }
+                    }
+                }
             }
+            if (!ret) {
+                renderJson(new Result(300, "error"));
+                return;
+            }
+            Record record = new Record();
+            record.set("userId", getParaToInt("userId"));
+            record.set("provinceId", getParaToInt("province"));
+            record.set("cityId", getParaToInt("city", 0));
+            record.set("areaId", getParaToInt("area", 0));
+            Db.use(ConstantInitMy.db_dataSource_main).save("t14my_region", record);   
         }
-        if (!ret) {
-            renderJson(new Result(300, "error"));
-            return;
-        }
-
-        Record record = new Record();
-        record.set("userId", getParaToInt("userId"));
-        record.set("provinceId", getParaToInt("province"));
-        record.set("cityId", getParaToInt("city", 0));
-        record.set("areaId", getParaToInt("area", 0));
-        Db.use(ConstantInitMy.db_dataSource_main).save("t14my_region", record);
-            /*Record record2=new Record();
-			record2.set("userId", getParaToInt("userId"));
-			record2.set("regionId",getParaToInt("city"));
-			Db.use(ConstantInitMy.db_dataSource_main).save("t14my_region", record2);
-			Record record3=new Record();
-			record3.set("userId", getParaToInt("userId"));
-			record3.set("regionId",getParaToInt("area"));
-			Db.use(ConstantInitMy.db_dataSource_main).save("t14my_region", record3);*/
         T3user admin = getSessionAttr("admin");
         T2syslogService.addLog(EnumT2sysLog.INFO, admin.getId(), admin.getAccount(), "Add area", "Add successful");
         renderJson(new Result(1, "successfully"));
     }
-
-
+    
+    
     /**
      * 删除单个或多个
      */

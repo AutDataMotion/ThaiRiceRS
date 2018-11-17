@@ -176,6 +176,7 @@ public class T3userController extends BaseController {
                 JSONObject object = array.getJSONObject(i);
                 
                 if(object.getInt("province")==1) {
+                    Db.use(ConstantInitMy.db_dataSource_main).update("delete  from t14my_region where userId="+t3user.getId());
                     List<Record>province=Db.use(ConstantInitMy.db_dataSource_main).find("select * from t13region where parentId=0");
                     for(Record r:province) {
                 	if(!r.get("name").equals("ALL")) {
