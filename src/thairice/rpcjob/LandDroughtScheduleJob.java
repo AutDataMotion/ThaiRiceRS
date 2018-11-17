@@ -5,6 +5,7 @@
  */
 package thairice.rpcjob;
 
+import java.util.Collections;
 import java.util.List;
 
 import org.apache.commons.collections4.CollectionUtils;
@@ -47,7 +48,7 @@ public class LandDroughtScheduleJob extends AbsScheduleJob implements ITask {
 
 	public List<Drought> mdlConvert(List<T12PreProcessInf> inputs) {
 		if (CollectionUtils.isEmpty(inputs)) {
-			return Lists.newArrayList();
+			return Collections.emptyList();
 		}
 
 		// 按时间范围查找lst文件
@@ -60,7 +61,7 @@ public class LandDroughtScheduleJob extends AbsScheduleJob implements ITask {
 						T12PreProcessInf.tableName, whereStr, EnumDataStatus.DATA_TYPE_LST.getIdStr()));
 		if (CollectionUtils.isEmpty(dataLSTs)) {
 			T2syslogService.warn(userId, userName, "mdlConvert ", "isEmpty(dataLSTs)");
-			return Lists.newArrayList();
+			return Collections.emptyList();
 		}
 		T12PreProcessInf lstObj = null;
 		T12PreProcessInf ndviObj = null;
