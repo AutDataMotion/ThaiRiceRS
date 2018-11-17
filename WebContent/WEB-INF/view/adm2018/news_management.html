@@ -1,4 +1,6 @@
 <% var cssSec={ %>
+	<script src="${cxt!}/ui/thairice/JS/jquery.min.js"></script>
+	<script type="text/javascript" src="${cxt!}/ui/thairice/JS/layer/layer.js"></script>
 <style>
 .undoIcon {
 	background-image: url(${cxt}/ui/thairice/Images/production/undo1.png);
@@ -188,8 +190,8 @@
 			<div class="form-group">
 				<label class="col-sm-3 control-label">Rice production</label>
 				<div class="col-sm-7">
-					<input type="text" class="form-control" name="rice_condition"
-						id="rice_condition" style="width: 395px;">
+					<input type="text" class="form-control" name="rice_production"
+						id="rice_production" style="width: 395px;">
 				</div>
 			</div>
 
@@ -205,16 +207,16 @@
 					style="width: 500px; margin: 7px auto 0; background: #fff; border-radius: 5px; padding: 5px 5px;">
 					<!-- 	<div align="center"> -->
 					<input type="text" class="form-control"
-						style="Float: left; width: 250px; margin-left: 61px;"
+						style="Float: left; width: 250px; margin-left: 110px;"
 						name="uploadFilePath" id="uploadFilePath"
 						placeholder="Upload images (660*340)"> &nbsp<label
 						class="btn btn-success"
-						style="width: 85px; Float: left; margin: 2px;"><input
+						style="width: 85px; Float: right; margin: -1px;"><input
 						class="file_input" type="file" name="file" id="hhhh"
 						onchange="document.getElementById('uploadFilePath').value = document.getElementById('hhhh').value;"
-						style="margin-left: -7px;"> Browse...</label> &nbsp<input
+						style="margin-left: -5px;"> Browse...</label> &nbsp<input
 						type="submit" class="btn btn-success" value="Upload"
-						style="Float: left; margin-left: 61px;">
+						style="Float: left;margin-top: 14px; margin-left: 107px;width: 255px;">
 					<!-- </div> -->
 				</form>
 			</div>
@@ -377,13 +379,12 @@
 		</div>
 
 		<% }; %> <% var jsSec={ %>
-
-
+	
 		<script type="text/javascript">
 			function save() {
 				
 				if($("#news1").val().length > 84){
-					alert("The length of conteht can not longer than 84! Please input agin!");
+					layer.alert("The length of conteht can not longer than 84! Please input agin!");
 					return;
 				}
 				$.ajax({
@@ -404,7 +405,7 @@
 						 document.getElementById("account").style.backgroundColor = "#faa390";
 						 } */
 						/* 			document.setElementById("ftpSrcPath0").value = "55555"; */
-						alert(res.desc);
+						layer.alert(res.desc);
 					},
 					dataType : "json"
 				});
@@ -435,7 +436,7 @@
 						 document.getElementById("account").style.backgroundColor = "#faa390";
 						 } */
 						/* 			document.setElementById("ftpSrcPath0").value = "55555"; */
-						alert(res.desc);
+						layer.alert(res.desc);
 					},
 					dataType : "json"
 				});
@@ -446,10 +447,18 @@
 			function message() {
 				var filePath = document.getElementById('hhhh').value;
 				if (filePath == null || filePath == "") {
-					alert("Please click the browse button and select a file first!");
+					layer.open({
+						  title: 'Tips'
+						  ,content: "Please click the browse button and select a file first!"
+						}); 
+					//layer.alert("Please click the browse button and select a file first!");
 					return;
 				} else
-					alert("Upload successfully!");
+					layer.open({
+						  title: 'Tips'
+						  ,content: "Upload successfully!"
+						}); 
+					//layer.alert("Upload successfully!");
 			}
 		</script>
 		<script>
@@ -527,12 +536,12 @@
 		    			document.getElementById("inEndYear").value = res.inEndYear;
 		    			
     				} else{
-    					alert(res.desc);
-    				}
-    			} else {
-    				alert(res.desc);
-    			}
-    		  },
+    					layer.alert(res.desc);
+	    				}
+	    			} else {
+	    				layer.alert(res.desc);
+	    			}
+	    		  },
     		  dataType: "json"
     		});
     	}
@@ -542,10 +551,18 @@
         function message() {
          var filePath = document.getElementById('hhhh').value;
          if(filePath==null || filePath==""){
-        	 alert("Please click the browse button and select a file first!");
+        	 layer.open({
+				  title: 'Tips'
+				  ,content: "Please click the browse button and select a file first!"
+				}); 
+        	 //layer.alert("Please click the browse button and select a file first!");
         	 return;
          } else
-         	alert("Upload successfully!");
+        	 layer.open({
+				  title: 'Tips'
+				  ,content: "Upload successfully!"
+				}); 
+        	 //layer.alert("Upload successfully!");
         }        
     </script>
 		<script> function PostData() { $.ajax({ type:"POST", 
