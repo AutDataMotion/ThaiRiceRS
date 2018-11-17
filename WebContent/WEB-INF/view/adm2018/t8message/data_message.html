@@ -1,6 +1,6 @@
 <% var cssSec={ %>
 <style>
-table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td{vertical-align: middle;text-align: left;}
+table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td{vertical-align: middle;text-align: middle;} 
 .even{background-color: rgb(219, 239, 246)!important;}
 .omit{white-space: nowrap;text-overflow: ellipsis;overflow: hidden;}
 .omit:hover{overflow:visible;white-space: normal;}
@@ -22,10 +22,10 @@ table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td
         <table class="table table-bordered data-table" id="dataTable01" style="word-wrap:break-word;word-break:break-all;table-layout:fixed;" >
           <thead>
             <tr>
-              <th width="5%" style="border-bottom:none;text-align:left"> <input type="checkbox" name="cb-check-all"> All </th>
-              <th width="11%" style="border-bottom:none;text-align:left">Type</th>
-              <th width="69%"style="border-bottom:none;text-align:left">Content</th>
-              <th width="14%" style="border-bottom:none;text-align:left">Sending time</th>
+              <th width="5%" style="border-bottom:none;text-align:middle"> <input type="checkbox" name="cb-check-all"> All </th>
+              <th width="11%" style="border-bottom:none;text-align:middle">Type</th>
+              <th width="69%"style="border-bottom:none;text-align:middle">Content</th>
+              <th width="14%" style="border-bottom:none;text-align:middle">Sending time</th>
             </tr>
           </thead>
         </table>
@@ -54,7 +54,7 @@ table.table-bordered.dataTable tbody th, table.table-bordered.dataTable tbody td
     	  }
       }},
       { "data": null,orderable: false,render: function (data, type, row, meta) {
-    	  return '<div class="omit">'+data.content+'</div>';
+    	  return '<div class="omit" style="text-align:left">'+data.content+'</div>';
       }},
       { "data": "add_time",width:150}
     ]
