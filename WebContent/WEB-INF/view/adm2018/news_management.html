@@ -5,9 +5,23 @@
 	width: 30px;
 	height: 30px;
 }
- 
- 
- 
+
+.info-text {
+	color: #03a9cc;
+	height: 40px;
+	line-height: 40px;
+	border-bottom: 1px solid #e3e3e3;
+	margin-bottom: 20px;
+}
+
+.tab-box {
+	width: 500px;
+	margin: 30px auto 0;
+	background: #fff;
+	border-radius: 5px;
+	padding: 5px 20px;
+}
+
 .redoIcon {
 	background-image: url(${cxt}/ui/thairice/Images/production/redo1.png);
 	width: 30px;
@@ -29,7 +43,7 @@
 }
 
 .tab-box {
-    width: 80%;
+	width: 80%;
 }
 </style>
 <!-- 
@@ -76,93 +90,177 @@
 <!--Nav tabs-->
 
 <!--Tab panes-->
-	<div class="tab-box">
-		<h4 class="info-text">News release</h4>
+<div class="tab-box">
+	<h4 class="info-text">News release</h4>
 
-		<div class="input-group">
-			<span class="input-group-addon">NEWS-1</span> <input type="text"
-				class="form-control input-lg" name="news1" id="news1" size='550'
-				value="${news1!}">
-		</div>
-		<div class="input-group">
-			<span class="input-group-addon">NEWS-2</span> <input type="text"
-				class="form-control input-lg" name="news2" id="news2" size='250'
-				value="${news2!}">
-		</div>
-		<div class="input-group">
-			<span class="input-group-addon">NEWS-3</span> <input type="text"
-				class="form-control input-lg" name="news3" id="news3" size='250'
-				value="${news3!}">
-		</div>
-		<div class="input-group">
-			<span class="input-group-addon">NEWS-4</span> <input type="text"
-				class="form-control input-lg" name="news4" id="news4" size='250'
-				value="${news4!}">
-		</div>
-		<div class="input-group">
-			<span class="input-group-addon">NEWS-5</span> <input type="text"
-				class="form-control input-lg" name="news5" id="news5" size='250'
-				value="${news5!}">
-		</div>
-		<div class="input-group">
-			<span class="input-group-addon">NEWS-6</span> <input type="text"
-				class="form-control input-lg" name="news6" id="news6" size='250'
-				value="${news6!}">
-		</div>
-		<div class="input-group">
-			<span class="input-group-addon">NEWS-7</span> <input type="text"
-				class="form-control input-lg" name="news7" id="news7" size='250'
-				value="${news7!}">
-		</div>
-		<div class="input-group">
-			<span class="input-group-addon">NEWS-8</span> <input type="text"
-				class="form-control input-lg" name="news8" id="news8" size='250'
-				value="${news8!}">
-		</div>
-
-		<div class="form-group" style="text-align: center;">
-			<button class="btn btn-primary" onclick="save()">Submit</button>
-			<!--  <button class="btn btn-default">reset</button> -->
-		</div>
+	<div class="input-group">
+		<span class="input-group-addon">NEWS-1</span> <input type="text"
+			class="form-control input-lg" name="news1" id="news1" size='550'
+			value="${news1!}">
 	</div>
-	
+	<div class="input-group">
+		<span class="input-group-addon">NEWS-2</span> <input type="text"
+			class="form-control input-lg" name="news2" id="news2" size='250'
+			value="${news2!}">
+	</div>
+	<div class="input-group">
+		<span class="input-group-addon">NEWS-3</span> <input type="text"
+			class="form-control input-lg" name="news3" id="news3" size='250'
+			value="${news3!}">
+	</div>
+	<div class="input-group">
+		<span class="input-group-addon">NEWS-4</span> <input type="text"
+			class="form-control input-lg" name="news4" id="news4" size='250'
+			value="${news4!}">
+	</div>
+	<div class="input-group">
+		<span class="input-group-addon">NEWS-5</span> <input type="text"
+			class="form-control input-lg" name="news5" id="news5" size='250'
+			value="${news5!}">
+	</div>
+	<div class="input-group">
+		<span class="input-group-addon">NEWS-6</span> <input type="text"
+			class="form-control input-lg" name="news6" id="news6" size='250'
+			value="${news6!}">
+	</div>
+	<div class="input-group">
+		<span class="input-group-addon">NEWS-7</span> <input type="text"
+			class="form-control input-lg" name="news7" id="news7" size='250'
+			value="${news7!}">
+	</div>
+	<div class="input-group">
+		<span class="input-group-addon">NEWS-8</span> <input type="text"
+			class="form-control input-lg" name="news8" id="news8" size='250'
+			value="${news8!}">
+	</div>
+
+	<div class="form-group" style="text-align: center;">
+		<button class="btn btn-primary" onclick="save()">Submit</button>
+		<!--  <button class="btn btn-default">reset</button> -->
+	</div>
+</div>
+
+<div class="tab-box">
 	<h4 class="info-text">Published case</h4>
-	
-	
-		<h4 class="info-text">Contact us</h4>
+	<div class="tab-box">
 		<form class="form-horizontal" style="width: 80%; margin: 0 auto 20px;">
-		  <div class="form-group">
-			<label class="col-sm-3 control-label">address</label>
-			<div class="col-sm-7">
-				<textarea class="form-control" rows="3" style="resize: none;"></textarea>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">Case sequence</label>
+				<div class="col-sm-7">
+					<select class="form-control" id="pdt_id" name="pdt_id"
+						style="width: 395px;">
+						<option value="1">Case 1</option>
+						<option value="2">Case 2</option>
+						<option value="3">Case 3</option>
+						<option value="4">Case 4</option>
+						<option value="5">Case 5</option>
+					</select>
+				</div>
 			</div>
-		  </div>
-		  <div class="form-group">
-			<label class="col-sm-3 control-label">The phone</label>
-			<div class="col-sm-7">
-			  <input type="tel" class="form-control">
+			<div class="form-group">
+				<label class="col-sm-3 control-label">Description</label>
+				<div class="col-sm-7">
+					<input type="text" class="form-control" name="pdt_desc"
+						id="pdt_desc" style="width: 395px;">
+				</div>
 			</div>
-		  </div>
-<!-- 		  <div class="form-group">
-			<label class="col-sm-3 control-label">Mobile phone</label>
-			<div class="col-sm-7">
-			  <input type="tel" class="form-control">
+			<div class="form-group">
+				<label class="col-sm-3 control-label">Rice planting area</label>
+				<div class="col-sm-7">
+					<input type="text" class="form-control" name="rice_planting_area"
+						id="rice_planting_area" style="width: 395px;">
+				</div>
 			</div>
-		  </div> -->
-		  <div class="form-group">
-			<label class="col-sm-3 control-label">Email</label>
-			<div class="col-sm-7">
-			  <input type="email" class="form-control">
+			<div class="form-group">
+				<label class="col-sm-3 control-label">Rice drought</label>
+				<div class="col-sm-7">
+					<input type="text" class="form-control" name="rice_drought"
+						id="rice_drought" style="width: 395px;">
+				</div>
 			</div>
-		  </div>
-		  <div class="form-group" style="margin-top: 25px;">
-		  	<button type="button" class="btn btn-primary active col-sm-2 col-sm-offset-4">Submit</button>
-			<button type="button" class="btn btn-default active col-sm-2 col-sm-offset-1">Cancel</button>
-		  </div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">Rice condition</label>
+				<div class="col-sm-7">
+					<input type="text" class="form-control" name="rice_condition"
+						id="rice_condition" style="width: 395px;">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">Rice production</label>
+				<div class="col-sm-7">
+					<input type="text" class="form-control" name="rice_condition"
+						id="rice_condition" style="width: 395px;">
+				</div>
+			</div>
+
 		</form>
 
+		<div class="row">
+			<div class="form-group"
+				style="margin-bottom: 0; text-align: center; margin-top: 10px">
+				<iframe id="framFile" name="framFile" style="display: none;"></iframe>
+				<form method="post" action="t16_pdt_sample/imageUpload"
+					enctype="multipart/form-data" target="framFile"
+					onsubmit="return message();"
+					style="width: 500px; margin: 7px auto 0; background: #fff; border-radius: 5px; padding: 5px 5px;">
+					<!-- 	<div align="center"> -->
+					<input type="text" class="form-control"
+						style="Float: left; width: 250px; margin-left: 61px;"
+						name="uploadFilePath" id="uploadFilePath"
+						placeholder="Upload images (660*340)"> &nbsp<label
+						class="btn btn-success"
+						style="width: 85px; Float: left; margin: 2px;"><input
+						class="file_input" type="file" name="file" id="hhhh"
+						onchange="document.getElementById('uploadFilePath').value = document.getElementById('hhhh').value;"
+						style="margin-left: -7px;"> Browse...</label> &nbsp<input
+						type="submit" class="btn btn-success" value="Upload"
+						style="Float: left; margin-left: 61px;">
+					<!-- </div> -->
+				</form>
+			</div>
+		</div>
+		<div class="row">
+			<div class="form-group" style="text-align: center; margin-top: 20px">
+				<button class="btn btn-primary" onclick="savePdtCase()">Submit</button>
+			</div>
+		</div>
+	</div>
 
-</div>
+	<div class="tab-box" align="center">
+		<h4 class="info-text">Contact us</h4>
+		<form class="form-horizontal" style="width: 80%; margin: 0 auto 20px;">
+			<div class="form-group">
+				<label class="col-sm-3 control-label">address</label>
+				<div class="col-sm-7">
+					<textarea class="form-control" rows="3" style="resize: none;width: 395px;"
+						name="address" id="address" >${address!}</textarea>
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">Telphone</label>
+				<div class="col-sm-7">
+					<input type="tel" class="form-control" name="telphone"
+						id="telphone" value=${telphone!} style="width: 395px;">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">Mobile</label>
+				<div class="col-sm-7">
+					<input type="tel" class="form-control" name="mobile" id="mobile" value=${mobile!} style="width: 395px;">
+				</div>
+			</div>
+			<div class="form-group">
+				<label class="col-sm-3 control-label">Email</label>
+				<div class="col-sm-7">
+					<input type="email" class="form-control" name="email" id="email" value=${email!} style="width: 395px;">
+				</div>
+			</div>
+			<div class="form-group" style="text-align: center;">
+				<button class="btn btn-primary" onclick="updateParams('004')">Submit</button>
+				<!-- <button type="button" class="btn btn-default active col-sm-2 col-sm-offset-1">Cancel</button> -->
+			</div>
+		</form>
+	</div>
 </div>
 </div>
 <!-- Hint Modal-->
@@ -314,6 +412,37 @@
 		</script>
 
 		<script type="text/javascript">
+			function savePdtCase() {
+				
+/* 				if($("#news1").val().length > 84){
+					alert("The length of conteht can not longer than 84! Please input agin!");
+					return;
+				} */
+				$.ajax({
+					type : 'POST',
+					url : '/jf/thairice/t16_pdt_sample/save',
+					data : {
+						id : $("#pdt_id").val(),
+						rice_planting_area : $("#rice_planting_area").val(),
+						rice_drought : $("#rice_drought").val(),
+						rice_condition : $("#rice_condition").val(),
+						rice_production : $("#rice_production").val(),
+						pic_path : $("#hhhh").val(),
+						pdt_desc : $("#pdt_desc").val()
+					},
+					success : function(res) {
+						/* 			if(res.code == "0003" || res.code == "0001"){
+						 document.getElementById("account").style.backgroundColor = "#faa390";
+						 } */
+						/* 			document.setElementById("ftpSrcPath0").value = "55555"; */
+						alert(res.desc);
+					},
+					dataType : "json"
+				});
+			}
+		</script>
+
+		<script type="text/javascript">
 			function message() {
 				var filePath = document.getElementById('hhhh').value;
 				if (filePath == null || filePath == "") {
@@ -339,6 +468,99 @@
 				return false;
 			}
 		</script>
+
+		<script type="text/javascript"> 
+    function updateParams(flag){
+	$.ajax({
+		  type: 'POST',
+		  url: '/jf/thairice/t1parameter/updateParams',
+		  data: {flag:flag,address:$("#address").val(),telphone:$("#telphone").val(),mobile:$("#mobile").val(),email:$("#email").val()},	
+		  success: function(res){
+/* 			if(res.code == "0003" || res.code == "0001"){
+					document.getElementById("account").style.backgroundColor = "#faa390";
+			} */
+/* 			document.setElementById("ftpSrcPath0").value = "55555"; */
+			alert(res.desc);
+		  },
+		  dataType: "json"
+		});
+	}
+    
+    function queryParams(flag){	
+    	$.ajax({
+    		  type: 'POST',
+    		  url: '/jf/thairice/t1parameter/queryParams',
+    		  data: {flag:flag},
+    		  success: function(res){
+    			if(res.code == "0000"){
+    				if(res.flag == "001"){
+    			 		if(res.ftpSrcPath0 != undefined)
+		    				document.getElementById("ftpSrcPath0").value = res.ftpSrcPath0;
+    			 		else
+    			 			document.getElementById("ftpSrcPath0").value = "";
+    			 		
+    			 		if(res.ftpSrcPath1 != undefined)
+		    				document.getElementById("ftpSrcPath1").value = res.ftpSrcPath1;
+    			 		else
+    			 			document.getElementById("ftpSrcPath1").value = "";
+    			 		
+    			 		if(res.ftpSrcPath2 != undefined)
+		    				document.getElementById("ftpSrcPath2").value = res.ftpSrcPath2;
+    			 		else
+    			 			document.getElementById("ftpSrcPath2").value = "";
+    			 		
+		    			if(res.ftpSrcPath3 != undefined)
+		    				document.getElementById("ftpSrcPath3").value = res.ftpSrcPath3;
+		    			else
+		    				document.getElementById("ftpSrcPath3").value = "";
+    				} else if(res.flag == "002"){
+		    			document.getElementById("droughtThreshold4").value = res.droughtThreshold4;
+		    			document.getElementById("droughtThreshold1").value = res.droughtThreshold1;
+		    			document.getElementById("droughtThreshold2").value = res.droughtThreshold2;
+		    			document.getElementById("droughtThreshold3").value = res.droughtThreshold3;
+    				} else if(res.flag == "003"){
+		    			document.getElementById("conditionThreshold1").value = res.conditionThreshold1;
+		    			document.getElementById("conditionThreshold2").value = res.conditionThreshold2;
+		    			document.getElementById("conditionThreshold3").value = res.conditionThreshold3;
+		    			document.getElementById("conditionThreshold4").value = res.conditionThreshold4;
+		    			document.getElementById("inStartYear").value = res.inStartYear;
+		    			document.getElementById("inEndYear").value = res.inEndYear;
+		    			
+    				} else{
+    					alert(res.desc);
+    				}
+    			} else {
+    				alert(res.desc);
+    			}
+    		  },
+    		  dataType: "json"
+    		});
+    	}
+</script>
+
+		<script type="text/javascript">
+        function message() {
+         var filePath = document.getElementById('hhhh').value;
+         if(filePath==null || filePath==""){
+        	 alert("Please click the browse button and select a file first!");
+        	 return;
+         } else
+         	alert("Upload successfully!");
+        }        
+    </script>
+		<script> function PostData() { $.ajax({ type:"POST", 
+	url: "/jf/thairice/t1parameter/riceYieldUpload",
+	data : "", 
+/* 	headers:{
+		'Content-Type':'multipart/form-data'
+	}, */
+	success: function(msg) {
+		
+	} 
+	}); 
+	return false; 
+	} 
+	</script>
 
 		<% }; %> <%
 		include("operator_layout.html",{cssSec:cssSec,contSec:contSec,jsSec:jsSec}){}

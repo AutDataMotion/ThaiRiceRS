@@ -33,6 +33,7 @@ import csuduc.platform.util.lyf.lyfGis;
 import thairice.constant.EnumStatus;
 import thairice.entity.ResultEntity;
 import thairice.interceptor.AdminLoginInterceptor;
+import thairice.mvc.t13region.T13Region;
 import thairice.mvc.t2syslog.EnumT2sysLog;
 import thairice.mvc.t2syslog.T2syslogService;
 import thairice.mvc.t3user.Result;
@@ -305,6 +306,22 @@ public class T1parameterController extends BaseController {
 		        T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), user.getAccount(), "Update rice growth configuration", "Successful");
 				renderJson(res);
 				return;
+			} else if("004".equals(flag)) {
+				String address = getPara("address");
+				String telphone = getPara("telphone");
+				String mobile = getPara("mobile");
+				String email = getPara("email");					
+				ParamUtils.updateParam("10000005", "001", address);
+				ParamUtils.updateParam("10000005", "002", telphone);
+				ParamUtils.updateParam("10000005", "003", mobile);
+				ParamUtils.updateParam("10000005", "004", email);
+				LOG.debug("Update Contact information successful！");
+				res = new ResultEntity("0000");
+				// 写入日志
+		        T3user user = getSessionAttr("user");
+		        T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), user.getAccount(), "Update Contact information", "Successful");
+				renderJson(res);
+				return;
 			} else {
 				LOG.error("更新参数发生异常");
 				res = new ResultEntity("0011");
@@ -431,7 +448,10 @@ public class T1parameterController extends BaseController {
 						file.put("sample_path", sample_path);
 						file.put("date", tifFileName.split("_")[0]);
 						String temp = tifFileName.split("_")[1];
-						file.put("district", temp.substring(0, temp.lastIndexOf('.')));
+						String code = temp.substring(0, temp.lastIndexOf('.'));
+						file.put("district", code);
+						String codeName = getProvinceNameByCode(code);
+						file.put("districtName", codeName);
 						files.add(file);
 						saveTifFilesInfo2Database(file);
 					}
@@ -446,6 +466,19 @@ public class T1parameterController extends BaseController {
 			e.printStackTrace();
 		}
 		
+	}
+	public String getProvinceNameByCode(String codeStr) {
+		int code = Integer.valueOf(codeStr);
+		T13Region item = T13Region.dao.findFirst("select * from t13region where Id=?",code);
+		
+		if(item==null)
+		{
+			return "";//
+		}
+		else {
+			return item.getName().toString();
+//			return "";
+		}
 	}
 	public boolean saveTifFilesInfo2Database(JSONObject file)
 	{

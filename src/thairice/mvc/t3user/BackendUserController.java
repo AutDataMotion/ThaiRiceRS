@@ -66,6 +66,7 @@ public class BackendUserController extends BaseController {
         }
         if (pass.equals(user.getPwd())) {
             setSessionAttr("admin", user);
+            setSessionAttr("user", user);
             T2syslogService.addLog(EnumT2sysLog.INFO, user.getId(), account, "Login", "Login successful");
             renderJson(new Result(1, "Login successful"));
         }else {

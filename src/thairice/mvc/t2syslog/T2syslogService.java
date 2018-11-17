@@ -122,17 +122,21 @@ public class T2syslogService extends BaseService{
 	}
 	
 	public static void addLog(EnumT2sysLog type, BigInteger userid, String userName, String action_, String content){
-		Record record = new Record().set(T2syslog.column_type_, type.getName())
-				.set(T2syslog.column_userid, userid)
-				.set(T2syslog.column_username, userName)
-				.set(T2syslog.column_action_, action_)
-				.set(T2syslog.column_content, content)
-				.set(T2syslog.column_add_time, new Date());
-		if (queue.size() > 5000) {
-			// 太大只记录日志文件
-			addLogToFile(record);
-		}else{
-			queue.offer(record ); // 将指定元素插入此队列的尾部
+		try {
+			Record record = new Record().set(T2syslog.column_type_, type.getName())
+					.set(T2syslog.column_userid, userid)
+					.set(T2syslog.column_username, userName)
+					.set(T2syslog.column_action_, action_)
+					.set(T2syslog.column_content, content)
+					.set(T2syslog.column_add_time, new Date());
+			if (queue.size() > 5000) {
+				// 太大只记录日志文件
+				addLogToFile(record);
+			}else{
+				queue.offer(record ); // 将指定元素插入此队列的尾部
+			}
+		} catch (Exception e) {
+			log.error("写入日志发生异常： " + e);
 		}
 	}
 	
