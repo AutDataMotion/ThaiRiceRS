@@ -561,14 +561,16 @@
         $("#city").html("<option value=\"\" >District</option>");
         $("#area").html("<option value=\"\" >Subdistrict</option>");
     }
+    
     //添加服务地区
+     var all='';
     function add_address(){
         if($("#p").val()==""){
             layer.msg("Please choose the Province first ");
             return;
         }
-    	var data={'province':$("#p").val(),'city':$("#c").val(),'area':$("#a").val(),'userId':userId}
-    	 sendAjax("${cxt!}/jf/thairice/admin/user/add_address",data,function (res) {
+    	    var data={'province':$("#p").val(),'city':$("#c").val(),'area':$("#a").val(),'userId':userId}
+    	 	 sendAjax("${cxt!}/jf/thairice/admin/user/add_address",data,function (res) {
     	     console.log(res);
     	     if(res.code==300){
                  layer.msg("You have added the area");
