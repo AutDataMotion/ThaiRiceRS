@@ -1,7 +1,11 @@
 <% var cssSec={ %>
 	<script src="${cxt!}/ui/thairice/JS/jquery.min.js"></script>
 	<script type="text/javascript" src="${cxt!}/ui/thairice/JS/layer/layer.js"></script>
-	<script type="text/javascript" src="${cxt!}/ui/thairice/common.js"></script>
+	<script type="text/javascript" src="${cxt!}/ui/thairice/common.js"></script>	
+	<script src="${cxt!}/ui/thairice/bootstrap-3.3.7-dist/js/bootstrap.min.js"></script>
+	<script src="${cxt!}/ui/thairice/JS/jquery.dataTables.js"></script>
+	<script src="${cxt!}/ui/thairice/JS/dataTables.bootstrap4.js"></script>
+	<script src="${cxt!}/ui/thairice/JS/sb-admin-datatables.min.js"></script>
 <style>
 .undoIcon {
 	background-image: url(${cxt}/ui/thairice/Images/production/undo1.png);
@@ -81,7 +85,6 @@
 }
 
 
-
 .fieldset_div {
 	float: left;
 	margin-bottom: 2px;
@@ -151,7 +154,7 @@
 				<label class="col-sm-3 control-label">Case sequence</label>
 				<div class="col-sm-7">
 					<select class="form-control" id="pdt_id" name="pdt_id"
-						style="width: 395px;">
+						style="width: 395px;" onchange="queryCaseById()">
 						<option value="1">Case 1</option>
 						<option value="2">Case 2</option>
 						<option value="3">Case 3</option>
@@ -195,7 +198,6 @@
 						id="rice_production" style="width: 395px;">
 				</div>
 			</div>
-
 		</form>
 
 		<div class="row">
@@ -207,17 +209,20 @@
 					onsubmit="return message();"
 					style="width: 500px; margin: 7px auto 0; background: #fff; border-radius: 5px; padding: 5px 5px;">
 					<!-- 	<div align="center"> -->
-					<input type="text" class="form-control"
+				<input type="text" class="form-control"
 						style="Float: left; width: 250px; margin-left: 110px;"
 						name="uploadFilePath" id="uploadFilePath"
-						placeholder="Upload images (660*340)"> &nbsp<label
+						placeholder="Upload images (660*340)">  &nbsp<label
 						class="btn btn-success"
-						style="width: 85px; Float: right; margin: -1px;"><input
-						class="file_input" type="file" name="file" id="hhhh"
-						onchange="document.getElementById('uploadFilePath').value = document.getElementById('hhhh').value;"
-						style="margin-left: -5px;"> Browse...</label> &nbsp<input
+						style="width: 85px; Float: right; margin: -1px;">
+						
+						<input style="display: none;"
+						class="file_input" type="file" name="file" id="picture_path"
+						onchange="document.getElementById('uploadFilePath').value = document.getElementById('picture_path').value;"
+						style="margin-left: -5px;"> Browse...</label> &nbsp
+						<input
 						type="submit" class="btn btn-success" value="Upload"
-						style="Float: left;margin-top: 14px; margin-left: 107px;width: 255px;">
+						style="text-align: center; margin-top: 20px">
 					<!-- </div> -->
 				</form>
 			</div>
@@ -231,7 +236,8 @@
 
 	<div class="tab-box" align="center">
 		<h4 class="info-text">Contact us</h4>
-		<form class="form-horizontal" style="width: 80%; margin: 0 auto 20px;">
+<!-- 		<form class="form-horizontal" style="width: 80%; margin: 0 auto 20px;"> -->
+		<div class="form-horizontal" style="width: 80%; margin: 0 auto 20px;">
 			<div class="form-group">
 				<label class="col-sm-3 control-label">address</label>
 				<div class="col-sm-7">
@@ -262,7 +268,8 @@
 				<button class="btn btn-primary" onclick="updateParams('004')">Submit</button>
 				<!-- <button type="button" class="btn btn-default active col-sm-2 col-sm-offset-1">Cancel</button> -->
 			</div>
-		</form>
+<!-- 		</form> -->
+</div>
 	</div>
 </div>
 </div>
@@ -282,7 +289,6 @@
 			<div class="modal-footer">
 				<button class="btn btn-secondary" type="button" data-dismiss="modal"
 					id="hintModal_okbtn">OK</button>
-
 			</div>
 		</div>
 	</div>
@@ -319,10 +325,6 @@
 					aria-label="Close">
 					<span aria-hidden="true">x</span>
 				</button>
-
-
-
-
 			</div>
 			<div class="modal-body">
 				<!-- input type="file" name="txt_file" id="txt_file01" multiple class="file" /-->
@@ -330,9 +332,7 @@
 				<div class="row">
 					<div class="col-sm-10 col-md-10" style="width: 100%;">
 						<table id="files_excel" class="hover" style="width: 100%"></table>
-
 					</div>
-
 				</div>
 			</div>
 			<div class="modal-footer" style="text-align: center;">
@@ -382,6 +382,23 @@
 		<% }; %><% var jsSec={ %>
 	
 		<script type="text/javascript">
+		$(function(){ 
+			queryCaseById();
+		}); 
+	
+	  function queryCaseById(){
+          var pdt_id = document.getElementById("pdt_id").value;
+       	  sendAjax("${cxt!}/jf/thairice/t16_pdt_sample/queryById", {id:pdt_id}, function(res){
+	       $('#pdt_desc').val(res.pdt_desc);
+	       $('#rice_drought').val(res.rice_drought);
+	       $('#rice_condition').val(res.rice_condition);
+	       $('#rice_production').val(res.rice_production);
+	       $('#rice_planting_area').val(res.rice_planting_area);
+	       $('#uploadFilePath').val(res.pic_path);
+   	 }); 
+      	
+      }
+		
 			function save() {
 				
 				if($("#news1").val().length > 84){
@@ -402,10 +419,6 @@
 						news8 : $("#news8").val()
 					},
 					success : function(res) {
-						/* 			if(res.code == "0003" || res.code == "0001"){
-						 document.getElementById("account").style.backgroundColor = "#faa390";
-						 } */
-						/* 			document.setElementById("ftpSrcPath0").value = "55555"; */
 						showMessage(res.desc);
 					},
 					dataType : "json"
@@ -415,11 +428,6 @@
 
 		<script type="text/javascript">
 			function savePdtCase() {
-				
-/* 				if($("#news1").val().length > 84){
-					alert("The length of conteht can not longer than 84! Please input agin!");
-					return;
-				} */
 				$.ajax({
 					type : 'POST',
 					url : '/jf/thairice/t16_pdt_sample/save',
@@ -429,14 +437,10 @@
 						rice_drought : $("#rice_drought").val(),
 						rice_condition : $("#rice_condition").val(),
 						rice_production : $("#rice_production").val(),
-						pic_path : $("#hhhh").val(),
+						pic_path : $("#picture_path").val(),
 						pdt_desc : $("#pdt_desc").val()
 					},
 					success : function(res) {
-						/* 			if(res.code == "0003" || res.code == "0001"){
-						 document.getElementById("account").style.backgroundColor = "#faa390";
-						 } */
-						/* 			document.setElementById("ftpSrcPath0").value = "55555"; */
 						showMessage(res.desc);
 					},
 					dataType : "json"
@@ -446,7 +450,7 @@
 
 		<script type="text/javascript">
 			function message() {
-				var filePath = document.getElementById('hhhh').value;
+				var filePath = document.getElementById('picture_path').value;
 				if (filePath == null || filePath == "") {
 				/* 	 layer.open({
 						  title: 'Tips'
@@ -481,23 +485,12 @@
 		</script>
 
 		<script type="text/javascript"> 
-    function updateParams(flag){
-	$.ajax({
-		  type: 'POST',
-		  url: '/jf/thairice/t1parameter/updateParams',
-		  data: {flag:flag,address:$("#address").val(),telphone:$("#telphone").val(),mobile:$("#mobile").val(),email:$("#email").val()},	
-		  success: function(res){
-/* 			if(res.code == "0003" || res.code == "0001"){
-					document.getElementById("account").style.backgroundColor = "#faa390";
-			} */
-/* 			document.setElementById("ftpSrcPath0").value = "55555"; */
-			alert(111111111);
-			alert(res.desc);
-		  },
-		  dataType: "json"
-		});
-	}
-    
+		function updateParams(flag){
+	 	  sendAjax("${cxt!}/jf/thairice/t1parameter/updateParams", {flag:flag,address:$("#address").val(),telphone:$("#telphone").val(),mobile:$("#mobile").val(),email:$("#email").val()}, function(res){
+	 		 showMessage(res.desc);
+	   	 });
+		}
+	 	      
     function queryParams(flag){	
     	$.ajax({
     		  type: 'POST',
@@ -552,7 +545,7 @@
 
 		<script type="text/javascript">
         function message() {
-         var filePath = document.getElementById('hhhh').value;
+         var filePath = document.getElementById('picture_path').value;
          if(filePath==null || filePath==""){
         	 showMessage("Please click the browse button and select a file first!");
         	 //layer.alert("Please click the browse button and select a file first!");
@@ -565,9 +558,6 @@
 		<script> function PostData() { $.ajax({ type:"POST", 
 	url: "/jf/thairice/t1parameter/riceYieldUpload",
 	data : "", 
-/* 	headers:{
-		'Content-Type':'multipart/form-data'
-	}, */
 	success: function(msg) {
 		
 	} 

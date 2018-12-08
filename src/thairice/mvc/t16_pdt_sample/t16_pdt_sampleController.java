@@ -7,10 +7,13 @@ import com.platform.mvc.base.BaseModel;
 import java.io.File;
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.util.List;
 
 import org.apache.log4j.Logger;
 import com.jfinal.aop.Before;
 import com.jfinal.aop.Clear;
+import com.jfinal.aop.Duang;
+import com.jfinal.plugin.activerecord.Record;
 import com.jfinal.upload.UploadFile;
 
 import thairice.constant.ConstantInitMy;
@@ -19,6 +22,7 @@ import thairice.mvc.t15_news_cnt.t15_news_cnt;
 import thairice.mvc.t2syslog.EnumT2sysLog;
 import thairice.mvc.t2syslog.T2syslogService;
 import thairice.mvc.t3user.T3user;
+import thairice.mvc.t3user.T3userService;
 
 
 /**
@@ -49,6 +53,26 @@ public class t16_pdt_sampleController extends BaseController {
 	public void index() {
 		paging(ConstantInitMy.db_dataSource_main, splitPage, BaseModel.sqlId_splitPage_select, t16_pdt_sample.sqlId_splitPage_from);
 		renderWithPath(pthv+"list.html");
+	}
+	
+	/**
+	 * 按id查询
+	 */
+	public void queryById() {
+		Long id = Long.parseLong(getPara("id"));
+		LOG.info(id);
+		t16_pdt_sample t16 = t16_pdt_sample.dao.findById(id);
+		if(null != t16) {
+	        Record record = new Record();
+	        record.set("id", t16.getId());
+	        record.set("rice_planting_area", t16.getRice_planting_area());
+	        record.set("rice_drought", t16.getRice_drought());
+	        record.set("rice_condition", t16.getRice_condition());
+	        record.set("rice_production", t16.getRice_production());
+	        record.set("pic_path", t16.getPic_path());
+	        record.set("pdt_desc", t16.getPdt_desc());
+	        renderJson(record);
+		}
 	}
 	
 	/**
