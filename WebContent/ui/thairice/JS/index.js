@@ -150,6 +150,7 @@ $(function () {
                 }
             },
             'Prdt_EfDt': {
+            	trigger:'blur',
                 validators: {
                     notEmpty: {
                         message: 'The date can\'t be empty'
@@ -161,6 +162,7 @@ $(function () {
                 }
             },
             'PD_ExDat': {
+            	trigger:'blur',
                 validators: {
                     notEmpty: {
                         message: 'The date can\'t be empty'

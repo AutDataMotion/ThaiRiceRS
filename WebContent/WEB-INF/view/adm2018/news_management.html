@@ -1,6 +1,7 @@
 <% var cssSec={ %>
 	<script src="${cxt!}/ui/thairice/JS/jquery.min.js"></script>
 	<script type="text/javascript" src="${cxt!}/ui/thairice/JS/layer/layer.js"></script>
+	<script type="text/javascript" src="${cxt!}/ui/thairice/common.js"></script>
 <style>
 .undoIcon {
 	background-image: url(${cxt}/ui/thairice/Images/production/undo1.png);
@@ -378,7 +379,7 @@
 			</div>
 		</div>
 
-		<% }; %> <% var jsSec={ %>
+		<% }; %><% var jsSec={ %>
 	
 		<script type="text/javascript">
 			function save() {
@@ -405,7 +406,7 @@
 						 document.getElementById("account").style.backgroundColor = "#faa390";
 						 } */
 						/* 			document.setElementById("ftpSrcPath0").value = "55555"; */
-						layer.alert(res.desc);
+						showMessage(res.desc);
 					},
 					dataType : "json"
 				});
@@ -436,7 +437,7 @@
 						 document.getElementById("account").style.backgroundColor = "#faa390";
 						 } */
 						/* 			document.setElementById("ftpSrcPath0").value = "55555"; */
-						layer.alert(res.desc);
+						showMessage(res.desc);
 					},
 					dataType : "json"
 				});
@@ -447,11 +448,12 @@
 			function message() {
 				var filePath = document.getElementById('hhhh').value;
 				if (filePath == null || filePath == "") {
-					layer.open({
+				/* 	 layer.open({
 						  title: 'Tips'
 						  ,content: "Please click the browse button and select a file first!"
-						}); 
-					//layer.alert("Please click the browse button and select a file first!");
+						,closeBtn: 0
+						});  */
+						showMessage("Please click the browse button and select a file first!");
 					return;
 				} else
 					layer.open({
@@ -489,6 +491,7 @@
 					document.getElementById("account").style.backgroundColor = "#faa390";
 			} */
 /* 			document.setElementById("ftpSrcPath0").value = "55555"; */
+			alert(111111111);
 			alert(res.desc);
 		  },
 		  dataType: "json"
@@ -536,10 +539,10 @@
 		    			document.getElementById("inEndYear").value = res.inEndYear;
 		    			
     				} else{
-    					layer.alert(res.desc);
+    					showMessage(res.desc);
 	    				}
 	    			} else {
-	    				layer.alert(res.desc);
+	    				showMessage(res.desc);
 	    			}
 	    		  },
     		  dataType: "json"
@@ -551,17 +554,11 @@
         function message() {
          var filePath = document.getElementById('hhhh').value;
          if(filePath==null || filePath==""){
-        	 layer.open({
-				  title: 'Tips'
-				  ,content: "Please click the browse button and select a file first!"
-				}); 
+        	 showMessage("Please click the browse button and select a file first!");
         	 //layer.alert("Please click the browse button and select a file first!");
         	 return;
          } else
-        	 layer.open({
-				  title: 'Tips'
-				  ,content: "Upload successfully!"
-				}); 
+        	 showMessage("Upload successfully!");
         	 //layer.alert("Upload successfully!");
         }        
     </script>
