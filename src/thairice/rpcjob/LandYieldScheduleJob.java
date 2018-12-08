@@ -80,7 +80,7 @@ public class LandYieldScheduleJob extends AbsScheduleJob implements ITask {
 			List<T12PreProcessInf> listArg = T12PreProcessInf.dao.find(String.format(
 					" select * from %s where  %s and data_type =%s "
 					+ " and date_format(data_collect_time, '%%Y') between '%d' and '%d' "
-					+ " and date_format(data_collect_time, '%%m%%d') = '%s'  limit 200 ",
+					+ "and daynum  = %d limit 200 ",
 					T12PreProcessInf.tableName, whereStr, EnumDataStatus.DATA_TYPE_NDVI_02.getIdStr()
 					,yearBeg, yearEnd
 					,preObj.getDaynum()
