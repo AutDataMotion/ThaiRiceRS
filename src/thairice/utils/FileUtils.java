@@ -285,14 +285,64 @@ public class FileUtils {
 			 */
 			// 如果是文件
 			if (temp.isFile()) {
-				System.out.println(temp.toString());
-				prepareTestData(temp.toString(), storagePath);
+				System.out.println("temp.toString()" + temp.toString());
+				archOriginalData(temp.toString(), storagePath);
 			} else {// 如果是目录，递归
 				if (temp.isDirectory()) {
 					prepareTestDataDir(temp.toString(), storagePath);
 				}
 			}
 
+		}
+	}
+	
+	/**
+	 * 解析单个原始文件并归档入库
+	 * 
+	 * @param fileDir
+	 *            ftp远程文件路径
+	 * @author zhuchaobin, 2018-09-02
+	 * @return String T6org_data 解析后的原始文件对象
+	 * @throws ParseException
+	 */
+	public static void archOriginalData(String fileDir, String storagePath) {
+		LOG.debug("解析ftp远程文件路径：" + fileDir);
+		try {
+			if (StringUtils.isBlank(fileDir)) {
+				// ftp远程文件路径为空
+				LOG.error("ftp远程文件路径为空");
+				return;
+			}
+		//	T6org_data orgDataObj = new T6org_data();
+			// 文件名
+			String fileName = fileDir.substring(fileDir.lastIndexOf("\\") + 1);
+			LOG.info("文件名" + fileName);
+		//	orgDataObj.setName_(fileName);					
+			String sql = "select * from T6org_data t where t.name_ = '" + fileName + "'";
+			LOG.debug("查询待下载文件列表：" + sql);
+			List<T6org_data> rltList = T6org_data.dao.find(sql);			
+			if(rltList.size() > 0) {
+				T6org_data orgDataObj = rltList.get(0);
+				orgDataObj = rltList.get(0);
+				orgDataObj.setStatus_(DataConstants.DOWNLOAD_SUCCE);
+				orgDataObj.setStorage_path(storagePath);
+				orgDataObj.setDload_end_time(new Timestamp(System.currentTimeMillis()));
+				
+				// 解析文件名
+				String[] fileAttr = fileName.split("\\.");
+				if (fileAttr.length >= 3) {
+					orgDataObj.setStorage_path(storagePath + fileAttr[0] + "\\" + fileAttr[1].substring(1,5) + "\\" + fileAttr[1].substring(5,8));
+				}
+				
+				orgDataObj.update();
+			} else {
+				prepareTestData(fileDir, storagePath);
+			}
+		} catch (Exception e) {
+			// 解析ftp远程文件路径发生异常
+			LOG.error("解析ftp远程文件路径发生异常:");
+			e.printStackTrace();
+			return;
 		}
 	}
 
@@ -333,6 +383,7 @@ public class FileUtils {
 				} else {
 					LOG.error("解析数据采集日期失败，文件名格式不对！");
 				}
+	//			orgDataObj.setStorage_path(fileAttr[0] + "\\" + fileAttr[1].substring(1,5) + "\\" + fileAttr[1].substring(5,8));
 				// 文件类型代码
 				// orgDataObj.setType_(fileAttr[0]);
 				if ("MOD13Q1".equals(fileAttr[0]))
@@ -350,7 +401,6 @@ public class FileUtils {
 			} else {
 				LOG.error("解析行列号失败，文件名格式不对！");
 			}
-			orgDataObj.saveGenIntId();
 			return orgDataObj;
 		} catch (Exception e) {
 			// 解析ftp远程文件路径发生异常
@@ -453,19 +503,49 @@ public class FileUtils {
 	    }
 	}
 	
+	/**
+	 * 判断文件是否读写结束
+	 * @param url
+	 * @return
+	 */
+	public static int isFileFinished(String fileName) throws Exception{
+	    long oldLen = 0;
+	    long newLen = 0;
+	    File file = new File(fileName);
+	    if(null != file) {
+		    while(true){
+		    	oldLen = file.length();
+		        Thread.sleep(20000);
+		        newLen = file.length();
+		        if ((newLen - oldLen) == 0) {
+		        	return 0;
+		        } else {
+		        	return 1;
+		        }
+		    }
+	    } else
+	    	return 2;
+	}
+	
 	public static void main(String[] args) throws IOException, ParseException {
 		// String str = "MOD13Q1.A2001033.h00v08.006.2015141152020.hdf";
 		// String[] fileAttr = str.split("\\.");
-		// System.out.println(fileAttr.length);
+/*		// System.out.println(fileAttr.length);
         String string = "2018-01-01";
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date dt = sdf.parse(string);
 		String test = generateNewPath("/allData/6/MOD13Q1/$1/$2", "01", sdf.parse(string), null);
 		System.out.println(test);
 
-		prepareTestDataDir("D:\\TEST", "e:\\testData\\");
-
-
+		prepareTestDataDir("D:\\TEST", "e:\\testData\\");*/
+		
+		// 解析文件名
+/*		String fileName = "MOD13Q1.A2018305.h27v08.006.2018321224428.hdf";
+		String[] fileAttr = fileName.split("\\.");
+		System.out.println(fileAttr[0]);
+		System.out.println(fileAttr[1].substring(1,5));
+		System.out.println(fileAttr[1].substring(5,8));*/
+		prepareTestDataDir("D:\\test\\MOD13A2", "D:\\test\\MOD13A2");
 /*		File dir = new File("d://ddddd//113//4455");
 		String temp = "12345678";
 		System.out.println(temp.substring(1, 5));
