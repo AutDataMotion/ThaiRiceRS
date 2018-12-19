@@ -1155,10 +1155,11 @@ public class FtpUtils {
 							// 更新初始数据开始日期
 							inlzStDt = ParamUtils.getParam(ParamUtils.PC_FTP_AUTO_DWLD, ParamUtils.INLZ_STDT);						
 							String dateStr = new SimpleDateFormat("yyyyMMdd").format(eleDate);
-							if(dateStr.compareTo(inlzStDt) > 0) {
-								ParamUtils.updateParam(ParamUtils.PC_FTP_AUTO_DWLD, ParamUtils.INLZ_STDT, dateStr);
-							}
-	
+							//暂时不更新自动扫描开始日期
+//							if(dateStr.compareTo(inlzStDt) > 0) {
+//								ParamUtils.updateParam(ParamUtils.PC_FTP_AUTO_DWLD, ParamUtils.INLZ_STDT, dateStr);
+//							}
+//	
 							Calendar cal = Calendar.getInstance();
 							List<String> remotePathList = ParamUtils.getParamList(ParamUtils.PC_FTP_AUTO_DWLD,
 									ParamUtils.PD_SRCFTP_ROOT_CTLG);
@@ -1242,8 +1243,7 @@ public class FtpUtils {
 			String time=sdf.format(new Date());
 			System.out.println("定时自动扫描待下载文件并启动wget下载"+time);
 			T2syslogService.addLog(EnumT2sysLog.INFO, DataConstants.SYS_USER_ID, DataConstants.SYS_USER_NM, "Download remote ftp files", "Automatically scan files to be downloaded and start ftp download...");
-			final String localfilePath = ParamUtils.getParam(ParamUtils.PC_FTP_AUTO_DWLD, ParamUtils.FILE_STRG_ADR);
-
+			String localfilePathPre = ParamUtils.getParam(ParamUtils.PC_FTP_AUTO_DWLD, ParamUtils.FILE_STRG_ADR);
 			// 查询待下载文件列表:未下载+下载失败
 			String sql = "select * from T6org_data t where t.status_ = '" + DataConstants.NOT_DOWNLOAD + "' or t.status_ = '" + DataConstants.DOWNLOAD_FAIL + "'";
 			LOG.debug("查询待下载文件列表：" + sql);
@@ -1255,6 +1255,10 @@ public class FtpUtils {
 					org_data.setDload_start_time(new Timestamp(System.currentTimeMillis()));
 					org_data.setStatus_(DataConstants.DOWNLOAD_ING);
 					org_data.update();
+					// 拼归档路径
+					String name = org_data.getName_();
+					String[] fileAttr = name.split("\\.");
+					String localfilePath =  localfilePathPre + fileAttr[0] + "\\" + fileAttr[1].substring(1,5) + "\\" + fileAttr[1].substring(5,8);
 					// 下载后存放到本地归档根目录
 					if(!FileUtils.folderCheckAndMake(localfilePath)) {
 						LOG.error("检测并创建下载文件保存路径失败！路径：" + localfilePath);
@@ -1264,8 +1268,8 @@ public class FtpUtils {
 						LOG.debug("autoHttpDownload busy, SLEEP:" + sleepInteval + "秒");
 						Thread.sleep(sleepInteval * 1000);
 					}
-					if(FtpUtils.wgetDownload(org_data.getName_(), org_data.getDownload_path(), localfilePath)) {
-						LOG.debug("wget下载文件成功!");
+					if(FtpUtils.wgetDownload(org_data.getName_(), org_data.getDownload_path(), localfilePathPre)) {
+						LOG.debug("wget下载文件命令调用成功!");
 						org_data.setStatus_(DataConstants.DOWNLOAD_ING);
 						org_data.setDload_start_time(new Timestamp(System.currentTimeMillis()));
 						org_data.setUserid(DataConstants.SYS_USER_ID);
@@ -1287,6 +1291,41 @@ public class FtpUtils {
 		} catch(Exception e) {
 			LOG.error("定时自动扫描待下载文件并启动wget下载发生异常：" + e);
 			T2syslogService.addLog(EnumT2sysLog.ERROR_N, DataConstants.SYS_USER_ID, DataConstants.SYS_USER_NM, "Download remote ftp files", "Automatically scan files to be downloaded and start ftp download abnormal!" + e);
+		}
+	}
+	
+	public static void autoWgetArch() {
+		try {
+			//格式化时间 
+			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+			String time=sdf.format(new Date());
+			System.out.println("定时自动归档进程开始"+time);
+			T2syslogService.addLog(EnumT2sysLog.INFO, DataConstants.SYS_USER_ID, DataConstants.SYS_USER_NM, "Archieved files", "Automatically scan files to be archieved ...");
+			String localfilePath = ParamUtils.getParam(ParamUtils.PC_FTP_AUTO_DWLD, ParamUtils.FILE_STRG_ADR);
+			// 查询待下载文件列表:未下载+下载失败
+			String sql = "select * from T6org_data t where t.status_ = '" + DataConstants.DOWNLOAD_ING + "'";
+			LOG.debug("查询待归档文件列表：" + sql);
+			List<T6org_data> rltList = T6org_data.dao.find(sql);
+			if(null != rltList) {
+				for(int i = 0; i < rltList.size(); i ++) {
+					T6org_data org_data = rltList.get(i);
+					if(0 == FileUtils.isFileFinished(org_data.getDownload_path() + "//" + org_data.getName_())) {
+						LOG.debug("检测到文件" + org_data.getDownload_path() + "//" + org_data.getName_() + "下载完成，设置状态为下载成功。");
+						org_data.setStatus_(DataConstants.DOWNLOAD_SUCCE);
+						org_data.setDload_end_time(new Timestamp(System.currentTimeMillis()));
+						org_data.update();
+					} else if(2 == FileUtils.isFileFinished(org_data.getDownload_path() + "//" + org_data.getName_())){
+						LOG.debug("文件" + org_data.getDownload_path() + "//" + org_data.getName_() + "不存在，设置为待下载状态。");
+						org_data.setStatus_(DataConstants.NOT_DOWNLOAD);
+						org_data.update();
+					}
+				}		
+			} else {
+				LOG.debug("待下载文件列表为空");
+			}
+		} catch(Exception e) {
+			LOG.error("定时自动扫描并自动归档发生异常：" + e);
+			T2syslogService.addLog(EnumT2sysLog.ERROR_N, DataConstants.SYS_USER_ID, DataConstants.SYS_USER_NM, "Archieve files", "Automatically scan files to be archieved abnormal!" + e);
 		}
 	}
 	

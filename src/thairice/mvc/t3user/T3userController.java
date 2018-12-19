@@ -22,6 +22,7 @@ import com.jfinal.plugin.activerecord.Db;
 import com.jfinal.plugin.activerecord.Page;
 import com.jfinal.plugin.activerecord.Record;
 import com.platform.constant.ConstantRender;
+import com.platform.constant.ConstantWebContext;
 import com.platform.interceptor.ParamPkgInterceptor;
 import com.platform.mvc.base.BaseController;
 
@@ -211,7 +212,8 @@ public class T3userController extends BaseController {
             //邮箱验证，激活链接
             String authCode = codeService.createAuthCode(new BigInteger(t3user.get("id").toString()), 0, 1800);
             if (StrKit.notBlank(authCode)) {
-                String url = PropKit.get("activation_url") + authCode;
+        	String ip = getAttr(ConstantWebContext.request_cxt);
+                String url = ip+"/jf/thairice/t3user/activate?authCode=" + authCode;
                 String content = "Hello!\r\n<br>"
                 			+ "We sent you this email because you're "
                 			+ "<br>signing up for a new Thai ARSM Platform account with your email address,<br>"

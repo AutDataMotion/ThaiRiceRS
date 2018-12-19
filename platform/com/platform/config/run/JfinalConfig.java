@@ -38,6 +38,7 @@ import thairice.constant.PropertiesInitMy;
 import zeroc.util.IceClientUtil;
 import thairice.interceptor.AdminLoginInterceptor;
 import thairice.utils.FtpUtils;
+import thairice.utils.AutoOriginDataArchThread;
 import thairice.utils.AutoWGetDloadThread;
 import thairice.utils.AutoWGetScanThread;
 
@@ -206,6 +207,8 @@ public class JfinalConfig extends JFinalConfig {
 		 new AutoWGetScanThread().start();	
 		 // 启动自动下载待下载文件线程
 		 new AutoWGetDloadThread().start();
+		 // 启动自动归档待归档文件线程
+		 new AutoOriginDataArchThread().start();
 	}
 
 	/**
